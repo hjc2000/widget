@@ -22,7 +22,6 @@ set(CMAKE_INSTALL_PREFIX $ENV{cpp_lib_build_scripts_path}/${platform}/.libs/${Pr
 # 添加测试程序
 if(1)
 	add_executable(test WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-	target_compile_definitions(test PRIVATE Predefine_ResourceDir="D:/video/视频开发测试")
 
 	target_link_libraries(${ProjectName} PUBLIC -Wl,--start-group)
 	target_link_libraries(test PUBLIC ${ProjectName})
