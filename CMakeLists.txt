@@ -14,8 +14,8 @@ set(CMAKE_C_STANDARD 17)
 add_library(${ProjectName})
 target_import_src(${ProjectName})
 target_import_base(${ProjectName} PUBLIC)
-target_import_qt_core(${ProjectName} PUBLIC)
 target_import_qt_widgets(${ProjectName} PUBLIC)
+target_import_qt_opengl(${ProjectName} PUBLIC)
 
 set(CMAKE_INSTALL_PREFIX $ENV{cpp_lib_build_scripts_path}/${platform}/.libs/${ProjectName}/)
 
