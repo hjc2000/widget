@@ -17,8 +17,6 @@ target_import_base(${ProjectName} PUBLIC)
 target_import_qt_widgets(${ProjectName} PUBLIC)
 target_import_qt_opengl(${ProjectName} PUBLIC)
 
-set(CMAKE_INSTALL_PREFIX $ENV{cpp_lib_build_scripts_path}/${platform}/.libs/${ProjectName}/)
-
 # 添加测试程序
 if(1)
 	add_executable(test WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
