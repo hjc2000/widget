@@ -23,4 +23,11 @@ widget::MainWindow::MainWindow()
 
 	// 设置中央部件
 	setCentralWidget(centralWidget);
+
+	connect(button1,
+			&QPushButton::clicked,
+			[this]()
+			{
+				close();
+			});
 }
