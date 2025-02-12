@@ -15,7 +15,7 @@ target_import_src(${ProjectName})
 target_import_base(${ProjectName} PUBLIC)
 target_import_qt_widgets(${ProjectName} PUBLIC)
 target_import_qt_opengl(${ProjectName} PUBLIC)
-target_link_libraries(${ProjectName} PUBLIC libqwt-qt6)
+target_import_qwt(${ProjectName} PUBLIC)
 
 # 添加测试程序
 if(1)
