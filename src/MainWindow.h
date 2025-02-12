@@ -1,12 +1,12 @@
 #pragma once
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSplitter>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
+#include <QApplication>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QMainWindow>
+#include <QPushButton>
+#include <QSplitter>
+#include <QVBoxLayout>
+#include <QWidget>
 
 namespace widget
 {
