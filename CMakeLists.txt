@@ -30,3 +30,14 @@ if(1)
 			LIBRARY DESTINATION lib
 			ARCHIVE DESTINATION lib)
 endif()
+
+execute_process(
+    COMMAND expand-wildcard --paths "**.h"
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE command_output
+    RESULT_VARIABLE exit_code
+)
+
+# 输出结果
+message("命令标准输出：${command_output}")
+message("命令退出代码：${exit_code}")
