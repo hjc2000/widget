@@ -70,12 +70,28 @@ void widget::Button::enterEvent(QEnterEvent *event)
 	QPalette temp_palette = palette();
 	temp_palette.setColor(QPalette::Button, QColor{120, 160, 255});
 	setPalette(temp_palette);
+
+	try
+	{
+		_enter_event.Invoke();
+	}
+	catch (...)
+	{
+	}
 }
 
 void widget::Button::leaveEvent(QEvent *event)
 {
 	QPushButton::leaveEvent(event);
 	setPalette(_origin_palette);
+
+	try
+	{
+		_leave_event.Invoke();
+	}
+	catch (...)
+	{
+	}
 }
 
 #pragma endregion
@@ -87,7 +103,6 @@ widget::Button::Button(QWidget *parent)
 	  _origin_palette(palette())
 {
 	SetText("按钮");
-	setAutoFillBackground(true);
 	ConnectSignal();
 }
 
@@ -114,6 +129,16 @@ base::IEvent<> &widget::Button::PressedEvent()
 base::IEvent<> &widget::Button::ReleasedEvent()
 {
 	return _released_event;
+}
+
+base::IEvent<> &widget::Button::EnterEvent()
+{
+	return _enter_event;
+}
+
+base::IEvent<> &widget::Button::LeaveEvent()
+{
+	return _leave_event;
 }
 
 #pragma endregion

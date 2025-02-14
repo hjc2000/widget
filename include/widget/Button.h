@@ -12,9 +12,13 @@ namespace widget
 		public QPushButton
 	{
 	private:
+#pragma region 事件
 		base::Delegate<> _clicked_event;
 		base::Delegate<> _pressed_event;
 		base::Delegate<> _released_event;
+		base::Delegate<> _enter_event;
+		base::Delegate<> _leave_event;
+#pragma endregion
 
 		QPalette const _origin_palette;
 
@@ -34,6 +38,8 @@ namespace widget
 		base::IEvent<> &ClickedEvent();
 		base::IEvent<> &PressedEvent();
 		base::IEvent<> &ReleasedEvent();
+		base::IEvent<> &EnterEvent();
+		base::IEvent<> &LeaveEvent();
 #pragma endregion
 
 #pragma region 按钮文本

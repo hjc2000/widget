@@ -92,13 +92,13 @@ widget::MainWindow::MainWindow()
 		widget::Button *button = new widget::Button{this};
 		tableView->setIndexWidget(model->index(row, 1), button);
 
-		button->PressedEvent().Subscribe(
+		button->EnterEvent().Subscribe(
 			[button]()
 			{
 				button->SetText("666");
 			});
 
-		button->ReleasedEvent().Subscribe(
+		button->LeaveEvent().Subscribe(
 			[button]()
 			{
 				button->SetText("777");
