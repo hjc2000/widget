@@ -11,6 +11,8 @@ int main()
 	};
 
 	QApplication app{argc, argv};
+	QApplication::setStyle("fusion");
+	// QApplication::setStyle("windows");
 	widget::MainWindow window{};
 	window.showMaximized();
 	return app.exec();

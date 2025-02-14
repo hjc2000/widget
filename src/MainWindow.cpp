@@ -85,6 +85,34 @@ widget::MainWindow::MainWindow()
 							 "   color: white;"           // 可选：设置文本颜色为白色以提高对比度
 							 "}");
 
+	// 在第 2 列的每个单元格中添加 QPushButton
+	for (int row = 0; row < model->rowCount(); ++row)
+	{
+		QPushButton *button = new QPushButton("Click Me", this);
+
+		// 设置按钮的样式表
+		button->setStyleSheet("QPushButton {"
+							  "   background-color: white;"
+							  "   color: black;"
+							  "}"
+							  "QPushButton:pressed {"
+							  "   background-color: lightgray;"
+							  "}"
+							  "QPushButton:hover {"
+							  "   background-color: red;"
+							  "}");
+
+		button->setAutoFillBackground(true);
+
+		connect(button, &QPushButton::clicked, [row]()
+				{
+					qDebug() << "Button clicked in row:" << row;
+				});
+
+		// 绑定按钮到单元格
+		tableView->setIndexWidget(model->index(row, 1), button);
+	}
+
 	// // 添加一些按钮到布局中作为示例
 	// QPushButton *button1 = new QPushButton{"按钮 1", centralWidget};
 	// layout->addWidget(button1);
