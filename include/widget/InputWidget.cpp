@@ -17,21 +17,20 @@ void widget::InputWidget::InitializeLayout()
 
 void widget::InputWidget::ConnectSignal()
 {
-	connect(_button,
-			&QPushButton::clicked,
-			[this]()
+	_button->ClickedEvent().Subscribe(
+		[this]()
+		{
+			try
 			{
-				try
-				{
-					_submit_event.Invoke(_line_edit->text());
-				}
-				catch (std::exception const &e)
-				{
-				}
-				catch (...)
-				{
-				}
-			});
+				_submit_event.Invoke(_line_edit->text());
+			}
+			catch (std::exception const &e)
+			{
+			}
+			catch (...)
+			{
+			}
+		});
 
 	connect(_line_edit,
 			&QLineEdit::returnPressed,

@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include <string>
+#include <widget/Button.h>
 
 namespace widget
 {
@@ -14,7 +15,7 @@ namespace widget
 	private:
 		QHBoxLayout *_layout = new QHBoxLayout{this};
 		QLineEdit *_line_edit = new QLineEdit{this};
-		QPushButton *_button = new QPushButton{"提交", this};
+		widget::Button *_button = new widget::Button{this, "提交"};
 
 #pragma region 事件
 		base::Delegate<QString const &> _submit_event;
