@@ -82,8 +82,8 @@ widget::MainWindow::MainWindow()
 
 	// 设置样式表，将焦点矩形的颜色和背景颜色设置为蓝色
 	tableView->setStyleSheet("QTableView::item:focus {"
-							 "   background-color: blue;" // 设置焦点背景颜色为蓝色
-							 "   color: white;"           // 可选：设置文本颜色为白色以提高对比度
+							 "   background-color: rgb(204,232,255);" // 设置焦点背景颜色为蓝色
+							 "   color: black;"                       // 可选：设置文本颜色为白色以提高对比度
 							 "}");
 
 	// 在第 2 列的每个单元格中添加 QPushButton
