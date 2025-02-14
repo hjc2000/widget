@@ -10,7 +10,7 @@ namespace widget
 		protected QOpenGLFunctions_1_0
 	{
 	public:
-		GLWidget(QWidget *parent = nullptr)
+		GLWidget(QWidget *parent)
 			: QOpenGLWidget(parent)
 		{
 		}

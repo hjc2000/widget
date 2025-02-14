@@ -27,7 +27,7 @@ namespace widget
 		void ConnectSignal();
 
 	public:
-		InputWidget(QWidget *parent = nullptr);
+		InputWidget(QWidget *parent);
 
 		/// @brief 输入框在没有输入内容时显示的文本。
 		/// @return
@@ -48,6 +48,10 @@ namespace widget
 		/// @brief 设置：编辑框中的文本。
 		/// @param value
 		void SetText(std::string const &value);
+
+		/// @brief 设置：编辑框中的文本。
+		/// @param value
+		void SetText(char const *value);
 
 		/// @brief 获取按钮的文本。
 		/// @return

@@ -7,6 +7,7 @@
 #include <QStyledItemDelegate>
 #include <QTableView>
 #include <string>
+#include <widget/Button.h>
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
 
@@ -16,7 +17,7 @@ namespace
 		public QAbstractTableModel
 	{
 	public:
-		MyTableModel(QWidget *parent = nullptr)
+		MyTableModel(QTableView *parent)
 			: QAbstractTableModel(parent)
 		{
 		}
@@ -68,7 +69,7 @@ widget::MainWindow::MainWindow()
 
 	// 创建 QTableView 和模型
 	QTableView *tableView = new QTableView{centralWidget};
-	MyTableModel *model = new MyTableModel{};
+	MyTableModel *model = new MyTableModel{tableView};
 	tableView->setModel(model);
 	layout->addWidget(tableView);
 
@@ -88,28 +89,7 @@ widget::MainWindow::MainWindow()
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
-		QPushButton *button = new QPushButton("Click Me", this);
-
-		// 设置按钮的样式表
-		button->setStyleSheet("QPushButton {"
-							  "   background-color: white;"
-							  "   color: black;"
-							  "}"
-							  "QPushButton:pressed {"
-							  "   background-color: lightgray;"
-							  "}"
-							  "QPushButton:hover {"
-							  "   background-color: red;"
-							  "}");
-
-		button->setAutoFillBackground(true);
-
-		connect(button, &QPushButton::clicked, [row]()
-				{
-					qDebug() << "Button clicked in row:" << row;
-				});
-
-		// 绑定按钮到单元格
+		widget::Button *button = new widget::Button{this};
 		tableView->setIndexWidget(model->index(row, 1), button);
 	}
 

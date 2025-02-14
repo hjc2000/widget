@@ -140,6 +140,11 @@ void widget::InputWidget::SetText(std::string const &value)
 	SetText(QString{value.c_str()});
 }
 
+void widget::InputWidget::SetText(char const *value)
+{
+	SetText(QString{value});
+}
+
 QString widget::InputWidget::ButtonText() const
 {
 	return _button->text();
