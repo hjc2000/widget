@@ -81,7 +81,8 @@ widget::MainWindow::MainWindow()
 
 	// 获取水平头视图并设置拉伸模式
 	QHeaderView *header = tableView->horizontalHeader();
-	header->setSectionResizeMode(QHeaderView::Stretch); // 均分宽度并拉伸
+	header->setSectionResizeMode(QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(1, QHeaderView::Stretch);
 
 	tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
 	tableView->setSelectionMode(QAbstractItemView::SingleSelection);
