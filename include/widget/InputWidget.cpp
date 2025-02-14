@@ -21,35 +21,80 @@ void widget::InputWidget::ConnectSignal()
 			&QPushButton::clicked,
 			[this]()
 			{
-				_submit_event.Invoke(_line_edit->text());
+				try
+				{
+					_submit_event.Invoke(_line_edit->text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
 			});
 
 	connect(_line_edit,
 			&QLineEdit::returnPressed,
 			[this]()
 			{
-				_submit_event.Invoke(_line_edit->text());
+				try
+				{
+					_submit_event.Invoke(_line_edit->text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
 			});
 
 	connect(_line_edit,
 			&QLineEdit::textChanged,
 			[this]()
 			{
-				_text_changed_event.Invoke(_line_edit->text());
+				try
+				{
+					_text_changed_event.Invoke(_line_edit->text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
 			});
 
 	connect(_line_edit,
 			&QLineEdit::textEdited,
 			[this]()
 			{
-				_text_edited_event.Invoke(_line_edit->text());
+				try
+				{
+					_text_edited_event.Invoke(_line_edit->text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
 			});
 
 	connect(_line_edit,
 			&QLineEdit::editingFinished,
 			[this]()
 			{
-				_editing_finished.Invoke(_line_edit->text());
+				try
+				{
+					_editing_finished.Invoke(_line_edit->text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
 			});
 }
 
@@ -58,13 +103,11 @@ void widget::InputWidget::ConnectSignal()
 widget::InputWidget::InputWidget(QWidget *parent)
 	: QWidget(parent)
 {
-	// 创建输入框
 	_line_edit->setPlaceholderText("在此处输入内容后按回车或点击提交");
 
 	// 输入框自适应缩放
 	_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	// 创建按钮
 	// 按钮大小由内容决定
 	_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 
@@ -92,6 +135,11 @@ void widget::InputWidget::SetText(QString const &value)
 	_line_edit->setText(value);
 }
 
+void widget::InputWidget::SetText(std::string const &value)
+{
+	SetText(QString{value.c_str()});
+}
+
 QString widget::InputWidget::ButtonText() const
 {
 	return _button->text();
@@ -101,6 +149,8 @@ void widget::InputWidget::SetButtonText(QString const &value) const
 {
 	_button->setText(value);
 }
+
+#pragma region 事件
 
 base::IEvent<QString const &> &widget::InputWidget::SubmitEvent()
 {
@@ -121,3 +171,5 @@ base::IEvent<QString const &> &widget::InputWidget::EditingFinishedEvent()
 {
 	return _editing_finished;
 }
+
+#pragma endregion

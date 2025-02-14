@@ -1,5 +1,8 @@
 #include "MainWindow.h"
+#include <base/string/Parse.h>
 #include <QLineEdit>
+#include <string>
+#include <widget/Conversion.h>
 #include <widget/InputWidget.h>
 
 widget::MainWindow::MainWindow()
@@ -31,6 +34,10 @@ widget::MainWindow::MainWindow()
 	w->SubmitEvent().Subscribe(
 		[this, w](QString const &text)
 		{
-			w->SetText(w->Text() + "666");
+			std::string str;
+			str << w->Text();
+
+			int64_t num = base::ParseInt64(str);
+			w->SetText(std::to_string(num + 1));
 		});
 }

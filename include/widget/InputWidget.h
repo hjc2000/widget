@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QWidget>
+#include <string>
 
 namespace widget
 {
@@ -43,6 +44,10 @@ namespace widget
 		/// @brief 设置：编辑框中的文本。
 		/// @param value
 		void SetText(QString const &value);
+
+		/// @brief 设置：编辑框中的文本。
+		/// @param value
+		void SetText(std::string const &value);
 
 		/// @brief 获取按钮的文本。
 		/// @return
