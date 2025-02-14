@@ -36,7 +36,7 @@ namespace
 		{
 			if (role == Qt::DisplayRole)
 			{
-				return QString("Cell (%1, %2)").arg(index.row()).arg(index.column());
+				return QVariant{QString{"Cell (%1, %2)"}.arg(index.row()).arg(index.column())};
 			}
 
 			return QVariant{};
@@ -91,6 +91,12 @@ widget::MainWindow::MainWindow()
 	{
 		widget::Button *button = new widget::Button{this};
 		tableView->setIndexWidget(model->index(row, 1), button);
+
+		button->ClickedEvent().Subscribe(
+			[button]()
+			{
+				button->SetText("666");
+			});
 	}
 
 	// // 添加一些按钮到布局中作为示例

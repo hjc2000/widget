@@ -6,6 +6,7 @@
 
 namespace widget
 {
+	/// @brief 按钮
 	class Button :
 		public QPushButton
 	{
@@ -24,9 +25,11 @@ namespace widget
 		base::IEvent<> &PressedEvent();
 #pragma endregion
 
+#pragma region 按钮文本
 		QString Text() const;
 		void SetText(QString const &value);
 		void SetText(std::string const &value);
 		void SetText(char const *value);
+#pragma endregion
 	};
 } // namespace widget

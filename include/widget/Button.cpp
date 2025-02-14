@@ -73,6 +73,8 @@ base::IEvent<> &widget::Button::PressedEvent()
 
 #pragma endregion
 
+#pragma region 按钮文本
+
 QString widget::Button::Text() const
 {
 	return text();
@@ -92,3 +94,5 @@ void widget::Button::SetText(char const *value)
 {
 	SetText(QString{value});
 }
+
+#pragma endregion
