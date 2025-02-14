@@ -9,6 +9,9 @@ project(${ProjectName})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_AUTOMOC ON)
+find_package(Qt6 COMPONENTS Core REQUIRED)
+
 # 编译为动态库
 add_library(${ProjectName})
 target_import_src(${ProjectName})

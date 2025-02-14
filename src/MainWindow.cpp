@@ -1,9 +1,44 @@
 #include "MainWindow.h"
 #include <base/string/Parse.h>
+#include <QAbstractTableModel>
 #include <QLineEdit>
 #include <string>
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
+
+// 自定义模型
+class MyTableModel :
+	public QAbstractTableModel
+{
+	Q_OBJECT
+
+public:
+	int rowCount(QModelIndex const &parent = QModelIndex()) const override
+	{
+		return 4;
+	}
+
+	int columnCount(QModelIndex const &parent = QModelIndex()) const override
+	{
+		return 3;
+	}
+
+	QVariant data(QModelIndex const &index, int role = Qt::DisplayRole) const override
+	{
+		if (role == Qt::DisplayRole)
+			return QString("Cell (%1, %2)").arg(index.row()).arg(index.column());
+		return QVariant();
+	}
+
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override
+	{
+		if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
+			return QString("Column %1").arg(section + 1);
+		return QAbstractTableModel::headerData(section, orientation, role);
+	}
+};
+
+#include "MainWindow.moc"
 
 widget::MainWindow::MainWindow()
 {
