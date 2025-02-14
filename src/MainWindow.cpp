@@ -80,10 +80,14 @@ widget::MainWindow::MainWindow()
 		tableView->setCurrentIndex(QModelIndex{});
 	}
 
-	// 获取水平头视图并设置拉伸模式
-	QHeaderView *header = tableView->horizontalHeader();
-	header->setSectionResizeMode(QHeaderView::ResizeToContents);
-	header->setSectionResizeMode(1, QHeaderView::Stretch);
+	{
+		// 设置列头可手动调整
+		QHeaderView *header = tableView->horizontalHeader();
+		header->setSectionResizeMode(QHeaderView::Interactive);
+		header->setSectionResizeMode(1, QHeaderView::Stretch);
+		header->setSectionsMovable(true);   // 允许用户移动列
+		header->setSectionsClickable(true); // 允许用户点击列头
+	}
 
 	tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
 	tableView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -97,19 +101,15 @@ widget::MainWindow::MainWindow()
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
-		widget::InputWidget *button = new widget::InputWidget{this};
-		tableView->setIndexWidget(model->index(row, 1), button);
+		widget::InputWidget *input = new widget::InputWidget{this};
+		tableView->setIndexWidget(model->index(row, 1), input);
 
-		// button->EnterEvent().Subscribe(
-		// 	[button]()
-		// 	{
-		// 		button->SetText("666");
-		// 	});
-
-		// button->LeaveEvent().Subscribe(
-		// 	[button]()
-		// 	{
-		// 		button->SetText("777");
-		// 	});
+		input->SubmitEvent().Subscribe(
+			[this, tableView](QString const &text)
+			{
+				// 设置列头可手动调整
+				QHeaderView *header = tableView->horizontalHeader();
+				header->setSectionResizeMode(QHeaderView::Interactive);
+			});
 	}
 }
