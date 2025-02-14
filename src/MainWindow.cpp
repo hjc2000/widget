@@ -69,6 +69,7 @@ widget::MainWindow::MainWindow()
 
 	// 创建 QTableView 和模型
 	QTableView *tableView = new QTableView{centralWidget};
+	tableView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	MyTableModel *model = new MyTableModel{tableView};
 	tableView->setModel(model);
 	layout->addWidget(tableView);
