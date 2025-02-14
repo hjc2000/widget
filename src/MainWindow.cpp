@@ -73,6 +73,12 @@ widget::MainWindow::MainWindow()
 	tableView->setModel(model);
 	layout->addWidget(tableView);
 
+	{
+		// 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
+		tableView->clearFocus();
+		tableView->setCurrentIndex(QModelIndex{});
+	}
+
 	// 获取水平头视图并设置拉伸模式
 	QHeaderView *header = tableView->horizontalHeader();
 	header->setSectionResizeMode(QHeaderView::Stretch); // 均分宽度并拉伸
