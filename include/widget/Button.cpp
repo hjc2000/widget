@@ -58,14 +58,6 @@ void widget::Button::ConnectSignal()
 
 #pragma region 重写事件
 
-void widget::Button::paintEvent(QPaintEvent *event)
-{
-	QPushButton::paintEvent(event);
-	QPainter painter{this};
-	painter.setPen(QPen{Qt::black, 0.5});
-	painter.drawRect(rect().adjusted(0, 0, -1, -1));
-}
-
 void widget::Button::enterEvent(QEnterEvent *event)
 {
 	_palette_before_enter_event = palette();

@@ -33,7 +33,6 @@ namespace widget
 
 		void ConnectSignal();
 
-		virtual void paintEvent(QPaintEvent *event) override;
 		virtual void enterEvent(QEnterEvent *event) override;
 		virtual void leaveEvent(QEvent *event) override;
 
