@@ -28,17 +28,8 @@ widget::MainWindow::MainWindow()
 	widget::InputWidget *w = new widget::InputWidget{centralWidget};
 	layout->addWidget(w);
 
-	connect(button1,
-			&QPushButton::clicked,
-			[this]()
-			{
-				close();
-			});
-
-	connect(button2,
-			&QPushButton::clicked,
-			[this, button1]()
-			{
-				button1->clicked();
-			});
+	w->SubmitEvent().Subscribe([this](QString const &text)
+							   {
+								   close();
+							   });
 }

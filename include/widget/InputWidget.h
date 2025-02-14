@@ -1,4 +1,5 @@
 #pragma once
+#include <base/delegate/Delegate.h>
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
@@ -9,29 +10,60 @@ namespace widget
 	class InputWidget :
 		public QWidget
 	{
+	private:
+		QHBoxLayout *_layout = new QHBoxLayout{this};
+		QLineEdit *_line_edit = new QLineEdit{this};
+		QPushButton *_button = new QPushButton{"提交", this};
+
+#pragma region 事件
+		base::Delegate<QString const &> _submit_event;
+		base::Delegate<QString const &> _text_changed_event;
+		base::Delegate<QString const &> _text_edited_event;
+		base::Delegate<QString const &> _editing_finished;
+#pragma endregion
+
+		void InitializeLayout();
+		void ConnectSignal();
+
 	public:
-		InputWidget(QWidget *parent = nullptr)
-			: QWidget(parent)
-		{
-			// 创建水平布局
-			QHBoxLayout *layout = new QHBoxLayout(this);
+		InputWidget(QWidget *parent = nullptr);
 
-			// 创建输入框
-			QLineEdit *lineEdit = new QLineEdit(this);
-			lineEdit->setPlaceholderText("Enter text here...");
-			lineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred); // 输入框自适应缩放
+		/// @brief 输入框在没有输入内容时显示的文本。
+		/// @return
+		QString PlaceholderText() const;
 
-			// 创建按钮
-			QPushButton *button = new QPushButton("Submit", this);
-			button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred); // 按钮大小由内容决定
+		/// @brief 设置：输入框在没有输入内容时显示的文本。
+		/// @param value
+		void SetPlaceholderText(QString const &value);
 
-			// 将控件添加到布局中
-			layout->addWidget(lineEdit);
-			layout->addWidget(button);
+		/// @brief 编辑框中的文本。
+		/// @return
+		QString Text() const;
 
-			// 设置布局的间距和边距
-			layout->setSpacing(10);                     // 控件之间的间距
-			layout->setContentsMargins(10, 10, 10, 10); // 布局与窗口边缘的距离
-		}
+		/// @brief 设置：编辑框中的文本。
+		/// @param value
+		void SetText(QString const &value);
+
+#pragma region 事件
+		/// @brief 提交。
+		/// @note 提交按钮被点击或输入框中按下回车时触发此事件。
+		/// @return
+		base::IEvent<QString const &> &SubmitEvent();
+
+		/// @brief 输入框中的文本改变。
+		/// @note 无论改变的原因是什么，即不管是程序修改还是用户修改，都会触发。
+		/// @return
+		base::IEvent<QString const &> &TextChangedEvent();
+
+		/// @brief 输入框中的文本被编辑。
+		/// @note 只有用户编辑了输入框中的文本时才会触发，程序改变输入框的文本不会触发。
+		/// @return
+		base::IEvent<QString const &> &TextEditedEvent();
+
+		/// @brief 编辑完成。
+		/// @note 输入框中按下回车或输入框失去焦点时触发。
+		/// @return
+		base::IEvent<QString const &> &EditingFinishedEvent();
+#pragma endregion
 	};
 } // namespace widget
