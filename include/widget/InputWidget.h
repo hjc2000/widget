@@ -44,6 +44,14 @@ namespace widget
 		/// @param value
 		void SetText(QString const &value);
 
+		/// @brief 获取按钮的文本。
+		/// @return
+		QString ButtonText() const;
+
+		/// @brief 设置按钮的文本。
+		/// @param value
+		void SetButtonText(QString const &value) const;
+
 #pragma region 事件
 		/// @brief 提交。
 		/// @note 提交按钮被点击或输入框中按下回车时触发此事件。

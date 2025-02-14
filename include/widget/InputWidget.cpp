@@ -92,6 +92,16 @@ void widget::InputWidget::SetText(QString const &value)
 	_line_edit->setText(value);
 }
 
+QString widget::InputWidget::ButtonText() const
+{
+	return _button->text();
+}
+
+void widget::InputWidget::SetButtonText(QString const &value) const
+{
+	_button->setText(value);
+}
+
 base::IEvent<QString const &> &widget::InputWidget::SubmitEvent()
 {
 	return _submit_event;

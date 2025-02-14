@@ -28,8 +28,9 @@ widget::MainWindow::MainWindow()
 	widget::InputWidget *w = new widget::InputWidget{centralWidget};
 	layout->addWidget(w);
 
-	w->SubmitEvent().Subscribe([this](QString const &text)
-							   {
-								   close();
-							   });
+	w->SubmitEvent().Subscribe(
+		[this, w](QString const &text)
+		{
+			w->SetText(w->Text() + "666");
+		});
 }
