@@ -89,42 +89,19 @@ widget::MainWindow::MainWindow()
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
-		widget::Button *button = new widget::Button{this};
+		widget::InputWidget *button = new widget::InputWidget{this};
 		tableView->setIndexWidget(model->index(row, 1), button);
 
-		button->EnterEvent().Subscribe(
-			[button]()
-			{
-				button->SetText("666");
-			});
+		// button->EnterEvent().Subscribe(
+		// 	[button]()
+		// 	{
+		// 		button->SetText("666");
+		// 	});
 
-		button->LeaveEvent().Subscribe(
-			[button]()
-			{
-				button->SetText("777");
-			});
+		// button->LeaveEvent().Subscribe(
+		// 	[button]()
+		// 	{
+		// 		button->SetText("777");
+		// 	});
 	}
-
-	// // 添加一些按钮到布局中作为示例
-	// QPushButton *button1 = new QPushButton{"按钮 1", centralWidget};
-	// layout->addWidget(button1);
-
-	// QPushButton *button2 = new QPushButton{"按钮 2", centralWidget};
-	// layout->addWidget(button2);
-
-	// QPushButton *button3 = new QPushButton{"按钮 3", centralWidget};
-	// layout->addWidget(button3);
-
-	// widget::InputWidget *w = new widget::InputWidget{centralWidget};
-	// layout->addWidget(w);
-
-	// w->SubmitEvent().Subscribe(
-	// 	[this, w](QString const &text)
-	// 	{
-	// 		std::string str;
-	// 		str << w->Text();
-
-	// 		int64_t num = base::ParseInt64(str);
-	// 		w->SetText(std::to_string(num + 1));
-	// 	});
 }

@@ -105,10 +105,17 @@ widget::InputWidget::InputWidget(QWidget *parent)
 	_line_edit->setPlaceholderText("在此处输入内容后按回车或点击提交");
 
 	// 输入框自适应缩放
-	_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 
 	// 按钮大小由内容决定
-	_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+	_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
+
+	{
+		setAutoFillBackground(true);
+		QPalette temp_palette = palette();
+		temp_palette.setColor(QPalette::Window, QColor{255, 255, 255});
+		setPalette(temp_palette);
+	}
 
 	InitializeLayout();
 	ConnectSignal();

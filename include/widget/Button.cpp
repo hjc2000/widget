@@ -64,7 +64,7 @@ void widget::Button::enterEvent(QEnterEvent *event)
 
 	QPushButton::enterEvent(event);
 	QPalette temp_palette = palette();
-	temp_palette.setColor(QPalette::Button, QColor{204, 232, 255});
+	temp_palette.setColor(QPalette::Button, QColor{150, 190, 230});
 	setPalette(temp_palette);
 
 	try
