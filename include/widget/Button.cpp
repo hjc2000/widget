@@ -23,6 +23,8 @@ void widget::Button::ConnectSignal()
 			&QPushButton::pressed,
 			[this]()
 			{
+				_palette_before_pressed_event = palette();
+
 				QPalette temp_palette = palette();
 				temp_palette.setColor(QPalette::Button, QColor{100, 150, 255});
 				setPalette(temp_palette);
@@ -40,7 +42,7 @@ void widget::Button::ConnectSignal()
 			&QPushButton::released,
 			[this]()
 			{
-				setPalette(_origin_palette);
+				setPalette(_palette_before_pressed_event);
 
 				try
 				{
@@ -66,6 +68,8 @@ void widget::Button::paintEvent(QPaintEvent *event)
 
 void widget::Button::enterEvent(QEnterEvent *event)
 {
+	_palette_before_enter_event = palette();
+
 	QPushButton::enterEvent(event);
 	QPalette temp_palette = palette();
 	temp_palette.setColor(QPalette::Button, QColor{120, 160, 255});
@@ -83,7 +87,7 @@ void widget::Button::enterEvent(QEnterEvent *event)
 void widget::Button::leaveEvent(QEvent *event)
 {
 	QPushButton::leaveEvent(event);
-	setPalette(_origin_palette);
+	setPalette(_palette_before_enter_event);
 
 	try
 	{
