@@ -62,7 +62,7 @@ void widget::Button::paintEvent(QPaintEvent *event)
 {
 	QPushButton::paintEvent(event);
 	QPainter painter{this};
-	painter.setPen(QPen{Qt::black, 2});
+	painter.setPen(QPen{Qt::black, 0.5});
 	painter.drawRect(rect().adjusted(0, 0, -1, -1));
 }
 
@@ -72,7 +72,7 @@ void widget::Button::enterEvent(QEnterEvent *event)
 
 	QPushButton::enterEvent(event);
 	QPalette temp_palette = palette();
-	temp_palette.setColor(QPalette::Button, QColor{160, 200, 255});
+	temp_palette.setColor(QPalette::Button, QColor{204, 232, 255});
 	setPalette(temp_palette);
 
 	try
@@ -103,10 +103,15 @@ void widget::Button::leaveEvent(QEvent *event)
 #pragma region 构造函数
 
 widget::Button::Button(QWidget *parent)
-	: QPushButton(parent),
-	  _origin_palette(palette())
+	: QPushButton(parent)
 {
 	SetText("按钮");
+	setAutoFillBackground(true);
+
+	_origin_palette = palette();
+	_origin_palette.setColor(QPalette::Button, QColor{255, 255, 255});
+	setPalette(_origin_palette);
+
 	ConnectSignal();
 }
 

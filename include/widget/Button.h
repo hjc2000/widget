@@ -22,7 +22,7 @@ namespace widget
 
 #pragma region 记录的QPalette
 		/// @brief 构造函数中记录的原始样式。
-		QPalette const _origin_palette;
+		QPalette _origin_palette;
 
 		/// @brief 触发 enter 事件前的样式。在 enter 事件处理函数的一开始就记录到本字段中。
 		QPalette _palette_before_enter_event;
