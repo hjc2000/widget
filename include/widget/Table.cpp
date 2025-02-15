@@ -11,6 +11,7 @@
 widget::Table::Table(QWidget *parent)
 	: QTableView(parent)
 {
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void widget::Table::setModel(QAbstractItemModel *model)
