@@ -8,9 +8,22 @@
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
 
-bool widget::Table::event(QEvent *event)
+void widget::Table::enterEvent(QEnterEvent *event)
 {
-	return QTableView::event(event);
+	QTableView::enterEvent(event);
+
+	static bool first_time = true;
+	if (first_time)
+	{
+		first_time = false;
+		QHeaderView *header = horizontalHeader();
+		header->setSectionResizeMode(QHeaderView::Interactive);
+	}
+}
+
+void widget::Table::leaveEvent(QEvent *event)
+{
+	QTableView::leaveEvent(event);
 }
 
 widget::Table::Table(QWidget *parent)

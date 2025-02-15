@@ -112,12 +112,4 @@ widget::MainWindow::MainWindow()
 				header->setSectionResizeMode(QHeaderView::Interactive);
 			});
 	}
-
-	_show_event.Subscribe(
-		[this, tableView]()
-		{
-			QApplication::processEvents();
-			QHeaderView *header = tableView->horizontalHeader();
-			header->setSectionResizeMode(QHeaderView::Interactive);
-		});
 }

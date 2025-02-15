@@ -1,5 +1,4 @@
 #pragma once
-#include <base/delegate/Delegate.h>
 #include <QTableView>
 
 namespace widget
@@ -8,9 +7,8 @@ namespace widget
 		public QTableView
 	{
 	private:
-		base::Delegate<> _show_event;
-
-		virtual bool event(QEvent *event) override;
+		virtual void enterEvent(QEnterEvent *event) override;
+		virtual void leaveEvent(QEvent *event) override;
 
 	public:
 		Table(QWidget *parent);
