@@ -9,6 +9,7 @@
 #include <string>
 #include <widget/Button.h>
 #include <widget/Conversion.h>
+#include <widget/CustomItemDelegate.h>
 #include <widget/InputWidget.h>
 #include <widget/Table.h>
 
@@ -72,13 +73,11 @@ widget::MainWindow::MainWindow()
 	widget::Table *tableView = new widget::Table{centralWidget};
 	MyTableModel *model = new MyTableModel{tableView};
 	tableView->setModel(model);
-	layout->addWidget(tableView);
 
-	// 设置样式表，将焦点矩形的颜色和背景颜色设置为蓝色
-	tableView->setStyleSheet("QTableView::item:focus {"
-							 "   background-color: rgb(204,232,255);" // 设置焦点背景颜色为蓝色
-							 "   color: black;"                       // 可选：设置文本颜色为白色以提高对比度
-							 "}");
+	// 使用 CustomItemDelegate
+	tableView->setItemDelegate(new widget::CustomItemDelegate{tableView});
+
+	layout->addWidget(tableView);
 
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
