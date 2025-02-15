@@ -8,6 +8,11 @@
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
 
+bool widget::Table::event(QEvent *event)
+{
+	return QTableView::event(event);
+}
+
 widget::Table::Table(QWidget *parent)
 	: QTableView(parent)
 {
