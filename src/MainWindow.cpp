@@ -10,6 +10,7 @@
 #include <widget/Button.h>
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
+#include <widget/Table.h>
 
 namespace
 {
@@ -83,26 +84,11 @@ widget::MainWindow::MainWindow()
 	layout->setAlignment(Qt::Alignment{Qt::AlignmentFlag::AlignTop | Qt::AlignmentFlag::AlignLeft});
 
 	// 创建 QTableView 和模型
-	QTableView *tableView = new QTableView{centralWidget};
+	widget::Table *tableView = new widget::Table{centralWidget};
 	tableView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	MyTableModel *model = new MyTableModel{tableView};
 	tableView->setModel(model);
 	layout->addWidget(tableView);
-
-	{
-		// 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
-		tableView->clearFocus();
-		tableView->setCurrentIndex(QModelIndex{});
-	}
-
-	{
-		// 设置列头可手动调整
-		QHeaderView *header = tableView->horizontalHeader();
-		header->setSectionResizeMode(QHeaderView::Interactive);
-		header->setSectionResizeMode(1, QHeaderView::Stretch);
-		header->setSectionsMovable(true);   // 允许用户移动列
-		header->setSectionsClickable(true); // 允许用户点击列头
-	}
 
 	tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
 	tableView->setSelectionMode(QAbstractItemView::SingleSelection);
