@@ -29,9 +29,12 @@ void widget::Table::leaveEvent(QEvent *event)
 widget::Table::Table(QWidget *parent)
 	: QTableView(parent)
 {
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	setSelectionBehavior(QAbstractItemView::SelectItems);
-	setSelectionMode(QAbstractItemView::SingleSelection);
+	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
+	setSelectionBehavior(SelectionBehavior::SelectItems);
+	setSelectionMode(SelectionMode::SingleSelection);
+
+	setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
+	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
 }
 
 void widget::Table::setModel(QAbstractItemModel *model)
