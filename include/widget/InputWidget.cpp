@@ -121,6 +121,8 @@ widget::InputWidget::InputWidget(QWidget *parent)
 	ConnectSignal();
 }
 
+#pragma region 编辑框中的文本
+
 QString widget::InputWidget::PlaceholderText() const
 {
 	return _line_edit->placeholderText();
@@ -151,6 +153,10 @@ void widget::InputWidget::SetText(char const *value)
 	SetText(QString{value});
 }
 
+#pragma endregion
+
+#pragma region 按钮的文本
+
 QString widget::InputWidget::ButtonText() const
 {
 	return _button->text();
@@ -160,6 +166,18 @@ void widget::InputWidget::SetButtonText(QString const &value) const
 {
 	_button->setText(value);
 }
+
+void widget::InputWidget::SetButtonText(std::string const &value) const
+{
+	SetButtonText(QString{value.c_str()});
+}
+
+void widget::InputWidget::SetButtonText(char const *value) const
+{
+	SetButtonText(QString{value});
+}
+
+#pragma endregion
 
 #pragma region 事件
 

@@ -30,6 +30,7 @@ namespace widget
 	public:
 		InputWidget(QWidget *parent);
 
+#pragma region 编辑框中的文本
 		/// @brief 输入框在没有输入内容时显示的文本。
 		/// @return
 		QString PlaceholderText() const;
@@ -53,7 +54,9 @@ namespace widget
 		/// @brief 设置：编辑框中的文本。
 		/// @param value
 		void SetText(char const *value);
+#pragma endregion
 
+#pragma region 按钮的文本
 		/// @brief 获取按钮的文本。
 		/// @return
 		QString ButtonText() const;
@@ -61,6 +64,9 @@ namespace widget
 		/// @brief 设置按钮的文本。
 		/// @param value
 		void SetButtonText(QString const &value) const;
+		void SetButtonText(std::string const &value) const;
+		void SetButtonText(char const *value) const;
+#pragma endregion
 
 #pragma region 事件
 		/// @brief 提交。

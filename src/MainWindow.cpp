@@ -56,6 +56,21 @@ namespace
 	};
 } // namespace
 
+bool widget::MainWindow::event(QEvent *event)
+{
+	if (event->type() == QEvent::Paint)
+	{
+		static bool first_paint = true;
+		if (first_paint)
+		{
+			first_paint = false;
+			_show_event.Invoke();
+		}
+	}
+
+	return QMainWindow::event(event);
+}
+
 widget::MainWindow::MainWindow()
 {
 	setWindowTitle("test");
@@ -112,4 +127,12 @@ widget::MainWindow::MainWindow()
 				header->setSectionResizeMode(QHeaderView::Interactive);
 			});
 	}
+
+	_show_event.Subscribe(
+		[this, tableView]()
+		{
+			QApplication::processEvents();
+			QHeaderView *header = tableView->horizontalHeader();
+			header->setSectionResizeMode(QHeaderView::Interactive);
+		});
 }
