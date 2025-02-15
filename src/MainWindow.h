@@ -15,11 +15,6 @@ namespace widget
 	class MainWindow :
 		public QMainWindow
 	{
-	private:
-		base::Delegate<> _show_event;
-
-		virtual bool event(QEvent *event) override;
-
 	public:
 		MainWindow();
 	};

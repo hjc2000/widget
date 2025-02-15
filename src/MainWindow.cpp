@@ -49,28 +49,13 @@ namespace
 		{
 			if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
 			{
-				return QString("Column %1").arg(section + 1);
+				return QString{"Column %1"}.arg(section + 1);
 			}
 
 			return QAbstractTableModel::headerData(section, orientation, role);
 		}
 	};
 } // namespace
-
-bool widget::MainWindow::event(QEvent *event)
-{
-	if (event->type() == QEvent::Paint)
-	{
-		static bool first_paint = true;
-		if (first_paint)
-		{
-			first_paint = false;
-			_show_event.Invoke();
-		}
-	}
-
-	return QMainWindow::event(event);
-}
 
 widget::MainWindow::MainWindow()
 {
