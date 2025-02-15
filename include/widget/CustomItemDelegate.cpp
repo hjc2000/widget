@@ -19,7 +19,7 @@ void widget::CustomItemDelegate::paint(QPainter *painter,
 
 	new_palette.setColor(QPalette::ColorGroup::Inactive,
 						 QPalette::ColorRole::Highlight,
-						 QColor{204, 232, 255});
+						 Qt::GlobalColor::white);
 
 	// 设置选中时的文字颜色
 	new_palette.setColor(QPalette::ColorGroup::Active,
