@@ -17,9 +17,10 @@ void widget::CustomItemDelegate::paint(QPainter *painter,
 						 QPalette::ColorRole::Highlight,
 						 QColor{204, 232, 255});
 
+	// 单元格从拥有焦点变成失去焦点时的背景颜色
 	new_palette.setColor(QPalette::ColorGroup::Inactive,
 						 QPalette::ColorRole::Highlight,
-						 Qt::GlobalColor::white);
+						 QColor{240, 240, 240});
 
 	// 设置选中时的文字颜色
 	new_palette.setColor(QPalette::ColorGroup::Active,
