@@ -89,9 +89,6 @@ widget::MainWindow::MainWindow()
 	tableView->setModel(model);
 	layout->addWidget(tableView);
 
-	tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
-	tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-
 	// 设置样式表，将焦点矩形的颜色和背景颜色设置为蓝色
 	tableView->setStyleSheet("QTableView::item:focus {"
 							 "   background-color: rgb(204,232,255);" // 设置焦点背景颜色为蓝色

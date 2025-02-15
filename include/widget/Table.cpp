@@ -30,6 +30,8 @@ widget::Table::Table(QWidget *parent)
 	: QTableView(parent)
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	setSelectionBehavior(QAbstractItemView::SelectItems);
+	setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 void widget::Table::setModel(QAbstractItemModel *model)
