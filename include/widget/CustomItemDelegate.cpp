@@ -12,21 +12,22 @@ void widget::CustomItemDelegate::paint(QPainter *painter,
 	// 修改 Highlight 和 HighlightedText 颜色
 	QPalette new_palette = new_option.palette;
 
-	// 设置选中时的背景颜色
+	// 单元格获得焦点时的背景颜色。
 	new_palette.setColor(QPalette::ColorGroup::Active,
 						 QPalette::ColorRole::Highlight,
 						 QColor{204, 232, 255});
 
-	// 单元格从拥有焦点变成失去焦点时的背景颜色
+	// 单元格从拥有焦点变成失去焦点时的背景颜色。
 	new_palette.setColor(QPalette::ColorGroup::Inactive,
 						 QPalette::ColorRole::Highlight,
 						 QColor{240, 240, 240});
 
-	// 设置选中时的文字颜色
+	// 单元格获得焦点时的文字颜色。
 	new_palette.setColor(QPalette::ColorGroup::Active,
 						 QPalette::ColorRole::HighlightedText,
 						 Qt::GlobalColor::black);
 
+	// 单元格从拥有焦点变成失去焦点时的文字颜色。
 	new_palette.setColor(QPalette::ColorGroup::Inactive,
 						 QPalette::ColorRole::HighlightedText,
 						 Qt::GlobalColor::black);
