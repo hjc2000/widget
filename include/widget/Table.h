@@ -25,6 +25,7 @@ namespace widget
 	public:
 		Table(QWidget *parent);
 
+#pragma region setModel
 		/// @brief
 		/// @param model 需要是一个堆上的对象。
 		virtual void setModel(QAbstractItemModel *model) override;
@@ -33,6 +34,7 @@ namespace widget
 		/// @param model
 		/// @param resize_modes
 		void setModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
+#pragma endregion
 
 		/// @brief 设置每一列的大小调整方式。
 		/// @param resize_modes
