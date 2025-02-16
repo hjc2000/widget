@@ -173,6 +173,8 @@ widget::Table::Table(QWidget *parent)
 	setItemDelegate(new CustomItemDelegate{this});
 }
 
+#pragma region setModel
+
 void widget::Table::setModel(QAbstractItemModel *model)
 {
 	QTableView::setModel(model);
@@ -201,6 +203,8 @@ void widget::Table::setModel(QAbstractItemModel *model,
 	setModel(model);
 	SetResizeModes(resize_modes);
 }
+
+#pragma endregion
 
 void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
