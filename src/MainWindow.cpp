@@ -9,7 +9,6 @@
 #include <string>
 #include <widget/Button.h>
 #include <widget/Conversion.h>
-#include <widget/CustomItemDelegate.h>
 #include <widget/InputWidget.h>
 #include <widget/Table.h>
 
@@ -73,10 +72,6 @@ widget::MainWindow::MainWindow()
 	widget::Table *tableView = new widget::Table{centralWidget};
 	MyTableModel *model = new MyTableModel{tableView};
 	tableView->setModel(model);
-
-	// 使用 CustomItemDelegate
-	tableView->setItemDelegate(new widget::CustomItemDelegate{tableView});
-
 	layout->addWidget(tableView);
 
 	// 在第 2 列的每个单元格中添加 QPushButton
