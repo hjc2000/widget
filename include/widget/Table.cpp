@@ -148,7 +148,7 @@ void widget::Table::ClearInitialFocus()
 	setCurrentIndex(QModelIndex{});
 }
 
-void widget::Table::EnablePerPixelScroll()
+void widget::Table::SetAsPerPixelScroll()
 {
 	setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
 	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
@@ -167,7 +167,7 @@ widget::Table::Table(QWidget *parent)
 		setSelectionMode(SelectionMode::SingleSelection);
 	}
 
-	EnablePerPixelScroll();
+	SetAsPerPixelScroll();
 
 	// 设置单元格绘制代理，按照自定义的方式绘制单元格。
 	setItemDelegate(new CustomItemDelegate{this});
@@ -179,7 +179,6 @@ void widget::Table::setModel(QAbstractItemModel *model)
 	ClearInitialFocus();
 
 	{
-		// 设置列头可手动调整
 		QHeaderView *header = horizontalHeader();
 		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 	}
@@ -205,15 +204,10 @@ void widget::Table::setModel(QAbstractItemModel *model,
 
 void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
-	// 设置列头可手动调整
 	QHeaderView *header = horizontalHeader();
-
+	int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
+	for (int i = 0; i < count; ++i)
 	{
-		std::cout << header->count() << std::endl;
-		int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
-		for (int i = 0; i < count; ++i)
-		{
-			header->setSectionResizeMode(i, resize_modes[i]);
-		}
+		header->setSectionResizeMode(i, resize_modes[i]);
 	}
 }

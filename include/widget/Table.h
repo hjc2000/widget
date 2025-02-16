@@ -19,7 +19,7 @@ namespace widget
 		void ClearInitialFocus();
 
 		/// @brief 设置滚动方式为逐个像素滚动。
-		void EnablePerPixelScroll();
+		void SetAsPerPixelScroll();
 #pragma endregion
 
 	public:
