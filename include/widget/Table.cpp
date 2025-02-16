@@ -140,6 +140,8 @@ void widget::Table::leaveEvent(QEvent *event)
 
 #pragma endregion
 
+#pragma region 初始化函数
+
 void widget::Table::ClearInitialFocus()
 {
 	clearFocus();
@@ -151,6 +153,8 @@ void widget::Table::EnablePerPixelScroll()
 	setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
 	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
 }
+
+#pragma endregion
 
 widget::Table::Table(QWidget *parent)
 	: QTableView(parent)

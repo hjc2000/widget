@@ -14,11 +14,13 @@ namespace widget
 		virtual void leaveEvent(QEvent *event) override;
 #pragma endregion
 
+#pragma region 初始化函数
 		/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
 		void ClearInitialFocus();
 
 		/// @brief 设置滚动方式为逐个像素滚动。
 		void EnablePerPixelScroll();
+#pragma endregion
 
 	public:
 		Table(QWidget *parent);
