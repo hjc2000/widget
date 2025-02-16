@@ -12,6 +12,12 @@ namespace widget
 		virtual void enterEvent(QEnterEvent *event) override;
 		virtual void leaveEvent(QEvent *event) override;
 
+		/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
+		void ClearInitialFocus();
+
+		/// @brief 设置滚动方式为逐个像素滚动。
+		void EnablePerPixelScroll();
+
 	public:
 		Table(QWidget *parent);
 
@@ -23,5 +29,9 @@ namespace widget
 		/// @param model
 		/// @param resize_modes
 		void setModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
+
+		/// @brief 设置每一列的大小调整方式。
+		/// @param resize_modes
+		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
 	};
 } // namespace widget

@@ -132,6 +132,18 @@ void widget::Table::leaveEvent(QEvent *event)
 	QTableView::leaveEvent(event);
 }
 
+void widget::Table::ClearInitialFocus()
+{
+	clearFocus();
+	setCurrentIndex(QModelIndex{});
+}
+
+void widget::Table::EnablePerPixelScroll()
+{
+	setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
+	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
+}
+
 widget::Table::Table(QWidget *parent)
 	: QTableView(parent)
 {
@@ -143,11 +155,7 @@ widget::Table::Table(QWidget *parent)
 		setSelectionMode(SelectionMode::SingleSelection);
 	}
 
-	{
-		// 设置滚动方式为逐个像素滚动
-		setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
-		setVerticalScrollMode(ScrollMode::ScrollPerPixel);
-	}
+	EnablePerPixelScroll();
 
 	// 设置单元格绘制代理，按照自定义的方式绘制单元格。
 	setItemDelegate(new CustomItemDelegate{this});
@@ -156,18 +164,17 @@ widget::Table::Table(QWidget *parent)
 void widget::Table::setModel(QAbstractItemModel *model)
 {
 	QTableView::setModel(model);
-
-	{
-		// 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
-		clearFocus();
-		setCurrentIndex(QModelIndex{});
-	}
+	ClearInitialFocus();
 
 	{
 		// 设置列头可手动调整
 		QHeaderView *header = horizontalHeader();
 		header->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
 		header->setSectionResizeMode(1, QHeaderView::ResizeMode::Stretch);
+	}
+
+	{
+		QHeaderView *header = horizontalHeader();
 
 		// 允许用户移动列
 		header->setSectionsMovable(true);
@@ -181,30 +188,21 @@ void widget::Table::setModel(QAbstractItemModel *model,
 							 std::vector<QHeaderView::ResizeMode> resize_modes)
 {
 	QTableView::setModel(model);
+	ClearInitialFocus();
+	SetResizeModes(resize_modes);
+}
+
+void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
+{
+	// 设置列头可手动调整
+	QHeaderView *header = horizontalHeader();
 
 	{
-		// 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
-		clearFocus();
-		setCurrentIndex(QModelIndex{});
-	}
-
-	{
-		// 设置列头可手动调整
-		QHeaderView *header = horizontalHeader();
-
+		std::cout << header->count() << std::endl;
+		int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
+		for (int i = 0; i < count; ++i)
 		{
-			std::cout << header->count() << std::endl;
-			int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
-			for (int i = 0; i < count; ++i)
-			{
-				header->setSectionResizeMode(i, resize_modes[i]);
-			}
+			header->setSectionResizeMode(i, resize_modes[i]);
 		}
-
-		// 允许用户移动列
-		header->setSectionsMovable(true);
-
-		// 允许用户点击列头
-		header->setSectionsClickable(true);
 	}
 }
