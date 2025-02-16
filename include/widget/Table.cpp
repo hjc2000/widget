@@ -179,6 +179,7 @@ void widget::Table::setModel(QAbstractItemModel *model)
 	ClearInitialFocus();
 
 	{
+		// 设置列头自适应大小。
 		QHeaderView *header = horizontalHeader();
 		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 	}
