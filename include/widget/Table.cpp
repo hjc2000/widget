@@ -3,7 +3,6 @@
 #include <iostream>
 #include <QAbstractTableModel>
 #include <QApplication>
-#include <QHeaderView>
 #include <QPainter>
 #include <QStyledItemDelegate>
 #include <string>
@@ -167,9 +166,40 @@ void widget::Table::setModel(QAbstractItemModel *model)
 	{
 		// 设置列头可手动调整
 		QHeaderView *header = horizontalHeader();
-		std::cout << header->count() << std::endl;
-		header->setSectionResizeMode(QHeaderView::Interactive);
-		header->setSectionResizeMode(1, QHeaderView::Stretch);
+		header->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
+		header->setSectionResizeMode(1, QHeaderView::ResizeMode::Stretch);
+
+		// 允许用户移动列
+		header->setSectionsMovable(true);
+
+		// 允许用户点击列头
+		header->setSectionsClickable(true);
+	}
+}
+
+void widget::Table::setModel(QAbstractItemModel *model,
+							 std::vector<QHeaderView::ResizeMode> resize_modes)
+{
+	QTableView::setModel(model);
+
+	{
+		// 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
+		clearFocus();
+		setCurrentIndex(QModelIndex{});
+	}
+
+	{
+		// 设置列头可手动调整
+		QHeaderView *header = horizontalHeader();
+
+		{
+			std::cout << header->count() << std::endl;
+			int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
+			for (int i = 0; i < count; ++i)
+			{
+				header->setSectionResizeMode(i, resize_modes[i]);
+			}
+		}
 
 		// 允许用户移动列
 		header->setSectionsMovable(true);
