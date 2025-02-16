@@ -9,6 +9,8 @@
 #include <widget/Conversion.h>
 #include <widget/InputWidget.h>
 
+#pragma region CustomItemDelegate
+
 namespace
 {
 	/// @brief 按照自定义的方式绘制单元格。
@@ -114,6 +116,8 @@ namespace
 	};
 } // namespace
 
+#pragma endregion
+
 void widget::Table::enterEvent(QEnterEvent *event)
 {
 	QTableView::enterEvent(event);
@@ -169,8 +173,7 @@ void widget::Table::setModel(QAbstractItemModel *model)
 	{
 		// 设置列头可手动调整
 		QHeaderView *header = horizontalHeader();
-		header->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
-		header->setSectionResizeMode(1, QHeaderView::ResizeMode::Stretch);
+		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 	}
 
 	{
