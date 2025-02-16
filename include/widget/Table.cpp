@@ -118,6 +118,8 @@ namespace
 
 #pragma endregion
 
+#pragma region 重写事件
+
 void widget::Table::enterEvent(QEnterEvent *event)
 {
 	QTableView::enterEvent(event);
@@ -135,6 +137,8 @@ void widget::Table::leaveEvent(QEvent *event)
 {
 	QTableView::leaveEvent(event);
 }
+
+#pragma endregion
 
 void widget::Table::ClearInitialFocus()
 {

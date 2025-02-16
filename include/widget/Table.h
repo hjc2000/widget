@@ -9,8 +9,10 @@ namespace widget
 		public QTableView
 	{
 	private:
+#pragma region 重写事件
 		virtual void enterEvent(QEnterEvent *event) override;
 		virtual void leaveEvent(QEvent *event) override;
+#pragma endregion
 
 		/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
 		void ClearInitialFocus();
