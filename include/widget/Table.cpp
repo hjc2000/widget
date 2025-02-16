@@ -197,8 +197,7 @@ void widget::Table::setModel(QAbstractItemModel *model)
 void widget::Table::setModel(QAbstractItemModel *model,
 							 std::vector<QHeaderView::ResizeMode> resize_modes)
 {
-	QTableView::setModel(model);
-	ClearInitialFocus();
+	setModel(model);
 	SetResizeModes(resize_modes);
 }
 
