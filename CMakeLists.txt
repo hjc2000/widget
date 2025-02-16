@@ -19,7 +19,7 @@ target_import_qwt(${ProjectName} PUBLIC)
 
 # 添加测试程序
 if(1)
-	add_executable(test WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+	add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 	target_link_libraries(${ProjectName} PUBLIC -Wl,--start-group)
 	target_link_libraries(test PUBLIC ${ProjectName})
