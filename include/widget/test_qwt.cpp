@@ -1,10 +1,10 @@
 #include "test_qwt.h"
-#include <QApplication>
 #include <QMainWindow>
 #include <QPen>
 #include <qwt-qt6/qwt_plot.h>
 #include <qwt-qt6/qwt_plot_curve.h>
 #include <qwt-qt6/qwt_symbol.h>
+#include <widget/FusionApplication.h>
 
 void widget::test_qwt()
 {
@@ -15,7 +15,7 @@ void widget::test_qwt()
 		nullptr,
 	};
 
-	QApplication app{argc, argv};
+	widget::FusionApplication app{argc, argv};
 	QWidget widget{};
 
 	// 创建 QwtPlot 对象
