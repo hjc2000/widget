@@ -89,5 +89,23 @@ namespace widget
 		/// @return
 		base::IEvent<QString const &> &EditingFinishedEvent();
 #pragma endregion
+
+#pragma region 提交按钮可见性
+		/// @brief 隐藏提交按钮。
+		void HideSubmissionButton();
+
+		/// @brief 展示提交按钮。
+		void ShowSubmissionButton();
+
+		/// @brief 提交按钮的可见性。
+		/// @note true 表示可见，false 表示不可见。
+		/// @return
+		bool SubmissionButtonVisibility() const;
+
+		/// @brief 设置提交按钮的可见性。
+		/// @note true 表示可见，false 表示不可见。
+		/// @param value
+		void SetSubmissionButtonVisibility(bool value);
+#pragma endregion
 	};
 } // namespace widget

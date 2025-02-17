@@ -202,3 +202,34 @@ base::IEvent<QString const &> &widget::Submit::EditingFinishedEvent()
 }
 
 #pragma endregion
+
+#pragma region 提交按钮可见性
+
+void widget::Submit::HideSubmissionButton()
+{
+	_button->hide();
+}
+
+void widget::Submit::ShowSubmissionButton()
+{
+	_button->show();
+}
+
+bool widget::Submit::SubmissionButtonVisibility() const
+{
+	return !_button->isHidden();
+}
+
+void widget::Submit::SetSubmissionButtonVisibility(bool value)
+{
+	if (SubmissionButtonVisibility())
+	{
+		HideSubmissionButton();
+	}
+	else
+	{
+		ShowSubmissionButton();
+	}
+}
+
+#pragma endregion
