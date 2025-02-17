@@ -77,15 +77,7 @@ widget::MainWindow::MainWindow()
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
-		widget::Submit *input = new widget::Submit{this};
-		tableView->setIndexWidget(model->index(row, 1), input);
-
-		input->SubmitEvent().Subscribe(
-			[this, tableView](QString const &text)
-			{
-				// 设置列头可手动调整
-				QHeaderView *header = tableView->horizontalHeader();
-				header->setSectionResizeMode(QHeaderView::Interactive);
-			});
+		widget::Submit *submit = new widget::Submit{this};
+		tableView->setIndexWidget(model->index(row, 1), submit);
 	}
 }
