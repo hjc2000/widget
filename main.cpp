@@ -1,4 +1,4 @@
-#include <test_qwt.h>
+#include <widget/test_qwt.h>
 
 int main()
 {
