@@ -102,7 +102,7 @@ void widget::Submit::ConnectSignal()
 widget::Submit::Submit(QWidget *parent)
 	: QWidget(parent)
 {
-	_line_edit->setPlaceholderText("在此处输入内容后按回车或点击提交");
+	_line_edit->setPlaceholderText("在此处输入内容...");
 
 	// 输入框自适应缩放
 	_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
