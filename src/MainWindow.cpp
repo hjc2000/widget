@@ -9,7 +9,7 @@
 #include <string>
 #include <widget/Button.h>
 #include <widget/Conversion.h>
-#include <widget/InputWidget.h>
+#include <widget/Submit.h>
 #include <widget/Table.h>
 
 namespace
@@ -77,7 +77,7 @@ widget::MainWindow::MainWindow()
 	// 在第 2 列的每个单元格中添加 QPushButton
 	for (int row = 0; row < model->rowCount(); ++row)
 	{
-		widget::InputWidget *input = new widget::InputWidget{this};
+		widget::Submit *input = new widget::Submit{this};
 		tableView->setIndexWidget(model->index(row, 1), input);
 
 		input->SubmitEvent().Subscribe(

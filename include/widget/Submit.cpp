@@ -1,8 +1,8 @@
-#include "InputWidget.h"
+#include "Submit.h"
 
 #pragma region 初始化方法
 
-void widget::InputWidget::InitializeLayout()
+void widget::Submit::InitializeLayout()
 {
 	// 将控件添加到布局中
 	_layout->addWidget(_line_edit);
@@ -15,7 +15,7 @@ void widget::InputWidget::InitializeLayout()
 	_layout->setContentsMargins(0, 0, 0, 0);
 }
 
-void widget::InputWidget::ConnectSignal()
+void widget::Submit::ConnectSignal()
 {
 	_button->ClickedEvent().Subscribe(
 		[this]()
@@ -99,7 +99,7 @@ void widget::InputWidget::ConnectSignal()
 
 #pragma endregion
 
-widget::InputWidget::InputWidget(QWidget *parent)
+widget::Submit::Submit(QWidget *parent)
 	: QWidget(parent)
 {
 	_line_edit->setPlaceholderText("在此处输入内容后按回车或点击提交");
@@ -123,32 +123,32 @@ widget::InputWidget::InputWidget(QWidget *parent)
 
 #pragma region 编辑框中的文本
 
-QString widget::InputWidget::PlaceholderText() const
+QString widget::Submit::PlaceholderText() const
 {
 	return _line_edit->placeholderText();
 }
 
-void widget::InputWidget::SetPlaceholderText(QString const &value)
+void widget::Submit::SetPlaceholderText(QString const &value)
 {
 	_line_edit->setPlaceholderText(value);
 }
 
-QString widget::InputWidget::Text() const
+QString widget::Submit::Text() const
 {
 	return _line_edit->text();
 }
 
-void widget::InputWidget::SetText(QString const &value)
+void widget::Submit::SetText(QString const &value)
 {
 	_line_edit->setText(value);
 }
 
-void widget::InputWidget::SetText(std::string const &value)
+void widget::Submit::SetText(std::string const &value)
 {
 	SetText(QString{value.c_str()});
 }
 
-void widget::InputWidget::SetText(char const *value)
+void widget::Submit::SetText(char const *value)
 {
 	SetText(QString{value});
 }
@@ -157,22 +157,22 @@ void widget::InputWidget::SetText(char const *value)
 
 #pragma region 按钮的文本
 
-QString widget::InputWidget::ButtonText() const
+QString widget::Submit::ButtonText() const
 {
 	return _button->text();
 }
 
-void widget::InputWidget::SetButtonText(QString const &value) const
+void widget::Submit::SetButtonText(QString const &value) const
 {
 	_button->setText(value);
 }
 
-void widget::InputWidget::SetButtonText(std::string const &value) const
+void widget::Submit::SetButtonText(std::string const &value) const
 {
 	SetButtonText(QString{value.c_str()});
 }
 
-void widget::InputWidget::SetButtonText(char const *value) const
+void widget::Submit::SetButtonText(char const *value) const
 {
 	SetButtonText(QString{value});
 }
@@ -181,22 +181,22 @@ void widget::InputWidget::SetButtonText(char const *value) const
 
 #pragma region 事件
 
-base::IEvent<QString const &> &widget::InputWidget::SubmitEvent()
+base::IEvent<QString const &> &widget::Submit::SubmitEvent()
 {
 	return _submit_event;
 }
 
-base::IEvent<QString const &> &widget::InputWidget::TextChangedEvent()
+base::IEvent<QString const &> &widget::Submit::TextChangedEvent()
 {
 	return _text_changed_event;
 }
 
-base::IEvent<QString const &> &widget::InputWidget::TextEditedEvent()
+base::IEvent<QString const &> &widget::Submit::TextEditedEvent()
 {
 	return _text_edited_event;
 }
 
-base::IEvent<QString const &> &widget::InputWidget::EditingFinishedEvent()
+base::IEvent<QString const &> &widget::Submit::EditingFinishedEvent()
 {
 	return _editing_finished;
 }

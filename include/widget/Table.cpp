@@ -7,7 +7,7 @@
 #include <QStyledItemDelegate>
 #include <string>
 #include <widget/Conversion.h>
-#include <widget/InputWidget.h>
+#include <widget/Submit.h>
 
 #pragma region CustomItemDelegate
 

@@ -9,7 +9,7 @@
 
 namespace widget
 {
-	class InputWidget :
+	class Submit :
 		public QWidget
 	{
 	private:
@@ -28,7 +28,7 @@ namespace widget
 		void ConnectSignal();
 
 	public:
-		InputWidget(QWidget *parent);
+		Submit(QWidget *parent);
 
 #pragma region 编辑框中的文本
 		/// @brief 输入框在没有输入内容时显示的文本。
