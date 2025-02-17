@@ -17,6 +17,9 @@ namespace
 	class CustomItemDelegate :
 		public QStyledItemDelegate
 	{
+	private:
+		int _padding = 10;
+
 	public:
 		using QStyledItemDelegate::QStyledItemDelegate;
 
@@ -36,7 +39,7 @@ namespace
 									 Qt::AlignmentFlag::AlignVCenter);
 
 			QRect text_rect = new_option.rect;
-			text_rect.setX(text_rect.x() + 5);
+			text_rect.adjust(_padding, 0, -_padding, 0);
 
 			if (new_option.state & QStyle::State_Selected)
 			{
@@ -57,61 +60,17 @@ namespace
 				painter->drawText(text_rect, text, text_option);
 			}
 		}
-	};
 
-	/// @brief 通过调色盘设置单元格成为焦点和失去焦点时的颜色。
-	class CustomItemDelegate1 :
-		public QStyledItemDelegate
-	{
-	public:
-		using QStyledItemDelegate::QStyledItemDelegate;
-
-		void paint(QPainter *painter,
-				   QStyleOptionViewItem const &option,
-				   QModelIndex const &index) const override
+		QSize sizeHint(QStyleOptionViewItem const &option, QModelIndex const &index) const override
 		{
-			if (option.state & QStyle::State_HasFocus)
-			{
-				std::cout << "是焦点" << std::endl;
+			QSize size = QStyledItemDelegate::sizeHint(option, index);
 
-				// 创建一个新的 QStyleOptionViewItem 并初始化
-				QStyleOptionViewItem new_option = option;
-				initStyleOption(&new_option, index);
-
-				// 修改 Highlight 和 HighlightedText 颜色
-				QPalette new_palette = new_option.palette;
-
-				// 单元格获得焦点时的背景颜色。
-				new_palette.setColor(QPalette::ColorGroup::Active,
-									 QPalette::ColorRole::Highlight,
-									 QColor{204, 232, 255});
-
-				// 单元格从拥有焦点变成失去焦点时的背景颜色。
-				new_palette.setColor(QPalette::ColorGroup::Inactive,
-									 QPalette::ColorRole::Highlight,
-									 QColor{240, 240, 240});
-
-				// 单元格获得焦点时的文字颜色。
-				new_palette.setColor(QPalette::ColorGroup::Active,
-									 QPalette::ColorRole::HighlightedText,
-									 Qt::GlobalColor::black);
-
-				// 单元格从拥有焦点变成失去焦点时的文字颜色。
-				new_palette.setColor(QPalette::ColorGroup::Inactive,
-									 QPalette::ColorRole::HighlightedText,
-									 Qt::GlobalColor::black);
-
-				// 应用修改后的 palette
-				new_option.palette = new_palette;
-
-				// 调用基类绘制方法
-				QStyledItemDelegate::paint(painter, new_option, index);
-			}
-			else
-			{
-				// 调用基类绘制方法
-				QStyledItemDelegate::paint(painter, option, index);
-			}
+			// 获取文本宽度并加上左右内边距
+			QFontMetrics fm(option.font);
+			QString text = index.data(Qt::DisplayRole).toString();
+			int textWidth = fm.horizontalAdvance(text) + 2 * _padding;
+			size.setWidth(qMax(size.width(), textWidth));
+			return size;
 		}
 	};
 } // namespace
