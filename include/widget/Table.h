@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <QHeaderView>
 #include <QTableView>
 #include <vector>
@@ -9,23 +10,21 @@ namespace widget
 		public QTableView
 	{
 	private:
-#pragma region 重写事件
+		class CustomItemDelegate;
+		std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
+
 		virtual void enterEvent(QEnterEvent *event) override;
 		virtual void leaveEvent(QEvent *event) override;
-#pragma endregion
 
-#pragma region 初始化函数
 		/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
 		void ClearInitialFocus();
 
 		/// @brief 设置滚动方式为逐个像素滚动。
 		void SetAsPerPixelScroll();
-#pragma endregion
 
 	public:
 		Table(QWidget *parent);
 
-#pragma region setModel
 		/// @brief
 		/// @param model 需要是一个堆上的对象。
 		virtual void setModel(QAbstractItemModel *model) override;
@@ -34,7 +33,6 @@ namespace widget
 		/// @param model
 		/// @param resize_modes
 		void setModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
-#pragma endregion
 
 		/// @brief 设置每一列的大小调整方式。
 		/// @param resize_modes

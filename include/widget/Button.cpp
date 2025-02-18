@@ -2,8 +2,6 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#pragma region 初始化方法
-
 void widget::Button::ConnectSignal()
 {
 	connect(this,
@@ -54,10 +52,6 @@ void widget::Button::ConnectSignal()
 			});
 }
 
-#pragma endregion
-
-#pragma region 重写事件
-
 void widget::Button::enterEvent(QEnterEvent *event)
 {
 	_palette_before_enter_event = palette();
@@ -90,12 +84,7 @@ void widget::Button::leaveEvent(QEvent *event)
 	}
 }
 
-#pragma endregion
-
-#pragma region 构造函数
-
-widget::Button::Button(QWidget *parent)
-	: QPushButton(parent)
+widget::Button::Button()
 {
 	SetText("按钮");
 	setAutoFillBackground(true);
@@ -107,15 +96,10 @@ widget::Button::Button(QWidget *parent)
 	ConnectSignal();
 }
 
-widget::Button::Button(QWidget *parent, QString const &text)
-	: Button(parent)
+widget::Button::Button(QString const &text)
 {
 	SetText(text);
 }
-
-#pragma endregion
-
-#pragma region 事件
 
 base::IEvent<> &widget::Button::ClickedEvent()
 {
@@ -142,10 +126,6 @@ base::IEvent<> &widget::Button::LeaveEvent()
 	return _leave_event;
 }
 
-#pragma endregion
-
-#pragma region 按钮文本
-
 QString widget::Button::Text() const
 {
 	return text();
@@ -165,5 +145,3 @@ void widget::Button::SetText(char const *value)
 {
 	SetText(QString{value});
 }
-
-#pragma endregion
