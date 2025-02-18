@@ -105,10 +105,10 @@ widget::Submit::Submit(QWidget *parent)
 	_line_edit->setPlaceholderText("在此处输入内容...");
 
 	// 输入框自适应缩放
-	_line_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::MinimumExpanding);
+	_line_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
 	// 按钮大小由内容决定
-	_button->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::MinimumExpanding);
+	_button->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
 
 	{
 		setAutoFillBackground(true);
