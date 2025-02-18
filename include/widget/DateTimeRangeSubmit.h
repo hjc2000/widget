@@ -7,12 +7,13 @@
 namespace widget
 {
 	class DateTimeRangeSubmit :
-		QWidget
+		public QWidget
 	{
 	private:
 		QHBoxLayout _layout{this};
 		QDateTimeEdit _left_edit{};
 		QDateTimeEdit _right_edit{};
+		widget::Button _button{"提交"};
 
 	public:
 		DateTimeRangeSubmit();

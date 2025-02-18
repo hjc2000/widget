@@ -89,6 +89,9 @@ widget::Button::Button()
 	SetText("按钮");
 	setAutoFillBackground(true);
 
+	// 按钮大小由内容决定，且固定大小。
+	setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+
 	_origin_palette = palette();
 	_origin_palette.setColor(QPalette::Button, QColor{255, 255, 255});
 	setPalette(_origin_palette);

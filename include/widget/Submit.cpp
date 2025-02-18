@@ -1,18 +1,5 @@
 #include "Submit.h"
 
-void widget::Submit::InitializeLayout()
-{
-	// 将控件添加到布局中
-	_layout.addWidget(&_line_edit);
-	_layout.addWidget(&_button);
-
-	// 控件之间的间距。在这里就是设置输入框和提交按钮之间的间距。
-	_layout.setSpacing(10);
-
-	// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
-	_layout.setContentsMargins(0, 0, 0, 0);
-}
-
 void widget::Submit::ConnectSignal()
 {
 	_button.ClickedEvent().Subscribe(
@@ -102,9 +89,6 @@ widget::Submit::Submit()
 	// 输入框自适应缩放
 	_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
-	// 按钮大小由内容决定
-	_button.setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
-
 	{
 		setAutoFillBackground(true);
 		QPalette temp_palette = palette();
@@ -112,7 +96,18 @@ widget::Submit::Submit()
 		setPalette(temp_palette);
 	}
 
-	InitializeLayout();
+	{
+		// 将控件添加到布局中
+		_layout.addWidget(&_line_edit);
+		_layout.addWidget(&_button);
+
+		// 控件之间的间距。在这里就是设置输入框和提交按钮之间的间距。
+		_layout.setSpacing(10);
+
+		// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
+		_layout.setContentsMargins(0, 0, 0, 0);
+	}
+
 	ConnectSignal();
 }
 

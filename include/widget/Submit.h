@@ -22,7 +22,6 @@ namespace widget
 		base::Delegate<QString const &> _text_edited_event;
 		base::Delegate<QString const &> _editing_finished;
 
-		void InitializeLayout();
 		void ConnectSignal();
 
 	public:
