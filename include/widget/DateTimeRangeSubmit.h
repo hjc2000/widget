@@ -11,8 +11,8 @@ namespace widget
 	{
 	private:
 		QHBoxLayout _layout{this};
-		QDateTimeEdit _left_edit{nullptr};
-		QDateTimeEdit _right_edit{nullptr};
+		QDateTimeEdit _left_edit{};
+		QDateTimeEdit _right_edit{};
 
 	public:
 	};
