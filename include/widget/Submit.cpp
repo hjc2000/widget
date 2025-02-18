@@ -92,7 +92,7 @@ widget::Submit::Submit()
 	{
 		setAutoFillBackground(true);
 		QPalette temp_palette = palette();
-		temp_palette.setColor(QPalette::Window, QColor{255, 255, 255});
+		temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
 		setPalette(temp_palette);
 	}
 
