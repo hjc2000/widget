@@ -95,8 +95,7 @@ void widget::Submit::ConnectSignal()
 			});
 }
 
-widget::Submit::Submit(QWidget *parent)
-	: QWidget(parent)
+widget::Submit::Submit()
 {
 	_line_edit.setPlaceholderText("在此处输入内容...");
 

@@ -23,7 +23,7 @@ namespace widget
 		void SetAsPerPixelScroll();
 
 	public:
-		Table(QWidget *parent);
+		Table();
 
 		/// @brief
 		/// @param model 需要是一个堆上的对象。

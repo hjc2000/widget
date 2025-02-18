@@ -15,5 +15,6 @@ namespace widget
 		QDateTimeEdit _right_edit{};
 
 	public:
+		DateTimeRangeSubmit();
 	};
 } // namespace widget

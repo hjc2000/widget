@@ -98,8 +98,7 @@ void widget::Table::SetAsPerPixelScroll()
 	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
 }
 
-widget::Table::Table(QWidget *parent)
-	: QTableView(parent)
+widget::Table::Table()
 {
 	_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
 

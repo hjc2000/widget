@@ -9,10 +9,24 @@ namespace widget
 		public QOpenGLWidget,
 		protected QOpenGLFunctions_1_0
 	{
-	public:
-		GLWidget(QWidget *parent)
-			: QOpenGLWidget(parent)
+	private:
+		void drawCircle(float cx, float cy, float r, int num_segments)
 		{
+			glColor3f(1.0f, 1.0f, 1.0f); // 设置绘制颜色为白色
+
+			glBegin(GL_TRIANGLE_FAN);
+			glVertex2f(cx, cy); // 圆心坐标
+
+			// 生成圆周上的点
+			for (int i = 0; i <= num_segments; i++)
+			{
+				float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);
+				float x = r * cosf(theta);
+				float y = r * sinf(theta);
+				glVertex2f(x + cx, y + cy);
+			}
+
+			glEnd();
 		}
 
 	protected:
@@ -41,26 +55,6 @@ namespace widget
 
 			// 绘制圆形
 			drawCircle(0.0f, 0.0f, 0.5f, 100);
-		}
-
-	private:
-		void drawCircle(float cx, float cy, float r, int num_segments)
-		{
-			glColor3f(1.0f, 1.0f, 1.0f); // 设置绘制颜色为白色
-
-			glBegin(GL_TRIANGLE_FAN);
-			glVertex2f(cx, cy); // 圆心坐标
-
-			// 生成圆周上的点
-			for (int i = 0; i <= num_segments; i++)
-			{
-				float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);
-				float x = r * cosf(theta);
-				float y = r * sinf(theta);
-				glVertex2f(x + cx, y + cy);
-			}
-
-			glEnd();
 		}
 	};
 

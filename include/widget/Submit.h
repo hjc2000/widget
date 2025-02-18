@@ -14,7 +14,7 @@ namespace widget
 	{
 	private:
 		QHBoxLayout _layout{this};
-		QLineEdit _line_edit{nullptr};
+		QLineEdit _line_edit{};
 		widget::Button _button{"提交"};
 
 		base::Delegate<QString const &> _submit_event;
@@ -26,7 +26,7 @@ namespace widget
 		void ConnectSignal();
 
 	public:
-		Submit(QWidget *parent);
+		Submit();
 
 		/// @brief 输入框在没有输入内容时显示的文本。
 		/// @return
