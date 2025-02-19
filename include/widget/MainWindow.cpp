@@ -8,7 +8,7 @@ widget::MainWindow::MainWindow()
 	_layout.addWidget(&_button);
 
 	_button.SubmitEvent().Subscribe(
-		[this]()
+		[]()
 		{
 			std::cout << "点击事件被处理了。" << std::endl;
 		});

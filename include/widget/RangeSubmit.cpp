@@ -1,7 +1,6 @@
 #include "RangeSubmit.h"
 #include "widget/Conversion.h"
 #include <climits>
-#include <iostream>
 #include <widget/Conversion.h>
 
 widget::RangeSubmit::RangeSubmit()
@@ -29,7 +28,6 @@ widget::RangeSubmit::RangeSubmit()
 	_button.ClickedEvent().Subscribe(
 		[this]()
 		{
-			std::cout << "_button.ClickedEvent().Subscribe(" << std::endl;
 			_submit_event.Invoke();
 		});
 }

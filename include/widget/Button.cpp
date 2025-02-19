@@ -12,7 +12,6 @@ void widget::Button::ConnectSignal()
 			{
 				try
 				{
-					std::cout << "clicked" << std::endl;
 					_clicked_event.Invoke();
 				}
 				catch (std::exception const &e)
