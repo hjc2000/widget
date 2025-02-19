@@ -6,7 +6,7 @@
 #include <widget/line-input-widget/DateTimeRangeSubmit.h>
 #include <widget/line-input-widget/RangeSubmit.h>
 #include <widget/line-input-widget/Submit.h>
-#include <widget/Table.h>
+#include <widget/table/Table.h>
 
 namespace widget
 {
