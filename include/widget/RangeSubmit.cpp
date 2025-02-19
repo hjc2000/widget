@@ -1,11 +1,16 @@
 #include "RangeSubmit.h"
+#include <climits>
 #include <iostream>
+#include <widget/Conversion.h>
 
 widget::RangeSubmit::RangeSubmit()
 {
 	{
 		_left_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 		_right_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
+		_left_edit.setValidator(&_validator);
+		_right_edit.setValidator(&_validator);
 	}
 
 	{
@@ -54,9 +59,23 @@ QString widget::RangeSubmit::LeftText() const
 	return _left_edit.text();
 }
 
+std::string widget::RangeSubmit::LeftTextStdString() const
+{
+	std::string ret;
+	ret << LeftText();
+	return ret;
+}
+
 QString widget::RangeSubmit::RightText() const
 {
 	return _right_edit.text();
+}
+
+std::string widget::RangeSubmit::RightTextStdString() const
+{
+	std::string ret;
+	ret << RightText();
+	return ret;
 }
 
 base::IEvent<> &widget::RangeSubmit::SubmitEvent()
