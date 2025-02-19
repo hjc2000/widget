@@ -6,6 +6,10 @@
 
 namespace widget
 {
+	/**
+	 * @brief 整型范围提交控件。
+	 *
+	 */
 	class IntRangeSubmit :
 		public QWidget
 	{
