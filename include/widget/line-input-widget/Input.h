@@ -1,9 +1,9 @@
 #pragma once
 #include "base/delegate/Delegate.h"
-#include "qboxlayout.h"
 #include "qlineedit.h"
 #include "qwidget.h"
 #include <string>
+#include <widget/layout/HBoxLayout.h>
 
 namespace widget
 {
@@ -15,7 +15,7 @@ namespace widget
 		public QWidget
 	{
 	private:
-		QHBoxLayout _layout{this};
+		widget::HBoxLayout _layout{this};
 		QLineEdit _line_edit{};
 
 		void ConnectSignal();
