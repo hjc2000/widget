@@ -29,16 +29,10 @@ widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 	}
 
 	{
-		_layout.addWidget(&_left_edit);
-		_layout.addWidget(&_label);
-		_layout.addWidget(&_right_edit);
-		_layout.addWidget(&_button);
-
-		// 控件之间的间距。
-		_layout.setSpacing(10);
-
-		// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
-		_layout.setContentsMargins(0, 0, 0, 0);
+		_layout.AddWidget(&_left_edit);
+		_layout.AddWidget(&_label);
+		_layout.AddWidget(&_right_edit);
+		_layout.AddWidget(&_button);
 	}
 
 	{

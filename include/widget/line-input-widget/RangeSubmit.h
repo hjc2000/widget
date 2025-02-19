@@ -1,6 +1,5 @@
 #pragma once
 #include "Input.h"
-#include "qboxlayout.h"
 #include "qlabel.h"
 #include "widget/Button.h"
 
@@ -16,7 +15,7 @@ namespace widget
 		public QWidget
 	{
 	private: // 控件
-		QHBoxLayout _layout{this};
+		widget::HBoxLayout _layout{this};
 		widget::Input _left_edit{};
 		widget::Input _right_edit{};
 		QLabel _label{"-"};

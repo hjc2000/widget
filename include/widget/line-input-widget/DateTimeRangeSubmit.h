@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <widget/Button.h>
+#include <widget/layout/HBoxLayout.h>
 
 namespace widget
 {
@@ -17,7 +18,7 @@ namespace widget
 		public QWidget
 	{
 	private:
-		QHBoxLayout _layout{this};
+		widget::HBoxLayout _layout{this};
 		QDateTimeEdit _left_edit{};
 		QDateTimeEdit _right_edit{};
 
