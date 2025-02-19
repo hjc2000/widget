@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "qboxlayout.h"
 #include "qlabel.h"
-#include "qvalidator.h"
 #include "widget/Button.h"
 
 namespace widget
@@ -24,7 +23,6 @@ namespace widget
 		widget::Button _button{};
 
 	private:
-		QIntValidator _validator{0, INT_MAX};
 		base::Delegate<> _submit_event;
 
 	public:
