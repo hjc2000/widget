@@ -69,14 +69,14 @@ namespace widget
 		/**
 		 * @brief 设置左边输入框的输入非法样式。
 		 *
-		 * @param is_invalid
+		 * @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		 */
 		void SetLeftInvalidInputStyle(bool is_invalid);
 
 		/**
 		 * @brief 设置右边输入框的输入非法样式。
 		 *
-		 * @param is_invalid
+		 * @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		 */
 		void SetRightInvalidInputStyle(bool is_invalid);
 	};
