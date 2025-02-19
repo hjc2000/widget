@@ -1,8 +1,8 @@
 #pragma once
-#include "qboxlayout.h"
-#include "qwidget.h"
 #include <cwchar>
 #include <memory>
+#include <qboxlayout.h>
+#include <qwidget.h>
 
 namespace widget
 {
