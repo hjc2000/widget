@@ -1,6 +1,5 @@
 #pragma once
 #include "base/delegate/IEvent.h"
-#include "qboxlayout.h"
 #include "RangeSubmit.h"
 #include <cstdint>
 
@@ -14,7 +13,7 @@ namespace widget
 		public QWidget
 	{
 	private:
-		QHBoxLayout _layout = QHBoxLayout{this};
+		widget::HBoxLayout _layout{this};
 		widget::RangeSubmit _range_submit = widget::RangeSubmit{};
 
 	private:

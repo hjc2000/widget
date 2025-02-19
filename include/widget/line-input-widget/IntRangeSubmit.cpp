@@ -121,15 +121,7 @@ namespace widget
 			throw std::invalid_argument{CODE_POS_STR + "最小值不能大于最大值。"};
 		}
 
-		{
-			_layout.addWidget(&_range_submit);
-
-			// 控件之间的间距。
-			_layout.setSpacing(10);
-
-			// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
-			_layout.setContentsMargins(0, 0, 0, 0);
-		}
+		_layout.AddWidget(&_range_submit);
 
 		_range_submit.SubmitEvent().Subscribe(
 			[this]()
