@@ -1,7 +1,7 @@
 #pragma once
-#include "base/delegate/IEvent.h"
-#include "RangeSubmit.h"
+#include <base/delegate/IEvent.h>
 #include <cstdint>
+#include <widget/line-input-widget/RangeSubmit.h>
 
 namespace widget
 {
