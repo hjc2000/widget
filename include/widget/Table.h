@@ -6,6 +6,10 @@
 
 namespace widget
 {
+	/**
+	 * @brief 表格。
+	 *
+	 */
 	class Table :
 		public QTableView
 	{
@@ -13,9 +17,11 @@ namespace widget
 		class CustomItemDelegate;
 		std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 
+	private: // 事件
 		virtual void enterEvent(QEnterEvent *event) override;
 		virtual void leaveEvent(QEvent *event) override;
 
+	private:
 		/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
 		void ClearInitialFocus();
 

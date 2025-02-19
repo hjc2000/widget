@@ -3,9 +3,9 @@
 #include <QDateTimeEdit>
 #include <QMainWindow>
 #include <QVBoxLayout>
-#include <widget/DateTimeRangeSubmit.h>
-#include <widget/RangeSubmit.h>
-#include <widget/Submit.h>
+#include <widget/line-input-widget/DateTimeRangeSubmit.h>
+#include <widget/line-input-widget/RangeSubmit.h>
+#include <widget/line-input-widget/Submit.h>
 #include <widget/Table.h>
 
 namespace widget

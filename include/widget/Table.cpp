@@ -1,13 +1,11 @@
 #include "Table.h"
 #include <base/string/Parse.h>
-#include <iostream>
 #include <QAbstractTableModel>
 #include <QApplication>
 #include <QPainter>
 #include <QStyledItemDelegate>
-#include <string>
 #include <widget/Conversion.h>
-#include <widget/Submit.h>
+#include <widget/line-input-widget/Submit.h>
 
 /// @brief 按照自定义的方式绘制单元格。
 class widget::Table::CustomItemDelegate :
