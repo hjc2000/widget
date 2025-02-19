@@ -1,4 +1,10 @@
 #include "DateTimeRangeSubmit.h"
+#include "base/time/TimePointSinceEpoch.h"
+#include "qwindowdefs.h"
+#include "widget/Button.h"
+#include <chrono>
+#include <exception>
+#include <iostream>
 
 widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 {
@@ -41,4 +47,41 @@ widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 		temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
 		setPalette(temp_palette);
 	}
+
+	{
+		// 连接信号
+		connect(&_button,
+				&widget::Button::clicked,
+				[this]()
+				{
+					try
+					{
+						_submit_event.Invoke();
+					}
+					catch (std::exception const &e)
+					{
+						std::cerr << e.what() << std::endl;
+					}
+					catch (...)
+					{
+					}
+				});
+	}
+}
+
+base::IEvent<> &widget::DateTimeRangeSubmit::SubmitEvent()
+{
+	return _submit_event;
+}
+
+base::TimePointSinceEpoch widget::DateTimeRangeSubmit::LeftTimePoint() const
+{
+	QDateTime selectedDateTime = _left_edit.dateTime();
+	return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
+}
+
+base::TimePointSinceEpoch widget::DateTimeRangeSubmit::RightTimePoint() const
+{
+	QDateTime selectedDateTime = _right_edit.dateTime();
+	return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
 }
