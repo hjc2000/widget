@@ -1,4 +1,5 @@
 #pragma once
+#include "Input.h"
 #include <base/delegate/Delegate.h>
 #include <QHBoxLayout>
 #include <QLineEdit>
@@ -9,32 +10,43 @@
 
 namespace widget
 {
+	/**
+	 * @brief 提交组件。
+	 *
+	 * @note 用来让用户提交一个输入信息。
+	 */
 	class Submit :
 		public QWidget
 	{
-	private:
+	private: // 控件
 		QHBoxLayout _layout{this};
-		QLineEdit _line_edit{};
+		widget::Input _line_edit{};
 		widget::Button _button{"提交"};
 
+	private:
 		base::Delegate<QString const &> _submit_event;
-		base::Delegate<QString const &> _text_changed_event;
-		base::Delegate<QString const &> _text_edited_event;
-		base::Delegate<QString const &> _editing_finished;
 
 		void ConnectSignal();
 
 	public:
 		Submit();
 
-		/// @brief 输入框在没有输入内容时显示的文本。
-		/// @return
+	public: // PlaceholderText
+		/**
+		 * @brief 输入框在没有输入内容时显示的文本。
+		 *
+		 * @return QString
+		 */
 		QString PlaceholderText() const;
 
-		/// @brief 设置：输入框在没有输入内容时显示的文本。
-		/// @param value
+		/**
+		 * @brief Set the Placeholder Text object设置：输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
 		void SetPlaceholderText(QString const &value);
 
+	public: // Text
 		/// @brief 编辑框中的文本。
 		/// @return
 		QString Text() const;
@@ -51,6 +63,7 @@ namespace widget
 		/// @param value
 		void SetText(char const *value);
 
+	public: // ButtonText
 		/// @brief 获取按钮的文本。
 		/// @return
 		QString ButtonText() const;
@@ -61,40 +74,40 @@ namespace widget
 		void SetButtonText(std::string const &value);
 		void SetButtonText(char const *value);
 
+	public: // 事件
 		/// @brief 提交。
 		/// @note 提交按钮被点击或输入框中按下回车时触发此事件。
 		/// @return
 		base::IEvent<QString const &> &SubmitEvent();
 
-		/// @brief 输入框中的文本改变。
-		/// @note 无论改变的原因是什么，即不管是程序修改还是用户修改，都会触发。
-		/// @return
-		base::IEvent<QString const &> &TextChangedEvent();
-
-		/// @brief 输入框中的文本被编辑。
-		/// @note 只有用户编辑了输入框中的文本时才会触发，程序改变输入框的文本不会触发。
-		/// @return
-		base::IEvent<QString const &> &TextEditedEvent();
-
-		/// @brief 编辑完成。
-		/// @note 输入框中按下回车或输入框失去焦点时触发。
-		/// @return
-		base::IEvent<QString const &> &EditingFinishedEvent();
-
-		/// @brief 隐藏提交按钮。
+	public: // 提交按钮可见性
+		/**
+		 * @brief 隐藏提交按钮。
+		 *
+		 */
 		void HideSubmissionButton();
 
-		/// @brief 展示提交按钮。
+		/**
+		 * @brief 展示提交按钮。
+		 *
+		 */
 		void ShowSubmissionButton();
 
-		/// @brief 提交按钮的可见性。
-		/// @note true 表示可见，false 表示不可见。
-		/// @return
+		/**
+		 * @brief 提交按钮的可见性。
+		 *
+		 * @return true 可见
+		 * @return false 不可见
+		 */
 		bool SubmissionButtonVisibility() const;
 
-		/// @brief 设置提交按钮的可见性。
-		/// @note true 表示可见，false 表示不可见。
-		/// @param value
+		/**
+		 * @brief 设置提交按钮的可见性。
+		 *
+		 * @note true 表示可见，false 表示不可见。
+		 *
+		 * @param value
+		 */
 		void SetSubmissionButtonVisibility(bool value);
 	};
 } // namespace widget

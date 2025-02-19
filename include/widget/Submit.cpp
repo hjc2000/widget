@@ -7,7 +7,7 @@ void widget::Submit::ConnectSignal()
 		{
 			try
 			{
-				_submit_event.Invoke(_line_edit.text());
+				_submit_event.Invoke(_line_edit.Text());
 			}
 			catch (std::exception const &e)
 			{
@@ -17,78 +17,24 @@ void widget::Submit::ConnectSignal()
 			}
 		});
 
-	connect(&_line_edit,
-			&QLineEdit::returnPressed,
-			[this]()
+	_line_edit.TextChangedEvent().Subscribe(
+		[this](QString const &text)
+		{
+			try
 			{
-				try
-				{
-					_submit_event.Invoke(_line_edit.text());
-				}
-				catch (std::exception const &e)
-				{
-				}
-				catch (...)
-				{
-				}
-			});
-
-	connect(&_line_edit,
-			&QLineEdit::textChanged,
-			[this]()
+				_submit_event.Invoke(_line_edit.Text());
+			}
+			catch (std::exception const &e)
 			{
-				try
-				{
-					_text_changed_event.Invoke(_line_edit.text());
-				}
-				catch (std::exception const &e)
-				{
-				}
-				catch (...)
-				{
-				}
-			});
-
-	connect(&_line_edit,
-			&QLineEdit::textEdited,
-			[this]()
+			}
+			catch (...)
 			{
-				try
-				{
-					_text_edited_event.Invoke(_line_edit.text());
-				}
-				catch (std::exception const &e)
-				{
-				}
-				catch (...)
-				{
-				}
-			});
-
-	connect(&_line_edit,
-			&QLineEdit::editingFinished,
-			[this]()
-			{
-				try
-				{
-					_editing_finished.Invoke(_line_edit.text());
-				}
-				catch (std::exception const &e)
-				{
-				}
-				catch (...)
-				{
-				}
-			});
+			}
+		});
 }
 
 widget::Submit::Submit()
 {
-	_line_edit.setPlaceholderText("在此处输入内容...");
-
-	// 输入框自适应缩放
-	_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
 	{
 		setAutoFillBackground(true);
 		QPalette temp_palette = palette();
@@ -113,22 +59,22 @@ widget::Submit::Submit()
 
 QString widget::Submit::PlaceholderText() const
 {
-	return _line_edit.placeholderText();
+	return _line_edit.PlaceholderText();
 }
 
 void widget::Submit::SetPlaceholderText(QString const &value)
 {
-	_line_edit.setPlaceholderText(value);
+	_line_edit.SetPlaceholderText(value);
 }
 
 QString widget::Submit::Text() const
 {
-	return _line_edit.text();
+	return _line_edit.Text();
 }
 
 void widget::Submit::SetText(QString const &value)
 {
-	_line_edit.setText(value);
+	_line_edit.SetText(value);
 }
 
 void widget::Submit::SetText(std::string const &value)
@@ -164,21 +110,6 @@ void widget::Submit::SetButtonText(char const *value)
 base::IEvent<QString const &> &widget::Submit::SubmitEvent()
 {
 	return _submit_event;
-}
-
-base::IEvent<QString const &> &widget::Submit::TextChangedEvent()
-{
-	return _text_changed_event;
-}
-
-base::IEvent<QString const &> &widget::Submit::TextEditedEvent()
-{
-	return _text_edited_event;
-}
-
-base::IEvent<QString const &> &widget::Submit::EditingFinishedEvent()
-{
-	return _editing_finished;
 }
 
 void widget::Submit::HideSubmissionButton()
