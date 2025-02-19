@@ -136,5 +136,13 @@ namespace widget
 		 * @return base::IEvent<QString const &>&
 		 */
 		base::IEvent<QString const &> &EditingFinishedEvent();
+
+	public:
+		/**
+		 * @brief 设置输入非法样式。
+		 *
+		 * @param is_invalid
+		 */
+		void SetInvalidInputStyle(bool is_invalid);
 	};
 } // namespace widget

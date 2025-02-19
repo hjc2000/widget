@@ -11,7 +11,7 @@ namespace widget
 	{
 	private:
 		QHBoxLayout _layout = QHBoxLayout{this};
-		widget::RangeSubmit _range_submit{};
+		widget::RangeSubmit _range_submit = widget::RangeSubmit{};
 
 	private:
 		int64_t _min = INT64_MIN;
@@ -40,5 +40,20 @@ namespace widget
 
 	public:
 		base::IEvent<> &SubmitEvent();
+
+	public:
+		/**
+		 * @brief 设置左边输入框的输入非法样式。
+		 *
+		 * @param is_invalid
+		 */
+		void SetLeftInvalidInputStyle(bool is_invalid);
+
+		/**
+		 * @brief 设置右边输入框的输入非法样式。
+		 *
+		 * @param is_invalid
+		 */
+		void SetRightInvalidInputStyle(bool is_invalid);
 	};
 } // namespace widget

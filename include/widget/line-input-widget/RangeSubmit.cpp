@@ -56,3 +56,13 @@ base::IEvent<> &widget::RangeSubmit::SubmitEvent()
 {
 	return _submit_event;
 }
+
+void widget::RangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
+{
+	_left_edit.SetInvalidInputStyle(is_invalid);
+}
+
+void widget::RangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
+{
+	_right_edit.SetInvalidInputStyle(is_invalid);
+}

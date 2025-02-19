@@ -167,4 +167,16 @@ namespace widget
 	{
 		return _editing_finished_event;
 	}
+
+	void Input::SetInvalidInputStyle(bool is_invalid)
+	{
+		if (is_invalid)
+		{
+			_line_edit.setStyleSheet("border: 2px solid red;");
+		}
+		else
+		{
+			_line_edit.setStyleSheet(""); // 恢复默认样式
+		}
+	}
 } // namespace widget

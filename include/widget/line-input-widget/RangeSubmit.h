@@ -20,7 +20,7 @@ namespace widget
 		widget::Input _left_edit{};
 		widget::Input _right_edit{};
 		QLabel _label{"-"};
-		widget::Button _button{};
+		widget::Button _button{"提交"};
 
 	private:
 		base::Delegate<> _submit_event;
@@ -64,5 +64,20 @@ namespace widget
 		 * @return base::IEvent<>&
 		 */
 		base::IEvent<> &SubmitEvent();
+
+	public:
+		/**
+		 * @brief 设置左边输入框的输入非法样式。
+		 *
+		 * @param is_invalid
+		 */
+		void SetLeftInvalidInputStyle(bool is_invalid);
+
+		/**
+		 * @brief 设置右边输入框的输入非法样式。
+		 *
+		 * @param is_invalid
+		 */
+		void SetRightInvalidInputStyle(bool is_invalid);
 	};
 } // namespace widget
