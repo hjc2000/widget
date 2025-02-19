@@ -104,7 +104,7 @@ widget::Table::Table()
 
 	{
 		// 设置选择行为为选择单元格
-		setSelectionBehavior(SelectionBehavior::SelectItems);
+		setSelectionBehavior(SelectionBehavior::SelectRows);
 		setSelectionMode(SelectionMode::SingleSelection);
 	}
 
