@@ -1,18 +1,11 @@
 #include "RangeSubmit.h"
+#include "widget/Conversion.h"
 #include <climits>
 #include <iostream>
 #include <widget/Conversion.h>
 
 widget::RangeSubmit::RangeSubmit()
 {
-	{
-		_left_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-		_right_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-		_left_edit.setValidator(&_validator);
-		_right_edit.setValidator(&_validator);
-	}
-
 	{
 		_layout.addWidget(&_left_edit);
 		_layout.addWidget(&_label);
@@ -33,49 +26,32 @@ widget::RangeSubmit::RangeSubmit()
 		setPalette(temp_palette);
 	}
 
-	{
-		// 连接信号
-		connect(&_button,
-				&widget::Button::clicked,
-				[this]()
-				{
-					try
-					{
-						_submit_event.Invoke();
-					}
-					catch (std::exception const &e)
-					{
-						std::cerr << e.what() << std::endl;
-					}
-					catch (...)
-					{
-					}
-				});
-	}
+	_button.ClickedEvent().Subscribe(
+		[this]()
+		{
+			std::cout << "_button.ClickedEvent().Subscribe(" << std::endl;
+			_submit_event.Invoke();
+		});
 }
 
 QString widget::RangeSubmit::LeftText() const
 {
-	return _left_edit.text();
+	return _left_edit.Text();
 }
 
 std::string widget::RangeSubmit::LeftTextStdString() const
 {
-	std::string ret;
-	ret << LeftText();
-	return ret;
+	return widget::ToString(LeftText());
 }
 
 QString widget::RangeSubmit::RightText() const
 {
-	return _right_edit.text();
+	return _right_edit.Text();
 }
 
 std::string widget::RangeSubmit::RightTextStdString() const
 {
-	std::string ret;
-	ret << RightText();
-	return ret;
+	return widget::ToString(RightText());
 }
 
 base::IEvent<> &widget::RangeSubmit::SubmitEvent()

@@ -1,5 +1,6 @@
 #pragma once
 #include "base/delegate/Delegate.h"
+#include "qboxlayout.h"
 #include "qlineedit.h"
 #include "qwidget.h"
 #include <string>
@@ -14,6 +15,7 @@ namespace widget
 		public QWidget
 	{
 	private:
+		QHBoxLayout _layout{this};
 		QLineEdit _line_edit{};
 
 		void ConnectSignal();
@@ -24,7 +26,6 @@ namespace widget
 		base::Delegate<QString const &> _editing_finished_event;
 
 	public:
-
 		/**
 		 * @brief Construct a new Input object
 		 *
@@ -32,7 +33,6 @@ namespace widget
 		Input();
 
 	public: // PlaceholderText
-
 		/**
 		 * @brief 输入框在没有输入内容时显示的文本。
 		 *
@@ -69,7 +69,6 @@ namespace widget
 		void SetPlaceholderText(char const *value);
 
 	public: // Text
-
 		/**
 		 * @brief 编辑框中的文本。
 		 *
@@ -106,7 +105,6 @@ namespace widget
 		void SetText(char const *value);
 
 	public: // 事件
-
 		/**
 		 * @brief 输入框中的文本改变事件。
 		 *

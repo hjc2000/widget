@@ -71,6 +71,12 @@ namespace widget
 		_line_edit.setPlaceholderText("在此处输入内容...");
 		_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
+		{
+			_layout.addWidget(&_line_edit);
+			_layout.setSpacing(0);
+			_layout.setContentsMargins(0, 0, 0, 0);
+		}
+
 		ConnectSignal();
 	}
 } // namespace widget

@@ -1,4 +1,6 @@
 #include "Button.h"
+#include <exception>
+#include <iostream>
 #include <QPainter>
 #include <QPaintEvent>
 
@@ -10,7 +12,12 @@ void widget::Button::ConnectSignal()
 			{
 				try
 				{
+					std::cout << "clicked" << std::endl;
 					_clicked_event.Invoke();
+				}
+				catch (std::exception const &e)
+				{
+					std::cerr << e.what() << std::endl;
 				}
 				catch (...)
 				{
@@ -31,6 +38,10 @@ void widget::Button::ConnectSignal()
 				{
 					_pressed_event.Invoke();
 				}
+				catch (std::exception const &e)
+				{
+					std::cerr << e.what() << std::endl;
+				}
 				catch (...)
 				{
 				}
@@ -45,6 +56,10 @@ void widget::Button::ConnectSignal()
 				try
 				{
 					_released_event.Invoke();
+				}
+				catch (std::exception const &e)
+				{
+					std::cerr << e.what() << std::endl;
 				}
 				catch (...)
 				{
@@ -100,6 +115,7 @@ widget::Button::Button()
 }
 
 widget::Button::Button(QString const &text)
+	: Button()
 {
 	SetText(text);
 }
