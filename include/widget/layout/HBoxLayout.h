@@ -9,9 +9,9 @@ namespace widget
 {
 	/**
 	 * @brief 自定义了样式的水平盒子布局。
-	 * @li 左对齐，顶端对齐。
-	 * @li 盒子内元素间距 10.
-	 * @li 盒子内边距为 0.
+	 * 		@li 左对齐，顶端对齐。
+	 * 		@li 盒子内元素间距 10.
+	 * 		@li 盒子内边距为 0.
 	 */
 	class HBoxLayout
 	{
@@ -26,8 +26,15 @@ namespace widget
 		 */
 		HBoxLayout(QWidget *parent);
 
+		/**
+		 * @brief Construct a new HBoxLayout object
+		 *
+		 * @param parent 要被布局控件进行 UI 布局的 QWidget 对象。
+		 * @param paddint 盒子内边距。
+		 */
 		HBoxLayout(QWidget *parent, widget::Padding const &paddint);
 
+	public:
 		/**
 		 * @brief 向布局添加一个控件。
 		 *
