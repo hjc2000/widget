@@ -90,12 +90,6 @@ void widget::Table::ClearInitialFocus()
 	setCurrentIndex(QModelIndex{});
 }
 
-void widget::Table::SetAsPerPixelScroll()
-{
-	setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
-	setVerticalScrollMode(ScrollMode::ScrollPerPixel);
-}
-
 widget::Table::Table()
 {
 	_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
@@ -108,7 +102,11 @@ widget::Table::Table()
 		setSelectionMode(SelectionMode::SingleSelection);
 	}
 
-	SetAsPerPixelScroll();
+	{
+		// 设置滚动方式为逐个像素滚动。
+		setHorizontalScrollMode(ScrollMode::ScrollPerPixel);
+		setVerticalScrollMode(ScrollMode::ScrollPerPixel);
+	}
 
 	// 设置单元格绘制代理，按照自定义的方式绘制单元格。
 	setItemDelegate(_custom_item_delegate.get());
