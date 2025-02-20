@@ -169,7 +169,8 @@ namespace widget
 		}
 		else
 		{
-			_line_edit.setStyleSheet(""); // 恢复默认样式
+			// 恢复默认样式
+			_line_edit.setStyleSheet("");
 		}
 	}
 } // namespace widget

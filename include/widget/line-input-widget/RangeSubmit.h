@@ -13,8 +13,7 @@ namespace widget
 	class RangeSubmit :
 		public QWidget
 	{
-	private:
-		// 控件
+	private: // 控件
 		widget::HBoxLayout _layout{this};
 		widget::Input _left_edit{};
 		widget::Input _right_edit{};
@@ -38,9 +37,7 @@ namespace widget
 		 */
 		RangeSubmit();
 
-	public:
-		// 属性
-
+	public: // 属性
 		/**
 		 * @brief 左侧输入框的文本。
 		 *
@@ -69,9 +66,7 @@ namespace widget
 		 */
 		std::string RightTextStdString() const;
 
-	public:
-		// 事件
-
+	public: // 事件
 		/**
 		 * @brief 提交数据时触发的事件。
 		 *
@@ -84,9 +79,7 @@ namespace widget
 		 */
 		base::IEvent<> &SubmitEvent();
 
-	public:
-		// 输入非法
-
+	public: // 输入非法
 		/**
 		 * @brief 设置左边输入框的输入非法样式。
 		 *

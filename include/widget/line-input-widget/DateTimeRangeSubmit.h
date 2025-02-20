@@ -2,6 +2,8 @@
 #include <base/delegate/Delegate.h>
 #include <base/delegate/IEvent.h>
 #include <base/time/TimePointSinceEpoch.h>
+#include <chrono>
+#include <cstdint>
 #include <QDateTimeEdit>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -28,7 +30,12 @@ namespace widget
 		 */
 		QLabel _label{"-"};
 
+	private:
+		base::TimePointSinceEpoch _min{std::chrono::nanoseconds{INT64_MIN}};
+		base::TimePointSinceEpoch _max{std::chrono::nanoseconds{INT64_MAX}};
 		base::Delegate<> _submit_event;
+
+		void ConnectSignal();
 
 	public:
 		/**
@@ -36,6 +43,15 @@ namespace widget
 		 *
 		 */
 		DateTimeRangeSubmit();
+
+		/**
+		 * @brief Construct a new Date Time Range Submit object
+		 *
+		 * @param min 允许输入的时间点最小值。
+		 * @param max 允许输入的时间点最大值。
+		 */
+		DateTimeRangeSubmit(base::TimePointSinceEpoch const &min,
+							base::TimePointSinceEpoch const &max);
 
 		/**
 		 * @brief 提交事件。提交按钮被点击后触发。此时可以读取日期范围。
@@ -57,5 +73,20 @@ namespace widget
 		 * @return base::TimePointSinceEpoch
 		 */
 		base::TimePointSinceEpoch RightTimePoint() const;
+
+	public: // 输入非法
+		/**
+		 * @brief 设置左边输入框的输入非法样式。
+		 *
+		 * @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
+		 */
+		void SetLeftInvalidInputStyle(bool is_invalid);
+
+		/**
+		 * @brief 设置右边输入框的输入非法样式。
+		 *
+		 * @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
+		 */
+		void SetRightInvalidInputStyle(bool is_invalid);
 	};
 } // namespace widget
