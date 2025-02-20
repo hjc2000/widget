@@ -28,12 +28,6 @@ namespace widget
 		 */
 		QLabel _label{"-"};
 
-		/**
-		 * @brief 提交按钮。点击后触发事件。
-		 *
-		 */
-		widget::Button _button{"提交"};
-
 		base::Delegate<> _submit_event;
 
 	public:

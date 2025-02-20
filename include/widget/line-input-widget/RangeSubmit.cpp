@@ -8,7 +8,6 @@ widget::RangeSubmit::RangeSubmit()
 		_layout.AddWidget(&_left_edit);
 		_layout.AddWidget(&_label);
 		_layout.AddWidget(&_right_edit);
-		_layout.AddWidget(&_button);
 	}
 
 	{
@@ -28,12 +27,6 @@ widget::RangeSubmit::RangeSubmit()
 
 		_right_edit.TextEditingFinishedEvent().Subscribe(
 			[this](QString const &text)
-			{
-				_submit_event.Invoke();
-			});
-
-		_button.ClickedEvent().Subscribe(
-			[this]()
 			{
 				_submit_event.Invoke();
 			});

@@ -1,10 +1,9 @@
 #include "DateTimeRangeSubmit.h"
-#include "base/time/TimePointSinceEpoch.h"
-#include "qwindowdefs.h"
-#include "widget/button/Button.h"
+#include <base/time/TimePointSinceEpoch.h>
 #include <chrono>
 #include <exception>
 #include <iostream>
+#include <qwindowdefs.h>
 
 widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 {
@@ -32,7 +31,6 @@ widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 		_layout.AddWidget(&_left_edit);
 		_layout.AddWidget(&_label);
 		_layout.AddWidget(&_right_edit);
-		_layout.AddWidget(&_button);
 	}
 
 	{
@@ -44,9 +42,26 @@ widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 
 	{
 		// 连接信号
-		connect(&_button,
-				&widget::Button::clicked,
-				[this]()
+		connect(&_left_edit,
+				&QDateTimeEdit::dateTimeChanged,
+				[this](QDateTime const &dateTime)
+				{
+					try
+					{
+						_submit_event.Invoke();
+					}
+					catch (std::exception const &e)
+					{
+						std::cerr << e.what() << std::endl;
+					}
+					catch (...)
+					{
+					}
+				});
+
+		connect(&_right_edit,
+				&QDateTimeEdit::dateTimeChanged,
+				[this](QDateTime const &dateTime)
 				{
 					try
 					{
