@@ -37,7 +37,7 @@ namespace widget
 
 	public: // 数据模型
 		/**
-		 * @brief
+		 * @brief 设置数据模型。
 		 *
 		 * @param model 需要是一个堆上的对象。
 		 */

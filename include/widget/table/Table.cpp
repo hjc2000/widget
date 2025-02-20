@@ -114,6 +114,11 @@ widget::Table::Table()
 
 void widget::Table::setModel(QAbstractItemModel *model)
 {
+	/* 先设置成空指针，避免以前已经有模型了。
+	 * 如果以前已经有模型了，不先设置成空指针清空模型，就会出现表格视图没有刷新完全的情况。例如行数
+	 * 还保持着上一个模型的行数。
+	 */
+	QTableView::setModel(nullptr);
 	QTableView::setModel(model);
 	ClearInitialFocus();
 
