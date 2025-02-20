@@ -8,7 +8,9 @@ namespace widget
 {
 	/**
 	 * @brief 自定义了样式的水平盒子布局。
-	 *
+	 * @li 左对齐，顶端对齐。
+	 * @li 盒子内元素间距 10.
+	 * @li 盒子内边距为 0.
 	 */
 	class HBoxLayout
 	{
