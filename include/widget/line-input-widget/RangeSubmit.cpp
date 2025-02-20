@@ -18,11 +18,26 @@ widget::RangeSubmit::RangeSubmit()
 		setPalette(temp_palette);
 	}
 
-	_button.ClickedEvent().Subscribe(
-		[this]()
-		{
-			_submit_event.Invoke();
-		});
+	{
+		// 订阅事件
+		_left_edit.TextEditingFinishedEvent().Subscribe(
+			[this](QString const &text)
+			{
+				_submit_event.Invoke();
+			});
+
+		_right_edit.TextEditingFinishedEvent().Subscribe(
+			[this](QString const &text)
+			{
+				_submit_event.Invoke();
+			});
+
+		_button.ClickedEvent().Subscribe(
+			[this]()
+			{
+				_submit_event.Invoke();
+			});
+	}
 }
 
 QString widget::RangeSubmit::LeftText() const

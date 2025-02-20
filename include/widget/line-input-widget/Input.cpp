@@ -47,7 +47,7 @@ namespace widget
 				{
 					try
 					{
-						_editing_finished_event.Invoke(_line_edit.text());
+						_text_editing_finished_event.Invoke(_line_edit.text());
 					}
 					catch (std::exception const &e)
 					{
@@ -156,9 +156,9 @@ namespace widget
 		return _text_edited_event;
 	}
 
-	base::IEvent<QString const &> &widget::Input::EditingFinishedEvent()
+	base::IEvent<QString const &> &widget::Input::TextEditingFinishedEvent()
 	{
-		return _editing_finished_event;
+		return _text_editing_finished_event;
 	}
 
 	void Input::SetInvalidInputStyle(bool is_invalid)

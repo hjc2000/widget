@@ -23,7 +23,7 @@ namespace widget
 	private: // 事件
 		base::Delegate<QString const &> _text_changed_event;
 		base::Delegate<QString const &> _text_edited_event;
-		base::Delegate<QString const &> _editing_finished_event;
+		base::Delegate<QString const &> _text_editing_finished_event;
 
 	public:
 		/**
@@ -105,6 +105,7 @@ namespace widget
 		void SetText(char const *value);
 
 	public: // 事件
+
 		/**
 		 * @brief 输入框中的文本改变事件。
 		 *
@@ -135,7 +136,7 @@ namespace widget
 		 *
 		 * @return base::IEvent<QString const &>&
 		 */
-		base::IEvent<QString const &> &EditingFinishedEvent();
+		base::IEvent<QString const &> &TextEditingFinishedEvent();
 
 	public:
 		/**

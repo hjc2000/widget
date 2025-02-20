@@ -57,8 +57,14 @@ namespace widget
 		std::string RightTextStdString() const;
 
 	public: // 事件
+
 		/**
-		 * @brief 用户点击提交按钮后触发的事件。
+		 * @brief 提交数据时触发的事件。
+		 *
+		 * @note 触发条件
+		 * 		@li 用户点击提交按钮。
+		 * 		@li 用户在左右 2 个输入框按下回车。
+		 *		@li 用户在左右 2 个输入框编辑后让输入框失去焦点。
 		 *
 		 * @return base::IEvent<>&
 		 */
