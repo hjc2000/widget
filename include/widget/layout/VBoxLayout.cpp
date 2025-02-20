@@ -1,9 +1,8 @@
-#include "HBoxLayout.h"
-#include "Padding.h"
+#include "VBoxLayout.h"
 
-widget::HBoxLayout::HBoxLayout(QWidget *parent)
+widget::VBoxLayout::VBoxLayout(QWidget *parent)
 {
-	_layout = std::shared_ptr<QHBoxLayout>{new QHBoxLayout{parent}};
+	_layout = std::shared_ptr<QVBoxLayout>{new QVBoxLayout{parent}};
 
 	_layout->setAlignment(Qt::Alignment{Qt::AlignmentFlag::AlignTop | Qt::AlignmentFlag::AlignLeft});
 
@@ -13,18 +12,18 @@ widget::HBoxLayout::HBoxLayout(QWidget *parent)
 	SetPadding(widget::Padding{});
 }
 
-widget::HBoxLayout::HBoxLayout(QWidget *parent, widget::Padding const &paddint)
-	: widget::HBoxLayout{parent}
+widget::VBoxLayout::VBoxLayout(QWidget *parent, widget::Padding const &padding)
+	: widget::VBoxLayout{parent}
 {
-	SetPadding(paddint);
+	SetPadding(padding);
 }
 
-void widget::HBoxLayout::AddWidget(QWidget *widget)
+void widget::VBoxLayout::AddWidget(QWidget *widget)
 {
 	_layout->addWidget(widget);
 }
 
-widget::Padding widget::HBoxLayout::Padding() const
+widget::Padding widget::VBoxLayout::Padding() const
 {
 	QMargins value = _layout->contentsMargins();
 
@@ -36,7 +35,7 @@ widget::Padding widget::HBoxLayout::Padding() const
 	};
 }
 
-void widget::HBoxLayout::SetPadding(widget::Padding const &value)
+void widget::VBoxLayout::SetPadding(widget::Padding const &value)
 {
 	// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
 	_layout->setContentsMargins(value.Left(), value.Top(),

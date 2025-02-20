@@ -1,8 +1,12 @@
 #pragma once
+#include "layout/Padding.h"
+#include "qcheckbox.h"
 #include <base/delegate/Delegate.h>
+#include <QCheckBox >
 #include <QDateTimeEdit>
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <widget/layout/VBoxLayout.h>
 #include <widget/line-input-widget/DateTimeRangeSubmit.h>
 #include <widget/line-input-widget/RangeSubmit.h>
 #include <widget/line-input-widget/Submit.h>
@@ -22,9 +26,13 @@ namespace widget
 		QWidget _central_widget{};
 
 		/// @brief 布局控件。
-		QVBoxLayout _layout{&_central_widget};
+		widget::VBoxLayout _layout{
+			&_central_widget,
+			widget::Padding{10},
+		};
 
-		widget::RangeSubmit _button{};
+		widget::RangeSubmit _range_submit{};
+		QCheckBox _check_box{"选择框"};
 
 	public:
 		/**
