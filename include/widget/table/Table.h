@@ -6,6 +6,8 @@
 
 namespace widget
 {
+	class CustomItemDelegate;
+
 	/**
 	 * @brief 表格。
 	 *
@@ -14,7 +16,6 @@ namespace widget
 		public QTableView
 	{
 	private:
-		class CustomItemDelegate;
 		std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 
 	private: // 事件
