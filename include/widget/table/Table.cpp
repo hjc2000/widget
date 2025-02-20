@@ -110,6 +110,9 @@ widget::Table::Table()
 
 	// 设置单元格绘制代理，按照自定义的方式绘制单元格。
 	setItemDelegate(_custom_item_delegate.get());
+
+	// 使能排序
+	setSortingEnabled(true);
 }
 
 void widget::Table::setModel(QAbstractItemModel *model)
