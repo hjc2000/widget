@@ -1,4 +1,5 @@
 #include "Button.h"
+#include <base/string/define.h>
 #include <exception>
 #include <iostream>
 #include <QPainter>
@@ -16,7 +17,7 @@ void widget::Button::ConnectSignal()
 				}
 				catch (std::exception const &e)
 				{
-					std::cerr << e.what() << std::endl;
+					std::cerr << CODE_POS_STR + e.what() << std::endl;
 				}
 				catch (...)
 				{
@@ -39,7 +40,7 @@ void widget::Button::ConnectSignal()
 				}
 				catch (std::exception const &e)
 				{
-					std::cerr << e.what() << std::endl;
+					std::cerr << CODE_POS_STR + e.what() << std::endl;
 				}
 				catch (...)
 				{
@@ -58,7 +59,7 @@ void widget::Button::ConnectSignal()
 				}
 				catch (std::exception const &e)
 				{
-					std::cerr << e.what() << std::endl;
+					std::cerr << CODE_POS_STR + e.what() << std::endl;
 				}
 				catch (...)
 				{
@@ -79,6 +80,10 @@ void widget::Button::enterEvent(QEnterEvent *event)
 	{
 		_enter_event.Invoke();
 	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
+	}
 	catch (...)
 	{
 	}
@@ -92,6 +97,10 @@ void widget::Button::leaveEvent(QEvent *event)
 	try
 	{
 		_leave_event.Invoke();
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
 	}
 	catch (...)
 	{

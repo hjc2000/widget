@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include <string>
-#include <widget/Button.h>
+#include <widget/button/Button.h>
 
 namespace widget
 {
