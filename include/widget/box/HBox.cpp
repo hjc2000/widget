@@ -1,14 +1,5 @@
 #include "HBox.h"
 
-widget::HBox::HBox()
-{
-}
-
-widget::HBox::HBox(std::initializer_list<std::shared_ptr<QWidget>> widget_list)
-{
-	AddWidget(widget_list);
-}
-
 void widget::HBox::AddWidget(std::shared_ptr<QWidget> widget)
 {
 	auto it = _widget_set.find(widget);

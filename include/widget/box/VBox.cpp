@@ -1,14 +1,5 @@
 #include "VBox.h"
 
-widget::VBox::VBox()
-{
-}
-
-widget::VBox::VBox(std::initializer_list<std::shared_ptr<QWidget>> widget_list)
-{
-	AddWidget(widget_list);
-}
-
 void widget::VBox::AddWidget(std::shared_ptr<QWidget> widget)
 {
 	auto it = _widget_set.find(widget);

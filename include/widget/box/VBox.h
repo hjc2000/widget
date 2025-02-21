@@ -1,6 +1,5 @@
 #pragma once
 #include "qwidget.h"
-#include <initializer_list>
 #include <memory>
 #include <set>
 #include <widget/box/IBox.h>
@@ -20,18 +19,70 @@ namespace widget
 		std::set<std::shared_ptr<QWidget>> _widget_set;
 
 	public:
-		/**
-		 * @brief Construct a new VBox object
-		 *
-		 */
-		VBox();
+		// 构造函数
 
 		/**
 		 * @brief Construct a new VBox object
 		 *
-		 * @param widget_list
 		 */
-		VBox(std::initializer_list<std::shared_ptr<QWidget>> widget_list);
+		VBox() = default;
+
+		/**
+		 * @brief Construct a new VBox object
+		 *
+		 * @param widgets
+		 */
+		VBox(std::initializer_list<std::shared_ptr<QWidget>> widgets)
+		{
+			AddWidget(widgets);
+		}
+
+		/**
+		 * @brief Construct a new VBox object
+		 *
+		 * @param widgets
+		 */
+		VBox(std::vector<std::shared_ptr<QWidget>> widgets)
+		{
+			AddWidget(widgets);
+		}
+
+		/**
+		 * @brief Construct a new VBox object
+		 *
+		 * @param widgets
+		 * @param padding
+		 */
+		VBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding)
+			: widget::VBox(widgets)
+		{
+			SetPadding(padding);
+		}
+
+		/**
+		 * @brief Construct a new VBox object
+		 *
+		 * @param widgets
+		 */
+		VBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
+		{
+			AddWidget(widgets);
+		}
+
+		/**
+		 * @brief Construct a new VBox object
+		 *
+		 * @tparam TCount
+		 * @param widgets
+		 */
+		template <size_t TCount>
+		VBox(std::array<std::shared_ptr<QWidget>, TCount> &widgets)
+		{
+			for (auto widget : widgets)
+			{
+				AddWidget(widget);
+			}
+		}
 
 	public:
 		using IBox::AddWidget;

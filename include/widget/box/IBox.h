@@ -1,7 +1,11 @@
 #pragma once
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
+#include <array>
+#include <base/container/iterator/IEnumerable.h>
+#include <cstddef>
 #include <memory>
+#include <vector>
 
 namespace widget
 {
@@ -16,6 +20,7 @@ namespace widget
 		 */
 		virtual void AddWidget(std::shared_ptr<QWidget> widget) = 0;
 
+	public:
 		/**
 		 * @brief 将控件从盒子中移除。
 		 *
@@ -48,8 +53,37 @@ namespace widget
 		/**
 		 * @brief 向盒子添加一系列控件。
 		 *
-		 * @param widget_list
+		 * @param widgets
 		 */
-		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> widget_list);
+		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> widgets);
+
+		/**
+		 * @brief 向盒子添加一系列控件。
+		 *
+		 * @param widgets
+		 */
+		void AddWidget(std::vector<std::shared_ptr<QWidget>> widgets);
+
+		/**
+		 * @brief 向盒子添加一系列控件。
+		 *
+		 * @param widgets
+		 */
+		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> &widgets);
+
+		/**
+		 * @brief 向盒子添加一系列控件。
+		 *
+		 * @tparam TCount
+		 * @param widgets
+		 */
+		template <size_t TCount>
+		void AddWidget(std::array<std::shared_ptr<QWidget>, TCount> &widgets)
+		{
+			for (auto widget : widgets)
+			{
+				AddWidget(widget);
+			}
+		}
 	};
 } // namespace widget
