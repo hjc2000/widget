@@ -6,6 +6,7 @@
 #include <QDateTimeEdit>
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <widget/layout/GridLayout.h>
 #include <widget/layout/VBoxLayout.h>
 #include <widget/line-input-widget/DateTimeRangeSubmit.h>
 #include <widget/line-input-widget/RangeSubmit.h>
@@ -25,10 +26,7 @@ namespace widget
 		QWidget _central_widget{};
 
 		/// @brief 布局控件。
-		widget::VBoxLayout _layout{
-			&_central_widget,
-			widget::Padding{10},
-		};
+		widget::GridLayout _layout{&_central_widget};
 
 		widget::RangeSubmit _range_submit{};
 		QCheckBox _check_box{"选择框"};

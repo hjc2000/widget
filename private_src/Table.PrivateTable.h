@@ -34,6 +34,7 @@ public:
 	PrivateTable();
 
 public: // 数据模型
+
 	/**
 	 * @brief 设置数据模型。
 	 *

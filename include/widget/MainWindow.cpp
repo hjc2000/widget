@@ -6,8 +6,9 @@ widget::MainWindow::MainWindow()
 	setWindowTitle("test");
 	setCentralWidget(&_central_widget);
 
-	_layout.AddWidget(&_range_submit);
-	_layout.AddWidget(&_check_box);
+	_layout.AddWidget(&_range_submit, 0, 0);
+	_layout.AddWidget(&_check_box, 0, 1);
+	_layout.SetColumnStretch(0, 1);
 
 	_range_submit.SubmitEvent().Subscribe(
 		[]()

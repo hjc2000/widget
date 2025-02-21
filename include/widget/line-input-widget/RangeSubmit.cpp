@@ -4,6 +4,8 @@
 
 widget::RangeSubmit::RangeSubmit()
 {
+	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
 	{
 		_layout.AddWidget(&_left_edit);
 		_layout.AddWidget(&_label);
