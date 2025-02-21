@@ -1,8 +1,8 @@
-#include "CustomItemDelegate.h"
+#include "Table.CustomItemDelegate.h"
 
-void widget::CustomItemDelegate::paint(QPainter *painter,
-									   QStyleOptionViewItem const &option,
-									   QModelIndex const &index) const
+void widget::Table::CustomItemDelegate::paint(QPainter *painter,
+											  QStyleOptionViewItem const &option,
+											  QModelIndex const &index) const
 {
 	// 创建一个新的 QStyleOptionViewItem 并初始化
 	QStyleOptionViewItem new_option = option;
@@ -38,7 +38,7 @@ void widget::CustomItemDelegate::paint(QPainter *painter,
 	}
 }
 
-QSize widget::CustomItemDelegate::sizeHint(QStyleOptionViewItem const &option, QModelIndex const &index) const
+QSize widget::Table::CustomItemDelegate::sizeHint(QStyleOptionViewItem const &option, QModelIndex const &index) const
 {
 	QSize size = QStyledItemDelegate::sizeHint(option, index);
 
