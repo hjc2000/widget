@@ -1,5 +1,4 @@
 #pragma once
-
 #include "qpainter.h"
 #include "qstyleditemdelegate.h"
 #include "qstyleoption.h"
