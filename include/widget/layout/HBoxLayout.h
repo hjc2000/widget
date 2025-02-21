@@ -43,6 +43,13 @@ namespace widget
 		void AddWidget(QWidget *widget);
 
 		/**
+		 * @brief 将控件从布局中移除。
+		 *
+		 * @param widget
+		 */
+		void RemoveWidget(QWidget *widget);
+
+		/**
 		 * @brief 获取内边距。
 		 *
 		 * @return widget::Padding

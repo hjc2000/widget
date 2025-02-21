@@ -24,6 +24,11 @@ void widget::HBoxLayout::AddWidget(QWidget *widget)
 	_layout->addWidget(widget);
 }
 
+void widget::HBoxLayout::RemoveWidget(QWidget *widget)
+{
+	_layout->removeWidget(widget);
+}
+
 widget::Padding widget::HBoxLayout::Padding() const
 {
 	QMargins value = _layout->contentsMargins();
