@@ -14,14 +14,34 @@ void widget::GridLayout::AddWidget(QWidget *widget, int row, int column)
 	AddWidget(widget, row, column, 1, 1);
 }
 
+void widget::GridLayout::AddWidget(QWidget *widget, int row, int column, Qt::AlignmentFlag align)
+{
+	AddWidget(widget, row, column, 1, 1, align);
+}
+
 void widget::GridLayout::AddWidget(QWidget *widget, int row, int column, int row_span, int column_span)
+{
+	AddWidget(widget,
+			  row,
+			  column,
+			  row_span,
+			  column_span,
+			  static_cast<Qt::AlignmentFlag>(0));
+}
+
+void widget::GridLayout::AddWidget(QWidget *widget,
+								   int row,
+								   int column,
+								   int row_span,
+								   int column_span,
+								   Qt::AlignmentFlag align)
 {
 	_grid_layout->addWidget(widget,
 							row,
 							column,
 							row_span,
 							column_span,
-							Qt::AlignmentFlag::AlignLeft | Qt::AlignmentFlag::AlignTop);
+							align);
 }
 
 int widget::GridLayout::RowStretch(int row) const
