@@ -1,8 +1,8 @@
 #pragma once
-#include "qwidget.h"
 #include <memory>
 #include <QHeaderView>
 #include <QTableView>
+#include <qwidget.h>
 #include <widget/layout/HBoxLayout.h>
 
 namespace widget
