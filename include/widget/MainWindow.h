@@ -1,12 +1,14 @@
 #pragma once
-#include "layout/Padding.h"
+#include "box/VBox.h"
 #include "qcheckbox.h"
 #include "qwindowdefs.h"
 #include <base/delegate/Delegate.h>
+#include <memory>
 #include <QCheckBox >
 #include <QDateTimeEdit>
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <widget/box/VBox.h>
 #include <widget/layout/FormTableLayout.h>
 #include <widget/layout/GridLayout.h>
 #include <widget/layout/VBoxLayout.h>
@@ -24,17 +26,10 @@ namespace widget
 		public QMainWindow
 	{
 	private:
-		/// @brief 主窗口中心区域控件。
-		QWidget _central_widget{};
+		std::shared_ptr<widget::RangeSubmit> _range_submit{new widget::RangeSubmit{}};
+		std::shared_ptr<QCheckBox> _check_box{new QCheckBox{"选择框"}};
 
-		/// @brief 布局控件。
-		widget::FormTableLayout _layout{
-			&_central_widget,
-			widget::Padding{10},
-		};
-
-		widget::RangeSubmit _range_submit{};
-		QCheckBox _check_box{"选择框"};
+		widget::VBox _box{_range_submit, _check_box};
 
 	public:
 		/**

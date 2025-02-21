@@ -42,6 +42,8 @@ namespace widget
 		 */
 		void AddWidget(QWidget *widget);
 
+		void RemoveWidget(QWidget *widget);
+
 		/**
 		 * @brief 获取内边距。
 		 *

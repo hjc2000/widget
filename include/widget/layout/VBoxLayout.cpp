@@ -23,6 +23,11 @@ void widget::VBoxLayout::AddWidget(QWidget *widget)
 	_layout->addWidget(widget);
 }
 
+void widget::VBoxLayout::RemoveWidget(QWidget *widget)
+{
+	_layout->removeWidget(widget);
+}
+
 widget::Padding widget::VBoxLayout::Padding() const
 {
 	QMargins value = _layout->contentsMargins();
