@@ -1,6 +1,9 @@
 #include "GridLayout.h"
 #include "qgridlayout.h"
 #include "qnamespace.h"
+#include "qwidget.h"
+#include <base/string/define.h>
+#include <stdexcept>
 
 widget::GridLayout::GridLayout(QWidget *parent)
 {
@@ -51,6 +54,54 @@ void widget::GridLayout::AddWidget(QWidget *widget,
 							align);
 }
 
+void widget::GridLayout::RemoveWidget(QWidget *widget)
+{
+	if (widget == nullptr)
+	{
+		return;
+	}
+
+	_grid_layout->removeWidget(widget);
+}
+
+void widget::GridLayout::RemoveWidget(int row, int column)
+{
+	QWidget *widget = GetWidget(row, column);
+	if (widget != nullptr)
+	{
+		RemoveWidget(widget);
+	}
+}
+
+QWidget *widget::GridLayout::GetWidget(int row, int column) const
+{
+	QLayoutItem *item = _grid_layout->itemAtPosition(row, column);
+	return item->widget();
+}
+
+widget::GridPosition widget::GridLayout::GetWidgetPosition(QWidget *widget)
+{
+	for (int i = 0; i < _grid_layout->count(); i++)
+	{
+		QLayoutItem *item = _grid_layout->itemAt(i);
+		if (item->widget() == widget)
+		{
+			int row = 0;
+			int column = 0;
+			int row_span = 1;
+			int column_span = 1;
+
+			_grid_layout->getItemPosition(i,
+										  &row, &column,
+										  &row_span, &column_span);
+
+			return widget::GridPosition{row, column, row_span, column_span};
+		}
+	}
+
+	throw std::runtime_error{CODE_POS_STR + "找不到该控件。"};
+}
+
 int widget::GridLayout::RowStretch(int row) const
 {
 	return _grid_layout->rowStretch(row);
@@ -69,4 +120,9 @@ int widget::GridLayout::ColumnStretch(int column) const
 void widget::GridLayout::SetColumnStretch(int column, int stretch)
 {
 	_grid_layout->setColumnStretch(column, stretch);
+}
+
+void widget::GridLayout::SetAlignment(Qt::AlignmentFlag alignment)
+{
+	_grid_layout->setAlignment(alignment);
 }

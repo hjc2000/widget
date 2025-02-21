@@ -6,9 +6,8 @@ widget::MainWindow::MainWindow()
 	setWindowTitle("test");
 	setCentralWidget(&_central_widget);
 
-	_layout.AddWidget(&_range_submit, 0, 0, Qt::AlignmentFlag::AlignTop);
-	_layout.AddWidget(&_check_box, 0, 1, Qt::AlignmentFlag::AlignTop);
-	_layout.SetColumnStretch(0, 1);
+	_layout.SetItem(0, "输入：", &_range_submit);
+	_layout.SetItem(1, "输入：", &_check_box);
 
 	_range_submit.SubmitEvent().Subscribe(
 		[]()
