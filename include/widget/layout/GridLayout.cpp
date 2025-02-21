@@ -9,6 +9,13 @@ widget::GridLayout::GridLayout(QWidget *parent)
 	_grid_layout->setContentsMargins(0, 0, 0, 0);
 }
 
+widget::GridLayout::GridLayout(QWidget *parent, widget::Padding const &padding)
+	: GridLayout(parent)
+{
+	_grid_layout->setContentsMargins(padding.Left(), padding.Top(),
+									 padding.Right(), padding.Bottom());
+}
+
 void widget::GridLayout::AddWidget(QWidget *widget, int row, int column)
 {
 	AddWidget(widget, row, column, 1, 1);

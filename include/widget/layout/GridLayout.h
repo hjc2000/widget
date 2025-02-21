@@ -2,6 +2,7 @@
 #include <memory>
 #include <qgridlayout.h>
 #include <qwidget.h>
+#include <widget/layout/Padding.h>
 
 namespace widget
 {
@@ -17,6 +18,14 @@ namespace widget
 		 * @param parent
 		 */
 		GridLayout(QWidget *parent);
+
+		/**
+		 * @brief Construct a new Grid Layout object
+		 *
+		 * @param parent
+		 * @param padding
+		 */
+		GridLayout(QWidget *parent, widget::Padding const &padding);
 
 	public:
 		/**

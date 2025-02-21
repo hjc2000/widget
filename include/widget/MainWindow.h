@@ -1,6 +1,7 @@
 #pragma once
 #include "layout/Padding.h"
 #include "qcheckbox.h"
+#include "qwindowdefs.h"
 #include <base/delegate/Delegate.h>
 #include <QCheckBox >
 #include <QDateTimeEdit>
@@ -26,7 +27,10 @@ namespace widget
 		QWidget _central_widget{};
 
 		/// @brief 布局控件。
-		widget::GridLayout _layout{&_central_widget};
+		widget::GridLayout _layout{
+			&_central_widget,
+			widget::Padding{10},
+		};
 
 		widget::RangeSubmit _range_submit{};
 		QCheckBox _check_box{"选择框"};
