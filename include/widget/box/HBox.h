@@ -27,20 +27,14 @@ namespace widget
 		 *
 		 * @param widgets
 		 */
-		HBox(std::initializer_list<std::shared_ptr<QWidget>> widgets)
-		{
-			AddWidget(widgets);
-		}
+		HBox(std::initializer_list<std::shared_ptr<QWidget>> widgets);
 
 		/**
 		 * @brief Construct a new HBox object
 		 *
 		 * @param widgets
 		 */
-		HBox(std::vector<std::shared_ptr<QWidget>> widgets)
-		{
-			AddWidget(widgets);
-		}
+		HBox(std::vector<std::shared_ptr<QWidget>> widgets);
 
 		/**
 		 * @brief Construct a new HBox object
@@ -48,21 +42,14 @@ namespace widget
 		 * @param widgets
 		 * @param padding
 		 */
-		HBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding)
-			: widget::HBox(widgets)
-		{
-			SetPadding(padding);
-		}
+		HBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding);
 
 		/**
 		 * @brief Construct a new HBox object
 		 *
 		 * @param widgets
 		 */
-		HBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
-		{
-			AddWidget(widgets);
-		}
+		HBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets);
 
 		/**
 		 * @brief Construct a new HBox object

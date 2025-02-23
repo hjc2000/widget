@@ -1,5 +1,26 @@
 #include "VBox.h"
 
+widget::VBox::VBox(std::initializer_list<std::shared_ptr<QWidget>> widgets)
+{
+	AddWidget(widgets);
+}
+
+widget::VBox::VBox(std::vector<std::shared_ptr<QWidget>> widgets)
+{
+	AddWidget(widgets);
+}
+
+widget::VBox::VBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding)
+	: widget::VBox(widgets)
+{
+	SetPadding(padding);
+}
+
+widget::VBox::VBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
+{
+	AddWidget(widgets);
+}
+
 void widget::VBox::AddWidget(std::shared_ptr<QWidget> widget)
 {
 	auto it = _widget_set.find(widget);

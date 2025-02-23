@@ -9,6 +9,10 @@
 
 namespace widget
 {
+	/**
+	 * @brief 盒子接口。
+	 *
+	 */
 	class IBox :
 		public QWidget
 	{

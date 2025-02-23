@@ -32,20 +32,14 @@ namespace widget
 		 *
 		 * @param widgets
 		 */
-		VBox(std::initializer_list<std::shared_ptr<QWidget>> widgets)
-		{
-			AddWidget(widgets);
-		}
+		VBox(std::initializer_list<std::shared_ptr<QWidget>> widgets);
 
 		/**
 		 * @brief Construct a new VBox object
 		 *
 		 * @param widgets
 		 */
-		VBox(std::vector<std::shared_ptr<QWidget>> widgets)
-		{
-			AddWidget(widgets);
-		}
+		VBox(std::vector<std::shared_ptr<QWidget>> widgets);
 
 		/**
 		 * @brief Construct a new VBox object
@@ -53,21 +47,14 @@ namespace widget
 		 * @param widgets
 		 * @param padding
 		 */
-		VBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding)
-			: widget::VBox(widgets)
-		{
-			SetPadding(padding);
-		}
+		VBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding);
 
 		/**
 		 * @brief Construct a new VBox object
 		 *
 		 * @param widgets
 		 */
-		VBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
-		{
-			AddWidget(widgets);
-		}
+		VBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets);
 
 		/**
 		 * @brief Construct a new VBox object

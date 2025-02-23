@@ -1,5 +1,26 @@
 #include "HBox.h"
 
+widget::HBox::HBox(std::initializer_list<std::shared_ptr<QWidget>> widgets)
+{
+	AddWidget(widgets);
+}
+
+widget::HBox::HBox(std::vector<std::shared_ptr<QWidget>> widgets)
+{
+	AddWidget(widgets);
+}
+
+widget::HBox::HBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding)
+	: widget::HBox(widgets)
+{
+	SetPadding(padding);
+}
+
+widget::HBox::HBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
+{
+	AddWidget(widgets);
+}
+
 void widget::HBox::AddWidget(std::shared_ptr<QWidget> widget)
 {
 	auto it = _widget_set.find(widget);
