@@ -1,6 +1,7 @@
 #include "FormTableBox.h"
 #include <base/string/define.h>
 #include <exception>
+#include <format>
 #include <stdexcept>
 
 widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items)
@@ -40,9 +41,10 @@ void widget::FormTableBox::SetItem(int row, widget::FormTableBoxItem const &item
 
 void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableBoxItem> const &items)
 {
+	int i = 0;
+
 	try
 	{
-		int i = 0;
 		for (widget::FormTableBoxItem const &item : items)
 		{
 			SetItem(i++, item);
@@ -50,7 +52,11 @@ void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableBoxIte
 	}
 	catch (std::exception const &e)
 	{
-		throw new std::runtime_error{CODE_POS_STR + e.what()};
+		std::string message = CODE_POS_STR +
+							  std::format("添加到第 {} 个项目时引发异常", i) +
+							  e.what();
+
+		throw new std::runtime_error{message};
 	}
 }
 
