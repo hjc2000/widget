@@ -9,7 +9,7 @@ namespace widget
 	 * @brief 表单的项目。
 	 *
 	 */
-	class FormTableItem
+	class FormTableBoxItem
 	{
 	private:
 		std::string _label{};
@@ -22,7 +22,7 @@ namespace widget
 		 * @param label
 		 * @param widget
 		 */
-		FormTableItem(std::string const &label, std::shared_ptr<QWidget> const &widget);
+		FormTableBoxItem(std::string const &label, std::shared_ptr<QWidget> const &widget);
 
 	public:
 		/**

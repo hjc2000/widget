@@ -4,7 +4,7 @@
 #include <base/container/Dictionary.h>
 #include <initializer_list>
 #include <memory>
-#include <widget/layout/FormTableItem.h>
+#include <widget/box/FormTableBoxItem.h>
 #include <widget/layout/FormTableLayout.h>
 
 namespace widget
@@ -32,7 +32,7 @@ namespace widget
 		 *
 		 * @param items
 		 */
-		FormTableBox(std::initializer_list<widget::FormTableItem> const &items);
+		FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items);
 
 	public:
 		/**
@@ -50,14 +50,14 @@ namespace widget
 		 * @param row
 		 * @param item
 		 */
-		void SetItem(int row, widget::FormTableItem const &item);
+		void SetItem(int row, widget::FormTableBoxItem const &item);
 
 		/**
 		 * @brief 设置一系列表单项。
 		 *
 		 * @param items
 		 */
-		void SetItem(std::initializer_list<widget::FormTableItem> const &items);
+		void SetItem(std::initializer_list<widget::FormTableBoxItem> const &items);
 
 		/**
 		 * @brief 移除某一行。

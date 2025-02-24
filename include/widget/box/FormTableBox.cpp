@@ -3,7 +3,7 @@
 #include <exception>
 #include <stdexcept>
 
-widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableItem> const &items)
+widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items)
 {
 	try
 	{
@@ -26,7 +26,7 @@ void widget::FormTableBox::SetItem(int row, std::string const &label, std::share
 	_widget_dic.Add(row, widget);
 }
 
-void widget::FormTableBox::SetItem(int row, widget::FormTableItem const &item)
+void widget::FormTableBox::SetItem(int row, widget::FormTableBoxItem const &item)
 {
 	try
 	{
@@ -38,12 +38,12 @@ void widget::FormTableBox::SetItem(int row, widget::FormTableItem const &item)
 	}
 }
 
-void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableItem> const &items)
+void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableBoxItem> const &items)
 {
 	try
 	{
 		int i = 0;
-		for (widget::FormTableItem const &item : items)
+		for (widget::FormTableBoxItem const &item : items)
 		{
 			SetItem(i++, item);
 		}
