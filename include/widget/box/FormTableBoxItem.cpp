@@ -1,9 +1,20 @@
 #include "FormTableBoxItem.h"
+#include "base/string/define.h"
 #include "qlabel.h"
 #include <memory>
 
 void widget::FormTableBoxItem::Initialize()
 {
+	if (_left == nullptr)
+	{
+		throw new std::runtime_error{CODE_POS_STR + "_left 不能为空指针。"};
+	}
+
+	if (_right == nullptr)
+	{
+		throw new std::runtime_error{CODE_POS_STR + "_right 不能为空指针。"};
+	}
+
 	_left->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
 	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 }
