@@ -1,30 +1,61 @@
 #include "FormTableBox.h"
+#include <base/string/define.h>
+#include <exception>
+#include <stdexcept>
 
-widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableItem> items)
+widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableItem> const &items)
 {
-	SetItem(items);
+	try
+	{
+		SetItem(items);
+	}
+	catch (std::exception const &e)
+	{
+		throw new std::runtime_error{CODE_POS_STR + e.what()};
+	}
 }
 
-void widget::FormTableBox::SetItem(int row, std::string const &label, QWidget *widget)
+void widget::FormTableBox::SetItem(int row, std::string const &label, std::shared_ptr<QWidget> const &widget)
 {
-	_layout.SetItem(row, label, widget);
+	if (widget == nullptr)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
+	}
+
+	_layout.SetItem(row, label, widget.get());
+	_widget_dic.Add(row, widget);
 }
 
 void widget::FormTableBox::SetItem(int row, widget::FormTableItem const &item)
 {
-	SetItem(row, item.Label(), item.Widget());
+	try
+	{
+		SetItem(row, item.Label(), item.Widget());
+	}
+	catch (std::exception const &e)
+	{
+		throw new std::runtime_error{CODE_POS_STR + e.what()};
+	}
 }
 
-void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableItem> items)
+void widget::FormTableBox::SetItem(std::initializer_list<widget::FormTableItem> const &items)
 {
-	int i = 0;
-	for (widget::FormTableItem const &item : items)
+	try
 	{
-		SetItem(i++, item);
+		int i = 0;
+		for (widget::FormTableItem const &item : items)
+		{
+			SetItem(i++, item);
+		}
+	}
+	catch (std::exception const &e)
+	{
+		throw new std::runtime_error{CODE_POS_STR + e.what()};
 	}
 }
 
 void widget::FormTableBox::RemoveItem(int row)
 {
 	_layout.RemoveItem(row);
+	_widget_dic.Remove(row);
 }

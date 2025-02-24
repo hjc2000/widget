@@ -1,7 +1,9 @@
 #pragma once
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
+#include <base/container/Dictionary.h>
 #include <initializer_list>
+#include <memory>
 #include <widget/layout/FormTableItem.h>
 #include <widget/layout/FormTableLayout.h>
 
@@ -16,6 +18,7 @@ namespace widget
 	{
 	private:
 		widget::FormTableLayout _layout{this, widget::Padding{10}};
+		base::Dictionary<int, std::shared_ptr<QWidget>> _widget_dic;
 
 	public:
 		/**
@@ -29,7 +32,7 @@ namespace widget
 		 *
 		 * @param items
 		 */
-		FormTableBox(std::initializer_list<widget::FormTableItem> items);
+		FormTableBox(std::initializer_list<widget::FormTableItem> const &items);
 
 	public:
 		/**
@@ -39,7 +42,7 @@ namespace widget
 		 * @param label
 		 * @param widget
 		 */
-		void SetItem(int row, std::string const &label, QWidget *widget);
+		void SetItem(int row, std::string const &label, std::shared_ptr<QWidget> const &widget);
 
 		/**
 		 * @brief 设置一条表单项。
@@ -54,7 +57,7 @@ namespace widget
 		 *
 		 * @param items
 		 */
-		void SetItem(std::initializer_list<widget::FormTableItem> items);
+		void SetItem(std::initializer_list<widget::FormTableItem> const &items);
 
 		/**
 		 * @brief 移除某一行。

@@ -22,7 +22,7 @@ namespace widget
 		 *
 		 * @param widget
 		 */
-		virtual void AddWidget(std::shared_ptr<QWidget> widget) = 0;
+		virtual void AddWidget(std::shared_ptr<QWidget> const &widget) = 0;
 
 	public:
 		/**
@@ -30,7 +30,7 @@ namespace widget
 		 *
 		 * @param widget
 		 */
-		virtual void RemoveWidget(std::shared_ptr<QWidget> widget) = 0;
+		virtual void RemoveWidget(std::shared_ptr<QWidget> const &widget) = 0;
 
 		/**
 		 * @brief 清空盒子中的所有控件。
@@ -59,21 +59,21 @@ namespace widget
 		 *
 		 * @param widgets
 		 */
-		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> widgets);
+		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief 向盒子添加一系列控件。
 		 *
 		 * @param widgets
 		 */
-		void AddWidget(std::vector<std::shared_ptr<QWidget>> widgets);
+		void AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief 向盒子添加一系列控件。
 		 *
 		 * @param widgets
 		 */
-		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> &widgets);
+		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief 向盒子添加一系列控件。
@@ -82,7 +82,7 @@ namespace widget
 		 * @param widgets
 		 */
 		template <size_t TCount>
-		void AddWidget(std::array<std::shared_ptr<QWidget>, TCount> &widgets)
+		void AddWidget(std::array<std::shared_ptr<QWidget>, TCount> const &widgets)
 		{
 			for (auto widget : widgets)
 			{

@@ -1,6 +1,6 @@
 #include "IBox.h"
 
-void widget::IBox::AddWidget(std::initializer_list<std::shared_ptr<QWidget>> widgets)
+void widget::IBox::AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
 {
 	for (auto widget : widgets)
 	{
@@ -8,7 +8,7 @@ void widget::IBox::AddWidget(std::initializer_list<std::shared_ptr<QWidget>> wid
 	}
 }
 
-void widget::IBox::AddWidget(std::vector<std::shared_ptr<QWidget>> widgets)
+void widget::IBox::AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets)
 {
 	for (auto widget : widgets)
 	{
@@ -16,7 +16,7 @@ void widget::IBox::AddWidget(std::vector<std::shared_ptr<QWidget>> widgets)
 	}
 }
 
-void widget::IBox::AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> &widgets)
+void widget::IBox::AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
 {
 	for (auto widget : widgets)
 	{

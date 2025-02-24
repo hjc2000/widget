@@ -27,14 +27,14 @@ namespace widget
 		 *
 		 * @param widgets
 		 */
-		HBox(std::initializer_list<std::shared_ptr<QWidget>> widgets);
+		HBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief Construct a new HBox object
 		 *
 		 * @param widgets
 		 */
-		HBox(std::vector<std::shared_ptr<QWidget>> widgets);
+		HBox(std::vector<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief Construct a new HBox object
@@ -42,14 +42,14 @@ namespace widget
 		 * @param widgets
 		 * @param padding
 		 */
-		HBox(std::vector<std::shared_ptr<QWidget>> widgets, widget::Padding const &padding);
+		HBox(std::vector<std::shared_ptr<QWidget>> const &widgets, widget::Padding const &padding);
 
 		/**
 		 * @brief Construct a new HBox object
 		 *
 		 * @param widgets
 		 */
-		HBox(base::IEnumerable<std::shared_ptr<QWidget>> &widgets);
+		HBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
 
 		/**
 		 * @brief Construct a new HBox object
@@ -58,12 +58,9 @@ namespace widget
 		 * @param widgets
 		 */
 		template <size_t TCount>
-		HBox(std::array<std::shared_ptr<QWidget>, TCount> &widgets)
+		HBox(std::array<std::shared_ptr<QWidget>, TCount> const &widgets)
 		{
-			for (auto widget : widgets)
-			{
-				AddWidget(widget);
-			}
+			AddWidget(widgets);
 		}
 
 	public:
@@ -74,14 +71,14 @@ namespace widget
 		 *
 		 * @param widget
 		 */
-		virtual void AddWidget(std::shared_ptr<QWidget> widget) override;
+		virtual void AddWidget(std::shared_ptr<QWidget> const &widget) override;
 
 		/**
 		 * @brief 将控件从盒子中移除。
 		 *
 		 * @param widget
 		 */
-		virtual void RemoveWidget(std::shared_ptr<QWidget> widget) override;
+		virtual void RemoveWidget(std::shared_ptr<QWidget> const &widget) override;
 
 		/**
 		 * @brief 清空盒子中的所有控件。
