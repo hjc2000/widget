@@ -15,9 +15,7 @@ void widget::CheckBox::ConnectSignals()
 			{
 				try
 				{
-					widget::CheckState check_state{};
-					check_state << q_check_state;
-					_check_state_changed_event.Invoke(check_state);
+					_check_state_changed_event.Invoke();
 				}
 				catch (std::exception const &e)
 				{
@@ -64,7 +62,7 @@ void widget::CheckBox::SetCheckState(widget::CheckState value)
 	_check_box->setCheckState(q_check_state);
 }
 
-base::IEvent<widget::CheckState> &widget::CheckBox::CheckStateChangedEvent()
+base::IEvent<> &widget::CheckBox::CheckStateChangedEvent()
 {
 	return _check_state_changed_event;
 }

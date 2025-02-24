@@ -1,5 +1,7 @@
 #pragma once
+#include "qobject.h"
 #include <qlabel.h>
+#include <string>
 #include <widget/line-input-widget/Input.h>
 
 namespace widget
@@ -13,7 +15,9 @@ namespace widget
 	class RangeSubmit :
 		public QWidget
 	{
-	private: // 控件
+	private:
+		// 控件
+
 		widget::HBoxLayout _layout{this};
 		widget::Input _left_edit{};
 		widget::Input _right_edit{};
@@ -37,13 +41,36 @@ namespace widget
 		 */
 		RangeSubmit();
 
-	public: // 属性
+	public:
+		// 属性
+
 		/**
 		 * @brief 左侧输入框的文本。
 		 *
 		 * @return QString
 		 */
 		QString LeftText() const;
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(QString const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(std::string const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(char const *value);
 
 		/**
 		 * @brief 左侧输入框的文本。
@@ -60,13 +87,36 @@ namespace widget
 		QString RightText() const;
 
 		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(QString const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(std::string const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(char const *value);
+
+		/**
 		 * @brief 右侧输入框的文本。
 		 *
 		 * @return std::string
 		 */
 		std::string RightTextStdString() const;
 
-	public: // 事件
+	public:
+		// 事件
+
 		/**
 		 * @brief 提交数据时触发的事件。
 		 *
@@ -79,7 +129,9 @@ namespace widget
 		 */
 		base::IEvent<> &SubmitEvent();
 
-	public: // 输入非法
+	public:
+		// 输入非法
+
 		/**
 		 * @brief 设置左边输入框的输入非法样式。
 		 *

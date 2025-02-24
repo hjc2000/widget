@@ -22,7 +22,7 @@ namespace widget
 		widget::HBoxLayout _layout{this};
 
 	public:
-		base::Delegate<widget::CheckState> _check_state_changed_event;
+		base::Delegate<> _check_state_changed_event;
 
 		void ConnectSignals();
 
@@ -59,8 +59,8 @@ namespace widget
 		/**
 		 * @brief 选择状态改变事件。
 		 *
-		 * @return base::IEvent<widget::CheckState>&
+		 * @return base::IEvent<>&
 		 */
-		base::IEvent<widget::CheckState> &CheckStateChangedEvent();
+		base::IEvent<> &CheckStateChangedEvent();
 	};
 } // namespace widget

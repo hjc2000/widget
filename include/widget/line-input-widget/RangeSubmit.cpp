@@ -40,6 +40,21 @@ QString widget::RangeSubmit::LeftText() const
 	return _left_edit.Text();
 }
 
+void widget::RangeSubmit::SetLeftText(QString const &value)
+{
+	_left_edit.SetText(value);
+}
+
+void widget::RangeSubmit::SetLeftText(std::string const &value)
+{
+	_left_edit.SetText(value);
+}
+
+void widget::RangeSubmit::SetLeftText(char const *value)
+{
+	_left_edit.SetText(value);
+}
+
 std::string widget::RangeSubmit::LeftTextStdString() const
 {
 	return widget::ToString(LeftText());
@@ -48,6 +63,21 @@ std::string widget::RangeSubmit::LeftTextStdString() const
 QString widget::RangeSubmit::RightText() const
 {
 	return _right_edit.Text();
+}
+
+void widget::RangeSubmit::SetRightText(QString const &value)
+{
+	_right_edit.SetText(value);
+}
+
+void widget::RangeSubmit::SetRightText(std::string const &value)
+{
+	_right_edit.SetText(value);
+}
+
+void widget::RangeSubmit::SetRightText(char const *value)
+{
+	_right_edit.SetText(value);
 }
 
 std::string widget::RangeSubmit::RightTextStdString() const

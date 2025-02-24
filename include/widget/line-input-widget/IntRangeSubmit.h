@@ -30,8 +30,11 @@ namespace widget
 		base::Delegate<> _submit_event;
 
 	public:
+		IntRangeSubmit();
+
 		IntRangeSubmit(int64_t min, int64_t max);
 
+	public:
 		int64_t MinValue() const;
 		void SetMinValue(int64_t value);
 		int64_t MaxValue() const;
