@@ -30,3 +30,13 @@ void widget::FormTableLayout::RemoveItem(int row)
 	_grid_layout->RemoveWidget(row, 0);
 	_grid_layout->RemoveWidget(row, 1);
 }
+
+widget::Padding widget::FormTableLayout::Padding() const
+{
+	return _grid_layout->Padding();
+}
+
+void widget::FormTableLayout::SetPadding(widget::Padding const &value)
+{
+	_grid_layout->SetPadding(value);
+}

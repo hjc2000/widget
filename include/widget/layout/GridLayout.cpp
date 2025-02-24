@@ -1,4 +1,5 @@
 #include "GridLayout.h"
+#include "Padding.h"
 #include "qgridlayout.h"
 #include "qnamespace.h"
 #include "qwidget.h"
@@ -9,14 +10,13 @@ widget::GridLayout::GridLayout(QWidget *parent)
 {
 	_grid_layout = std::shared_ptr<QGridLayout>{new QGridLayout{parent}};
 	_grid_layout->setSpacing(10);
-	_grid_layout->setContentsMargins(0, 0, 0, 0);
+	SetPadding(widget::Padding{0});
 }
 
 widget::GridLayout::GridLayout(QWidget *parent, widget::Padding const &padding)
 	: GridLayout(parent)
 {
-	_grid_layout->setContentsMargins(padding.Left(), padding.Top(),
-									 padding.Right(), padding.Bottom());
+	SetPadding(padding);
 }
 
 void widget::GridLayout::AddWidget(QWidget *widget, int row, int column)
@@ -122,7 +122,30 @@ void widget::GridLayout::SetColumnStretch(int column, int stretch)
 	_grid_layout->setColumnStretch(column, stretch);
 }
 
+Qt::AlignmentFlag widget::GridLayout::Alignment() const
+{
+	return static_cast<Qt::AlignmentFlag>(_grid_layout->alignment().toInt());
+}
+
 void widget::GridLayout::SetAlignment(Qt::AlignmentFlag alignment)
 {
 	_grid_layout->setAlignment(alignment);
+}
+
+widget::Padding widget::GridLayout::Padding() const
+{
+	QMargins qmargin = _grid_layout->contentsMargins();
+
+	return widget::Padding{
+		qmargin.left(),
+		qmargin.top(),
+		qmargin.right(),
+		qmargin.bottom(),
+	};
+}
+
+void widget::GridLayout::SetPadding(widget::Padding const &value)
+{
+	_grid_layout->setContentsMargins(value.Left(), value.Top(),
+									 value.Right(), value.Bottom());
 }

@@ -16,7 +16,7 @@ namespace widget
 		public QWidget
 	{
 	private:
-		widget::FormTableLayout _layout{this, widget::Padding{10}};
+		widget::FormTableLayout _layout{this, widget::Padding{0}};
 		base::Dictionary<int, widget::FormTableBoxItem> _widget_dic;
 
 	public:
@@ -55,5 +55,20 @@ namespace widget
 		 * @param row
 		 */
 		void RemoveItem(int row);
+
+	public:
+		/**
+		 * @brief 表单盒子内边距。
+		 *
+		 * @return widget::Padding
+		 */
+		widget::Padding Padding() const;
+
+		/**
+		 * @brief 设置表单盒子内边距。
+		 *
+		 * @param value
+		 */
+		void SetPadding(widget::Padding const &value);
 	};
 } // namespace widget

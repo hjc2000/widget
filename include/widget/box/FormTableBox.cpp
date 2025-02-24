@@ -65,3 +65,13 @@ void widget::FormTableBox::RemoveItem(int row)
 	_layout.RemoveItem(row);
 	_widget_dic.Remove(row);
 }
+
+widget::Padding widget::FormTableBox::Padding() const
+{
+	return _layout.Padding();
+}
+
+void widget::FormTableBox::SetPadding(widget::Padding const &value)
+{
+	_layout.SetPadding(value);
+}

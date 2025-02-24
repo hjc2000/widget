@@ -1,4 +1,5 @@
 #pragma once
+#include "qnamespace.h"
 #include <memory>
 #include <qgridlayout.h>
 #include <qwidget.h>
@@ -151,6 +152,15 @@ namespace widget
 		void SetColumnStretch(int column, int stretch);
 
 	public:
+		// 样式
+
+		/**
+		 * @brief 网格盒子的对齐方式。
+		 *
+		 * @return Qt::AlignmentFlag
+		 */
+		Qt::AlignmentFlag Alignment() const;
+
 		/**
 		 * @brief 设置网格盒子的对齐方式。
 		 *
@@ -162,5 +172,19 @@ namespace widget
 		 * @param alignment 对齐方式。
 		 */
 		void SetAlignment(Qt::AlignmentFlag alignment);
+
+		/**
+		 * @brief 网格盒子的内边距。
+		 *
+		 * @return widget::Padding
+		 */
+		widget::Padding Padding() const;
+
+		/**
+		 * @brief 设置网格盒子的内边距。
+		 *
+		 * @param value
+		 */
+		void SetPadding(widget::Padding const &value);
 	};
 } // namespace widget

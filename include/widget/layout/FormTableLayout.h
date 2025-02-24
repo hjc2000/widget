@@ -49,5 +49,20 @@ namespace widget
 		 * @param row
 		 */
 		void RemoveItem(int row);
+
+	public:
+		/**
+		 * @brief 表单布局内边距。
+		 *
+		 * @return widget::Padding
+		 */
+		widget::Padding Padding() const;
+
+		/**
+		 * @brief 设置表单布局内边距。
+		 *
+		 * @param value
+		 */
+		void SetPadding(widget::Padding const &value);
 	};
 } // namespace widget
