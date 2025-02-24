@@ -15,8 +15,6 @@ namespace widget
 		QWidget *_widget{};
 
 	public:
-		FormTableItem() = default;
-
 		FormTableItem(std::string const &label, QWidget *widget);
 
 	public:
