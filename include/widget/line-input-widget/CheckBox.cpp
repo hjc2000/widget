@@ -17,7 +17,7 @@ void widget::CheckBox::ConnectSignals()
 				{
 					widget::CheckState check_state{};
 					check_state << q_check_state;
-					_check_state_changed.Invoke(check_state);
+					_check_state_changed_event.Invoke(check_state);
 				}
 				catch (std::exception const &e)
 				{
@@ -33,6 +33,8 @@ void widget::CheckBox::ConnectSignals()
 widget::CheckBox::CheckBox()
 {
 	_check_box = std::shared_ptr<QCheckBox>{new QCheckBox{}};
+	_layout.AddWidget(_check_box.get());
+
 	ConnectSignals();
 }
 
@@ -42,6 +44,8 @@ widget::CheckBox::CheckBox(std::string const &text)
 		text.c_str(),
 		nullptr,
 	}};
+
+	_layout.AddWidget(_check_box.get());
 
 	ConnectSignals();
 }
@@ -58,4 +62,9 @@ void widget::CheckBox::SetCheckState(widget::CheckState value)
 	Qt::CheckState q_check_state{};
 	q_check_state << value;
 	_check_box->setCheckState(q_check_state);
+}
+
+base::IEvent<widget::CheckState> &widget::CheckBox::CheckStateChangedEvent()
+{
+	return _check_state_changed_event;
 }

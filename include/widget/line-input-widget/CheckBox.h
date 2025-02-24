@@ -1,9 +1,11 @@
 #pragma once
+#include "base/delegate/IEvent.h"
 #include "qcheckbox.h"
 #include "qwidget.h"
 #include <base/delegate/Delegate.h>
 #include <memory>
 #include <string>
+#include <widget/layout/HBoxLayout.h>
 #include <widget/line-input-widget/CheckState.h>
 
 namespace widget
@@ -17,7 +19,10 @@ namespace widget
 	{
 	private:
 		std::shared_ptr<QCheckBox> _check_box;
-		base::Delegate<widget::CheckState> _check_state_changed;
+		widget::HBoxLayout _layout{this};
+
+	public:
+		base::Delegate<widget::CheckState> _check_state_changed_event;
 
 		void ConnectSignals();
 
@@ -49,5 +54,13 @@ namespace widget
 		 * @param value
 		 */
 		void SetCheckState(widget::CheckState value);
+
+	public:
+		/**
+		 * @brief 选择状态改变事件。
+		 *
+		 * @return base::IEvent<widget::CheckState>&
+		 */
+		base::IEvent<widget::CheckState> &CheckStateChangedEvent();
 	};
 } // namespace widget
