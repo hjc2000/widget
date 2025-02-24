@@ -36,12 +36,12 @@ widget::FormTableBoxItem::FormTableBoxItem(std::string const &left_label_text,
 	Initialize();
 }
 
-std::shared_ptr<QWidget> widget::FormTableBoxItem::Left() const
+std::shared_ptr<QWidget> widget::FormTableBoxItem::LeftWidget() const
 {
 	return _left;
 }
 
-std::shared_ptr<QWidget> widget::FormTableBoxItem::Right() const
+std::shared_ptr<QWidget> widget::FormTableBoxItem::RightWidget() const
 {
 	return _right;
 }

@@ -17,19 +17,19 @@ widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxIte
 
 void widget::FormTableBox::SetItem(int row, widget::FormTableBoxItem const &item)
 {
-	if (item.Left() == nullptr)
+	if (item.LeftWidget() == nullptr)
 	{
-		throw new std::runtime_error{CODE_POS_STR + "item.Left() 不能为空指针。"};
+		throw new std::runtime_error{CODE_POS_STR + "item.LeftWidget() 不能为空指针。"};
 	}
 
-	if (item.Right() == nullptr)
+	if (item.RightWidget() == nullptr)
 	{
-		throw new std::runtime_error{CODE_POS_STR + "item.Right() 不能为空指针。"};
+		throw new std::runtime_error{CODE_POS_STR + "item.RightWidget() 不能为空指针。"};
 	}
 
 	try
 	{
-		_layout.SetItem(row, item.Left().get(), item.Right().get());
+		_layout.SetItem(row, item.LeftWidget().get(), item.RightWidget().get());
 		_widget_dic.Add(row, item);
 	}
 	catch (std::exception const &e)
