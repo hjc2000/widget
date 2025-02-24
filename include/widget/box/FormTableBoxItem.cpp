@@ -1,17 +1,36 @@
 #include "FormTableBoxItem.h"
+#include "qlabel.h"
+#include <memory>
 
-widget::FormTableBoxItem::FormTableBoxItem(std::string const &label, std::shared_ptr<QWidget> const &widget)
-	: _label(label),
-	  _widget(widget)
+void widget::FormTableBoxItem::Initialize()
 {
+	_left->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 }
 
-std::string widget::FormTableBoxItem::Label() const
+widget::FormTableBoxItem::FormTableBoxItem(std::shared_ptr<QWidget> const &left,
+										   std::shared_ptr<QWidget> const &right)
+	: _left(left),
+	  _right(right)
 {
-	return _label;
+	Initialize();
 }
 
-std::shared_ptr<QWidget> widget::FormTableBoxItem::Widget() const
+widget::FormTableBoxItem::FormTableBoxItem(std::string const &left_label_text,
+										   std::shared_ptr<QWidget> const &right)
 {
-	return _widget;
+	_left = std::shared_ptr<QLabel>{new QLabel{left_label_text.c_str()}};
+	_right = right;
+
+	Initialize();
+}
+
+std::shared_ptr<QWidget> widget::FormTableBoxItem::Left() const
+{
+	return _left;
+}
+
+std::shared_ptr<QWidget> widget::FormTableBoxItem::Right() const
+{
+	return _right;
 }

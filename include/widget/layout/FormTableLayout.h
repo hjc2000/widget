@@ -1,8 +1,6 @@
 #pragma once
 #include "Padding.h"
-#include "qlabel.h"
 #include "qwidget.h"
-#include <base/container/Dictionary.h>
 #include <memory>
 #include <widget/layout/GridLayout.h>
 
@@ -16,7 +14,6 @@ namespace widget
 	{
 	private:
 		std::shared_ptr<widget::GridLayout> _grid_layout;
-		base::Dictionary<int, std::shared_ptr<QLabel>> _label_dic;
 
 		void Initialize();
 
@@ -41,10 +38,10 @@ namespace widget
 		 * @brief 设置一条表单项。
 		 *
 		 * @param row
-		 * @param label
-		 * @param widget
+		 * @param left
+		 * @param right
 		 */
-		void SetItem(int row, std::string const &label, QWidget *widget);
+		void SetItem(int row, QWidget *left, QWidget *right);
 
 		/**
 		 * @brief 移除某一行。

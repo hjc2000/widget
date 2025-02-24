@@ -12,31 +12,22 @@ namespace widget
 	class FormTableBoxItem
 	{
 	private:
-		std::string _label{};
-		std::shared_ptr<QWidget> _widget{};
+		std::shared_ptr<QWidget> _left{};
+		std::shared_ptr<QWidget> _right{};
+
+		void Initialize();
 
 	public:
-		/**
-		 * @brief Construct a new Form Table Item object
-		 *
-		 * @param label
-		 * @param widget
-		 */
-		FormTableBoxItem(std::string const &label, std::shared_ptr<QWidget> const &widget);
+		FormTableBoxItem() = default;
+
+		FormTableBoxItem(std::shared_ptr<QWidget> const &left,
+						 std::shared_ptr<QWidget> const &right);
+
+		FormTableBoxItem(std::string const &left_label_text,
+						 std::shared_ptr<QWidget> const &right);
 
 	public:
-		/**
-		 * @brief 标签。
-		 *
-		 * @return std::string
-		 */
-		std::string Label() const;
-
-		/**
-		 * @brief 控件。
-		 *
-		 * @return std::shared_ptr<QWidget>
-		 */
-		std::shared_ptr<QWidget> Widget() const;
+		std::shared_ptr<QWidget> Left() const;
+		std::shared_ptr<QWidget> Right() const;
 	};
 } // namespace widget

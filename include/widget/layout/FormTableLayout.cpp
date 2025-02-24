@@ -1,5 +1,4 @@
 #include "FormTableLayout.h"
-#include "qlabel.h"
 #include "qnamespace.h"
 
 void widget::FormTableLayout::Initialize()
@@ -20,19 +19,14 @@ widget::FormTableLayout::FormTableLayout(QWidget *parent, widget::Padding const 
 	Initialize();
 }
 
-void widget::FormTableLayout::SetItem(int row, std::string const &label, QWidget *widget)
+void widget::FormTableLayout::SetItem(int row, QWidget *left, QWidget *right)
 {
-	std::shared_ptr<QLabel> qlabel{new QLabel{label.c_str()}};
-	qlabel->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
-
-	_label_dic.Set(row, qlabel);
-	_grid_layout->AddWidget(qlabel.get(), row, 0, Qt::AlignmentFlag::AlignTop);
-	_grid_layout->AddWidget(widget, row, 1, Qt::AlignmentFlag::AlignTop);
+	_grid_layout->AddWidget(left, row, 0, Qt::AlignmentFlag::AlignTop);
+	_grid_layout->AddWidget(right, row, 1, Qt::AlignmentFlag::AlignTop);
 }
 
 void widget::FormTableLayout::RemoveItem(int row)
 {
-	_label_dic.Remove(row);
 	_grid_layout->RemoveWidget(row, 0);
 	_grid_layout->RemoveWidget(row, 1);
 }

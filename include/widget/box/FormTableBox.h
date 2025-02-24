@@ -3,7 +3,6 @@
 #include "widget/layout/Padding.h"
 #include <base/container/Dictionary.h>
 #include <initializer_list>
-#include <memory>
 #include <widget/box/FormTableBoxItem.h>
 #include <widget/layout/FormTableLayout.h>
 
@@ -18,7 +17,7 @@ namespace widget
 	{
 	private:
 		widget::FormTableLayout _layout{this, widget::Padding{10}};
-		base::Dictionary<int, std::shared_ptr<QWidget>> _widget_dic;
+		base::Dictionary<int, widget::FormTableBoxItem> _widget_dic;
 
 	public:
 		/**
@@ -35,15 +34,6 @@ namespace widget
 		FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items);
 
 	public:
-		/**
-		 * @brief 设置一条表单项。
-		 *
-		 * @param row
-		 * @param label
-		 * @param widget
-		 */
-		void SetItem(int row, std::string const &label, std::shared_ptr<QWidget> const &widget);
-
 		/**
 		 * @brief 设置一条表单项。
 		 *

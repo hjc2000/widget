@@ -15,22 +15,22 @@ widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxIte
 	}
 }
 
-void widget::FormTableBox::SetItem(int row, std::string const &label, std::shared_ptr<QWidget> const &widget)
-{
-	if (widget == nullptr)
-	{
-		throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
-	}
-
-	_layout.SetItem(row, label, widget.get());
-	_widget_dic.Add(row, widget);
-}
-
 void widget::FormTableBox::SetItem(int row, widget::FormTableBoxItem const &item)
 {
+	if (item.Left() == nullptr)
+	{
+		throw new std::runtime_error{CODE_POS_STR + "item.Left() 不能为空指针。"};
+	}
+
+	if (item.Right() == nullptr)
+	{
+		throw new std::runtime_error{CODE_POS_STR + "item.Right() 不能为空指针。"};
+	}
+
 	try
 	{
-		SetItem(row, item.Label(), item.Widget());
+		_layout.SetItem(row, item.Left().get(), item.Right().get());
+		_widget_dic.Add(row, item);
 	}
 	catch (std::exception const &e)
 	{
