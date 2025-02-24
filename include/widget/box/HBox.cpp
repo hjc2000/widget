@@ -1,4 +1,5 @@
 #include "HBox.h"
+#include "base/string/define.h"
 
 widget::HBox::HBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
 {
@@ -23,6 +24,11 @@ widget::HBox::HBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
 
 void widget::HBox::AddWidget(std::shared_ptr<QWidget> const &widget)
 {
+	if (widget == nullptr)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
+	}
+
 	auto it = _widget_set.find(widget);
 	if (it != _widget_set.end())
 	{

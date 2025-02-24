@@ -25,8 +25,18 @@ namespace widget
 		FormTableItem(std::string const &label, std::shared_ptr<QWidget> const &widget);
 
 	public:
+		/**
+		 * @brief 标签。
+		 *
+		 * @return std::string
+		 */
 		std::string Label() const;
 
+		/**
+		 * @brief 控件。
+		 *
+		 * @return std::shared_ptr<QWidget>
+		 */
 		std::shared_ptr<QWidget> Widget() const;
 	};
 } // namespace widget
