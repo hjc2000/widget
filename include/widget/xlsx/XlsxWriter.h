@@ -38,10 +38,10 @@ namespace widget
 		void Write(int row, int column, char const *content, QXlsx::Format const &format);
 
 	public:
-		void SaveAsFile(QString const &file_name);
+		void SaveAsFile(QString const &file_path);
 
-		void SaveAsFile(std::string const &file_name);
+		void SaveAsFile(std::string const &file_path);
 
-		void SaveAsFile(char const *file_name);
+		void SaveAsFile(char const *file_path);
 	};
 } // namespace widget

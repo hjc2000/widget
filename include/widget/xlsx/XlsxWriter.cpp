@@ -34,17 +34,17 @@ void widget::XlsxWriter::Write(int row, int column, char const *content, QXlsx::
 	Write(row, column, QString{content}, format);
 }
 
-void widget::XlsxWriter::SaveAsFile(QString const &file_name)
+void widget::XlsxWriter::SaveAsFile(QString const &file_path)
 {
-	_xlsx_writer->saveAs(file_name);
+	_xlsx_writer->saveAs(file_path);
 }
 
-void widget::XlsxWriter::SaveAsFile(std::string const &file_name)
+void widget::XlsxWriter::SaveAsFile(std::string const &file_path)
 {
-	SaveAsFile(QString{file_name.c_str()});
+	SaveAsFile(QString{file_path.c_str()});
 }
 
-void widget::XlsxWriter::SaveAsFile(char const *file_name)
+void widget::XlsxWriter::SaveAsFile(char const *file_path)
 {
-	SaveAsFile(QString{file_name});
+	SaveAsFile(QString{file_path});
 }
