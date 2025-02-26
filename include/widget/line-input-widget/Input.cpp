@@ -9,7 +9,7 @@ void widget::Input::ConnectSignal()
 			{
 				try
 				{
-					_text_changing_event.Invoke(_line_edit.text());
+					_text_changed_event.Invoke(_line_edit.text());
 				}
 				catch (std::exception const &e)
 				{
@@ -52,7 +52,7 @@ void widget::Input::ConnectSignal()
 
 				try
 				{
-					_text_changed_event.Invoke(_line_edit.text());
+					_text_changing_finished_event.Invoke(_line_edit.text());
 				}
 				catch (std::exception const &e)
 				{
@@ -108,7 +108,7 @@ void widget::Input::SetText(QString const &value)
 
 	try
 	{
-		_text_changed_event.Invoke(_line_edit.text());
+		_text_changing_finished_event.Invoke(_line_edit.text());
 	}
 	catch (std::exception const &e)
 	{
@@ -134,14 +134,14 @@ std::string widget::Input::TextStdString() const
 	return ret;
 }
 
-base::IEvent<QString const &> &widget::Input::TextChangingEvent()
-{
-	return _text_changing_event;
-}
-
 base::IEvent<QString const &> &widget::Input::TextChangedEvent()
 {
 	return _text_changed_event;
+}
+
+base::IEvent<QString const &> &widget::Input::TextChangingFinishedEvent()
+{
+	return _text_changing_finished_event;
 }
 
 base::IEvent<QString const &> &widget::Input::TextEditedEvent()

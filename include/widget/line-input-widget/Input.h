@@ -23,8 +23,8 @@ namespace widget
 	private:
 		// 事件
 
-		base::Delegate<QString const &> _text_changing_event;
 		base::Delegate<QString const &> _text_changed_event;
+		base::Delegate<QString const &> _text_changing_finished_event;
 		base::Delegate<QString const &> _text_edited_event;
 		base::Delegate<QString const &> _text_editing_finished_event;
 
@@ -124,7 +124,7 @@ namespace widget
 		 *
 		 * @return base::IEvent<QString const &>&
 		 */
-		base::IEvent<QString const &> &TextChangingEvent();
+		base::IEvent<QString const &> &TextChangedEvent();
 
 		/**
 		 * @brief 输入框中的文本改变完成事件。
@@ -136,7 +136,7 @@ namespace widget
 		 *
 		 * @return base::IEvent<QString const &>&
 		 */
-		base::IEvent<QString const &> &TextChangedEvent();
+		base::IEvent<QString const &> &TextChangingFinishedEvent();
 
 		/**
 		 * @brief 输入框中的文本被编辑。
