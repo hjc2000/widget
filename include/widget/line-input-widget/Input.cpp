@@ -9,7 +9,7 @@ void widget::Input::ConnectSignal()
 			{
 				try
 				{
-					_text_changed_event.Invoke(_line_edit.text());
+					_text_changing_event.Invoke(_line_edit.text());
 				}
 				catch (std::exception const &e)
 				{
@@ -42,6 +42,17 @@ void widget::Input::ConnectSignal()
 				try
 				{
 					_text_editing_finished_event.Invoke(_line_edit.text());
+				}
+				catch (std::exception const &e)
+				{
+				}
+				catch (...)
+				{
+				}
+
+				try
+				{
+					_text_changed_event.Invoke(_line_edit.text());
 				}
 				catch (std::exception const &e)
 				{
@@ -91,15 +102,20 @@ QString widget::Input::Text() const
 	return _line_edit.text();
 }
 
-std::string widget::Input::TextStdString() const
-{
-	std::string ret = ToString(Text());
-	return ret;
-}
-
 void widget::Input::SetText(QString const &value)
 {
 	_line_edit.setText(value);
+
+	try
+	{
+		_text_changed_event.Invoke(_line_edit.text());
+	}
+	catch (std::exception const &e)
+	{
+	}
+	catch (...)
+	{
+	}
 }
 
 void widget::Input::SetText(std::string const &value)
@@ -110,6 +126,17 @@ void widget::Input::SetText(std::string const &value)
 void widget::Input::SetText(char const *value)
 {
 	SetText(QString{value});
+}
+
+std::string widget::Input::TextStdString() const
+{
+	std::string ret = ToString(Text());
+	return ret;
+}
+
+base::IEvent<QString const &> &widget::Input::TextChangingEvent()
+{
+	return _text_changing_event;
 }
 
 base::IEvent<QString const &> &widget::Input::TextChangedEvent()

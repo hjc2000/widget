@@ -235,19 +235,16 @@ QString widget::IntRangeSubmit::LeftText() const
 void widget::IntRangeSubmit::SetLeftText(QString const &value)
 {
 	_range_submit.SetLeftText(value);
-	OnSubmit();
 }
 
 void widget::IntRangeSubmit::SetLeftText(std::string const &value)
 {
 	_range_submit.SetLeftText(value);
-	OnSubmit();
 }
 
 void widget::IntRangeSubmit::SetLeftText(char const *value)
 {
 	_range_submit.SetLeftText(value);
-	OnSubmit();
 }
 
 std::string widget::IntRangeSubmit::LeftTextStdString() const
@@ -263,19 +260,16 @@ QString widget::IntRangeSubmit::RightText() const
 void widget::IntRangeSubmit::SetRightText(QString const &value)
 {
 	_range_submit.SetRightText(value);
-	OnSubmit();
 }
 
 void widget::IntRangeSubmit::SetRightText(std::string const &value)
 {
 	_range_submit.SetRightText(value);
-	OnSubmit();
 }
 
 void widget::IntRangeSubmit::SetRightText(char const *value)
 {
 	_range_submit.SetRightText(value);
-	OnSubmit();
 }
 
 std::string widget::IntRangeSubmit::RightTextStdString() const

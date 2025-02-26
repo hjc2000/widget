@@ -23,6 +23,7 @@ namespace widget
 	private:
 		// 事件
 
+		base::Delegate<QString const &> _text_changing_event;
 		base::Delegate<QString const &> _text_changed_event;
 		base::Delegate<QString const &> _text_edited_event;
 		base::Delegate<QString const &> _text_editing_finished_event;
@@ -83,13 +84,6 @@ namespace widget
 		QString Text() const;
 
 		/**
-		 * @brief 编辑框中的文本。
-		 *
-		 * @return std::string
-		 */
-		std::string TextStdString() const;
-
-		/**
 		 * @brief 设置：编辑框中的文本。
 		 *
 		 * @param value
@@ -110,16 +104,35 @@ namespace widget
 		 */
 		void SetText(char const *value);
 
+		/**
+		 * @brief 编辑框中的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string TextStdString() const;
+
 	public:
 		// 事件
 
 		/**
-		 * @brief 输入框中的文本改变事件。
+		 * @brief 输入框中的文本正在改变事件。
 		 *
 		 * @note 无论改变的原因是什么，即不管是程序修改还是用户修改，都会触发。
 		 *
 		 * @note 如果是程序引起的改变，调用完文本设置函数后触发。如果是用户编辑引起的改变，
 		 * 将在用户编辑每个字符时实时触发。
+		 *
+		 * @return base::IEvent<QString const &>&
+		 */
+		base::IEvent<QString const &> &TextChangingEvent();
+
+		/**
+		 * @brief 输入框中的文本改变完成事件。
+		 *
+		 * @note 无论改变的原因是什么，即不管是程序修改还是用户修改，都会触发。
+		 *
+		 * @note 如果是程序引起的改变，调用完文本设置函数后触发。如果是用户编辑引起的改变，
+		 * 将在用户按下回车或者让输入框失去焦点后触发。
 		 *
 		 * @return base::IEvent<QString const &>&
 		 */

@@ -2,35 +2,33 @@
 
 void widget::Submit::ConnectSignal()
 {
-	_button.ClickedEvent().Subscribe(
-		[this]()
-		{
-			try
-			{
-				_submit_event.Invoke(_line_edit.Text());
-			}
-			catch (std::exception const &e)
-			{
-			}
-			catch (...)
-			{
-			}
-		});
+	_button.ClickedEvent().Subscribe([this]()
+									 {
+										 try
+										 {
+											 _submit_event.Invoke(_line_edit.Text());
+										 }
+										 catch (std::exception const &e)
+										 {
+										 }
+										 catch (...)
+										 {
+										 }
+									 });
 
-	_line_edit.TextChangedEvent().Subscribe(
-		[this](QString const &text)
-		{
-			try
-			{
-				_submit_event.Invoke(_line_edit.Text());
-			}
-			catch (std::exception const &e)
-			{
-			}
-			catch (...)
-			{
-			}
-		});
+	_line_edit.TextChangedEvent().Subscribe([this](QString const &text)
+											{
+												try
+												{
+													_submit_event.Invoke(_line_edit.Text());
+												}
+												catch (std::exception const &e)
+												{
+												}
+												catch (...)
+												{
+												}
+											});
 }
 
 widget::Submit::Submit()
