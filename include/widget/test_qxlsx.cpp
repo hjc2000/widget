@@ -51,11 +51,10 @@ void widget::test_qxlsx()
 	{
 		qDebug() << "[debug] success to load xlsx file.";
 
-		auto cell = xlsxR.cellAt(row, col); // get cell pointer.
+		std::shared_ptr<QXlsx::Cell> cell = xlsxR.cellAt(row, col); // get cell pointer.
 		if (cell != NULL)
 		{
-			QVariant var =
-				cell->readValue();                      // read cell value (number(double), QDateTime, QString ...)
+			QVariant var = cell->readValue();           // read cell value (number(double), QDateTime, QString ...)
 			qDebug() << "[debug] cell(1,1) is " << var; // Display value. It is 'Hello Qt!'.
 		}
 		else
