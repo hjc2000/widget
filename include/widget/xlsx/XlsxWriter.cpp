@@ -1,6 +1,6 @@
 #include "XlsxWriter.h"
-#include "qcontainerfwd.h"
-#include "xlsxformat.h"
+#include <qcontainerfwd.h>
+#include <xlsxformat.h>
 
 void widget::XlsxWriter::Write(int row, int column, QString const &content)
 {
@@ -8,6 +8,11 @@ void widget::XlsxWriter::Write(int row, int column, QString const &content)
 }
 
 void widget::XlsxWriter::Write(int row, int column, std::string const &content)
+{
+	Write(row, column, content, QXlsx::Format{});
+}
+
+void widget::XlsxWriter::Write(int row, int column, char const *content)
 {
 	Write(row, column, content, QXlsx::Format{});
 }
@@ -22,4 +27,24 @@ void widget::XlsxWriter::Write(int row, int column, std::string const &content, 
 {
 	QString qstring{content.c_str()};
 	Write(row, column, qstring, format);
+}
+
+void widget::XlsxWriter::Write(int row, int column, char const *content, QXlsx::Format const &format)
+{
+	Write(row, column, QString{content}, format);
+}
+
+void widget::XlsxWriter::SaveAsFile(QString const &file_name)
+{
+	_xlsx_writer->saveAs(file_name);
+}
+
+void widget::XlsxWriter::SaveAsFile(std::string const &file_name)
+{
+	SaveAsFile(QString{file_name.c_str()});
+}
+
+void widget::XlsxWriter::SaveAsFile(char const *file_name)
+{
+	SaveAsFile(QString{file_name});
 }
