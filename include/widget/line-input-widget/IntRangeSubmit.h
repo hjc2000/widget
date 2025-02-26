@@ -133,5 +133,77 @@ namespace widget
 		 * @return std::string
 		 */
 		std::string RightPlaceholderTextStdString() const;
+
+	public:
+		/**
+		 * @brief 左侧输入框的文本。
+		 *
+		 * @return QString
+		 */
+		QString LeftText() const;
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(QString const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(std::string const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftText(char const *value);
+
+		/**
+		 * @brief 左侧输入框的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string LeftTextStdString() const;
+
+	public:
+		/**
+		 * @brief 右侧输入框的文本。
+		 *
+		 * @return QString
+		 */
+		QString RightText() const;
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(QString const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(std::string const &value);
+
+		/**
+		 * @brief 设置左侧输入框的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightText(char const *value);
+
+		/**
+		 * @brief 右侧输入框的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string RightTextStdString() const;
 	};
 } // namespace widget

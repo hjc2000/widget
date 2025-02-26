@@ -112,11 +112,10 @@ widget::IntRangeSubmit::IntRangeSubmit()
 {
 	_layout.AddWidget(&_range_submit);
 
-	_range_submit.SubmitEvent().Subscribe(
-		[this]()
-		{
-			OnSubmit();
-		});
+	_range_submit.SubmitEvent().Subscribe([this]()
+										  {
+											  OnSubmit();
+										  });
 
 	_range_submit.SetLeftText(std::to_string(_left_value));
 	_range_submit.SetRightText(std::to_string(_right_value));
@@ -226,4 +225,54 @@ void widget::IntRangeSubmit::SetRightPlaceholderText(char const *value)
 std::string widget::IntRangeSubmit::RightPlaceholderTextStdString() const
 {
 	return _range_submit.RightPlaceholderTextStdString();
+}
+
+QString widget::IntRangeSubmit::LeftText() const
+{
+	return _range_submit.LeftText();
+}
+
+void widget::IntRangeSubmit::SetLeftText(QString const &value)
+{
+	_range_submit.SetLeftText(value);
+}
+
+void widget::IntRangeSubmit::SetLeftText(std::string const &value)
+{
+	_range_submit.SetLeftText(value);
+}
+
+void widget::IntRangeSubmit::SetLeftText(char const *value)
+{
+	_range_submit.SetLeftText(value);
+}
+
+std::string widget::IntRangeSubmit::LeftTextStdString() const
+{
+	return _range_submit.LeftTextStdString();
+}
+
+QString widget::IntRangeSubmit::RightText() const
+{
+	return _range_submit.RightText();
+}
+
+void widget::IntRangeSubmit::SetRightText(QString const &value)
+{
+	_range_submit.SetRightText(value);
+}
+
+void widget::IntRangeSubmit::SetRightText(std::string const &value)
+{
+	_range_submit.SetRightText(value);
+}
+
+void widget::IntRangeSubmit::SetRightText(char const *value)
+{
+	_range_submit.SetRightText(value);
+}
+
+std::string widget::IntRangeSubmit::RightTextStdString() const
+{
+	return _range_submit.RightTextStdString();
 }

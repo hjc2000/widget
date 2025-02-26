@@ -21,17 +21,15 @@ widget::RangeSubmit::RangeSubmit()
 
 	{
 		// 订阅事件
-		_left_edit.TextEditingFinishedEvent().Subscribe(
-			[this](QString const &text)
-			{
-				_submit_event.Invoke();
-			});
+		_left_edit.TextEditingFinishedEvent().Subscribe([this](QString const &text)
+														{
+															_submit_event.Invoke();
+														});
 
-		_right_edit.TextEditingFinishedEvent().Subscribe(
-			[this](QString const &text)
-			{
-				_submit_event.Invoke();
-			});
+		_right_edit.TextEditingFinishedEvent().Subscribe([this](QString const &text)
+														 {
+															 _submit_event.Invoke();
+														 });
 	}
 }
 
