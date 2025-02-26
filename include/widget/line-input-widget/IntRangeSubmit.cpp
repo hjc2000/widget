@@ -177,3 +177,53 @@ void widget::IntRangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 {
 	_range_submit.SetRightInvalidInputStyle(is_invalid);
 }
+
+QString widget::IntRangeSubmit::LeftPlaceholderText() const
+{
+	return _range_submit.LeftPlaceholderText();
+}
+
+void widget::IntRangeSubmit::SetLeftPlaceholderText(QString const &value)
+{
+	_range_submit.SetLeftPlaceholderText(value);
+}
+
+void widget::IntRangeSubmit::SetLeftPlaceholderText(std::string const &value)
+{
+	_range_submit.SetLeftPlaceholderText(value);
+}
+
+void widget::IntRangeSubmit::SetLeftPlaceholderText(char const *value)
+{
+	_range_submit.SetLeftPlaceholderText(value);
+}
+
+std::string widget::IntRangeSubmit::LeftPlaceholderTextStdString() const
+{
+	return _range_submit.LeftPlaceholderTextStdString();
+}
+
+QString widget::IntRangeSubmit::RightPlaceholderText() const
+{
+	return _range_submit.RightPlaceholderText();
+}
+
+void widget::IntRangeSubmit::SetRightPlaceholderText(QString const &value)
+{
+	_range_submit.SetRightPlaceholderText(value);
+}
+
+void widget::IntRangeSubmit::SetRightPlaceholderText(std::string const &value)
+{
+	_range_submit.SetRightPlaceholderText(value);
+}
+
+void widget::IntRangeSubmit::SetRightPlaceholderText(char const *value)
+{
+	_range_submit.SetRightPlaceholderText(value);
+}
+
+std::string widget::IntRangeSubmit::RightPlaceholderTextStdString() const
+{
+	return _range_submit.RightPlaceholderTextStdString();
+}

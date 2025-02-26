@@ -61,5 +61,77 @@ namespace widget
 		 * @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		 */
 		void SetRightInvalidInputStyle(bool is_invalid);
+
+	public:
+		/**
+		 * @brief 左侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @return QString
+		 */
+		QString LeftPlaceholderText() const;
+
+		/**
+		 * @brief 设置左侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftPlaceholderText(QString const &value);
+
+		/**
+		 * @brief 设置左侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftPlaceholderText(std::string const &value);
+
+		/**
+		 * @brief 设置左侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetLeftPlaceholderText(char const *value);
+
+		/**
+		 * @brief 左侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string LeftPlaceholderTextStdString() const;
+
+	public:
+		/**
+		 * @brief 右侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @return QString
+		 */
+		QString RightPlaceholderText() const;
+
+		/**
+		 * @brief 设置右侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightPlaceholderText(QString const &value);
+
+		/**
+		 * @brief 设置右侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightPlaceholderText(std::string const &value);
+
+		/**
+		 * @brief 设置右侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @param value
+		 */
+		void SetRightPlaceholderText(char const *value);
+
+		/**
+		 * @brief 右侧输入框在没有输入内容时显示的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string RightPlaceholderTextStdString() const;
 	};
 } // namespace widget
