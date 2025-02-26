@@ -13,6 +13,7 @@ endif()
 
 include(target_import_base)
 include(target_import_qt)
+include(target_import_qxlsx)
 
 
 # 编译为动态库
@@ -22,6 +23,7 @@ target_import_base(${ProjectName} PUBLIC)
 target_import_qt_widgets(${ProjectName} PUBLIC)
 target_import_qt_opengl(${ProjectName} PUBLIC)
 target_import_qwt(${ProjectName} PUBLIC)
+target_import_qxlsx(${ProjectName} PUBLIC)
 
 # 添加测试程序
 if(1)
