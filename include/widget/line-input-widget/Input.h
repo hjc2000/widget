@@ -20,7 +20,9 @@ namespace widget
 
 		void ConnectSignal();
 
-	private: // 事件
+	private:
+		// 事件
+
 		base::Delegate<QString const &> _text_changed_event;
 		base::Delegate<QString const &> _text_edited_event;
 		base::Delegate<QString const &> _text_editing_finished_event;
@@ -32,20 +34,15 @@ namespace widget
 		 */
 		Input();
 
-	public: // PlaceholderText
+	public:
+		// PlaceholderText
+
 		/**
 		 * @brief 输入框在没有输入内容时显示的文本。
 		 *
 		 * @return QString
 		 */
 		QString PlaceholderText() const;
-
-		/**
-		 * @brief 输入框在没有输入内容时显示的文本。
-		 *
-		 * @return std::string
-		 */
-		std::string PlaceholderTextStdString() const;
 
 		/**
 		 * @brief 设置：输入框在没有输入内容时显示的文本。
@@ -68,7 +65,16 @@ namespace widget
 		 */
 		void SetPlaceholderText(char const *value);
 
-	public: // Text
+		/**
+		 * @brief 输入框在没有输入内容时显示的文本。
+		 *
+		 * @return std::string
+		 */
+		std::string PlaceholderTextStdString() const;
+
+	public:
+		// Text
+
 		/**
 		 * @brief 编辑框中的文本。
 		 *
@@ -104,7 +110,8 @@ namespace widget
 		 */
 		void SetText(char const *value);
 
-	public: // 事件
+	public:
+		// 事件
 
 		/**
 		 * @brief 输入框中的文本改变事件。
