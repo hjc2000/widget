@@ -16,10 +16,10 @@
 namespace widget
 {
 	/**
-	 * @brief xlsx 文件写入器。
+	 * @brief xlsx 文件编辑器。
 	 *
 	 */
-	class XlsxWriter
+	class XlsxEditor
 	{
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer{new QXlsx::Document{}};
