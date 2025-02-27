@@ -14,6 +14,7 @@ class widget::Table::PrivateTable :
 {
 private:
 	std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
+	QAbstractItemModel *_data_model = nullptr;
 
 private: // 事件
 	virtual void enterEvent(QEnterEvent *event) override;
@@ -33,7 +34,8 @@ public:
 	 */
 	PrivateTable();
 
-public: // 数据模型
+public:
+	// 数据模型
 
 	/**
 	 * @brief 设置数据模型。
@@ -49,6 +51,12 @@ public: // 数据模型
 	 * @param resize_modes
 	 */
 	void setModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
+
+	/**
+	 * @brief 数据模型发生改变，需要刷新表格视图。
+	 *
+	 */
+	void DataModelHasChanged();
 
 public:
 	/**

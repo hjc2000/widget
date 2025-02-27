@@ -18,6 +18,11 @@ void widget::Table::SetModel(QAbstractItemModel *model, std::vector<QHeaderView:
 	_table->setModel(model, resize_modes);
 }
 
+void widget::Table::DataModelHasChanged()
+{
+	_table->DataModelHasChanged();
+}
+
 void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
 	_table->SetResizeModes(resize_modes);

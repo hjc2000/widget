@@ -28,7 +28,8 @@ namespace widget
 		 */
 		Table();
 
-	public: // 数据模型
+	public:
+		// 数据模型
 
 		/**
 		 * @brief 设置数据模型。
@@ -44,6 +45,12 @@ namespace widget
 		 * @param resize_modes
 		 */
 		void SetModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
+
+		/**
+		 * @brief 数据模型发生改变，需要刷新表格视图。
+		 *
+		 */
+		void DataModelHasChanged();
 
 	public:
 		/**

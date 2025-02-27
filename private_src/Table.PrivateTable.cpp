@@ -59,6 +59,8 @@ widget::Table::PrivateTable::PrivateTable()
 
 void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 {
+	_data_model = model;
+
 	/* 先设置成空指针，避免以前已经有模型了。
 	 * 如果以前已经有模型了，不先设置成空指针清空模型，就会出现表格视图没有刷新完全的情况。例如行数
 	 * 还保持着上一个模型的行数。
@@ -89,6 +91,12 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model,
 {
 	setModel(model);
 	SetResizeModes(resize_modes);
+}
+
+void widget::Table::PrivateTable::DataModelHasChanged()
+{
+	QTableView::setModel(nullptr);
+	setModel(_data_model);
 }
 
 void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
