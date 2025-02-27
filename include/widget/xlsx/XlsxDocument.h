@@ -55,7 +55,14 @@ namespace widget
 
 		void Write(int row, int column, char const *content, QXlsx::Format const &format);
 
+		void Write(widget::ITableDataModel const &model);
+
 		void Write(widget::ITableDataModel const &model, QXlsx::Format const &format);
+
+		void Write(widget::ITableDataModel const &model,
+				   QXlsx::Format const &column_title_format,
+				   QXlsx::Format const &row_title_format,
+				   QXlsx::Format const &data_format);
 
 	public:
 		void Load() const;

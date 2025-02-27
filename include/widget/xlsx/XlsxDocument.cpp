@@ -51,7 +51,20 @@ void widget::XlsxDocument::Write(int row, int column, char const *content, QXlsx
 	Write(row, column, QString{content}, format);
 }
 
+void widget::XlsxDocument::Write(widget::ITableDataModel const &model)
+{
+	Write(model, QXlsx::Format{});
+}
+
 void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Format const &format)
+{
+	Write(model, format, format, format);
+}
+
+void widget::XlsxDocument::Write(widget::ITableDataModel const &model,
+								 QXlsx::Format const &column_title_format,
+								 QXlsx::Format const &row_title_format,
+								 QXlsx::Format const &data_format)
 {
 	int xlsx_column_index_offset = 1;
 	if (model.HasRowTitle())
@@ -75,7 +88,7 @@ void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Fo
 			Write(1,
 				  i + xlsx_column_index_offset,
 				  title,
-				  format);
+				  column_title_format);
 		}
 	}
 
@@ -89,7 +102,7 @@ void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Fo
 			Write(i + xlsx_row_index_offset,
 				  1,
 				  title,
-				  format);
+				  row_title_format);
 		}
 	}
 
@@ -100,7 +113,7 @@ void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Fo
 			Write(i + xlsx_row_index_offset,
 				  j + xlsx_column_index_offset,
 				  model.Data(i, j),
-				  format);
+				  data_format);
 		}
 	}
 }
