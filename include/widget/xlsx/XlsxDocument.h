@@ -1,5 +1,6 @@
 #pragma once
 #include "qcontainerfwd.h"
+#include "xlsxcell.h"
 #include <memory>
 #include <QCoreApplication>
 #include <QDebug>
@@ -19,10 +20,24 @@ namespace widget
 	 * @brief xlsx 文件编辑器。
 	 *
 	 */
-	class XlsxEditor
+	class XlsxDocument
 	{
 	private:
-		std::shared_ptr<QXlsx::Document> _xlsx_writer{new QXlsx::Document{}};
+		std::shared_ptr<QXlsx::Document> _xlsx_writer;
+
+	public:
+		/**
+		 * @brief 无参构造函数，创建一个临时表格。
+		 *
+		 */
+		XlsxDocument();
+
+		/**
+		 * @brief 打开指定路径的表格。
+		 *
+		 * @param file_path
+		 */
+		XlsxDocument(QString const &file_path);
 
 	public:
 		void Write(int row, int column, QString const &content);
@@ -38,10 +53,21 @@ namespace widget
 		void Write(int row, int column, char const *content, QXlsx::Format const &format);
 
 	public:
-		void SaveAsFile(QString const &file_path);
+		void Load() const;
 
-		void SaveAsFile(std::string const &file_path);
+		std::shared_ptr<QXlsx::Cell> GetCellAt(int row, int column) const;
 
-		void SaveAsFile(char const *file_path);
+		QString ReadCellAsString(int row, int column) const;
+
+		std::string ReadCellAsStdString(int row, int column) const;
+
+	public:
+		void Save() const;
+
+		void SaveAsFile(QString const &file_path) const;
+
+		void SaveAsFile(std::string const &file_path) const;
+
+		void SaveAsFile(char const *file_path) const;
 	};
 } // namespace widget
