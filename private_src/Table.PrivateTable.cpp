@@ -86,13 +86,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	}
 }
 
-void widget::Table::PrivateTable::setModel(QAbstractItemModel *model,
-										   std::vector<QHeaderView::ResizeMode> resize_modes)
-{
-	setModel(model);
-	SetResizeModes(resize_modes);
-}
-
 void widget::Table::PrivateTable::DataModelHasChanged()
 {
 	QTableView::setModel(nullptr);

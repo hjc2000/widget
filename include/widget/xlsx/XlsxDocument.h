@@ -10,6 +10,7 @@
 #include <QtGlobal>
 #include <QVariant>
 #include <string>
+#include <widget/table/ITableDataModel.h>
 #include <xlsxdocument.h>
 #include <xlsxformat.h>
 #include <xlsxworkbook.h>
@@ -53,6 +54,8 @@ namespace widget
 		void Write(int row, int column, std::string const &content, QXlsx::Format const &format);
 
 		void Write(int row, int column, char const *content, QXlsx::Format const &format);
+
+		void Write(widget::ITableDataModel const &model, QXlsx::Format const &format);
 
 	public:
 		void Load() const;

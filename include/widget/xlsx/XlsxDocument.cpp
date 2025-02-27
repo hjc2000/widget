@@ -51,6 +51,26 @@ void widget::XlsxDocument::Write(int row, int column, char const *content, QXlsx
 	Write(row, column, QString{content}, format);
 }
 
+void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Format const &format)
+{
+	int xlsx_column_start_index = 1;
+	if (model.HasRowTitle())
+	{
+		xlsx_column_start_index = 2;
+	}
+
+	int xlsx_row_start_index = 1;
+	if (model.HasColumnTitle())
+	{
+		xlsx_row_start_index = 2;
+	}
+
+	// 写入列标题
+	for (int i = xlsx_column_start_index; i < model.ColumnCount(); i++)
+	{
+	}
+}
+
 void widget::XlsxDocument::Load() const
 {
 	bool result = _xlsx_writer->load();

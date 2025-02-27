@@ -97,11 +97,12 @@ QVariant widget::Table::TableDataModel::headerData(int section, Qt::Orientation 
 			return QVariant{};
 		}
 
-		if (orientation == Qt::Orientation::Vertical)
+		if (orientation == Qt::Orientation::Vertical && _model->HasRowTitle())
 		{
 			return QVariant{_model->RowTitle(section)};
 		}
-		else
+
+		if (orientation == Qt::Orientation::Horizontal && _model->HasColumnTitle())
 		{
 			return QVariant{_model->ColumnTitle(section)};
 		}
