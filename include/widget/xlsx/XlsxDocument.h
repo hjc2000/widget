@@ -27,14 +27,9 @@ namespace widget
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer;
 		std::shared_ptr<QIODevice> _io_device;
+		QString _file_path = "";
 
 	public:
-		/**
-		 * @brief 无参构造函数，创建一个临时表格。
-		 *
-		 */
-		XlsxDocument();
-
 		/**
 		 * @brief 打开指定路径的表格。
 		 *
@@ -185,26 +180,5 @@ namespace widget
 		 *
 		 */
 		void Save() const;
-
-		/**
-		 * @brief 将当前文档另存为指定路径的 xlsx 文件。
-		 *
-		 * @param file_path
-		 */
-		void SaveAsFile(QString const &file_path) const;
-
-		/**
-		 * @brief 将当前文档另存为指定路径的 xlsx 文件。
-		 *
-		 * @param file_path
-		 */
-		void SaveAsFile(std::string const &file_path) const;
-
-		/**
-		 * @brief 将当前文档另存为指定路径的 xlsx 文件。
-		 *
-		 * @param file_path
-		 */
-		void SaveAsFile(char const *file_path) const;
 	};
 } // namespace widget

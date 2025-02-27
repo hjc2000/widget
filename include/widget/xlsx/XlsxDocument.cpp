@@ -5,11 +5,6 @@
 #include <stdexcept>
 #include <xlsxformat.h>
 
-widget::XlsxDocument::XlsxDocument()
-{
-	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{}};
-}
-
 widget::XlsxDocument::XlsxDocument(QString const &file_path)
 {
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{file_path}};
@@ -165,28 +160,20 @@ QXlsx::Worksheet *widget::XlsxDocument::CurrentWorksheet() const
 
 void widget::XlsxDocument::Save() const
 {
-	bool result = _xlsx_writer->save();
-	if (!result)
+	if (_io_device == nullptr)
 	{
-		throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+		bool result = _xlsx_writer->saveAs(_file_path);
+		if (!result)
+		{
+			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+		}
 	}
-}
-
-void widget::XlsxDocument::SaveAsFile(QString const &file_path) const
-{
-	bool result = _xlsx_writer->saveAs(file_path);
-	if (!result)
+	else
 	{
-		throw std::runtime_error{CODE_POS_STR + "另存为 \"" + widget::ToString(file_path) + "\" 失败。"};
+		bool result = _xlsx_writer->saveAs(_io_device.get());
+		if (!result)
+		{
+			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+		}
 	}
-}
-
-void widget::XlsxDocument::SaveAsFile(std::string const &file_path) const
-{
-	SaveAsFile(QString{file_path.c_str()});
-}
-
-void widget::XlsxDocument::SaveAsFile(char const *file_path) const
-{
-	SaveAsFile(QString{file_path});
 }
