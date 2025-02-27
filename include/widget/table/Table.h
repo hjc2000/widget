@@ -25,10 +25,6 @@ namespace widget
 		widget::HBoxLayout _layout{this};
 
 	public:
-		/**
-		 * @brief Construct a new Table object
-		 *
-		 */
 		Table();
 
 	public:
