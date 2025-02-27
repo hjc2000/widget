@@ -1,5 +1,6 @@
 #pragma once
 #include "qcontainerfwd.h"
+#include "qimage.h"
 #include "xlsxcell.h"
 #include <memory>
 #include <QCoreApplication>
@@ -25,6 +26,7 @@ namespace widget
 	{
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer;
+		std::shared_ptr<QIODevice> _io_device;
 
 	public:
 		/**
@@ -41,6 +43,13 @@ namespace widget
 		 * @param file_path
 		 */
 		XlsxDocument(QString const &file_path);
+
+		/**
+		 * @brief 绑定一个 IO 设备。将从此 IO 设备读取表格或写入表格。
+		 *
+		 * @param io_device
+		 */
+		XlsxDocument(std::shared_ptr<QIODevice> const &io_device);
 
 	public:
 		/**

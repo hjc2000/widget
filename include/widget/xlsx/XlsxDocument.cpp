@@ -15,6 +15,12 @@ widget::XlsxDocument::XlsxDocument(QString const &file_path)
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{file_path}};
 }
 
+widget::XlsxDocument::XlsxDocument(std::shared_ptr<QIODevice> const &io_device)
+{
+	_io_device = io_device;
+	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{io_device.get()}};
+}
+
 void widget::XlsxDocument::Write(int row, int column, QString const &content)
 {
 	Write(row, column, content, QXlsx::Format{});
