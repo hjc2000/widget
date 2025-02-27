@@ -17,7 +17,7 @@
 namespace widget
 {
 	/**
-	 * @brief xlsx 文件编辑器。
+	 * @brief xlsx 文档。
 	 *
 	 */
 	class XlsxDocument
@@ -62,6 +62,9 @@ namespace widget
 		QString ReadCellAsString(int row, int column) const;
 
 		std::string ReadCellAsStdString(int row, int column) const;
+
+	public:
+		QXlsx::Worksheet *CurrentWorksheet() const;
 
 	public:
 		void Save() const;

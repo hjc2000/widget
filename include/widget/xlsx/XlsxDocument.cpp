@@ -84,6 +84,12 @@ std::string widget::XlsxDocument::ReadCellAsStdString(int row, int column) const
 	return widget::ToString(qstring);
 }
 
+QXlsx::Worksheet *widget::XlsxDocument::CurrentWorksheet() const
+{
+	QXlsx::Worksheet *sheet = _xlsx_writer->currentWorksheet();
+	return sheet;
+}
+
 void widget::XlsxDocument::Save() const
 {
 	bool result = _xlsx_writer->save();
