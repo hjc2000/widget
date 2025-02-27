@@ -27,7 +27,7 @@ namespace widget
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer;
 		std::shared_ptr<QIODevice> _io_device;
-		QString _file_path = "";
+		QString _file_path = "temp.xlsx";
 
 	public:
 		/**
