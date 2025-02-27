@@ -176,7 +176,7 @@ namespace widget
 
 	public:
 		/**
-		 * @brief 保存当前文档到已经绑定的 xlsx 文件。
+		 * @brief 保存文件。
 		 *
 		 */
 		void Save() const;
