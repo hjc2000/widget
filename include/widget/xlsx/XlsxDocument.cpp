@@ -1,6 +1,8 @@
 #include "XlsxDocument.h"
 #include "widget/Conversion.h"
+#include <base/string/define.h>
 #include <qcontainerfwd.h>
+#include <stdexcept>
 #include <xlsxformat.h>
 
 widget::XlsxDocument::XlsxDocument()
@@ -31,7 +33,11 @@ void widget::XlsxDocument::Write(int row, int column, char const *content)
 void widget::XlsxDocument::Write(int row, int column, QString const &content, QXlsx::Format const &format)
 {
 	QVariant value{content};
-	_xlsx_writer->write(row, column, value, format);
+	bool result = _xlsx_writer->write(row, column, value, format);
+	if (!result)
+	{
+		throw std::runtime_error{CODE_POS_STR + "写入失败。"};
+	}
 }
 
 void widget::XlsxDocument::Write(int row, int column, std::string const &content, QXlsx::Format const &format)
@@ -47,7 +53,11 @@ void widget::XlsxDocument::Write(int row, int column, char const *content, QXlsx
 
 void widget::XlsxDocument::Load() const
 {
-	_xlsx_writer->load();
+	bool result = _xlsx_writer->load();
+	if (!result)
+	{
+		throw std::runtime_error{CODE_POS_STR + "加载失败。"};
+	}
 }
 
 std::shared_ptr<QXlsx::Cell> widget::XlsxDocument::GetCellAt(int row, int column) const
@@ -58,6 +68,11 @@ std::shared_ptr<QXlsx::Cell> widget::XlsxDocument::GetCellAt(int row, int column
 QString widget::XlsxDocument::ReadCellAsString(int row, int column) const
 {
 	auto cell = GetCellAt(row, column);
+	if (cell == nullptr)
+	{
+		return QString{};
+	}
+
 	auto value = cell->readValue();
 	QString qstring = value.toString();
 	return qstring;
@@ -71,12 +86,20 @@ std::string widget::XlsxDocument::ReadCellAsStdString(int row, int column) const
 
 void widget::XlsxDocument::Save() const
 {
-	_xlsx_writer->save();
+	bool result = _xlsx_writer->save();
+	if (!result)
+	{
+		throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+	}
 }
 
 void widget::XlsxDocument::SaveAsFile(QString const &file_path) const
 {
-	_xlsx_writer->saveAs(file_path);
+	bool result = _xlsx_writer->saveAs(file_path);
+	if (!result)
+	{
+		throw std::runtime_error{CODE_POS_STR + "另存为 \"" + widget::ToString(file_path) + "\" 失败。"};
+	}
 }
 
 void widget::XlsxDocument::SaveAsFile(std::string const &file_path) const

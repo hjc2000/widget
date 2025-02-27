@@ -35,6 +35,8 @@ namespace widget
 		/**
 		 * @brief 打开指定路径的表格。
 		 *
+		 * @note 如果文件不存在，则会创建。
+		 *
 		 * @param file_path
 		 */
 		XlsxDocument(QString const &file_path);
