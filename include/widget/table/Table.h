@@ -1,4 +1,5 @@
 #pragma once
+#include "widget/table/ITableDataModel.h"
 #include <memory>
 #include <QHeaderView>
 #include <QTableView>
@@ -36,9 +37,9 @@ namespace widget
 		/**
 		 * @brief 设置数据模型。
 		 *
-		 * @param model 需要是一个堆上的对象。
+		 * @param model
 		 */
-		void SetModel(QAbstractItemModel *model);
+		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model);
 
 		/**
 		 * @brief 设置数据模型，同时设置每一列的大小调整方式。
@@ -46,7 +47,8 @@ namespace widget
 		 * @param model
 		 * @param resize_modes
 		 */
-		void SetModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes);
+		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
+					  std::vector<QHeaderView::ResizeMode> resize_modes);
 
 		/**
 		 * @brief 数据模型发生改变，需要刷新表格视图。

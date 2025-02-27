@@ -11,14 +11,17 @@ widget::Table::Table()
 	_layout.AddWidget(_table.get());
 }
 
-void widget::Table::SetModel(QAbstractItemModel *model)
+void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
 {
-	_table->setModel(model);
+	_table_data_model = std::shared_ptr<TableDataModel>{new TableDataModel{model}};
+	_table->setModel(_table_data_model.get());
 }
 
-void widget::Table::SetModel(QAbstractItemModel *model, std::vector<QHeaderView::ResizeMode> resize_modes)
+void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
+							 std::vector<QHeaderView::ResizeMode> resize_modes)
 {
-	_table->setModel(model, resize_modes);
+	_table_data_model = std::shared_ptr<TableDataModel>{new TableDataModel{model}};
+	_table->setModel(_table_data_model.get(), resize_modes);
 }
 
 void widget::Table::DataModelHasChanged()

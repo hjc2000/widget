@@ -4,7 +4,7 @@
 #include <exception>
 #include <iostream>
 
-widget::Table::TableDataModel::TableDataModel(std::shared_ptr<widget::ITableDataModel> model)
+widget::Table::TableDataModel::TableDataModel(std::shared_ptr<widget::ITableDataModel> const &model)
 	: _model(model)
 {
 }

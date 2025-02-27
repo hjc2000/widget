@@ -13,7 +13,7 @@ private:
 
 public:
 	TableDataModel() = default;
-	TableDataModel(std::shared_ptr<widget::ITableDataModel> model);
+	TableDataModel(std::shared_ptr<widget::ITableDataModel> const &model);
 
 public:
 	virtual int rowCount(QModelIndex const &parent = QModelIndex{}) const override;
