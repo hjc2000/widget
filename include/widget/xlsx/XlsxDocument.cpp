@@ -53,21 +53,55 @@ void widget::XlsxDocument::Write(int row, int column, char const *content, QXlsx
 
 void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Format const &format)
 {
-	int xlsx_column_start_index = 1;
+	int xlsx_column_index_offset = 1;
 	if (model.HasRowTitle())
 	{
-		xlsx_column_start_index = 2;
+		xlsx_column_index_offset = 2;
 	}
 
-	int xlsx_row_start_index = 1;
+	int xlsx_row_index_offset = 1;
 	if (model.HasColumnTitle())
 	{
-		xlsx_row_start_index = 2;
+		xlsx_row_index_offset = 2;
 	}
 
-	// 写入列标题
-	for (int i = xlsx_column_start_index; i < model.ColumnCount(); i++)
+	if (model.HasColumnTitle())
 	{
+		// 写入列标题
+		for (int i = 0; i < model.ColumnCount(); i++)
+		{
+			QString title = model.ColumnTitle(i);
+
+			Write(1,
+				  i + xlsx_column_index_offset,
+				  title,
+				  format);
+		}
+	}
+
+	if (model.HasRowTitle())
+	{
+		// 写入行标题
+		for (int i = 0; i < model.RowCount(); i++)
+		{
+			QString title = model.RowTitle(i);
+
+			Write(i + xlsx_row_index_offset,
+				  1,
+				  title,
+				  format);
+		}
+	}
+
+	for (int i = 0; i < model.RowCount(); i++)
+	{
+		for (int j = 0; j < model.ColumnCount(); j++)
+		{
+			Write(i + xlsx_row_index_offset,
+				  j + xlsx_column_index_offset,
+				  model.Data(i, j),
+				  format);
+		}
 	}
 }
 
