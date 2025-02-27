@@ -7,6 +7,7 @@
 
 widget::XlsxDocument::XlsxDocument(QString const &file_path)
 {
+	_file_path = file_path;
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{file_path}};
 }
 
