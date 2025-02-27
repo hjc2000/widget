@@ -25,11 +25,4 @@ public:
 	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 	virtual void sort(int column, Qt::SortOrder order) override;
-
-public:
-	/**
-	 * @brief 模型改变后如果 UI 没有更新，可以尝试调用本方法。
-	 *
-	 */
-	void ModelHasChanged();
 };

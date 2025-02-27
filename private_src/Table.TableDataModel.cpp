@@ -122,6 +122,14 @@ QVariant widget::Table::TableDataModel::headerData(int section, Qt::Orientation 
 
 void widget::Table::TableDataModel::sort(int column, Qt::SortOrder order)
 {
+	// beginResetModel();
+
+	// base::Guard g{
+	// 	[this]()
+	// 	{
+	// 		endResetModel();
+	// 	}};
+
 	try
 	{
 		if (_model == nullptr)
@@ -143,15 +151,4 @@ void widget::Table::TableDataModel::sort(int column, Qt::SortOrder order)
 	// 排序完成后通知视图刷新
 	dataChanged(createIndex(0, 0),
 				createIndex(rowCount() - 1, columnCount() - 1));
-}
-
-void widget::Table::TableDataModel::ModelHasChanged()
-{
-	beginResetModel();
-
-	base::Guard g{
-		[this]()
-		{
-			endResetModel();
-		}};
 }
