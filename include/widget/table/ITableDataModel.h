@@ -24,13 +24,17 @@ namespace widget
 		 */
 		virtual int ColumnCount() const = 0;
 
+	public:
 		/**
 		 * @brief 是否有行标题。
 		 *
 		 * @return true 有行标题。
 		 * @return false 无行标题。
 		 */
-		virtual bool HasRowTitle() const = 0;
+		virtual bool HasRowTitle() const
+		{
+			return false;
+		}
 
 		/**
 		 * @brief 是否有列标题。
@@ -38,7 +42,10 @@ namespace widget
 		 * @return true 有列标题。
 		 * @return false 无列标题。
 		 */
-		virtual bool HasColumnTitle() const = 0;
+		virtual bool HasColumnTitle() const
+		{
+			return true;
+		}
 
 		/**
 		 * @brief 行标题。
@@ -48,7 +55,7 @@ namespace widget
 		 * @param row
 		 * @return QString
 		 */
-		virtual QString RowTitle(int row) const = 0;
+		virtual QString RowTitle(int row) const;
 
 		/**
 		 * @brief 列标题。
@@ -58,7 +65,7 @@ namespace widget
 		 * @param column
 		 * @return QString
 		 */
-		virtual QString ColumnTitle(int column) const = 0;
+		virtual QString ColumnTitle(int column) const;
 
 		/**
 		 * @brief 数据。
