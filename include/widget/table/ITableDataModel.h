@@ -73,8 +73,9 @@ namespace widget
 		/**
 		 * @brief 对数据进行排序。
 		 *
+		 * @param column 作为排序依据的列。
 		 * @param ascending 为 true 表示升序排列，即从小到大排列。
 		 */
-		virtual void Sort(bool ascending) = 0;
+		virtual void Sort(int column, bool ascending) = 0;
 	};
 } // namespace widget
