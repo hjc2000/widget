@@ -173,9 +173,7 @@ base::TimePointSinceEpoch widget::DateTimeRangeSubmit::RightTimePoint() const
 
 base::ClosedInterval<base::TimePointSinceEpoch> widget::DateTimeRangeSubmit::Interval() const
 {
-	base::TimePointSinceEpoch left = LeftTimePoint();
-	base::TimePointSinceEpoch right = std::max<base::TimePointSinceEpoch>(LeftTimePoint(), RightTimePoint());
-	return base::ClosedInterval<base::TimePointSinceEpoch>{left, right};
+	return base::ClosedInterval<base::TimePointSinceEpoch>{LeftTimePoint(), RightTimePoint()};
 }
 
 void widget::DateTimeRangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)

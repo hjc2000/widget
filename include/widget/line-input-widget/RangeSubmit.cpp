@@ -133,6 +133,11 @@ std::string widget::RangeSubmit::RightTextStdString() const
 	return widget::ToString(RightText());
 }
 
+base::ClosedInterval<QString> widget::RangeSubmit::Interval() const
+{
+	return base::ClosedInterval<QString>{LeftText(), RightText()};
+}
+
 base::IEvent<> &widget::RangeSubmit::SubmitEvent()
 {
 	return _submit_event;
@@ -146,9 +151,4 @@ void widget::RangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
 void widget::RangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 {
 	_right_edit.SetInvalidInputStyle(is_invalid);
-}
-
-base::ClosedInterval<QString> widget::RangeSubmit::Interval() const
-{
-	return base::ClosedInterval<QString>{LeftText(), RightText()};
 }
