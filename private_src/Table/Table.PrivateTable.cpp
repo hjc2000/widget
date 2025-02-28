@@ -8,18 +8,6 @@
 #include <widget/Conversion.h>
 #include <widget/line-input-widget/Submit.h>
 
-void widget::Table::PrivateTable::enterEvent(QEnterEvent *event)
-{
-	QTableView::enterEvent(event);
-	QHeaderView *header = horizontalHeader();
-	header->setSectionResizeMode(QHeaderView::Interactive);
-}
-
-void widget::Table::PrivateTable::leaveEvent(QEvent *event)
-{
-	QTableView::leaveEvent(event);
-}
-
 void widget::Table::PrivateTable::ClearInitialFocus()
 {
 	clearFocus();
@@ -64,9 +52,13 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	ClearInitialFocus();
 
 	{
-		// 设置列头自适应大小。
 		QHeaderView *header = horizontalHeader();
-		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+		header->setSectionResizeMode(QHeaderView::Interactive);
+
+		for (int i = 0; i < model->columnCount(); i++)
+		{
+			resizeColumnToContents(i);
+		}
 	}
 
 	{
