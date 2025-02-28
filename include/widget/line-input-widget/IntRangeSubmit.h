@@ -1,4 +1,5 @@
 #pragma once
+#include "base/math/Interval.h"
 #include <base/delegate/IEvent.h>
 #include <cstdint>
 #include <widget/line-input-widget/RangeSubmit.h>
@@ -41,10 +42,33 @@ namespace widget
 		void SetMaxValue(int64_t value);
 
 	public:
+		/**
+		 * @brief 区间左端点。
+		 *
+		 * @return int64_t
+		 */
 		int64_t LeftValue() const;
+
+		/**
+		 * @brief 区间右端点。
+		 *
+		 * @return int64_t
+		 */
 		int64_t RightValue() const;
 
+		/**
+		 * @brief 获取区间。
+		 *
+		 * @return base::ClosedInterval<int64_t>
+		 */
+		base::ClosedInterval<int64_t> Interval() const;
+
 	public:
+		/**
+		 * @brief 提交事件。
+		 *
+		 * @return base::IEvent<>&
+		 */
 		base::IEvent<> &SubmitEvent();
 
 	public:

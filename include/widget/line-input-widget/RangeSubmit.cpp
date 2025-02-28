@@ -147,3 +147,8 @@ void widget::RangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 {
 	_right_edit.SetInvalidInputStyle(is_invalid);
 }
+
+base::ClosedInterval<QString> widget::RangeSubmit::Interval() const
+{
+	return base::ClosedInterval<QString>{LeftText(), RightText()};
+}

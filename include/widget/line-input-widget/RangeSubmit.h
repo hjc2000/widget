@@ -1,5 +1,6 @@
 #pragma once
 #include "qobject.h"
+#include <base/math/Interval.h>
 #include <qlabel.h>
 #include <string>
 #include <widget/line-input-widget/Input.h>
@@ -183,6 +184,13 @@ namespace widget
 		 * @return std::string
 		 */
 		std::string RightTextStdString() const;
+
+		/**
+		 * @brief 获取区间。
+		 *
+		 * @return base::ClosedInterval<QString>
+		 */
+		base::ClosedInterval<QString> Interval() const;
 
 	public:
 		// 事件

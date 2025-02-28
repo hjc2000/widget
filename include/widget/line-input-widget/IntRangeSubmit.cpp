@@ -162,6 +162,13 @@ int64_t widget::IntRangeSubmit::RightValue() const
 	return _right_value;
 }
 
+base::ClosedInterval<int64_t> widget::IntRangeSubmit::Interval() const
+{
+	int64_t left = LeftValue();
+	int64_t right = std::max<int64_t>(LeftValue(), RightValue());
+	return base::ClosedInterval<int64_t>{left, right};
+}
+
 base::IEvent<> &widget::IntRangeSubmit::SubmitEvent()
 {
 	return _submit_event;

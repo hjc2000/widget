@@ -1,4 +1,5 @@
 #pragma once
+#include "base/math/Interval.h"
 #include <base/delegate/Delegate.h>
 #include <base/delegate/IEvent.h>
 #include <base/time/TimePointSinceEpoch.h>
@@ -73,6 +74,13 @@ namespace widget
 		 * @return base::TimePointSinceEpoch
 		 */
 		base::TimePointSinceEpoch RightTimePoint() const;
+
+		/**
+		 * @brief 获取区间。
+		 *
+		 * @return base::ClosedInterval<base::TimePointSinceEpoch>
+		 */
+		base::ClosedInterval<base::TimePointSinceEpoch> Interval() const;
 
 	public: // 输入非法
 		/**
