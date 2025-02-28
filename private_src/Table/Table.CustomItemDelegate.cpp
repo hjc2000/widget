@@ -1,4 +1,5 @@
 #include "Table.CustomItemDelegate.h"
+#include "qtextoption.h"
 
 void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 											  QStyleOptionViewItem const &option,
@@ -14,6 +15,8 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 
 	text_option.setAlignment(Qt::AlignmentFlag::AlignLeft |
 							 Qt::AlignmentFlag::AlignVCenter);
+
+	text_option.setWrapMode(QTextOption::WrapMode::NoWrap);
 
 	QRect text_rect = new_option.rect;
 	text_rect.adjust(_padding, 0, -_padding, 0);
