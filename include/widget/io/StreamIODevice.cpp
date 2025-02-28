@@ -11,11 +11,7 @@ qint64 widget::StreamIODevice::readData(char *data, qint64 maxlen)
 {
 	try
 	{
-		int32_t size = maxlen;
-		if (maxlen > INT32_MAX)
-		{
-			size = INT32_MAX;
-		}
+		int32_t size = std::min<int64_t>(INT32_MAX, maxlen);
 
 		base::Span span{
 			reinterpret_cast<uint8_t *>(data),

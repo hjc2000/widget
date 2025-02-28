@@ -20,6 +20,11 @@ namespace widget
 		virtual qint64 writeData(char const *data, qint64 len) override;
 
 	public:
+		/**
+		 * @brief 构造函数。
+		 *
+		 * @param stream 传入一个流，将被包装成 QIODevice.
+		 */
 		StreamIODevice(std::shared_ptr<base::Stream> const &stream);
 	};
 } // namespace widget
