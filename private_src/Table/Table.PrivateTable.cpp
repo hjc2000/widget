@@ -11,14 +11,8 @@
 void widget::Table::PrivateTable::enterEvent(QEnterEvent *event)
 {
 	QTableView::enterEvent(event);
-
-	static bool first_time = true;
-	if (first_time)
-	{
-		first_time = false;
-		QHeaderView *header = horizontalHeader();
-		header->setSectionResizeMode(QHeaderView::Interactive);
-	}
+	QHeaderView *header = horizontalHeader();
+	header->setSectionResizeMode(QHeaderView::Interactive);
 }
 
 void widget::Table::PrivateTable::leaveEvent(QEvent *event)
