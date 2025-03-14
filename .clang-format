@@ -15,8 +15,6 @@ NamespaceIndentation: All
 # 访问修饰符缩进
 IndentAccessModifiers: false
 AccessModifierOffset: -4
-EmptyLineBeforeAccessModifier: Always
-# EmptyLineAfterAccessModifier: Always
 
 # 继承链断行
 BreakInheritanceList: AfterColon
