@@ -6,8 +6,6 @@
 widget::Table::Table()
 {
 	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
-	_table_data_model = std::shared_ptr<TableDataModel>{new TableDataModel{}};
-
 	_layout.AddWidget(_table.get());
 }
 
