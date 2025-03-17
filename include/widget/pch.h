@@ -4,7 +4,6 @@
 
 #ifdef __cplusplus
 
-	#include <base/pch.h>
 	#include <iostream>
 	#include <QApplication>
 	#include <QDateTimeEdit>

@@ -1,7 +1,5 @@
 #include "Button.h"
-#include <base/string/define.h>
 #include <exception>
-#include <iostream>
 #include <QPainter>
 #include <QPaintEvent>
 
