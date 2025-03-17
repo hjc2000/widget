@@ -110,9 +110,11 @@ widget::Button::Button()
 	// 按钮大小由内容决定，且固定大小。
 	setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
 
-	_origin_palette = palette();
-	_origin_palette.setColor(QPalette::Button, QColor{255, 255, 255});
-	setPalette(_origin_palette);
+	{
+		QPalette temp_palette = palette();
+		temp_palette.setColor(QPalette::Button, QColor{255, 255, 255});
+		setPalette(temp_palette);
+	}
 
 	ConnectSignal();
 }

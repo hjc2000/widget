@@ -23,6 +23,7 @@
 #include <QPaintEvent>
 #include <QPalette>
 #include <QPen>
+#include <QPushButton>
 #include <qstyleditemdelegate.h>
 #include <QStyledItemDelegate>
 #include <qstyleoption.h>

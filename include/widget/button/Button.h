@@ -4,30 +4,24 @@
 
 namespace widget
 {
-	/**
-	 * @brief 按钮。
-	 *
-	 */
+	///
+	/// @brief 按钮。
+	///
+	///
 	class Button :
 		public QPushButton
 	{
 	private:
-		/**
-		 * @brief 构造函数中记录的原始样式。
-		 *
-		 */
-		QPalette _origin_palette;
-
-		/**
-		 * @brief 触发 enter 事件前的样式。在 enter 事件处理函数的一开始就记录到本字段中。
-		 *
-		 */
+		///
+		/// @brief 触发 enter 事件前的样式。在 enter 事件处理函数的一开始就记录到本字段中。
+		///
+		///
 		QPalette _palette_before_enter_event;
 
-		/**
-		 * @brief 触发 pressed 事件前的样式。在 pressed 事件处理函数地一开始就记录到本字段中。
-		 *
-		 */
+		///
+		/// @brief 触发 pressed 事件前的样式。在 pressed 事件处理函数地一开始就记录到本字段中。
+		///
+		///
 		QPalette _palette_before_pressed_event;
 
 		void ConnectSignal();
