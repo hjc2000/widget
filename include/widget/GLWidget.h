@@ -1,7 +1,7 @@
 #pragma once
 #include <QtOpenGL/qopenglfunctions_1_0.h>
 #include <QtOpenGLWidgets/QOpenGLWidget>
-#include <QtWidgets/QApplication>
+#include <widget/pch.h>
 
 namespace widget
 {

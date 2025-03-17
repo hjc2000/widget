@@ -1,9 +1,8 @@
 #pragma once
 #include "qnamespace.h"
 #include <qcheckbox.h>
-#include <QtCore>
-#include <string>
 #include <widget/line-input-widget/CheckState.h>
+#include <widget/pch.h>
 
 namespace widget
 {

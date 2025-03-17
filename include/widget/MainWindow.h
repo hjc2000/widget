@@ -1,7 +1,6 @@
 #pragma once
 #include "box/VBox.h"
 #include <base/delegate/Delegate.h>
-#include <memory>
 #include <QCheckBox >
 #include <QDateTimeEdit>
 #include <QMainWindow>
@@ -15,6 +14,7 @@
 #include <widget/line-input-widget/DateTimeRangeSubmit.h>
 #include <widget/line-input-widget/RangeSubmit.h>
 #include <widget/line-input-widget/Submit.h>
+#include <widget/pch.h>
 
 namespace widget
 {

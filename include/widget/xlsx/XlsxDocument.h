@@ -3,9 +3,7 @@
 #include "qimage.h"
 #include "xlsxcell.h"
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
-#include <QVariant>
 #include <widget/pch.h>
 #include <widget/table/ITableDataModel.h>
 #include <xlsxdocument.h>

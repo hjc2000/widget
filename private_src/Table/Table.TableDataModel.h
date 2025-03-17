@@ -1,7 +1,5 @@
 #pragma once
-#include "qnamespace.h"
-#include "qvariant.h"
-#include <memory>
+#include <widget/pch.h>
 #include <widget/table/ITableDataModel.h>
 #include <widget/table/Table.h>
 

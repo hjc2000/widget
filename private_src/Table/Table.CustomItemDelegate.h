@@ -2,7 +2,7 @@
 #include "qpainter.h"
 #include "qstyleditemdelegate.h"
 #include "qstyleoption.h"
-#include "qtextoption.h"
+#include <widget/pch.h>
 #include <widget/table/Table.h>
 
 /// @brief 按照自定义的方式绘制单元格。
