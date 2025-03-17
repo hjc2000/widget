@@ -1,5 +1,5 @@
 #pragma once
-#include <qboxlayout.h>
+#include <QBoxLayout>
 #include <widget/layout/Padding.h>
 
 namespace widget

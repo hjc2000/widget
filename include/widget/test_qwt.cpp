@@ -1,6 +1,4 @@
 #include "test_qwt.h"
-#include <QMainWindow>
-#include <QPen>
 #include <qwt-qt6/qwt_plot.h>
 #include <qwt-qt6/qwt_plot_curve.h>
 #include <qwt-qt6/qwt_symbol.h>

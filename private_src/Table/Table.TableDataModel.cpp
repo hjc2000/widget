@@ -1,8 +1,4 @@
 #include "Table.TableDataModel.h"
-#include <base/Guard.h>
-#include <base/string/define.h>
-#include <exception>
-#include <iostream>
 
 widget::Table::TableDataModel::TableDataModel(std::shared_ptr<widget::ITableDataModel> const &model)
 	: _model(model)
