@@ -1,7 +1,4 @@
 #include "Button.h"
-#include <exception>
-#include <QPainter>
-#include <QPaintEvent>
 
 void widget::Button::ConnectSignal()
 {

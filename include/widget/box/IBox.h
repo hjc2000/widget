@@ -2,6 +2,7 @@
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include <base/container/iterator/IEnumerable.h>
+#include <memory>
 
 namespace widget
 {
