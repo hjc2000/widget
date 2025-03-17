@@ -8,7 +8,6 @@
 #include <QLabel>
 #include <widget/button/Button.h>
 #include <widget/layout/HBoxLayout.h>
-#include <widget/pch.h>
 
 namespace widget
 {

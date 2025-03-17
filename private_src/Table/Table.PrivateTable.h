@@ -1,7 +1,7 @@
 #pragma once
+#include <memory>
 #include <QHeaderView>
 #include <QTableView>
-#include <widget/pch.h>
 #include <widget/table/Table.h>
 
 /**

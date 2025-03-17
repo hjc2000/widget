@@ -1,5 +1,5 @@
 #pragma once
-#include <widget/pch.h>
+#include <memory>
 #include <widget/table/ITableDataModel.h>
 #include <widget/table/Table.h>
 

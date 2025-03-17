@@ -5,7 +5,6 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <widget/button/Button.h>
-#include <widget/pch.h>
 
 namespace widget
 {

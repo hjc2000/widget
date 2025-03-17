@@ -2,9 +2,9 @@
 #include "base/delegate/IEvent.h"
 #include "qcheckbox.h"
 #include <base/delegate/Delegate.h>
+#include <memory>
 #include <widget/layout/HBoxLayout.h>
 #include <widget/line-input-widget/CheckState.h>
-#include <widget/pch.h>
 
 namespace widget
 {

@@ -2,7 +2,6 @@
 #include "base/delegate/Delegate.h"
 #include "qlineedit.h"
 #include <widget/layout/HBoxLayout.h>
-#include <widget/pch.h>
 
 namespace widget
 {
