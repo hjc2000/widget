@@ -1,7 +1,7 @@
 #pragma once
+#include <memory>
 #include <qboxlayout.h>
 #include <widget/layout/Padding.h>
-#include <widget/pch.h>
 
 namespace widget
 {

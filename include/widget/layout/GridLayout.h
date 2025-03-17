@@ -3,7 +3,6 @@
 #include <qgridlayout.h>
 #include <widget/layout/GridPosition.h>
 #include <widget/layout/Padding.h>
-#include <widget/pch.h>
 
 namespace widget
 {

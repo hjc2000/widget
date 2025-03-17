@@ -2,7 +2,6 @@
 #include "IBox.h"
 #include <widget/box/IBox.h>
 #include <widget/layout/HBoxLayout.h>
-#include <widget/pch.h>
 
 namespace widget
 {

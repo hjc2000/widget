@@ -1,6 +1,6 @@
 #pragma once
 #include <base/stream/Stream.h>
-#include <widget/pch.h>
+#include <QIODevice>
 
 namespace widget
 {

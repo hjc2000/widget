@@ -1,7 +1,6 @@
 #pragma once
 #include <base/delegate/Delegate.h>
 #include <QPushButton>
-#include <widget/pch.h>
 
 namespace widget
 {

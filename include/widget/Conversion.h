@@ -2,7 +2,6 @@
 #include "qnamespace.h"
 #include <qcheckbox.h>
 #include <widget/line-input-widget/CheckState.h>
-#include <widget/pch.h>
 
 namespace widget
 {

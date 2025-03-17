@@ -1,7 +1,6 @@
 #pragma once
 #include "Padding.h"
 #include <widget/layout/GridLayout.h>
-#include <widget/pch.h>
 
 namespace widget
 {

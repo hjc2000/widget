@@ -4,7 +4,6 @@
 #include <base/container/Dictionary.h>
 #include <widget/box/FormTableBoxItem.h>
 #include <widget/layout/FormTableLayout.h>
-#include <widget/pch.h>
 
 namespace widget
 {

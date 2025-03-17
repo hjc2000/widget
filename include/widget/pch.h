@@ -5,6 +5,7 @@
 #include <base/bit/AutoBitConverter.h>
 #include <base/container/Array.h>
 #include <base/delegate/Delegate.h>
+#include <base/delegate/IEvent.h>
 #include <base/pch.h>
 #include <base/stream/ReadOnlySpan.h>
 #include <base/stream/Span.h>
