@@ -5,7 +5,6 @@
 #include <base/pch.h>
 
 #ifdef __cplusplus
-	#include <iostream>
 	#include <QApplication>
 	#include <QDateTimeEdit>
 	#include <QDebug>
