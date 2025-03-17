@@ -35,7 +35,7 @@ if(1)
 		set(exe_type "")
 	endif()
 
-	add_executable(${exe_name} ${exe_type} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+	add_executable(${exe_name} ${exe_type} ${CMAKE_CURRENT_SOURCE_DIR}/exe/main.cpp)
 
 	target_link_libraries(${ProjectName} PUBLIC -Wl,--start-group)
 	target_link_libraries(${exe_name} PUBLIC ${ProjectName})
