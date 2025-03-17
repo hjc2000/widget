@@ -6,61 +6,25 @@ void widget::Button::ConnectSignal()
 			&QPushButton::clicked,
 			[this]()
 			{
-				try
-				{
-					_clicked_event.Invoke();
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << CODE_POS_STR + e.what() << std::endl;
-				}
-				catch (...)
-				{
-				}
+				OnClicked();
 			});
 
 	connect(this,
 			&QPushButton::pressed,
 			[this]()
 			{
-				_palette_before_pressed_event = palette();
-
-				QPalette temp_palette = palette();
-				temp_palette.setColor(QPalette::Button, QColor{100, 150, 255});
-				setPalette(temp_palette);
-
-				try
-				{
-					_pressed_event.Invoke();
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << CODE_POS_STR + e.what() << std::endl;
-				}
-				catch (...)
-				{
-				}
+				OnPressed();
 			});
 
 	connect(this,
 			&QPushButton::released,
 			[this]()
 			{
-				setPalette(_palette_before_pressed_event);
-
-				try
-				{
-					_released_event.Invoke();
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << CODE_POS_STR + e.what() << std::endl;
-				}
-				catch (...)
-				{
-				}
+				OnReleased();
 			});
 }
+
+/* #region 事件处理函数 */
 
 void widget::Button::enterEvent(QEnterEvent *event)
 {
@@ -102,6 +66,61 @@ void widget::Button::leaveEvent(QEvent *event)
 	}
 }
 
+void widget::Button::OnClicked()
+{
+	try
+	{
+		_clicked_event.Invoke();
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
+	}
+	catch (...)
+	{
+	}
+}
+
+void widget::Button::OnPressed()
+{
+	_palette_before_pressed_event = palette();
+
+	QPalette temp_palette = palette();
+	temp_palette.setColor(QPalette::Button, QColor{100, 150, 255});
+	setPalette(temp_palette);
+
+	try
+	{
+		_pressed_event.Invoke();
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
+	}
+	catch (...)
+	{
+	}
+}
+
+void widget::Button::OnReleased()
+{
+	setPalette(_palette_before_pressed_event);
+
+	try
+	{
+		_released_event.Invoke();
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
+	}
+	catch (...)
+	{
+	}
+}
+
+/* #endregion */
+
 widget::Button::Button()
 {
 	SetText("按钮");
@@ -124,6 +143,8 @@ widget::Button::Button(QString const &text)
 {
 	SetText(text);
 }
+
+/* #region 对外提供事件 */
 
 base::IEvent<> &widget::Button::ClickedEvent()
 {
@@ -150,6 +171,10 @@ base::IEvent<> &widget::Button::LeaveEvent()
 	return _leave_event;
 }
 
+/* #endregion */
+
+/* #region 文本 */
+
 QString widget::Button::Text() const
 {
 	return text();
@@ -169,3 +194,5 @@ void widget::Button::SetText(char const *value)
 {
 	SetText(QString{value});
 }
+
+/* #endregion */
