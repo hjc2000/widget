@@ -11,9 +11,11 @@
 #include <QDateTimeEdit>
 #include <QDebug>
 #include <QDir>
+#include <qfiledialog.h>
 #include <QHeaderView>
 #include <QIODevice>
 #include <QMainWindow>
+#include <qmessagebox.h>
 #include <qnamespace.h>
 #include <QObject>
 #include <qpainter.h>
