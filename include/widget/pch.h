@@ -11,6 +11,8 @@
 	#include <QMainWindow>
 	#include <QObject>
 	#include <QPalette>
+	#include <QtCore>
+	#include <QtGlobal>
 	#include <QWidget>
 
 #endif

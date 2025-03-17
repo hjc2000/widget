@@ -1,8 +1,8 @@
 #pragma once
 #include "base/math/Interval.h"
 #include <base/delegate/IEvent.h>
-#include <cstdint>
 #include <widget/line-input-widget/RangeSubmit.h>
+#include <widget/pch.h>
 
 namespace widget
 {

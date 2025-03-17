@@ -1,9 +1,8 @@
 #pragma once
-#include "qobject.h"
 #include <base/math/Interval.h>
 #include <qlabel.h>
-#include <string>
 #include <widget/line-input-widget/Input.h>
+#include <widget/pch.h>
 
 namespace widget
 {

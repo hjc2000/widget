@@ -1,10 +1,9 @@
 #pragma once
 #include "widget/table/ITableDataModel.h"
-#include <memory>
 #include <QHeaderView>
 #include <QTableView>
-#include <qwidget.h>
 #include <widget/layout/HBoxLayout.h>
+#include <widget/pch.h>
 
 namespace widget
 {

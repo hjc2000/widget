@@ -2,15 +2,11 @@
 #include "qcontainerfwd.h"
 #include "qimage.h"
 #include "xlsxcell.h"
-#include <memory>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-#include <qobject.h>
-#include <QtCore>
-#include <QtGlobal>
 #include <QVariant>
-#include <string>
+#include <widget/pch.h>
 #include <widget/table/ITableDataModel.h>
 #include <xlsxdocument.h>
 #include <xlsxformat.h>

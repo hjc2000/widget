@@ -4,9 +4,8 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QWidget>
-#include <string>
 #include <widget/button/Button.h>
+#include <widget/pch.h>
 
 namespace widget
 {
