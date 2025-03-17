@@ -1,6 +1,7 @@
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
 #include <iostream>
+#include <widget/pch.h>
 #include <widget/test_qwt.h>
 #include <widget/test_qxlsx.h>
 
