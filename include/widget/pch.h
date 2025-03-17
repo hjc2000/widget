@@ -11,6 +11,7 @@
 #include <QDateTimeEdit>
 #include <QDebug>
 #include <QDir>
+#include <QHeaderView>
 #include <QIODevice>
 #include <QMainWindow>
 #include <qnamespace.h>
@@ -23,6 +24,7 @@
 #include <qstyleditemdelegate.h>
 #include <QStyledItemDelegate>
 #include <qstyleoption.h>
+#include <QTableView>
 #include <QtCore>
 #include <qtextoption.h>
 #include <QtGlobal>
