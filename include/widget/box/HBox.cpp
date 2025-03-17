@@ -1,5 +1,4 @@
 #include "HBox.h"
-#include "base/string/define.h"
 
 widget::HBox::HBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
 {

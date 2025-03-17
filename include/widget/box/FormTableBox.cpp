@@ -1,8 +1,4 @@
 #include "FormTableBox.h"
-#include <base/string/define.h>
-#include <exception>
-#include <format>
-#include <stdexcept>
 
 widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items)
 {

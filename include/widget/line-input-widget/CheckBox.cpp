@@ -1,10 +1,6 @@
 #include "CheckBox.h"
 #include "CheckState.h"
 #include "qcheckbox.h"
-#include "qnamespace.h"
-#include <base/string/define.h>
-#include <exception>
-#include <iostream>
 #include <widget/Conversion.h>
 
 void widget::CheckBox::ConnectSignals()

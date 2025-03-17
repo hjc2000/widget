@@ -1,8 +1,6 @@
 #include "XlsxDocument.h"
 #include "widget/Conversion.h"
-#include <base/string/define.h>
 #include <qcontainerfwd.h>
-#include <stdexcept>
 #include <xlsxformat.h>
 
 widget::XlsxDocument::XlsxDocument(QString const &file_path)

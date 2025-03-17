@@ -1,7 +1,5 @@
 #include "FormTableBoxItem.h"
-#include "base/string/define.h"
 #include "qlabel.h"
-#include <memory>
 
 void widget::FormTableBoxItem::Initialize()
 {

@@ -1,10 +1,4 @@
 #include "test_qxlsx.h"
-#include <QCoreApplication>
-#include <QDebug>
-#include <QDir>
-#include <QtCore>
-#include <QtGlobal>
-#include <QVariant>
 #include <widget/xlsx/XlsxDocument.h>
 #include <xlsxdocument.h>
 #include <xlsxworkbook.h>

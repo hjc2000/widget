@@ -5,9 +5,13 @@
 #include <base/pch.h>
 
 #ifdef __cplusplus
+	#include "qtextoption.h"
+	#include <QAbstractTableModel>
 	#include <QApplication>
+	#include <QCoreApplication>
 	#include <QDateTimeEdit>
 	#include <QDebug>
+	#include <QDir>
 	#include <QIODevice>
 	#include <QMainWindow>
 	#include <qnamespace.h>
@@ -15,6 +19,7 @@
 	#include <QPainter>
 	#include <QPaintEvent>
 	#include <QPalette>
+	#include <QStyledItemDelegate>
 	#include <QtCore>
 	#include <QtGlobal>
 	#include <QVariant>

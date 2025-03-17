@@ -1,5 +1,4 @@
 #include "VBox.h"
-#include "base/string/define.h"
 
 widget::VBox::VBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
 {

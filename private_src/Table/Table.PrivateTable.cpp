@@ -1,9 +1,5 @@
 #include "Table.PrivateTable.h"
 #include <base/string/Parse.h>
-#include <QAbstractTableModel>
-#include <QApplication>
-#include <QPainter>
-#include <QStyledItemDelegate>
 #include <Table.CustomItemDelegate.h>
 #include <widget/Conversion.h>
 #include <widget/line-input-widget/Submit.h>

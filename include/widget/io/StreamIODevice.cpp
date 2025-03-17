@@ -1,11 +1,4 @@
 #include "StreamIODevice.h"
-#include "base/stream/ReadOnlySpan.h"
-#include "base/stream/Span.h"
-#include "base/string/define.h"
-#include <cstdint>
-#include <exception>
-#include <iostream>
-#include <stdexcept>
 
 qint64 widget::StreamIODevice::readData(char *data, qint64 maxlen)
 {

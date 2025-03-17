@@ -1,5 +1,4 @@
 #include "ITableDataModel.h"
-#include <string>
 
 QString widget::ITableDataModel::RowTitle(int row) const
 {

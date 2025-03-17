@@ -1,5 +1,4 @@
 #include "Table.CustomItemDelegate.h"
-#include "qtextoption.h"
 
 void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 											  QStyleOptionViewItem const &option,
