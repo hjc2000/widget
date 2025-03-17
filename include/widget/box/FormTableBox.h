@@ -1,9 +1,9 @@
 #pragma once
-#include "qwidget.h"
-#include "widget/layout/Padding.h"
 #include <base/container/Dictionary.h>
+#include <QWidget>
 #include <widget/box/FormTableBoxItem.h>
 #include <widget/layout/FormTableLayout.h>
+#include <widget/layout/Padding.h>
 
 namespace widget
 {
