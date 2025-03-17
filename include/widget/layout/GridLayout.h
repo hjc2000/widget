@@ -1,5 +1,4 @@
 #pragma once
-#include "qnamespace.h"
 #include <qgridlayout.h>
 #include <widget/layout/GridPosition.h>
 #include <widget/layout/Padding.h>

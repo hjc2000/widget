@@ -2,9 +2,7 @@
 #include "qcontainerfwd.h"
 #include "qimage.h"
 #include "xlsxcell.h"
-#include <memory>
 #include <QCoreApplication>
-#include <QDir>
 #include <widget/table/ITableDataModel.h>
 #include <xlsxdocument.h>
 #include <xlsxformat.h>

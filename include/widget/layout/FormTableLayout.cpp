@@ -1,5 +1,4 @@
 #include "FormTableLayout.h"
-#include "qnamespace.h"
 
 void widget::FormTableLayout::Initialize()
 {

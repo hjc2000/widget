@@ -1,6 +1,4 @@
 #include "GridLayout.h"
-#include "Padding.h"
-#include "qgridlayout.h"
 
 widget::GridLayout::GridLayout(QWidget *parent)
 {

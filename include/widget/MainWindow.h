@@ -1,6 +1,4 @@
 #pragma once
-#include "box/VBox.h"
-#include <base/delegate/Delegate.h>
 #include <QCheckBox >
 #include <QDateTimeEdit>
 #include <QMainWindow>
