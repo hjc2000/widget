@@ -1,5 +1,10 @@
 #include "Table.CustomItemDelegate.h"
 
+widget::Table::CustomItemDelegate::CustomItemDelegate(int padding)
+	: _padding(padding)
+{
+}
+
 void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 											  QStyleOptionViewItem const &option,
 											  QModelIndex const &index) const
@@ -11,10 +16,7 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 	QString text = index.data(Qt::DisplayRole).toString();
 
 	QTextOption text_option{};
-
-	text_option.setAlignment(Qt::AlignmentFlag::AlignLeft |
-							 Qt::AlignmentFlag::AlignVCenter);
-
+	text_option.setAlignment(Qt::AlignmentFlag::AlignLeft | Qt::AlignmentFlag::AlignVCenter);
 	text_option.setWrapMode(QTextOption::WrapMode::NoWrap);
 
 	QRect text_rect = new_option.rect;

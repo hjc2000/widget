@@ -7,10 +7,10 @@
 
 namespace widget
 {
-	/**
-	 * @brief 表格。
-	 *
-	 */
+	///
+	/// @brief 表格。
+	///
+	///
 	class Table :
 		public QWidget
 	{
@@ -26,37 +26,37 @@ namespace widget
 	public:
 		Table();
 
-	public:
-		// 数据模型
+		/* #region 数据模型 */
 
-		/**
-		 * @brief 设置数据模型。
-		 *
-		 * @param model
-		 */
+		///
+		/// @brief 设置数据模型。
+		///
+		/// @param model
+		///
 		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model);
 
-		/**
-		 * @brief 设置数据模型，同时设置每一列的大小调整方式。
-		 *
-		 * @param model
-		 * @param resize_modes
-		 */
+		///
+		/// @brief 设置数据模型，同时设置每一列的大小调整方式。
+		///
+		/// @param model
+		/// @param resize_modes
+		///
 		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
 					  std::vector<QHeaderView::ResizeMode> resize_modes);
 
-		/**
-		 * @brief 数据模型发生改变，需要刷新表格视图。
-		 *
-		 */
+		///
+		/// @brief 数据模型发生改变，需要刷新表格视图。
+		///
+		///
 		void DataModelHasChanged();
 
-	public:
-		/**
-		 * @brief 设置每一列的大小调整方式。
-		 *
-		 * @param resize_modes
-		 */
+		/* #endregion */
+
+		///
+		/// @brief 设置每一列的大小调整方式。
+		///
+		/// @param resize_modes
+		///
 		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
 	};
 } // namespace widget

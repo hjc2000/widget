@@ -11,8 +11,6 @@ void widget::Table::PrivateTable::ClearInitialFocus()
 
 widget::Table::PrivateTable::PrivateTable()
 {
-	_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
-
 	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
 
 	{
@@ -27,8 +25,11 @@ widget::Table::PrivateTable::PrivateTable()
 		setVerticalScrollMode(ScrollMode::ScrollPerPixel);
 	}
 
-	// 设置单元格绘制代理，按照自定义的方式绘制单元格。
-	setItemDelegate(_custom_item_delegate.get());
+	{
+		// 设置单元格绘制代理，按照自定义的方式绘制单元格。
+		_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
+		setItemDelegate(_custom_item_delegate.get());
+	}
 
 	// 使能排序
 	setSortingEnabled(true);
@@ -37,20 +38,29 @@ widget::Table::PrivateTable::PrivateTable()
 void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 {
 	_data_model = model;
+	DataModelHasChanged();
+}
+
+void widget::Table::PrivateTable::DataModelHasChanged()
+{
+	if (_data_model == nullptr)
+	{
+		return;
+	}
 
 	/* 先设置成空指针，避免以前已经有模型了。
 	 * 如果以前已经有模型了，不先设置成空指针清空模型，就会出现表格视图没有刷新完全的情况。例如行数
 	 * 还保持着上一个模型的行数。
 	 */
 	QTableView::setModel(nullptr);
-	QTableView::setModel(model);
+	QTableView::setModel(_data_model);
 	ClearInitialFocus();
 
 	{
 		QHeaderView *header = horizontalHeader();
 		header->setSectionResizeMode(QHeaderView::Interactive);
 
-		for (int i = 0; i < model->columnCount(); i++)
+		for (int i = 0; i < _data_model->columnCount(); i++)
 		{
 			resizeColumnToContents(i);
 		}
@@ -65,12 +75,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 		// 允许用户点击列头
 		header->setSectionsClickable(true);
 	}
-}
-
-void widget::Table::PrivateTable::DataModelHasChanged()
-{
-	QTableView::setModel(nullptr);
-	setModel(_data_model);
 }
 
 void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)

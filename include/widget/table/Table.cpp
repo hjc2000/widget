@@ -13,7 +13,10 @@ widget::Table::Table()
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
 {
+	// 有列标题则让水平的表格头可见。
 	_table->horizontalHeader()->setVisible(model->HasColumnTitle());
+
+	// 有行标题则让垂直的表格头可见。
 	_table->verticalHeader()->setVisible(model->HasRowTitle());
 
 	_table_data_model = std::shared_ptr<TableDataModel>{new TableDataModel{model}};
