@@ -2,9 +2,7 @@
 #include <widget/pch.h>
 
 #include <base/delegate/Delegate.h>
-#include <QPalette>
 #include <QPushButton>
-#include <QWidget>
 
 namespace widget
 {

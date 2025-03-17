@@ -4,13 +4,14 @@
 
 #ifdef __cplusplus
 
-	#include "qobject.h"
-	#include "qwidget.h"
 	#include <base/pch.h>
 	#include <iostream>
 	#include <QDateTimeEdit>
-	#include <qiodevice.h>
+	#include <QIODevice>
 	#include <QMainWindow>
+	#include <QObject>
+	#include <QPalette>
+	#include <QWidget>
 
 #endif
 
