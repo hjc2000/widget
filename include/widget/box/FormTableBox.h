@@ -1,8 +1,9 @@
 #pragma once
+#include <widget/pch.h>
+
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include <base/container/Dictionary.h>
-#include <initializer_list>
 #include <widget/box/FormTableBoxItem.h>
 #include <widget/layout/FormTableLayout.h>
 

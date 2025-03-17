@@ -1,9 +1,10 @@
 #pragma once
+#include <widget/pch.h>
+
 #include <base/delegate/Delegate.h>
 #include <QPalette>
 #include <QPushButton>
 #include <QWidget>
-#include <string>
 
 namespace widget
 {

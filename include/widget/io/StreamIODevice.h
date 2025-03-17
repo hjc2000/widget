@@ -1,7 +1,6 @@
 #pragma once
 #include <base/stream/Stream.h>
-#include <memory>
-#include <qiodevice.h>
+#include <widget/pch.h>
 
 namespace widget
 {

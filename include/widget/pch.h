@@ -9,6 +9,7 @@
 	#include <base/pch.h>
 	#include <iostream>
 	#include <QDateTimeEdit>
+	#include <qiodevice.h>
 	#include <QMainWindow>
 
 #endif

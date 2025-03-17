@@ -1,11 +1,9 @@
 #pragma once
+#include <widget/pch.h>
+
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
-#include <array>
 #include <base/container/iterator/IEnumerable.h>
-#include <cstddef>
-#include <memory>
-#include <vector>
 
 namespace widget
 {
