@@ -1,12 +1,10 @@
 #pragma once
 #include "base/delegate/IEvent.h"
 #include "qcheckbox.h"
-#include "qwidget.h"
 #include <base/delegate/Delegate.h>
-#include <memory>
-#include <string>
 #include <widget/layout/HBoxLayout.h>
 #include <widget/line-input-widget/CheckState.h>
+#include <widget/pch.h>
 
 namespace widget
 {

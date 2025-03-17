@@ -1,10 +1,9 @@
 #pragma once
-#include <widget/pch.h>
-
 #include "qwidget.h"
 #include <set>
 #include <widget/box/IBox.h>
 #include <widget/layout/VBoxLayout.h>
+#include <widget/pch.h>
 
 namespace widget
 {
