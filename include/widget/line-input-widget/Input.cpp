@@ -71,6 +71,7 @@ widget::Input::Input()
 	ConnectSignal();
 }
 
+/* #region PlaceholderText */
 QString widget::Input::PlaceholderText() const
 {
 	return _line_edit.placeholderText();
@@ -97,6 +98,9 @@ std::string widget::Input::PlaceholderTextStdString() const
 	return ret;
 }
 
+/* #endregion */
+
+/* #region Text */
 QString widget::Input::Text() const
 {
 	return _line_edit.text();
@@ -134,6 +138,9 @@ std::string widget::Input::TextStdString() const
 	return ret;
 }
 
+/* #endregion */
+
+/* #region 对外提供事件 */
 base::IEvent<QString const &> &widget::Input::TextChangedEvent()
 {
 	return _text_changed_event;
@@ -153,6 +160,8 @@ base::IEvent<QString const &> &widget::Input::TextEditingFinishedEvent()
 {
 	return _text_editing_finished_event;
 }
+
+/* #endregion */
 
 void widget::Input::SetInvalidInputStyle(bool is_invalid)
 {

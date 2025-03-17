@@ -18,23 +18,19 @@ namespace widget
 
 		void ConnectSignal();
 
-	private:
-		// 事件
+		/* #region 对外提供事件 */
 
 		base::Delegate<QString const &> _text_changed_event;
 		base::Delegate<QString const &> _text_changing_finished_event;
 		base::Delegate<QString const &> _text_edited_event;
 		base::Delegate<QString const &> _text_editing_finished_event;
 
-	public:
-		/**
-		 * @brief Construct a new Input object
-		 *
-		 */
-		Input();
+		/* #endregion */
 
 	public:
-		// PlaceholderText
+		Input();
+
+		/* #region PlaceholderText */
 
 		/**
 		 * @brief 输入框在没有输入内容时显示的文本。
@@ -70,9 +66,9 @@ namespace widget
 		 * @return std::string
 		 */
 		std::string PlaceholderTextStdString() const;
+		/* #endregion */
 
-	public:
-		// Text
+		/* #region Text */
 
 		/**
 		 * @brief 编辑框中的文本。
@@ -108,9 +104,9 @@ namespace widget
 		 * @return std::string
 		 */
 		std::string TextStdString() const;
+		/* #endregion */
 
-	public:
-		// 事件
+		/* #region 对外提供事件 */
 
 		/**
 		 * @brief 输入框中的文本正在改变事件。
@@ -155,8 +151,8 @@ namespace widget
 		 * @return base::IEvent<QString const &>&
 		 */
 		base::IEvent<QString const &> &TextEditingFinishedEvent();
+		/* #endregion */
 
-	public:
 		/**
 		 * @brief 设置输入非法样式。
 		 *
