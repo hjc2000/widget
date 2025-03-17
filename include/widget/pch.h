@@ -2,8 +2,9 @@
 // IWYU pragma: begin_keep
 // IWYU pragma: begin_exports
 
-#ifdef __cplusplus
+#include <base/pch.h>
 
+#ifdef __cplusplus
 	#include <iostream>
 	#include <QApplication>
 	#include <QDateTimeEdit>
@@ -17,7 +18,6 @@
 	#include <QtGlobal>
 	#include <QVariant>
 	#include <QWidget>
-
 #endif
 
 // IWYU pragma: end_exports
