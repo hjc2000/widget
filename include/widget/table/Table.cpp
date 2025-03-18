@@ -1,7 +1,7 @@
 #include "Table.h"
 #include <Table.CustomItemDelegate.h>
 #include <Table.PrivateTable.h>
-#include <Table.TableDataModel.h>
+#include <Table.TableDataModelWrapper.h>
 
 widget::Table::Table()
 {
@@ -17,7 +17,7 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	// 有行标题则让垂直的表格头可见。
 	_table->verticalHeader()->setVisible(model->HasRowTitle());
 
-	_table_data_model = std::shared_ptr<TableDataModel>{new TableDataModel{model}};
+	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
 	_table->setModel(_table_data_model.get());
 }
 

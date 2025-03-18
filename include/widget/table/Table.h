@@ -16,10 +16,10 @@ namespace widget
 	private:
 		class PrivateTable;
 		class CustomItemDelegate;
-		class TableDataModel;
+		class TableDataModelWrapper;
 
 		std::shared_ptr<PrivateTable> _table;
-		std::shared_ptr<TableDataModel> _table_data_model;
+		std::shared_ptr<TableDataModelWrapper> _table_data_model;
 		widget::HBoxLayout _layout{this};
 
 	public:

@@ -19,6 +19,12 @@ private:
 	///
 	void ClearInitialFocus();
 
+	///
+	/// @brief 刚设置模型，数据是未排序状态。清除表头初始时显示的排序箭头。
+	///
+	///
+	void ClearSortIndicator();
+
 public:
 	/**
 	 * @brief 构造函数。

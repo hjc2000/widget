@@ -7,14 +7,14 @@
 /// 本类将 widget::ITableDataModel 对象包装为 QAbstractTableModel，这样才能被 qt
 /// 表格类 QTableView 使用。
 ///
-class widget::Table::TableDataModel :
+class widget::Table::TableDataModelWrapper :
 	public QAbstractTableModel
 {
 private:
 	std::shared_ptr<widget::ITableDataModel> _model;
 
 public:
-	TableDataModel(std::shared_ptr<widget::ITableDataModel> const &model);
+	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
 
 	virtual int rowCount(QModelIndex const &parent = QModelIndex{}) const override;
 	virtual int columnCount(QModelIndex const &parent = QModelIndex{}) const override;

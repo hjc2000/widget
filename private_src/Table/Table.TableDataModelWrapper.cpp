@@ -1,11 +1,11 @@
-#include "Table.TableDataModel.h"
+#include "Table.TableDataModelWrapper.h"
 
-widget::Table::TableDataModel::TableDataModel(std::shared_ptr<widget::ITableDataModel> const &model)
+widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
 	: _model(model)
 {
 }
 
-int widget::Table::TableDataModel::rowCount(QModelIndex const &parent) const
+int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
 {
 	try
 	{
@@ -28,7 +28,7 @@ int widget::Table::TableDataModel::rowCount(QModelIndex const &parent) const
 	return 0;
 }
 
-int widget::Table::TableDataModel::columnCount(QModelIndex const &parent) const
+int widget::Table::TableDataModelWrapper::columnCount(QModelIndex const &parent) const
 {
 	try
 	{
@@ -51,7 +51,7 @@ int widget::Table::TableDataModel::columnCount(QModelIndex const &parent) const
 	return 0;
 }
 
-QVariant widget::Table::TableDataModel::data(QModelIndex const &index, int role) const
+QVariant widget::Table::TableDataModelWrapper::data(QModelIndex const &index, int role) const
 {
 	try
 	{
@@ -79,7 +79,7 @@ QVariant widget::Table::TableDataModel::data(QModelIndex const &index, int role)
 	return QVariant{};
 }
 
-QVariant widget::Table::TableDataModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant widget::Table::TableDataModelWrapper::headerData(int section, Qt::Orientation orientation, int role) const
 {
 	try
 	{
@@ -117,7 +117,7 @@ QVariant widget::Table::TableDataModel::headerData(int section, Qt::Orientation 
 	return QVariant{};
 }
 
-void widget::Table::TableDataModel::sort(int column, Qt::SortOrder order)
+void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
 	// beginResetModel();
 

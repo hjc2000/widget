@@ -9,6 +9,12 @@ void widget::Table::PrivateTable::ClearInitialFocus()
 	setCurrentIndex(QModelIndex{});
 }
 
+void widget::Table::PrivateTable::ClearSortIndicator()
+{
+	QHeaderView *header = horizontalHeader();
+	header->setSortIndicator(-1, Qt::SortOrder::DescendingOrder);
+}
+
 widget::Table::PrivateTable::PrivateTable()
 {
 	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
@@ -75,6 +81,8 @@ void widget::Table::PrivateTable::DataModelHasChanged()
 		// 允许用户点击列头
 		header->setSectionsClickable(true);
 	}
+
+	ClearSortIndicator();
 }
 
 void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
