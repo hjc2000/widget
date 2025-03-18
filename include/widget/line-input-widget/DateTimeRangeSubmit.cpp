@@ -5,104 +5,118 @@ void widget::DateTimeRangeSubmit::ConnectSignal()
 {
 	connect(&_left_edit,
 			&QDateTimeEdit::dateTimeChanged,
-			[this](QDateTime const &dateTime)
+			[this](QDateTime const &date_time)
 			{
-				try
-				{
-					{
-						// 检查非法输入
-						bool error = false;
-						if (LeftTimePoint() > RightTimePoint())
-						{
-							SetLeftInvalidInputStyle(true);
-							SetRightInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (LeftTimePoint() < _min)
-						{
-							SetLeftInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (RightTimePoint() > _max)
-						{
-							SetRightInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (error)
-						{
-							return;
-						}
-					}
-
-					{
-						// 输入合法，开始处理
-						SetLeftInvalidInputStyle(false);
-						SetRightInvalidInputStyle(false);
-						_submit_event.Invoke();
-					}
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << e.what() << std::endl;
-				}
-				catch (...)
-				{
-				}
+				OnLeftDateTimeChanged();
 			});
 
 	connect(&_right_edit,
 			&QDateTimeEdit::dateTimeChanged,
-			[this](QDateTime const &dateTime)
+			[this](QDateTime const &date_time)
 			{
-				try
-				{
-					{
-						// 检查非法输入
-						bool error = false;
-						if (LeftTimePoint() > RightTimePoint())
-						{
-							SetLeftInvalidInputStyle(true);
-							SetRightInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (LeftTimePoint() < _min)
-						{
-							SetLeftInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (RightTimePoint() > _max)
-						{
-							SetRightInvalidInputStyle(true);
-							error = true;
-						}
-
-						if (error)
-						{
-							return;
-						}
-					}
-
-					{
-						// 输入合法，开始处理
-						SetLeftInvalidInputStyle(false);
-						SetRightInvalidInputStyle(false);
-						_submit_event.Invoke();
-					}
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << e.what() << std::endl;
-				}
-				catch (...)
-				{
-				}
+				OnRightDateTimeChanged();
 			});
 }
+
+/* #region 事件处理函数 */
+
+void widget::DateTimeRangeSubmit::OnLeftDateTimeChanged()
+{
+	try
+	{
+		{
+			// 检查非法输入
+			bool error = false;
+			if (LeftTimePoint() > RightTimePoint())
+			{
+				SetLeftInvalidInputStyle(true);
+				SetRightInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (LeftTimePoint() < _min)
+			{
+				SetLeftInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (RightTimePoint() > _max)
+			{
+				SetRightInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (error)
+			{
+				return;
+			}
+		}
+
+		{
+			// 输入合法，开始处理
+			SetLeftInvalidInputStyle(false);
+			SetRightInvalidInputStyle(false);
+			_submit_event.Invoke();
+		}
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	catch (...)
+	{
+	}
+}
+
+void widget::DateTimeRangeSubmit::OnRightDateTimeChanged()
+{
+	try
+	{
+		{
+			// 检查非法输入
+			bool error = false;
+			if (LeftTimePoint() > RightTimePoint())
+			{
+				SetLeftInvalidInputStyle(true);
+				SetRightInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (LeftTimePoint() < _min)
+			{
+				SetLeftInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (RightTimePoint() > _max)
+			{
+				SetRightInvalidInputStyle(true);
+				error = true;
+			}
+
+			if (error)
+			{
+				return;
+			}
+		}
+
+		{
+			// 输入合法，开始处理
+			SetLeftInvalidInputStyle(false);
+			SetRightInvalidInputStyle(false);
+			_submit_event.Invoke();
+		}
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	catch (...)
+	{
+	}
+}
+
+/* #endregion */
 
 widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 {
@@ -155,6 +169,8 @@ base::IEvent<> &widget::DateTimeRangeSubmit::SubmitEvent()
 	return _submit_event;
 }
 
+/* #region 日期时间数据 */
+
 base::TimePointSinceEpoch widget::DateTimeRangeSubmit::LeftTimePoint() const
 {
 	QDateTime selectedDateTime = _left_edit.dateTime();
@@ -171,6 +187,10 @@ base::ClosedInterval<base::TimePointSinceEpoch> widget::DateTimeRangeSubmit::Int
 {
 	return base::ClosedInterval<base::TimePointSinceEpoch>{LeftTimePoint(), RightTimePoint()};
 }
+
+/* #endregion */
+
+/* #region 输入非法样式 */
 
 void widget::DateTimeRangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
 {
@@ -197,3 +217,5 @@ void widget::DateTimeRangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 		_right_edit.setStyleSheet("");
 	}
 }
+
+/* #endregion */
