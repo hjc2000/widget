@@ -19,6 +19,7 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
 	_table->setModel(_table_data_model.get());
+	_table->DataModelHasChanged();
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model,

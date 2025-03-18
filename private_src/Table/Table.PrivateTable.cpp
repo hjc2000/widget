@@ -44,7 +44,6 @@ widget::Table::PrivateTable::PrivateTable()
 void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 {
 	_data_model = model;
-	DataModelHasChanged();
 }
 
 void widget::Table::PrivateTable::DataModelHasChanged()

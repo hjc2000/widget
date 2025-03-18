@@ -37,7 +37,7 @@ public:
 	///
 	/// @brief 设置数据模型。
 	///
-	/// @note 设置后会自动调用 DataModelHasChanged，不需要手动调用。
+	/// @note 设置后需要手动调用 DataModelHasChanged 方法表格才会更新。
 	///
 	/// @param model
 	///
