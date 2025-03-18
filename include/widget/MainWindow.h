@@ -15,10 +15,10 @@
 
 namespace widget
 {
-	/**
-	 * @brief 主窗口。
-	 *
-	 */
+	///
+	/// @brief 主窗口。
+	///
+	///
 	class MainWindow :
 		public QMainWindow
 	{
@@ -30,10 +30,6 @@ namespace widget
 		}};
 
 	public:
-		/**
-		 * @brief Construct a new Main Window object
-		 *
-		 */
 		MainWindow();
 	};
 } // namespace widget
