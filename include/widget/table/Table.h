@@ -3,6 +3,7 @@
 #include <QTableView>
 #include <widget/layout/HBoxLayout.h>
 #include <widget/table/ITableDataModel.h>
+#include <widget/table/TableSortingParameter.h>
 
 namespace widget
 {
@@ -50,6 +51,13 @@ namespace widget
 		void DataModelHasChanged();
 
 		/* #endregion */
+
+		///
+		/// @brief 获取表格当前的排序参数。
+		///
+		/// @return widget::TableSortingParameter
+		///
+		widget::TableSortingParameter CurrentTableSortingParameter() const;
 
 		///
 		/// @brief 设置每一列的大小调整方式。

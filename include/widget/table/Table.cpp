@@ -37,3 +37,13 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 {
 	_table->SetResizeModes(resize_modes);
 }
+
+widget::TableSortingParameter widget::Table::CurrentTableSortingParameter() const
+{
+	if (_table_data_model == nullptr)
+	{
+		return widget::TableSortingParameter{};
+	}
+
+	return _table_data_model->CurrentTableSortingParameter();
+}
