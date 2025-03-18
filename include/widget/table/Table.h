@@ -48,13 +48,14 @@ namespace widget
 		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
 					  std::vector<QHeaderView::ResizeMode> resize_modes);
 
+		/* #endregion */
+
 		///
 		/// @brief 数据模型发生改变，需要刷新表格视图。
 		///
 		/// @note 刷新后排序状态会清除，表头的排序箭头会消失。
 		///
 		void DataModelHasChanged();
-		/* #endregion */
 
 		/* #region 排序 */
 

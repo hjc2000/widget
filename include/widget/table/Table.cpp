@@ -9,6 +9,8 @@ widget::Table::Table()
 	_layout.AddWidget(_table.get());
 }
 
+/* #region 数据模型 */
+
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
 {
 	// 有列标题则让水平的表格头可见。
@@ -29,15 +31,14 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	SetResizeModes(resize_modes);
 }
 
+/* #endregion */
+
 void widget::Table::DataModelHasChanged()
 {
 	_table->DataModelHasChanged();
 }
 
-void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
-{
-	_table->SetResizeModes(resize_modes);
-}
+/* #region 排序 */
 
 widget::TableSortingParameter widget::Table::CurrentSortingParameter() const
 {
@@ -67,4 +68,11 @@ void widget::Table::Sort(int column, Qt::SortOrder order)
 	}
 
 	_table->sortByColumn(column, order);
+}
+
+/* #endregion */
+
+void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
+{
+	_table->SetResizeModes(resize_modes);
 }
