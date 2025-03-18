@@ -10,10 +10,10 @@
 
 namespace widget
 {
-	/**
-	 * @brief xlsx 文档。
-	 *
-	 */
+	///
+	/// @brief xlsx 文档。
+	///
+	///
 	class XlsxDocument
 	{
 	private:
@@ -22,23 +22,24 @@ namespace widget
 		QString _file_path = "temp.xlsx";
 
 	public:
-		/**
-		 * @brief 打开指定路径的表格。
-		 *
-		 * @note 如果文件不存在，则会创建。
-		 *
-		 * @param file_path
-		 */
+		///
+		/// @brief 打开指定路径的表格。
+		///
+		/// @note 如果文件不存在，则会创建。
+		///
+		/// @param file_path
+		///
 		XlsxDocument(QString const &file_path);
 
-		/**
-		 * @brief 绑定一个 IO 设备。将从此 IO 设备读取表格或写入表格。
-		 *
-		 * @param io_device
-		 */
+		///
+		/// @brief 绑定一个 IO 设备。将从此 IO 设备读取表格或写入表格。
+		///
+		/// @param io_device
+		///
 		XlsxDocument(std::shared_ptr<QIODevice> const &io_device);
 
-	public:
+		/* #region Write */
+
 		/**
 		 * @brief 写入一个单元格。
 		 *
@@ -123,54 +124,55 @@ namespace widget
 				   QXlsx::Format const &column_title_format,
 				   QXlsx::Format const &row_title_format,
 				   QXlsx::Format const &data_format);
+		/* #endregion */
 
-	public:
-		/**
-		 * @brief 加载 xlsx 文件。
-		 *
-		 */
+		/* #region 加载、保存文件 */
+
+		///
+		/// @brief 加载 xlsx 文件。
+		///
+		///
 		void Load() const;
 
-		/**
-		 * @brief 获取指定位置的单元格。
-		 *
-		 * @param row
-		 * @param column
-		 * @return std::shared_ptr<QXlsx::Cell>
-		 */
+		///
+		/// @brief 保存文件。
+		///
+		///
+		void Save() const;
+		/* #endregion */
+
+		///
+		/// @brief 获取指定位置的单元格。
+		///
+		/// @param row
+		/// @param column
+		/// @return std::shared_ptr<QXlsx::Cell>
+		///
 		std::shared_ptr<QXlsx::Cell> GetCellAt(int row, int column) const;
 
-		/**
-		 * @brief 将指定单元格的内容作为字符串读出来。
-		 *
-		 * @param row
-		 * @param column
-		 * @return QString
-		 */
+		///
+		/// @brief 将指定单元格的内容作为字符串读出来。
+		///
+		/// @param row
+		/// @param column
+		/// @return QString
+		///
 		QString ReadCellAsString(int row, int column) const;
 
-		/**
-		 * @brief 将指定单元格的内容作为字符串读出来。
-		 *
-		 * @param row
-		 * @param column
-		 * @return std::string
-		 */
+		///
+		/// @brief 将指定单元格的内容作为字符串读出来。
+		///
+		/// @param row
+		/// @param column
+		/// @return std::string
+		///
 		std::string ReadCellAsStdString(int row, int column) const;
 
-	public:
-		/**
-		 * @brief 获取当前工作表。
-		 *
-		 * @return QXlsx::Worksheet*
-		 */
+		///
+		/// @brief 获取当前工作表。
+		///
+		/// @return QXlsx::Worksheet*
+		///
 		QXlsx::Worksheet *CurrentWorksheet() const;
-
-	public:
-		/**
-		 * @brief 保存文件。
-		 *
-		 */
-		void Save() const;
 	};
 } // namespace widget

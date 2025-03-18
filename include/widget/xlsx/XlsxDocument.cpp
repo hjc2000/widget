@@ -15,6 +15,8 @@ widget::XlsxDocument::XlsxDocument(std::shared_ptr<QIODevice> const &io_device)
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{io_device.get()}};
 }
 
+/* #region Write */
+
 void widget::XlsxDocument::Write(int row, int column, QString const &content)
 {
 	Write(row, column, content, QXlsx::Format{});
@@ -118,6 +120,10 @@ void widget::XlsxDocument::Write(widget::ITableDataModel const &model,
 	}
 }
 
+/* #endregion */
+
+/* #region 加载、保存文件 */
+
 void widget::XlsxDocument::Load() const
 {
 	bool result = _xlsx_writer->load();
@@ -126,6 +132,28 @@ void widget::XlsxDocument::Load() const
 		throw std::runtime_error{CODE_POS_STR + "加载失败。"};
 	}
 }
+
+void widget::XlsxDocument::Save() const
+{
+	if (_io_device == nullptr)
+	{
+		bool result = _xlsx_writer->saveAs(_file_path);
+		if (!result)
+		{
+			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+		}
+	}
+	else
+	{
+		bool result = _xlsx_writer->saveAs(_io_device.get());
+		if (!result)
+		{
+			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
+		}
+	}
+}
+
+/* #endregion */
 
 std::shared_ptr<QXlsx::Cell> widget::XlsxDocument::GetCellAt(int row, int column) const
 {
@@ -155,24 +183,4 @@ QXlsx::Worksheet *widget::XlsxDocument::CurrentWorksheet() const
 {
 	QXlsx::Worksheet *sheet = _xlsx_writer->currentWorksheet();
 	return sheet;
-}
-
-void widget::XlsxDocument::Save() const
-{
-	if (_io_device == nullptr)
-	{
-		bool result = _xlsx_writer->saveAs(_file_path);
-		if (!result)
-		{
-			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
-		}
-	}
-	else
-	{
-		bool result = _xlsx_writer->saveAs(_io_device.get());
-		if (!result)
-		{
-			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
-		}
-	}
 }
