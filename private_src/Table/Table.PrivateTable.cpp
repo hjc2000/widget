@@ -82,6 +82,7 @@ void widget::Table::PrivateTable::DataModelHasChanged()
 		header->setSectionsClickable(true);
 	}
 
+	// 添加、删除数据或者数据被编辑后表格实际上可能变成乱序了，所以需要清除排序箭头。
 	ClearSortIndicator();
 }
 

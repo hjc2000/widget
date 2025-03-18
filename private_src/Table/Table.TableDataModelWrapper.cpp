@@ -144,7 +144,7 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 				createIndex(rowCount() - 1, columnCount() - 1));
 }
 
-widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentTableSortingParameter() const
+widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSortingParameter() const
 {
 	return _table_sorting_paremeter;
 }

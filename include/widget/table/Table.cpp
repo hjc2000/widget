@@ -38,12 +38,32 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 	_table->SetResizeModes(resize_modes);
 }
 
-widget::TableSortingParameter widget::Table::CurrentTableSortingParameter() const
+widget::TableSortingParameter widget::Table::CurrentSortingParameter() const
 {
 	if (_table_data_model == nullptr)
 	{
 		return widget::TableSortingParameter{};
 	}
 
-	return _table_data_model->CurrentTableSortingParameter();
+	return _table_data_model->CurrentSortingParameter();
+}
+
+void widget::Table::Sort(widget::TableSortingParameter const &parameter)
+{
+	if (_table_data_model == nullptr)
+	{
+		return;
+	}
+
+	_table->sortByColumn(parameter.Column(), parameter.Order());
+}
+
+void widget::Table::Sort(int column, Qt::SortOrder order)
+{
+	if (_table_data_model == nullptr)
+	{
+		return;
+	}
+
+	_table->sortByColumn(column, order);
 }

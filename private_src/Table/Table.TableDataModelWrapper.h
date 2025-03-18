@@ -52,5 +52,5 @@ public:
 	///
 	/// @return widget::TableSortingParameter
 	///
-	widget::TableSortingParameter CurrentTableSortingParameter() const;
+	widget::TableSortingParameter CurrentSortingParameter() const;
 };
