@@ -2,10 +2,10 @@
 
 namespace widget
 {
-	/**
-	 * @brief 表示网格中的位置。
-	 *
-	 */
+	///
+	/// @brief 表示网格中的位置。
+	///
+	///
 	class GridPosition
 	{
 	private:
@@ -19,7 +19,6 @@ namespace widget
 
 		explicit GridPosition(int row, int column, int row_span, int column_span);
 
-	public:
 		int Row() const;
 
 		int Column() const;

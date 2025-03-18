@@ -126,6 +126,8 @@ widget::IntRangeSubmit::IntRangeSubmit(int64_t min, int64_t max)
 	}
 }
 
+/* #region 最大最小值 */
+
 int64_t widget::IntRangeSubmit::MinValue() const
 {
 	return _min;
@@ -146,6 +148,10 @@ void widget::IntRangeSubmit::SetMaxValue(int64_t value)
 	_max = value;
 }
 
+/* #endregion */
+
+/* #region 区间 */
+
 int64_t widget::IntRangeSubmit::LeftValue() const
 {
 	return _left_value;
@@ -161,10 +167,14 @@ base::ClosedInterval<int64_t> widget::IntRangeSubmit::Interval() const
 	return base::ClosedInterval<int64_t>{LeftValue(), RightValue()};
 }
 
+/* #endregion */
+
 base::IEvent<> &widget::IntRangeSubmit::SubmitEvent()
 {
 	return _submit_event;
 }
+
+/* #region 输入非法样式 */
 
 void widget::IntRangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
 {
@@ -175,6 +185,10 @@ void widget::IntRangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 {
 	_range_submit.SetRightInvalidInputStyle(is_invalid);
 }
+
+/* #endregion */
+
+/* #region PlaceholderText */
 
 QString widget::IntRangeSubmit::LeftPlaceholderText() const
 {
@@ -226,6 +240,10 @@ std::string widget::IntRangeSubmit::RightPlaceholderTextStdString() const
 	return _range_submit.RightPlaceholderTextStdString();
 }
 
+/* #endregion */
+
+/* #region 输入框的文本 */
+
 QString widget::IntRangeSubmit::LeftText() const
 {
 	return _range_submit.LeftText();
@@ -275,3 +293,5 @@ std::string widget::IntRangeSubmit::RightTextStdString() const
 {
 	return _range_submit.RightTextStdString();
 }
+
+/* #endregion */

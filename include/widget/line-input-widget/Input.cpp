@@ -72,6 +72,7 @@ widget::Input::Input()
 }
 
 /* #region PlaceholderText */
+
 QString widget::Input::PlaceholderText() const
 {
 	return _line_edit.placeholderText();
@@ -101,6 +102,7 @@ std::string widget::Input::PlaceholderTextStdString() const
 /* #endregion */
 
 /* #region Text */
+
 QString widget::Input::Text() const
 {
 	return _line_edit.text();
@@ -141,6 +143,7 @@ std::string widget::Input::TextStdString() const
 /* #endregion */
 
 /* #region 对外提供事件 */
+
 base::IEvent<QString const &> &widget::Input::TextChangedEvent()
 {
 	return _text_changed_event;

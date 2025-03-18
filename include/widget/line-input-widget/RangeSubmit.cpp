@@ -33,6 +33,8 @@ widget::RangeSubmit::RangeSubmit()
 	}
 }
 
+/* #region PlaceholderText */
+
 QString widget::RangeSubmit::LeftPlaceholderText() const
 {
 	return _left_edit.PlaceholderText();
@@ -83,6 +85,10 @@ std::string widget::RangeSubmit::RightPlaceholderTextStdString() const
 	return widget::ToString(RightPlaceholderText());
 }
 
+/* #endregion */
+
+/* #region 输入框的文本 */
+
 QString widget::RangeSubmit::LeftText() const
 {
 	return _left_edit.Text();
@@ -132,6 +138,8 @@ std::string widget::RangeSubmit::RightTextStdString() const
 {
 	return widget::ToString(RightText());
 }
+
+/* #endregion */
 
 base::ClosedInterval<QString> widget::RangeSubmit::Interval() const
 {
