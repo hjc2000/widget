@@ -119,6 +119,11 @@ QVariant widget::Table::TableDataModelWrapper::headerData(int section, Qt::Orien
 
 void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
+	if (column < 0 || column > columnCount())
+	{
+		return;
+	}
+
 	_table_sorting_paremeter = widget::TableSortingParameter{column, order};
 
 	try
