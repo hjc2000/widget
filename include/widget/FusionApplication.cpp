@@ -1,5 +1,5 @@
 #include "FusionApplication.h"
-#include <QFont>
+#include "QFont"
 
 namespace
 {

@@ -1,7 +1,7 @@
 #pragma once
-#include <widget/table/ITableDataModel.h>
-#include <widget/table/Table.h>
-#include <widget/table/TableSortingParameter.h>
+#include "widget/table/ITableDataModel.h"
+#include "widget/table/Table.h"
+#include "widget/table/TableSortingParameter.h"
 
 ///
 /// @brief 本库对外暴露的表格类 widget::Table 使用的是 widget::ITableDataModel，

@@ -1,17 +1,10 @@
 #pragma once
-#include <QCheckBox >
-#include <QDateTimeEdit>
-#include <QMainWindow>
-#include <QVBoxLayout>
-#include <widget/box/HBox.h>
-#include <widget/box/VBox.h>
-#include <widget/layout/FormTableLayout.h>
-#include <widget/layout/GridLayout.h>
-#include <widget/layout/VBoxLayout.h>
-#include <widget/line-input-widget/CheckBox.h>
-#include <widget/line-input-widget/DateTimeRangeSubmit.h>
-#include <widget/line-input-widget/RangeSubmit.h>
-#include <widget/line-input-widget/Submit.h>
+#include "QCheckBox"
+#include "QDateTimeEdit"
+#include "QMainWindow"
+#include "QVBoxLayout"
+#include "widget/box/VBox.h"
+#include "widget/line-input-widget/CheckBox.h"
 
 namespace widget
 {

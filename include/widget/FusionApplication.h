@@ -1,5 +1,5 @@
 #pragma once
-#include <QApplication>
+#include "QApplication"
 
 namespace widget
 {

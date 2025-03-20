@@ -1,5 +1,5 @@
 #pragma once
-#include <widget/table/Table.h>
+#include "widget/table/Table.h"
 
 ///
 /// @brief 私有的表格。派生 QTableView 以支持一些自定义特性，然后隐藏起来，作为私有代码，

@@ -1,8 +1,8 @@
 #include "test_qwt.h"
-#include <qwt-qt6/qwt_plot.h>
-#include <qwt-qt6/qwt_plot_curve.h>
-#include <qwt-qt6/qwt_symbol.h>
-#include <widget/FusionApplication.h>
+#include "qwt-qt6/qwt_plot.h"
+#include "qwt-qt6/qwt_plot_curve.h"
+#include "qwt-qt6/qwt_symbol.h"
+#include "widget/FusionApplication.h"
 
 void widget::test_qwt()
 {

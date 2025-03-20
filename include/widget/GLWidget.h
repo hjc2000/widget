@@ -1,6 +1,6 @@
 #pragma once
-#include <QtOpenGL/qopenglfunctions_1_0.h>
-#include <QtOpenGLWidgets/QOpenGLWidget>
+#include "QtOpenGL/qopenglfunctions_1_0.h"
+#include "QtOpenGLWidgets/QOpenGLWidget"
 
 namespace widget
 {
