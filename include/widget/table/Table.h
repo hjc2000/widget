@@ -1,9 +1,9 @@
 #pragma once
-#include <QHeaderView>
-#include <QTableView>
-#include <widget/layout/HBoxLayout.h>
-#include <widget/table/ITableDataModel.h>
-#include <widget/table/TableSortingParameter.h>
+#include "QHeaderView"
+#include "QTableView"
+#include "widget/layout/HBoxLayout.h"
+#include "widget/table/ITableDataModel.h"
+#include "widget/table/TableSortingParameter.h"
 
 namespace widget
 {
