@@ -1,6 +1,6 @@
 #pragma once
-#include <base/delegate/Delegate.h>
-#include <QPushButton>
+#include "base/delegate/Delegate.h"
+#include "QPushButton"
 
 namespace widget
 {

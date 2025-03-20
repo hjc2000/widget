@@ -1,7 +1,7 @@
 #pragma once
-#include <base/math/Interval.h>
-#include <qlabel.h>
-#include <widget/line-input-widget/Input.h>
+#include "base/math/Interval.h"
+#include "qlabel.h"
+#include "widget/line-input-widget/Input.h"
 
 namespace widget
 {

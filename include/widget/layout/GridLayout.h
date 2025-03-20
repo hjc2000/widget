@@ -1,7 +1,7 @@
 #pragma once
-#include <qgridlayout.h>
-#include <widget/layout/GridPosition.h>
-#include <widget/layout/Padding.h>
+#include "qgridlayout.h"
+#include "widget/layout/GridPosition.h"
+#include "widget/layout/Padding.h"
 
 namespace widget
 {

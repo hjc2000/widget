@@ -1,5 +1,5 @@
 #pragma once
-#include <qnamespace.h>
+#include "qnamespace.h"
 
 namespace widget
 {

@@ -1,6 +1,6 @@
 #pragma once
-#include <QBoxLayout>
-#include <widget/layout/Padding.h>
+#include "QBoxLayout"
+#include "widget/layout/Padding.h"
 
 namespace widget
 {

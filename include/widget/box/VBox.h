@@ -1,8 +1,8 @@
 #pragma once
 #include "qwidget.h"
+#include "widget/box/IBox.h"
+#include "widget/layout/VBoxLayout.h"
 #include <set>
-#include <widget/box/IBox.h>
-#include <widget/layout/VBoxLayout.h>
 
 namespace widget
 {

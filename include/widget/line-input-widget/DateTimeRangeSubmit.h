@@ -1,13 +1,12 @@
 #pragma once
+#include "base/delegate/Delegate.h"
+#include "base/delegate/IEvent.h"
 #include "base/math/Interval.h"
-#include <base/delegate/Delegate.h>
-#include <base/delegate/IEvent.h>
-#include <base/time/TimePointSinceEpoch.h>
-#include <QDateTimeEdit>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <widget/button/Button.h>
-#include <widget/layout/HBoxLayout.h>
+#include "base/time/TimePointSinceEpoch.h"
+#include "QDateTimeEdit"
+#include "QHBoxLayout"
+#include "QLabel"
+#include "widget/layout/HBoxLayout.h"
 
 namespace widget
 {

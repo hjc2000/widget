@@ -1,8 +1,8 @@
 #pragma once
 #include "IBox.h"
+#include "widget/box/IBox.h"
+#include "widget/layout/HBoxLayout.h"
 #include <set>
-#include <widget/box/IBox.h>
-#include <widget/layout/HBoxLayout.h>
 
 namespace widget
 {

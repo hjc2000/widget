@@ -1,7 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "qlineedit.h"
-#include <widget/layout/HBoxLayout.h>
+#include "widget/layout/HBoxLayout.h"
 
 namespace widget
 {
