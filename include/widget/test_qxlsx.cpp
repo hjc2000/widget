@@ -1,7 +1,5 @@
 #include "test_qxlsx.h"
-#include <widget/xlsx/XlsxDocument.h>
-#include <xlsxdocument.h>
-#include <xlsxworkbook.h>
+#include "widget/xlsx/XlsxDocumentEditor.h"
 
 void widget::test_qxlsx()
 {
