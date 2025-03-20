@@ -1,4 +1,5 @@
 #include "Table.TableDataModelWrapper.h"
+#include "base/string/define.h"
 #include <string>
 
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
@@ -122,7 +123,7 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
 	if (column < 0 || column > columnCount())
 	{
-		std::cout << "尝试以列号：" << std::to_string(column) << " 排序，不存在该列，返回。" << std::endl;
+		std::cout << CODE_POS_STR << "尝试以列号：" << std::to_string(column) << " 排序，不存在该列，返回。" << std::endl;
 		return;
 	}
 
