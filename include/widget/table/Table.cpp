@@ -1,7 +1,6 @@
 #include "Table.h"
-#include <Table.CustomItemDelegate.h>
-#include <Table.PrivateTable.h>
-#include <Table.TableDataModelWrapper.h>
+#include "Table.PrivateTable.h"
+#include "Table.TableDataModelWrapper.h"
 
 widget::Table::Table()
 {
