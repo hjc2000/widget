@@ -14,7 +14,7 @@ void widget::test_qxlsx()
 
 	{
 		// 创建表格
-		widget::XlsxDocument xlsxW{"Test.xlsx"};
+		widget::XlsxDocumentEditor xlsxW{"Test.xlsx"};
 		xlsxW.Write(1, 1, "Hello Qt!");
 		xlsxW.Save();
 		qDebug() << "[debug] current directory is " << QDir::currentPath();
@@ -22,7 +22,7 @@ void widget::test_qxlsx()
 
 	{
 		// 读取
-		widget::XlsxDocument xlsxR{"Test.xlsx"};
+		widget::XlsxDocumentEditor xlsxR{"Test.xlsx"};
 		xlsxR.Load();
 		qDebug() << "[debug] success to load xlsx file.";
 		qDebug() << xlsxR.ReadCellAsString(1, 1);

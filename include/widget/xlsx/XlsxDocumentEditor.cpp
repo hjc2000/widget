@@ -3,13 +3,13 @@
 #include "widget/Conversion.h"
 #include "xlsxdocument.h"
 
-widget::XlsxDocument::XlsxDocument(QString const &file_path)
+widget::XlsxDocumentEditor::XlsxDocumentEditor(QString const &file_path)
 {
 	_file_path = file_path;
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{file_path}};
 }
 
-widget::XlsxDocument::XlsxDocument(std::shared_ptr<QIODevice> const &io_device)
+widget::XlsxDocumentEditor::XlsxDocumentEditor(std::shared_ptr<QIODevice> const &io_device)
 {
 	_io_device = io_device;
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{io_device.get()}};
@@ -17,22 +17,22 @@ widget::XlsxDocument::XlsxDocument(std::shared_ptr<QIODevice> const &io_device)
 
 /* #region Write */
 
-void widget::XlsxDocument::Write(int row, int column, QString const &content)
+void widget::XlsxDocumentEditor::Write(int row, int column, QString const &content)
 {
 	Write(row, column, content, QXlsx::Format{});
 }
 
-void widget::XlsxDocument::Write(int row, int column, std::string const &content)
+void widget::XlsxDocumentEditor::Write(int row, int column, std::string const &content)
 {
 	Write(row, column, content, QXlsx::Format{});
 }
 
-void widget::XlsxDocument::Write(int row, int column, char const *content)
+void widget::XlsxDocumentEditor::Write(int row, int column, char const *content)
 {
 	Write(row, column, content, QXlsx::Format{});
 }
 
-void widget::XlsxDocument::Write(int row, int column, QString const &content, QXlsx::Format const &format)
+void widget::XlsxDocumentEditor::Write(int row, int column, QString const &content, QXlsx::Format const &format)
 {
 	QVariant value{content};
 	bool result = _xlsx_writer->write(row, column, value, format);
@@ -42,31 +42,31 @@ void widget::XlsxDocument::Write(int row, int column, QString const &content, QX
 	}
 }
 
-void widget::XlsxDocument::Write(int row, int column, std::string const &content, QXlsx::Format const &format)
+void widget::XlsxDocumentEditor::Write(int row, int column, std::string const &content, QXlsx::Format const &format)
 {
 	QString qstring{content.c_str()};
 	Write(row, column, qstring, format);
 }
 
-void widget::XlsxDocument::Write(int row, int column, char const *content, QXlsx::Format const &format)
+void widget::XlsxDocumentEditor::Write(int row, int column, char const *content, QXlsx::Format const &format)
 {
 	Write(row, column, QString{content}, format);
 }
 
-void widget::XlsxDocument::Write(widget::ITableDataModel const &model)
+void widget::XlsxDocumentEditor::Write(widget::ITableDataModel const &model)
 {
 	Write(model, QXlsx::Format{});
 }
 
-void widget::XlsxDocument::Write(widget::ITableDataModel const &model, QXlsx::Format const &format)
+void widget::XlsxDocumentEditor::Write(widget::ITableDataModel const &model, QXlsx::Format const &format)
 {
 	Write(model, format, format, format);
 }
 
-void widget::XlsxDocument::Write(widget::ITableDataModel const &model,
-								 QXlsx::Format const &column_title_format,
-								 QXlsx::Format const &row_title_format,
-								 QXlsx::Format const &data_format)
+void widget::XlsxDocumentEditor::Write(widget::ITableDataModel const &model,
+									   QXlsx::Format const &column_title_format,
+									   QXlsx::Format const &row_title_format,
+									   QXlsx::Format const &data_format)
 {
 	int xlsx_column_index_offset = 1;
 	if (model.HasRowTitle())
@@ -124,7 +124,7 @@ void widget::XlsxDocument::Write(widget::ITableDataModel const &model,
 
 /* #region 加载、保存文件 */
 
-void widget::XlsxDocument::Load() const
+void widget::XlsxDocumentEditor::Load() const
 {
 	bool result = _xlsx_writer->load();
 	if (!result)
@@ -133,7 +133,7 @@ void widget::XlsxDocument::Load() const
 	}
 }
 
-void widget::XlsxDocument::Save() const
+void widget::XlsxDocumentEditor::Save() const
 {
 	if (_io_device == nullptr)
 	{
@@ -155,12 +155,12 @@ void widget::XlsxDocument::Save() const
 
 /* #endregion */
 
-std::shared_ptr<QXlsx::Cell> widget::XlsxDocument::GetCellAt(int row, int column) const
+std::shared_ptr<QXlsx::Cell> widget::XlsxDocumentEditor::GetCellAt(int row, int column) const
 {
 	return _xlsx_writer->cellAt(row, column);
 }
 
-QString widget::XlsxDocument::ReadCellAsString(int row, int column) const
+QString widget::XlsxDocumentEditor::ReadCellAsString(int row, int column) const
 {
 	auto cell = GetCellAt(row, column);
 	if (cell == nullptr)
@@ -173,13 +173,13 @@ QString widget::XlsxDocument::ReadCellAsString(int row, int column) const
 	return qstring;
 }
 
-std::string widget::XlsxDocument::ReadCellAsStdString(int row, int column) const
+std::string widget::XlsxDocumentEditor::ReadCellAsStdString(int row, int column) const
 {
 	QString qstring = ReadCellAsString(row, column);
 	return widget::ToString(qstring);
 }
 
-QXlsx::Worksheet *widget::XlsxDocument::CurrentWorksheet() const
+QXlsx::Worksheet *widget::XlsxDocumentEditor::CurrentWorksheet() const
 {
 	QXlsx::Worksheet *sheet = _xlsx_writer->currentWorksheet();
 	return sheet;

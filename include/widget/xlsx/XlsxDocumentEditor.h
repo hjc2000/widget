@@ -13,7 +13,7 @@ namespace widget
 	/// @brief xlsx 文档。
 	///
 	///
-	class XlsxDocument
+	class XlsxDocumentEditor
 	{
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer;
@@ -28,14 +28,14 @@ namespace widget
 		///
 		/// @param file_path
 		///
-		XlsxDocument(QString const &file_path);
+		XlsxDocumentEditor(QString const &file_path);
 
 		///
 		/// @brief 绑定一个 IO 设备。将从此 IO 设备读取表格或写入表格。
 		///
 		/// @param io_device
 		///
-		XlsxDocument(std::shared_ptr<QIODevice> const &io_device);
+		XlsxDocumentEditor(std::shared_ptr<QIODevice> const &io_device);
 
 		/* #region Write */
 
