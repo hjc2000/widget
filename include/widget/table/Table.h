@@ -60,6 +60,21 @@ namespace widget
 		/* #region 排序 */
 
 		///
+		/// @brief 排序是否使能。
+		///
+		/// @return true
+		/// @return false
+		///
+		bool IsSortingEnabled() const;
+
+		///
+		/// @brief 使能排序。
+		///
+		/// @param enable 传入 true 表示使能，传入 false 表示失能。
+		///
+		void EnableSorting(bool enable);
+
+		///
 		/// @brief 获取表格当前的排序参数。
 		///
 		/// @note 如果表格没有被排序过，即用户没有点击表头进行排序，并且本类的 Sort 方法没被调用过，

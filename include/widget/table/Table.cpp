@@ -39,6 +39,16 @@ void widget::Table::DataModelHasChanged()
 
 /* #region 排序 */
 
+bool widget::Table::IsSortingEnabled() const
+{
+	return _table->isSortingEnabled();
+}
+
+void widget::Table::EnableSorting(bool enable)
+{
+	_table->setSortingEnabled(enable);
+}
+
 widget::TableSortingParameter widget::Table::CurrentSortingParameter() const
 {
 	if (_table_data_model == nullptr)
