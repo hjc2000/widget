@@ -36,9 +36,6 @@ widget::Table::PrivateTable::PrivateTable()
 		_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
 		setItemDelegate(_custom_item_delegate.get());
 	}
-
-	// 使能排序
-	setSortingEnabled(true);
 }
 
 void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
