@@ -89,6 +89,7 @@ namespace widget
 		/// @param order
 		///
 		void Sort(int column, Qt::SortOrder order);
+
 		/* #endregion */
 
 		///
