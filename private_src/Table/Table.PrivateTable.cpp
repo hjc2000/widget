@@ -12,6 +12,11 @@ void widget::Table::PrivateTable::ClearInitialFocus()
 void widget::Table::PrivateTable::ClearSortIndicator()
 {
 	QHeaderView *header = horizontalHeader();
+	if (header == nullptr)
+	{
+		return;
+	}
+
 	header->setSortIndicator(-1, Qt::SortOrder::DescendingOrder);
 }
 

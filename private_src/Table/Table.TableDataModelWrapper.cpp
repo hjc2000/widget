@@ -9,13 +9,13 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widg
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
 {
+	if (_model == nullptr)
+	{
+		return 0;
+	}
+
 	try
 	{
-		if (_model == nullptr)
-		{
-			return 0;
-		}
-
 		return _model->RowCount();
 	}
 	catch (std::exception const &e)
@@ -32,13 +32,13 @@ int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) co
 
 int widget::Table::TableDataModelWrapper::columnCount(QModelIndex const &parent) const
 {
+	if (_model == nullptr)
+	{
+		return 0;
+	}
+
 	try
 	{
-		if (_model == nullptr)
-		{
-			return 0;
-		}
-
 		return _model->ColumnCount();
 	}
 	catch (std::exception const &e)
@@ -55,13 +55,13 @@ int widget::Table::TableDataModelWrapper::columnCount(QModelIndex const &parent)
 
 QVariant widget::Table::TableDataModelWrapper::data(QModelIndex const &index, int role) const
 {
+	if (_model == nullptr)
+	{
+		return QVariant{};
+	}
+
 	try
 	{
-		if (_model == nullptr)
-		{
-			return QVariant{};
-		}
-
 		if (role != Qt::ItemDataRole::DisplayRole)
 		{
 			return QVariant{};
@@ -83,13 +83,13 @@ QVariant widget::Table::TableDataModelWrapper::data(QModelIndex const &index, in
 
 QVariant widget::Table::TableDataModelWrapper::headerData(int section, Qt::Orientation orientation, int role) const
 {
+	if (_model == nullptr)
+	{
+		return QVariant{};
+	}
+
 	try
 	{
-		if (_model == nullptr)
-		{
-			return QVariant{};
-		}
-
 		if (role != Qt::ItemDataRole::DisplayRole)
 		{
 			return QVariant{};
@@ -121,6 +121,11 @@ QVariant widget::Table::TableDataModelWrapper::headerData(int section, Qt::Orien
 
 void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
+	if (_model == nullptr)
+	{
+		return;
+	}
+
 	if (column < 0 || column > columnCount())
 	{
 		std::cout << CODE_POS_STR << "尝试以列号：" << std::to_string(column) << " 排序，不存在该列，返回。" << std::endl;
@@ -131,11 +136,6 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 
 	try
 	{
-		if (_model == nullptr)
-		{
-			return;
-		}
-
 		_model->Sort(column, order == Qt::SortOrder::AscendingOrder);
 	}
 	catch (std::exception const &e)
