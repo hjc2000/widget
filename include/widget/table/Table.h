@@ -50,13 +50,6 @@ namespace widget
 
 		/* #endregion */
 
-		///
-		/// @brief 数据模型发生改变，需要刷新表格视图。
-		///
-		/// @note 刷新后排序状态会清除，表头的排序箭头会消失。
-		///
-		void DataModelHasChanged();
-
 		/* #region 排序 */
 
 		///
@@ -114,6 +107,15 @@ namespace widget
 		///
 		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
 
+		/* #region 数据更新 */
+
+		///
+		/// @brief 数据模型发生改变，需要刷新表格视图。
+		///
+		/// @note 刷新后排序状态会清除，表头的排序箭头会消失。
+		///
+		void DataModelHasChanged();
+
 		///
 		/// @brief 通知 qt：行被插入了。
 		///
@@ -143,5 +145,7 @@ namespace widget
 		/// @param row
 		///
 		void RowRemoved(int row);
+
+		/* #endregion */
 	};
 } // namespace widget

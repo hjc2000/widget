@@ -32,11 +32,6 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 
 /* #endregion */
 
-void widget::Table::DataModelHasChanged()
-{
-	_table->DataModelHasChanged();
-}
-
 /* #region 排序 */
 
 bool widget::Table::IsSortingEnabled() const
@@ -86,6 +81,13 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 	_table->SetResizeModes(resize_modes);
 }
 
+/* #region 数据更新 */
+
+void widget::Table::DataModelHasChanged()
+{
+	_table->DataModelHasChanged();
+}
+
 void widget::Table::RowsInserted(int row, int count)
 {
 	_table_data_model->RowsInserted(row, count);
@@ -105,3 +107,5 @@ void widget::Table::RowRemoved(int row)
 {
 	RowsRemoved(row, 1);
 }
+
+/* #endregion */
