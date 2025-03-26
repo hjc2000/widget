@@ -1,7 +1,9 @@
 #pragma once
+#include "base/IIdToken.h"
 #include "widget/table/ITableDataModel.h"
 #include "widget/table/Table.h"
 #include "widget/table/TableSortingParameter.h"
+#include <memory>
 
 ///
 /// @brief 本库对外暴露的表格类 widget::Table 使用的是 widget::ITableDataModel，
@@ -15,8 +17,15 @@ private:
 	std::shared_ptr<widget::ITableDataModel> _model;
 	widget::TableSortingParameter _table_sorting_paremeter{};
 
+	base::SpIIdToken _model_reset_event_token;
+	base::SpIIdToken _row_inserted_event_token;
+	base::SpIIdToken _row_removed_event_token;
+	base::SpIIdToken _data_change_event_token;
+
 public:
 	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
+
+	~TableDataModelWrapper();
 
 	///
 	/// @brief 表格的行数。
@@ -35,7 +44,10 @@ public:
 	virtual int columnCount(QModelIndex const &parent = QModelIndex{}) const override;
 
 	virtual QVariant data(QModelIndex const &index, int role = Qt::DisplayRole) const override;
-	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
+	virtual QVariant headerData(int section,
+								Qt::Orientation orientation,
+								int role = Qt::DisplayRole) const override;
 
 	///
 	/// @brief 排序回调。用户点击表头后，qt 框架会回调本方法。

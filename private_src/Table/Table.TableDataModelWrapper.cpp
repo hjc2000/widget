@@ -1,30 +1,56 @@
 #include "Table.TableDataModelWrapper.h"
+#include "base/math/PositionRange.h"
+#include "base/math/RowCount.h"
+#include "base/math/RowIndex.h"
 #include "base/string/define.h"
 #include <string>
 
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
 	: _model(model)
 {
-	_model->ModelRestEvent().Subscribe(
-		[this]()
-		{
-			beginResetModel();
-			endResetModel();
-		});
+	_model_reset_event_token = _model->ModelRestEvent() += [this]()
+	{
+		beginResetModel();
+		endResetModel();
+	};
 
-	_model->RowInsertedEvent().Subscribe(
-		[this](int row, int count)
-		{
-			beginInsertRows(QModelIndex{}, row, row + count - 1);
-			endInsertRows();
-		});
+	_row_inserted_event_token = _model->RowInsertedEvent() +=
+		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
+	{
+		beginInsertRows(QModelIndex{},
+						row_index.Value(),
+						row_index.Value() + row_count.Value() - 1);
 
-	_model->RowRemovedEvent().Subscribe(
-		[this](int row, int count)
-		{
-			beginRemoveRows(QModelIndex{}, row, row + count - 1);
-			endRemoveRows();
-		});
+		endInsertRows();
+	};
+
+	_row_removed_event_token = _model->RowRemovedEvent() +=
+		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
+	{
+		beginRemoveRows(QModelIndex{},
+						row_index.Value(),
+						row_index.Value() + row_count.Value() - 1);
+
+		endRemoveRows();
+	};
+
+	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange const &range)
+	{
+		auto start = createIndex(range.Start().Y(), range.Start().X());
+		auto end = createIndex(range.End().Y(), range.End().X());
+		dataChanged(start, end);
+	};
+}
+
+widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
+{
+	if (_model)
+	{
+		_model->ModelRestEvent() -= _model_reset_event_token;
+		_model->RowInsertedEvent() -= _row_inserted_event_token;
+		_model->RowRemovedEvent() -= _row_removed_event_token;
+		_model->DataChangeEvent() -= _data_change_event_token;
+	}
 }
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
@@ -101,7 +127,9 @@ QVariant widget::Table::TableDataModelWrapper::data(QModelIndex const &index, in
 	return QVariant{};
 }
 
-QVariant widget::Table::TableDataModelWrapper::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant widget::Table::TableDataModelWrapper::headerData(int section,
+														  Qt::Orientation orientation,
+														  int role) const
 {
 	if (_model == nullptr)
 	{
@@ -166,10 +194,6 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 	{
 		std::cerr << CODE_POS_STR + "发生了未知异常。" << std::endl;
 	}
-
-	// 排序完成后通知视图刷新
-	dataChanged(createIndex(0, 0),
-				createIndex(rowCount() - 1, columnCount() - 1));
 }
 
 widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSortingParameter() const

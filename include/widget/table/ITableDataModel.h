@@ -1,5 +1,8 @@
 #pragma once
 #include "base/delegate/IEvent.h"
+#include "base/math/PositionRange.h"
+#include "base/math/RowCount.h"
+#include "base/math/RowIndex.h"
 #include "QString"
 
 namespace widget
@@ -108,16 +111,23 @@ namespace widget
 		///
 		/// @brief 行被插入事件。
 		///
-		/// @return base::IEvent<int, int>&
+		/// @return base::IEvent<base::RowIndex const &, base::RowCount const &>&
 		///
-		virtual base::IEvent<int, int> &RowInsertedEvent() = 0;
+		virtual base::IEvent<base::RowIndex const &, base::RowCount const &> &RowInsertedEvent() = 0;
 
 		///
 		/// @brief 行被移除事件。
 		///
-		/// @return base::IEvent<int, int>&
+		/// @return base::IEvent<base::RowIndex const &, base::RowCount const &>&
 		///
-		virtual base::IEvent<int, int> &RowRemovedEvent() = 0;
+		virtual base::IEvent<base::RowIndex const &, base::RowCount const &> &RowRemovedEvent() = 0;
+
+		///
+		/// @brief 数据发生更改。
+		///
+		/// @return base::IEvent<base::PositionRange const &>& 事件参数指示了发生更改的数据的范围。
+		///
+		virtual base::IEvent<base::PositionRange const &> &DataChangeEvent() = 0;
 
 		/* #endregion */
 	};
