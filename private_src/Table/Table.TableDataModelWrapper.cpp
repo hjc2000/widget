@@ -3,6 +3,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include <stdexcept>
 #include <string>
 
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
@@ -10,7 +11,7 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widg
 	_model = model;
 	if (_model == nullptr)
 	{
-		return;
+		throw std::invalid_argument{CODE_POS_STR + "禁止传入空指针。"};
 	}
 
 	_model_reset_event_token = _model->ModelRestEvent() += [this]()
@@ -49,22 +50,14 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widg
 
 widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 {
-	if (_model)
-	{
-		_model->ModelRestEvent() -= _model_reset_event_token;
-		_model->RowInsertedEvent() -= _row_inserted_event_token;
-		_model->RowRemovedEvent() -= _row_removed_event_token;
-		_model->DataChangeEvent() -= _data_change_event_token;
-	}
+	_model->ModelRestEvent() -= _model_reset_event_token;
+	_model->RowInsertedEvent() -= _row_inserted_event_token;
+	_model->RowRemovedEvent() -= _row_removed_event_token;
+	_model->DataChangeEvent() -= _data_change_event_token;
 }
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
 {
-	if (_model == nullptr)
-	{
-		return 0;
-	}
-
 	try
 	{
 		return _model->RowCount();
@@ -83,11 +76,6 @@ int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) co
 
 int widget::Table::TableDataModelWrapper::columnCount(QModelIndex const &parent) const
 {
-	if (_model == nullptr)
-	{
-		return 0;
-	}
-
 	try
 	{
 		return _model->ColumnCount();
@@ -106,11 +94,6 @@ int widget::Table::TableDataModelWrapper::columnCount(QModelIndex const &parent)
 
 QVariant widget::Table::TableDataModelWrapper::data(QModelIndex const &index, int role) const
 {
-	if (_model == nullptr)
-	{
-		return QVariant{};
-	}
-
 	try
 	{
 		if (role != Qt::ItemDataRole::DisplayRole)
@@ -136,11 +119,6 @@ QVariant widget::Table::TableDataModelWrapper::headerData(int section,
 														  Qt::Orientation orientation,
 														  int role) const
 {
-	if (_model == nullptr)
-	{
-		return QVariant{};
-	}
-
 	try
 	{
 		if (role != Qt::ItemDataRole::DisplayRole)
@@ -174,11 +152,6 @@ QVariant widget::Table::TableDataModelWrapper::headerData(int section,
 
 void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
-	if (_model == nullptr)
-	{
-		return;
-	}
-
 	if (column < 0 || column > columnCount())
 	{
 		std::cout << CODE_POS_STR << "尝试以列号：" << std::to_string(column) << " 排序，不存在该列，返回。" << std::endl;
