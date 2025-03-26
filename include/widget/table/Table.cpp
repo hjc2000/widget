@@ -90,3 +90,8 @@ void widget::Table::RowsInserted(int row, int count)
 {
 	_table_data_model->RowsInserted(row, count);
 }
+
+void widget::Table::RowsRemoved(int row, int count)
+{
+	_table_data_model->RowsRemoved(row, count);
+}

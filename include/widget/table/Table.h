@@ -121,5 +121,13 @@ namespace widget
 		/// @param count
 		///
 		void RowsInserted(int row, int count);
+
+		///
+		/// @brief 通知 qt: 行被删除了。
+		///
+		/// @param row
+		/// @param count
+		///
+		void RowsRemoved(int row, int count);
 	};
 } // namespace widget
