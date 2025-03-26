@@ -85,3 +85,8 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 {
 	_table->SetResizeModes(resize_modes);
 }
+
+void widget::Table::RowsInserted(int row, int count)
+{
+	_table_data_model->RowsInserted(row, count);
+}

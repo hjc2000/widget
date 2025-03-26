@@ -156,3 +156,15 @@ widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSorti
 {
 	return _table_sorting_paremeter;
 }
+
+void widget::Table::TableDataModelWrapper::RowsInserted(int row, int count)
+{
+	beginInsertRows(QModelIndex{}, row, row + count - 1);
+	endInsertRows();
+}
+
+void widget::Table::TableDataModelWrapper::RowsRemoved(int row, int count)
+{
+	beginRemoveRows(QModelIndex{}, row, row + count - 1);
+	endRemoveRows();
+}

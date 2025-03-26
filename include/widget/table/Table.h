@@ -113,5 +113,13 @@ namespace widget
 		/// @param resize_modes
 		///
 		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+
+		///
+		/// @brief 通知 qt：行被插入了。
+		///
+		/// @param row
+		/// @param count
+		///
+		void RowsInserted(int row, int count);
 	};
 } // namespace widget
