@@ -45,11 +45,6 @@ widget::Table::PrivateTable::PrivateTable()
 
 void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 {
-	if (model == nullptr)
-	{
-		return;
-	}
-
 	_data_model = model;
 
 	// 先设置成空指针，避免以前已经有模型了。
@@ -57,17 +52,14 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	// 还保持着上一个模型的行数。
 	QTableView::setModel(nullptr);
 	QTableView::setModel(_data_model);
-	ClearInitialFocus();
 
+	if (_data_model == nullptr)
 	{
-		QHeaderView *header = horizontalHeader();
-		header->setSectionResizeMode(QHeaderView::Interactive);
-
-		for (int i = 0; i < _data_model->columnCount(); i++)
-		{
-			resizeColumnToContents(i);
-		}
+		return;
 	}
+
+	ClearInitialFocus();
+	resizeColumnsToContents();
 
 	{
 		QHeaderView *header = horizontalHeader();
@@ -90,5 +82,26 @@ void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::Resize
 	for (int i = 0; i < count; ++i)
 	{
 		header->setSectionResizeMode(i, resize_modes[i]);
+	}
+}
+
+void widget::Table::PrivateTable::ResizeColumnsToContent()
+{
+	if (_data_model == nullptr)
+	{
+		return;
+	}
+
+	QHeaderView *header = horizontalHeader();
+	if (header == nullptr)
+	{
+		return;
+	}
+
+	header->setSectionResizeMode(QHeaderView::Interactive);
+
+	for (int i = 0; i < _data_model->columnCount(); i++)
+	{
+		resizeColumnToContents(i);
 	}
 }

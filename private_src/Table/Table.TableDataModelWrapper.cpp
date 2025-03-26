@@ -6,8 +6,13 @@
 #include <string>
 
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
-	: _model(model)
 {
+	_model = model;
+	if (_model == nullptr)
+	{
+		return;
+	}
+
 	_model_reset_event_token = _model->ModelRestEvent() += [this]()
 	{
 		beginResetModel();

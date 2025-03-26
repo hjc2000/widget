@@ -47,4 +47,6 @@ public:
 	/// @param resize_modes
 	///
 	void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+
+	void ResizeColumnsToContent();
 };

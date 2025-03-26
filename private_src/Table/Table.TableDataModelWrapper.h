@@ -65,4 +65,9 @@ public:
 	/// @return widget::TableSortingParameter
 	///
 	widget::TableSortingParameter CurrentSortingParameter() const;
+
+	std::shared_ptr<widget::ITableDataModel> InnerModel() const
+	{
+		return _model;
+	}
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include "base/IIdToken.h"
 #include "QHeaderView"
 #include "QTableView"
 #include "widget/layout/HBoxLayout.h"
@@ -23,10 +24,16 @@ namespace widget
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
 		widget::HBoxLayout _layout{this};
 
+		base::SpIIdToken _model_reset_event_token;
+		base::SpIIdToken _row_inserted_event_token;
+		base::SpIIdToken _row_removed_event_token;
+		base::SpIIdToken _data_change_event_token;
+
+		void SubscribeEvent();
+		void UnsubscribeEvent();
+
 	public:
 		Table();
-
-		/* #region SetModel */
 
 		///
 		/// @brief 设置数据模型。
@@ -36,19 +43,6 @@ namespace widget
 		/// @param model
 		///
 		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model);
-
-		///
-		/// @brief 设置数据模型，同时设置每一列的大小调整方式。
-		///
-		/// @note 设置模型后会自动调用 DataModelHasChanged，不需要手动调用。
-		///
-		/// @param model
-		/// @param resize_modes
-		///
-		void SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
-					  std::vector<QHeaderView::ResizeMode> resize_modes);
-
-		/* #endregion */
 
 		/* #region 排序 */
 
