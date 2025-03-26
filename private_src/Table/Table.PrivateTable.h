@@ -26,10 +26,10 @@ private:
 	void ClearSortIndicator();
 
 public:
-	/**
-	 * @brief 构造函数。
-	 *
-	 */
+	///
+	/// @brief 构造函数。
+	///
+	///
 	PrivateTable();
 
 	/* #region 数据模型 */
