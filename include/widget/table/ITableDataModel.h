@@ -1,4 +1,5 @@
 #pragma once
+#include "base/delegate/IEvent.h"
 #include "QString"
 
 namespace widget
@@ -94,5 +95,30 @@ namespace widget
 		/// @param ascending 为 true 表示升序排列，即从小到大排列。
 		///
 		virtual void Sort(int column, bool ascending) = 0;
+
+		/* #region 事件 */
+
+		///
+		/// @brief 数据发生大规模更改时触发。例如发生了排序、过滤等操作。
+		///
+		/// @return base::IEvent<void()>&
+		///
+		virtual base::IEvent<void()> &ModelRestEvent() = 0;
+
+		///
+		/// @brief 行被插入事件。
+		///
+		/// @return base::IEvent<void(int row, int count)>
+		///
+		virtual base::IEvent<void(int row, int count)> RowInsertedEvent() = 0;
+
+		///
+		/// @brief 行被移除事件。
+		///
+		/// @return base::IEvent<void(int row, int count)>
+		///
+		virtual base::IEvent<void(int row, int count)> RowRemovedEvent() = 0;
+
+		/* #endregion */
 	};
 } // namespace widget
