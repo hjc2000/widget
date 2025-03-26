@@ -32,8 +32,6 @@ public:
 	///
 	PrivateTable();
 
-	/* #region 数据模型 */
-
 	///
 	/// @brief 设置数据模型。
 	///
@@ -42,14 +40,6 @@ public:
 	/// @param model
 	///
 	virtual void setModel(QAbstractItemModel *model) override;
-
-	///
-	/// @brief 数据模型发生改变，需要刷新表格视图。
-	///
-	///
-	void DataModelHasChanged();
-
-	/* #endregion */
 
 	///
 	/// @brief 设置每一列的大小调整方式。

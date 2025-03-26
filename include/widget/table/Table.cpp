@@ -8,7 +8,7 @@ widget::Table::Table()
 	_layout.AddWidget(_table.get());
 }
 
-/* #region 数据模型 */
+/* #region SetModel */
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
 {
@@ -20,7 +20,6 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
 	_table->setModel(_table_data_model.get());
-	_table->DataModelHasChanged();
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model,
@@ -80,32 +79,3 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 {
 	_table->SetResizeModes(resize_modes);
 }
-
-/* #region 数据更新 */
-
-void widget::Table::DataModelHasChanged()
-{
-	_table->DataModelHasChanged();
-}
-
-void widget::Table::RowsInserted(int row, int count)
-{
-	_table_data_model->RowsInserted(row, count);
-}
-
-void widget::Table::RowInserted(int row)
-{
-	RowsInserted(row, 1);
-}
-
-void widget::Table::RowsRemoved(int row, int count)
-{
-	_table_data_model->RowsRemoved(row, count);
-}
-
-void widget::Table::RowRemoved(int row)
-{
-	RowsRemoved(row, 1);
-}
-
-/* #endregion */

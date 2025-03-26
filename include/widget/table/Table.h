@@ -26,7 +26,7 @@ namespace widget
 	public:
 		Table();
 
-		/* #region 数据模型 */
+		/* #region SetModel */
 
 		///
 		/// @brief 设置数据模型。
@@ -106,46 +106,5 @@ namespace widget
 		/// @param resize_modes
 		///
 		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
-
-		/* #region 数据更新 */
-
-		///
-		/// @brief 数据模型发生改变，需要刷新表格视图。
-		///
-		/// @note 刷新后排序状态会清除，表头的排序箭头会消失。
-		///
-		void DataModelHasChanged();
-
-		///
-		/// @brief 通知 qt：行被插入了。
-		///
-		/// @param row
-		/// @param count
-		///
-		void RowsInserted(int row, int count);
-
-		///
-		/// @brief 通知 qt: 单个行被插入了。
-		///
-		/// @param row
-		///
-		void RowInserted(int row);
-
-		///
-		/// @brief 通知 qt: 行被删除了。
-		///
-		/// @param row
-		/// @param count
-		///
-		void RowsRemoved(int row, int count);
-
-		///
-		/// @brief 通知 qt: 单个行被移除了。
-		///
-		/// @param row
-		///
-		void RowRemoved(int row);
-
-		/* #endregion */
 	};
 } // namespace widget

@@ -5,6 +5,26 @@
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
 	: _model(model)
 {
+	_model->ModelRestEvent().Subscribe(
+		[this]()
+		{
+			beginResetModel();
+			endResetModel();
+		});
+
+	_model->RowInsertedEvent().Subscribe(
+		[this](int row, int count)
+		{
+			beginInsertRows(QModelIndex{}, row, row + count - 1);
+			endInsertRows();
+		});
+
+	_model->RowRemovedEvent().Subscribe(
+		[this](int row, int count)
+		{
+			beginRemoveRows(QModelIndex{}, row, row + count - 1);
+			endRemoveRows();
+		});
 }
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
@@ -155,16 +175,4 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSortingParameter() const
 {
 	return _table_sorting_paremeter;
-}
-
-void widget::Table::TableDataModelWrapper::RowsInserted(int row, int count)
-{
-	beginInsertRows(QModelIndex{}, row, row + count - 1);
-	endInsertRows();
-}
-
-void widget::Table::TableDataModelWrapper::RowsRemoved(int row, int count)
-{
-	beginRemoveRows(QModelIndex{}, row, row + count - 1);
-	endRemoveRows();
 }

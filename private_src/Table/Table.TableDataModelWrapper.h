@@ -53,20 +53,4 @@ public:
 	/// @return widget::TableSortingParameter
 	///
 	widget::TableSortingParameter CurrentSortingParameter() const;
-
-	///
-	/// @brief 通知 qt: 行被插入了。
-	///
-	/// @param row
-	/// @param count
-	///
-	void RowsInserted(int row, int count);
-
-	///
-	/// @brief 通知 qt: 行被删除了。
-	///
-	/// @param row
-	/// @param count
-	///
-	void RowsRemoved(int row, int count);
 };
