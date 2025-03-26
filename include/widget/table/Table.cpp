@@ -133,3 +133,8 @@ void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_m
 {
 	_table->SetResizeModes(resize_modes);
 }
+
+void widget::Table::ResizeColumnsToContent()
+{
+	_table->ResizeColumnsToContent();
+}
