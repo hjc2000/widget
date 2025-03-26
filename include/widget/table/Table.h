@@ -123,11 +123,25 @@ namespace widget
 		void RowsInserted(int row, int count);
 
 		///
+		/// @brief 通知 qt: 单个行被插入了。
+		///
+		/// @param row
+		///
+		void RowInserted(int row);
+
+		///
 		/// @brief 通知 qt: 行被删除了。
 		///
 		/// @param row
 		/// @param count
 		///
 		void RowsRemoved(int row, int count);
+
+		///
+		/// @brief 通知 qt: 单个行被移除了。
+		///
+		/// @param row
+		///
+		void RowRemoved(int row);
 	};
 } // namespace widget
