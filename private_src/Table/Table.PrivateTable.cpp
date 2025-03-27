@@ -59,7 +59,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	}
 
 	ClearInitialFocus();
-	resizeColumnsToContents();
 
 	{
 		QHeaderView *header = horizontalHeader();
@@ -69,6 +68,9 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 
 		// 允许用户点击列头
 		header->setSectionsClickable(true);
+
+		// 允许用户调整列宽。
+		header->setSectionResizeMode(QHeaderView::Interactive);
 	}
 
 	// 添加、删除数据或者数据被编辑后表格实际上可能变成乱序了，所以需要清除排序箭头。
@@ -78,30 +80,14 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
 	QHeaderView *header = horizontalHeader();
-	int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
-	for (int i = 0; i < count; ++i)
-	{
-		header->setSectionResizeMode(i, resize_modes[i]);
-	}
-}
-
-void widget::Table::PrivateTable::ResizeColumnsToContent()
-{
-	if (_data_model == nullptr)
-	{
-		return;
-	}
-
-	QHeaderView *header = horizontalHeader();
 	if (header == nullptr)
 	{
 		return;
 	}
 
-	header->setSectionResizeMode(QHeaderView::Interactive);
-
-	for (int i = 0; i < _data_model->columnCount(); i++)
+	int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
+	for (int i = 0; i < count; ++i)
 	{
-		resizeColumnToContents(i);
+		header->setSectionResizeMode(i, resize_modes[i]);
 	}
 }

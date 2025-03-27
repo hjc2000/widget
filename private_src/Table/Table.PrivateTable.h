@@ -47,10 +47,4 @@ public:
 	/// @param resize_modes
 	///
 	void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
-
-	///
-	/// @brief 调整所有列的宽度为适应内容。
-	///
-	///
-	void ResizeColumnsToContent();
 };

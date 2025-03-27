@@ -1,59 +1,9 @@
 #include "Table.h"
+#include "base/math/ColumnIndex.h"
+#include "base/string/define.h"
 #include "Table.PrivateTable.h"
 #include "Table.TableDataModelWrapper.h"
-
-void widget::Table::SubscribeEvent()
-{
-	if (_table_data_model == nullptr)
-	{
-		return;
-	}
-
-	if (_table_data_model->InnerModel() == nullptr)
-	{
-		return;
-	}
-
-	_model_reset_event_token = _table_data_model->InnerModel()->ModelRestEvent() += [this]()
-	{
-		_table->ResizeColumnsToContent();
-	};
-
-	_row_inserted_event_token = _table_data_model->InnerModel()->RowInsertedEvent() +=
-		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
-	{
-		_table->ResizeColumnsToContent();
-	};
-
-	_row_removed_event_token = _table_data_model->InnerModel()->RowRemovedEvent() +=
-		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
-	{
-		_table->ResizeColumnsToContent();
-	};
-
-	_data_change_event_token = _table_data_model->InnerModel()->DataChangeEvent() += [this](base::PositionRange const &range)
-	{
-		_table->ResizeColumnsToContent();
-	};
-}
-
-void widget::Table::UnsubscribeEvent()
-{
-	if (_table_data_model == nullptr)
-	{
-		return;
-	}
-
-	if (_table_data_model->InnerModel() == nullptr)
-	{
-		return;
-	}
-
-	_table_data_model->InnerModel()->ModelRestEvent() -= _model_reset_event_token;
-	_table_data_model->InnerModel()->RowInsertedEvent() -= _row_inserted_event_token;
-	_table_data_model->InnerModel()->RowRemovedEvent() -= _row_removed_event_token;
-	_table_data_model->InnerModel()->DataChangeEvent() -= _data_change_event_token;
-}
+#include <stdexcept>
 
 widget::Table::Table()
 {
@@ -71,10 +21,8 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 		return;
 	}
 
-	UnsubscribeEvent();
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
 	_table->setModel(_table_data_model.get());
-	SubscribeEvent();
 
 	{
 		// 有列标题则让水平的表格头可见。
@@ -129,12 +77,83 @@ void widget::Table::Sort(int column, Qt::SortOrder order)
 
 /* #endregion */
 
-void widget::Table::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
+void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
 	_table->SetResizeModes(resize_modes);
 }
 
-void widget::Table::ResizeColumnsToContent()
+/* #region 列宽 */
+
+void widget::Table::ResizeColumnsToContents()
 {
-	_table->ResizeColumnsToContent();
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
+	_table->resizeColumnsToContents();
 }
+
+int widget::Table::ColumnWidth(int column_index) const
+{
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
+	if (column_index < 0 || column_index > _table_data_model->InnerModel()->ColumnCount())
+	{
+		throw std::out_of_range{CODE_POS_STR + "列索引超出范围。"};
+	}
+
+	return _table->columnWidth(column_index);
+}
+
+void widget::Table::SetColumnWidth(base::ColumnIndex const &index, int width)
+{
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
+	if (index.Value() < 0 || index.Value() > _table_data_model->InnerModel()->ColumnCount())
+	{
+		throw std::out_of_range{CODE_POS_STR + "列索引超出范围。"};
+	}
+
+	_table->setColumnWidth(index.Value(), width);
+}
+
+void widget::Table::SetColumnWidth(int width)
+{
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
+	for (int i = 0; i < _table_data_model->InnerModel()->ColumnCount(); i++)
+	{
+		_table->setColumnWidth(i, width);
+	}
+}
+
+void widget::Table::SetColumnWidth(std::vector<int> const &widths)
+{
+	if (_table_data_model == nullptr)
+	{
+		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
+	}
+
+	int column_count = std::min<int>(_table_data_model->InnerModel()->ColumnCount(), static_cast<int>(widths.size()));
+	for (int i = 0; i < column_count; i++)
+	{
+		_table->setColumnWidth(i, widths[i]);
+	}
+}
+
+/* #endregion */

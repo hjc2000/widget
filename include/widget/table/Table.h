@@ -1,10 +1,11 @@
 #pragma once
-#include "base/IIdToken.h"
+#include "base/math/ColumnIndex.h"
 #include "QHeaderView"
 #include "QTableView"
 #include "widget/layout/HBoxLayout.h"
 #include "widget/table/ITableDataModel.h"
 #include "widget/table/TableSortingParameter.h"
+#include <vector>
 
 namespace widget
 {
@@ -23,14 +24,6 @@ namespace widget
 		std::shared_ptr<PrivateTable> _table;
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
 		widget::HBoxLayout _layout{this};
-
-		base::SpIIdToken _model_reset_event_token;
-		base::SpIIdToken _row_inserted_event_token;
-		base::SpIIdToken _row_removed_event_token;
-		base::SpIIdToken _data_change_event_token;
-
-		void SubscribeEvent();
-		void UnsubscribeEvent();
 
 	public:
 		Table();
@@ -99,12 +92,46 @@ namespace widget
 		///
 		/// @param resize_modes
 		///
-		void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+		void SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+
+		/* #region 列宽 */
 
 		///
 		/// @brief 调整所有列的宽度为适应内容。
 		///
 		///
-		void ResizeColumnsToContent();
+		void ResizeColumnsToContents();
+
+		///
+		/// @brief 获取指定列的宽度。
+		///
+		/// @param column_index
+		/// @return int
+		///
+		int ColumnWidth(int column_index) const;
+
+		///
+		/// @brief 设置指定列的宽。
+		///
+		/// @param index
+		/// @param width
+		///
+		void SetColumnWidth(base::ColumnIndex const &index, int width);
+
+		///
+		/// @brief 设置所有列的宽为相同的值。
+		///
+		/// @param width
+		///
+		void SetColumnWidth(int width);
+
+		///
+		/// @brief 设置列宽。向量中每一个值都对应一个列。
+		///
+		/// @param widths
+		///
+		void SetColumnWidth(std::vector<int> const &widths);
+
+		/* #endregion */
 	};
 } // namespace widget
