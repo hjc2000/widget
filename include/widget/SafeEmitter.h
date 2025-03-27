@@ -36,4 +36,54 @@ namespace widget
 		///
 		base::IEvent<> &CallbackEvent();
 	};
+
+	template <typename... Args>
+	class SafeDelegate :
+		public base::IEvent<Args...>
+	{
+	private:
+		base::Delegate<Args...> _delegate;
+		mutable std::shared_ptr<base::IMutex> _lock = base::CreateIMutex();
+
+	public:
+		///
+		/// @brief 订阅事件。
+		///
+		/// @param func
+		/// @return std::shared_ptr<typename base::IIdToken> 用来取消订阅的 token.
+		///
+		virtual base::SpIIdToken Subscribe(std::function<void(Args...)> const &func) override
+		{
+			return _delegate.Subscribe(func);
+		}
+
+		///
+		/// @brief 取消订阅事件。
+		///
+		/// @param token 传入由 Subscribe 方法返回的 token.
+		///
+		virtual void Unsubscribe(base::SpIIdToken const &token) override
+		{
+			_delegate.Unsubscribe(token);
+		}
+
+		///
+		/// @brief 调用所有订阅的函数
+		/// @param ...args
+		///
+		void Invoke(Args... args) const
+		{
+			base::LockGuard g{*_lock};
+			_delegate.Invoke(args...);
+		}
+
+		///
+		/// @brief 伪函数
+		/// @param ...args
+		///
+		void operator()(Args... args) const
+		{
+			Invoke(args...);
+		}
+	};
 } // namespace widget
