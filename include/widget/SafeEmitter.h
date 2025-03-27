@@ -1,8 +1,10 @@
 #pragma once
+#include "base/container/SafeQueue.h"
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "QPushButton"
 #include "qpushbutton.h"
+#include <functional>
 
 namespace widget
 {
@@ -42,10 +44,24 @@ namespace widget
 		public base::IEvent<Args...>
 	{
 	private:
+		widget::SafeEmitter _safe_emiter;
 		base::Delegate<Args...> _delegate;
-		mutable std::shared_ptr<base::IMutex> _lock = base::CreateIMutex();
+		base::SafeQueue<std::function<void()>> _capture_func_queue;
 
 	public:
+		SafeDelegate()
+		{
+			_safe_emiter.CallbackEvent() += [this]()
+			{
+				std::function<void()> capture_func;
+				bool dequeue_result = _capture_func_queue.TryDequeue(capture_func);
+				if (dequeue_result && capture_func)
+				{
+					capture_func();
+				}
+			};
+		}
+
 		///
 		/// @brief 订阅事件。
 		///
@@ -71,17 +87,22 @@ namespace widget
 		/// @brief 调用所有订阅的函数
 		/// @param ...args
 		///
-		void Invoke(Args... args) const
+		void Invoke(Args... args)
 		{
-			base::LockGuard g{*_lock};
-			_delegate.Invoke(args...);
+			std::function<void()> capture_func = [this, ... args = std::forward<Args>(args)]()
+			{
+				_delegate.Invoke(args...);
+			};
+
+			_capture_func_queue.Enqueue(capture_func);
+			_safe_emiter.Emit();
 		}
 
 		///
 		/// @brief 伪函数
 		/// @param ...args
 		///
-		void operator()(Args... args) const
+		void operator()(Args... args)
 		{
 			Invoke(args...);
 		}
