@@ -113,6 +113,10 @@ namespace widget
 		///
 		/// @return base::IEvent<base::RowIndex const &, base::RowCount const &>&
 		///
+		/// 	@note 其中 RowIndex 指的是新行插入后，新行所在的起始索引在哪。
+		/// 	例如在末尾插入，当前有 2 行，最后一行的索引是 1, 新插入 2 行到末尾，
+		/// 	则 RowIndex = 2, RowCount = 2.
+		///
 		virtual base::IEvent<base::RowIndex const &, base::RowCount const &> &RowInsertedEvent() = 0;
 
 		///
