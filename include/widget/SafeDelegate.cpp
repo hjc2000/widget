@@ -1,4 +1,4 @@
-#include "SafeEmitter.h"
+#include "SafeDelegate.h"
 #include "base/string/define.h"
 #include <exception>
 
