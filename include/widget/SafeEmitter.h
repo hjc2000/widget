@@ -17,6 +17,10 @@ namespace widget
 		base::Delegate<> _callback;
 
 	public:
+		///
+		/// @brief 构造一个安全发射器。
+		///
+		///
 		SafeEmitter();
 
 		///
