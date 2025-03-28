@@ -13,6 +13,8 @@ widget::GridLayout::GridLayout(QWidget *parent, widget::Padding const &padding)
 	SetPadding(padding);
 }
 
+/* #region AddWidget */
+
 void widget::GridLayout::AddWidget(QWidget *widget, int row, int column)
 {
 	AddWidget(widget, row, column, 1, 1);
@@ -47,6 +49,8 @@ void widget::GridLayout::AddWidget(QWidget *widget,
 							column_span,
 							align);
 }
+
+/* #endregion */
 
 void widget::GridLayout::RemoveWidget(QWidget *widget)
 {
