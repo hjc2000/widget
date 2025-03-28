@@ -1,27 +1,13 @@
 #pragma once
+#include "qcontainerfwd.h"
 #include "qnamespace.h"
 #include "widget/line-input-widget/CheckState.h"
+#include <string>
 
-namespace widget
+namespace std
 {
-	///
-	/// @brief 将 QString 转换为 utf8 的 std::string.
-	///
-	/// @param qstr
-	/// @return std::string
-	///
-	std::string ToString(QString const &qstr);
-
-} // namespace widget
-
-///
-/// @brief 将 QString 转换为 utf8 的 std::string.
-///
-/// @param out
-/// @param in
-/// @return std::string&
-///
-std::string &operator<<(std::string &out, QString const &in);
+	std::string to_string(QString const &qstr);
+} // namespace std
 
 ///
 /// @brief 将 utf8 的 std::string 转为 QString.

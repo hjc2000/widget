@@ -176,7 +176,7 @@ QString widget::XlsxDocumentEditor::ReadCellAsString(int row, int column) const
 std::string widget::XlsxDocumentEditor::ReadCellAsStdString(int row, int column) const
 {
 	QString qstring = ReadCellAsString(row, column);
-	return widget::ToString(qstring);
+	return std::to_string(qstring);
 }
 
 QXlsx::Worksheet *widget::XlsxDocumentEditor::CurrentWorksheet() const
