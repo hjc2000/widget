@@ -1,6 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "QPushButton"
+#include <string>
 
 namespace widget
 {
@@ -47,8 +48,32 @@ namespace widget
 		/* #endregion */
 
 	public:
+		/* #region 构造函数 */
+
 		Button();
+
+		///
+		/// @brief
+		///
+		/// @param text 按钮显示的文本。
+		///
 		Button(QString const &text);
+
+		///
+		/// @brief
+		///
+		/// @param text 按钮显示的文本。
+		///
+		Button(std::string const &text);
+
+		///
+		/// @brief
+		///
+		/// @param text 按钮显示的文本。
+		///
+		Button(char const *text);
+
+		/* #endregion */
 
 		/* #region 对外提供事件 */
 

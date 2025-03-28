@@ -26,6 +26,8 @@ namespace widget
 	///
 	QString ToQString(std::string const &str);
 
+	QString ToQString(char const *str);
+
 	///
 	/// @brief 将 Qt::CheckState 转换为 widget::CheckState.
 	///

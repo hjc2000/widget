@@ -15,6 +15,11 @@ QString widget::ToQString(std::string const &str)
 	return QString{str.c_str()};
 }
 
+QString widget::ToQString(char const *str)
+{
+	return QString{str};
+}
+
 widget::CheckState widget::ToCheckState(Qt::CheckState const q_check_state)
 {
 	switch (q_check_state)

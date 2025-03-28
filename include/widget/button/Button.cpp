@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "widget/convert.h"
 
 void widget::Button::ConnectSignal()
 {
@@ -121,6 +122,8 @@ void widget::Button::OnReleased()
 
 /* #endregion */
 
+/* #region 构造函数 */
+
 widget::Button::Button()
 {
 	SetText("按钮");
@@ -143,6 +146,18 @@ widget::Button::Button(QString const &text)
 {
 	SetText(text);
 }
+
+widget::Button::Button(std::string const &text)
+	: widget::Button(widget::ToQString(text))
+{
+}
+
+widget::Button::Button(char const *text)
+	: widget::Button(widget::ToQString(text))
+{
+}
+
+/* #endregion */
 
 /* #region 对外提供事件 */
 
