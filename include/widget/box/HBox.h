@@ -19,7 +19,6 @@ namespace widget
 		HBox() = default;
 		HBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
 		HBox(std::vector<std::shared_ptr<QWidget>> const &widgets);
-		HBox(std::vector<std::shared_ptr<QWidget>> const &widgets, widget::Padding const &padding);
 		HBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
 
 		template <size_t TCount>

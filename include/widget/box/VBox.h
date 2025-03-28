@@ -23,7 +23,6 @@ namespace widget
 		VBox() = default;
 		VBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
 		VBox(std::vector<std::shared_ptr<QWidget>> const &widgets);
-		VBox(std::vector<std::shared_ptr<QWidget>> const &widgets, widget::Padding const &padding);
 		VBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
 
 		template <size_t TCount>

@@ -10,12 +10,6 @@ widget::HBox::HBox(std::vector<std::shared_ptr<QWidget>> const &widgets)
 	AddWidget(widgets);
 }
 
-widget::HBox::HBox(std::vector<std::shared_ptr<QWidget>> const &widgets, widget::Padding const &padding)
-	: widget::HBox(widgets)
-{
-	SetPadding(padding);
-}
-
 widget::HBox::HBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
 {
 	AddWidget(widgets);

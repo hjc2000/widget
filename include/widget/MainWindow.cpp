@@ -1,9 +1,16 @@
 #include "MainWindow.h"
+#include "dialog/Dialog.h"
 #include "widget/layout/Padding.h"
 
 widget::MainWindow::MainWindow()
 {
 	setWindowTitle("test");
-	setCentralWidget(_box.get());
-	_box->SetPadding(widget::Padding{10});
+	setCentralWidget(_vbox.get());
+	_vbox->SetPadding(widget::Padding{10});
+
+	_button->ClickedEvent() += []()
+	{
+		widget::Dialog dialog;
+		dialog.ShowModal();
+	};
 }
