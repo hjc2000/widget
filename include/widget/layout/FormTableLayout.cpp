@@ -20,8 +20,8 @@ widget::FormTableLayout::FormTableLayout(QWidget *parent, widget::Padding const 
 
 void widget::FormTableLayout::SetItem(int row, QWidget *left, QWidget *right)
 {
-	_grid_layout->AddWidget(left, row, 0, Qt::AlignmentFlag::AlignTop);
-	_grid_layout->AddWidget(right, row, 1, Qt::AlignmentFlag::AlignTop);
+	_grid_layout->AddWidget(left, row, 0);
+	_grid_layout->AddWidget(right, row, 1);
 }
 
 void widget::FormTableLayout::RemoveItem(int row)
