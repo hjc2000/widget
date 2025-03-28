@@ -18,6 +18,8 @@ void widget::FormTableBoxItem::Initialize()
 	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 }
 
+/* #region 构造函数 */
+
 widget::FormTableBoxItem::FormTableBoxItem(std::shared_ptr<QWidget> const &left,
 										   std::shared_ptr<QWidget> const &right)
 	: _left(left),
@@ -34,6 +36,8 @@ widget::FormTableBoxItem::FormTableBoxItem(std::string const &left_label_text,
 
 	Initialize();
 }
+
+/* #endregion */
 
 std::shared_ptr<QWidget> widget::FormTableBoxItem::LeftWidget() const
 {

@@ -18,6 +18,8 @@ namespace widget
 		void Initialize();
 
 	public:
+		/* #region 构造函数 */
+
 		///
 		/// @brief 构造出来的 _left 和 _right 都是空指针，不能被添加到表单盒子中，
 		/// 添加了会引发异常。
@@ -41,6 +43,8 @@ namespace widget
 		///
 		FormTableBoxItem(std::string const &left_label_text,
 						 std::shared_ptr<QWidget> const &right);
+
+		/* #endregion */
 
 		///
 		/// @brief 左侧控件。
