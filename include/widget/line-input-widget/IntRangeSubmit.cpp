@@ -118,12 +118,13 @@ widget::IntRangeSubmit::IntRangeSubmit()
 widget::IntRangeSubmit::IntRangeSubmit(int64_t min, int64_t max)
 	: IntRangeSubmit()
 {
-	_min = min;
-	_max = max;
-	if (_min > _max)
+	if (min > max)
 	{
 		throw std::invalid_argument{CODE_POS_STR + "最小值不能大于最大值。"};
 	}
+
+	_min = min;
+	_max = max;
 }
 
 /* #region 最大最小值 */

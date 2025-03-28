@@ -141,11 +141,6 @@ std::string widget::RangeSubmit::RightTextStdString() const
 
 /* #endregion */
 
-base::ClosedInterval<QString> widget::RangeSubmit::Interval() const
-{
-	return base::ClosedInterval<QString>{LeftText(), RightText()};
-}
-
 base::IEvent<> &widget::RangeSubmit::SubmitEvent()
 {
 	return _submit_event;
