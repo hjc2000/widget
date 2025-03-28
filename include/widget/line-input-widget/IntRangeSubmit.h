@@ -2,6 +2,7 @@
 #include "base/delegate/IEvent.h"
 #include "base/math/Interval.h"
 #include "widget/line-input-widget/RangeSubmit.h"
+#include <cstdint>
 
 namespace widget
 {
@@ -20,8 +21,11 @@ namespace widget
 
 		int64_t _left_value = 0;
 		int64_t _right_value = 0;
-		int64_t ParseLeftValue() const;
-		int64_t ParseRightValue() const;
+
+		bool TryParseLeftValue(int64_t &out);
+		bool TryParseRightValue(int64_t &out);
+		void CheckLeftRightValues(int64_t left_value, int64_t right_value);
+
 		void OnSubmit();
 
 		base::Delegate<> _submit_event;

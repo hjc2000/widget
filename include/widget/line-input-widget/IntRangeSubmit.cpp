@@ -1,29 +1,12 @@
 #include "IntRangeSubmit.h"
 #include "base/string/Parse.h"
 
-int64_t widget::IntRangeSubmit::ParseLeftValue() const
+bool widget::IntRangeSubmit::TryParseLeftValue(int64_t &out)
 {
-	int64_t value = base::ParseInt64(_range_submit.LeftTextStdString());
-	return value;
-}
-
-int64_t widget::IntRangeSubmit::ParseRightValue() const
-{
-	int64_t value = base::ParseInt64(_range_submit.RightTextStdString());
-	return value;
-}
-
-void widget::IntRangeSubmit::OnSubmit()
-{
-	int64_t left_value = 0;
-	int64_t right_value = 0;
-	bool parse_left_value_result = false;
-	bool parse_right_value_result = false;
-
 	try
 	{
-		left_value = ParseLeftValue();
-		parse_left_value_result = true;
+		out = base::ParseInt64(_range_submit.LeftTextStdString());
+		return true;
 	}
 	catch (std::exception const &e)
 	{
@@ -36,10 +19,15 @@ void widget::IntRangeSubmit::OnSubmit()
 		std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
 	}
 
+	return false;
+}
+
+bool widget::IntRangeSubmit::TryParseRightValue(int64_t &out)
+{
 	try
 	{
-		right_value = ParseRightValue();
-		parse_right_value_result = true;
+		out = base::ParseInt64(_range_submit.RightTextStdString());
+		return true;
 	}
 	catch (std::exception const &e)
 	{
@@ -52,34 +40,31 @@ void widget::IntRangeSubmit::OnSubmit()
 		std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
 	}
 
-	if (!(parse_left_value_result && parse_right_value_result))
+	return false;
+}
+
+void widget::IntRangeSubmit::CheckLeftRightValues(int64_t left_value, int64_t right_value)
+{
+	if (left_value > right_value)
 	{
+		std::cerr << CODE_POS_STR + "左侧值不能大于右侧值。" << std::endl;
+		SetLeftInvalidInputStyle(true);
+		SetRightInvalidInputStyle(true);
 		return;
 	}
 
+	if (left_value < _min)
 	{
-		// 解析成功后还要检查是否合法
-		if (left_value > right_value)
-		{
-			std::cerr << CODE_POS_STR + "左侧值不能大于右侧值。" << std::endl;
-			SetLeftInvalidInputStyle(true);
-			SetRightInvalidInputStyle(true);
-			return;
-		}
+		std::cerr << CODE_POS_STR + "左侧值不能小于最小值。" << std::endl;
+		SetLeftInvalidInputStyle(true);
+		return;
+	}
 
-		if (left_value < _min)
-		{
-			std::cerr << CODE_POS_STR + "左侧值不能小于最小值。" << std::endl;
-			SetLeftInvalidInputStyle(true);
-			return;
-		}
-
-		if (right_value > _max)
-		{
-			std::cerr << CODE_POS_STR + "右侧值不能大于最大值。" << std::endl;
-			SetRightInvalidInputStyle(true);
-			return;
-		}
+	if (right_value > _max)
+	{
+		std::cerr << CODE_POS_STR + "右侧值不能大于最大值。" << std::endl;
+		SetRightInvalidInputStyle(true);
+		return;
 	}
 
 	// 数据合法
@@ -87,6 +72,21 @@ void widget::IntRangeSubmit::OnSubmit()
 	_right_value = right_value;
 	SetLeftInvalidInputStyle(false);
 	SetRightInvalidInputStyle(false);
+}
+
+void widget::IntRangeSubmit::OnSubmit()
+{
+	int64_t left_value = 0;
+	int64_t right_value = 0;
+	bool parse_left_value_result = TryParseLeftValue(left_value);
+	bool parse_right_value_result = TryParseRightValue(right_value);
+
+	if (!(parse_left_value_result && parse_right_value_result))
+	{
+		return;
+	}
+
+	CheckLeftRightValues(left_value, right_value);
 
 	try
 	{
