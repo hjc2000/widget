@@ -35,7 +35,7 @@ namespace widget
 		/// @param widget 要添加的控件。
 		/// @param row 要添加到网格中的哪一行。
 		/// @param column 要添加到网格中的哪一列。
-		/// @param align
+		/// @param align 对齐方式。设置为 static_cast<Qt::AlignmentFlag>(0) 则铺满网格。
 		///
 		void AddWidget(QWidget *widget, int row, int column, Qt::AlignmentFlag align);
 
@@ -63,8 +63,10 @@ namespace widget
 		/// @param align 对齐方式。设置为 static_cast<Qt::AlignmentFlag>(0) 则铺满网格。
 		///
 		void AddWidget(QWidget *widget,
-					   int row, int column,
-					   int row_span, int column_span,
+					   int row,
+					   int column,
+					   int row_span,
+					   int column_span,
 					   Qt::AlignmentFlag align);
 
 		/* #endregion */
