@@ -1,6 +1,6 @@
 #include "Table.PrivateTable.h"
 #include <Table.CustomItemDelegate.h>
-#include <widget/Conversion.h>
+#include <widget/convert.h>
 #include <widget/line-input-widget/Submit.h>
 
 void widget::Table::PrivateTable::ClearInitialFocus()

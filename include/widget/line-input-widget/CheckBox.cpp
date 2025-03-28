@@ -1,5 +1,5 @@
 #include "CheckBox.h"
-#include "widget/Conversion.h"
+#include "widget/convert.h"
 
 void widget::CheckBox::ConnectSignals()
 {
@@ -44,16 +44,12 @@ widget::CheckBox::CheckBox(std::string const &text)
 
 widget::CheckState widget::CheckBox::CheckState() const
 {
-	widget::CheckState check_state{};
-	check_state << _check_box->checkState();
-	return check_state;
+	return widget::ToCheckState(_check_box->checkState());
 }
 
 void widget::CheckBox::SetCheckState(widget::CheckState value)
 {
-	Qt::CheckState q_check_state{};
-	q_check_state << value;
-	_check_box->setCheckState(q_check_state);
+	_check_box->setCheckState(widget::ToQtCheckState(value));
 }
 
 base::IEvent<> &widget::CheckBox::CheckStateChangedEvent()

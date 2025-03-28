@@ -1,5 +1,5 @@
 #include "Input.h"
-#include "widget/Conversion.h"
+#include "widget/convert.h"
 
 void widget::Input::ConnectSignal()
 {
