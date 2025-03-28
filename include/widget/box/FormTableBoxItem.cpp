@@ -13,8 +13,9 @@ void widget::FormTableBoxItem::Initialize()
 		throw new std::runtime_error{CODE_POS_STR + "_right 不能为空指针。"};
 	}
 
+	// 设置成 QSizePolicy::Policy::Preferred 允许网格将内容拉伸到充满网格。
 	_left->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
-	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+	_right->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
 }
 
 widget::FormTableBoxItem::FormTableBoxItem(std::shared_ptr<QWidget> const &left,
