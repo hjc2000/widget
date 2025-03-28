@@ -14,8 +14,8 @@ void widget::FormTableBoxItem::Initialize()
 	}
 
 	// 设置成 QSizePolicy::Policy::Preferred 允许网格将内容拉伸到充满网格。
-	_left->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
-	_right->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
+	_left->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 }
 
 widget::FormTableBoxItem::FormTableBoxItem(std::shared_ptr<QWidget> const &left,
