@@ -13,8 +13,8 @@ void widget::FormTableBoxItem::Initialize()
 		throw new std::runtime_error{CODE_POS_STR + "_right 不能为空指针。"};
 	}
 
-	_left->setSizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
-	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+	_left->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
+	_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
 }
 
 widget::FormTableBoxItem::FormTableBoxItem(std::shared_ptr<QWidget> const &left,
