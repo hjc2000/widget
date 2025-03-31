@@ -25,13 +25,15 @@ widget::SafeEmitter::SafeEmitter()
 
 widget::SafeEmitter::~SafeEmitter()
 {
-	// 析构时需要断开所有信号，避免等本对象析构后，在队列中排队的信号触发了，
-	// lambda 表达式的槽函数访问本对象字段。
 	disconnect(_connection);
 
 	// 因为只连接了一个信号，理论上 disconnect(_connection) 就行了，这里是为了做笔记，
 	// 通过下面这种方式，传入 nullptr, 可以断开来自 this 的所有信号的连接。
 	disconnect(this, nullptr, nullptr, nullptr);
+
+	// 除了断开连接，避免新的信号调用槽函数以外，还需要清理消息队列中已经有的信号，因为断开
+	// 连接不影响已经排队的信号，它们仍然会调用槽函数。
+	QCoreApplication::removePostedEvents(this, QEvent::MetaCall);
 }
 
 void widget::SafeEmitter::Emit()
