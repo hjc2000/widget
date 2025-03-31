@@ -1,4 +1,5 @@
 #pragma once
+#include "base/file/Path.h"
 #include "qcontainerfwd.h"
 #include "QCoreApplication"
 #include "qimage.h"
@@ -18,9 +19,10 @@ namespace widget
 	private:
 		std::shared_ptr<QXlsx::Document> _xlsx_writer;
 		std::shared_ptr<QIODevice> _io_device;
-		QString _file_path = "temp.xlsx";
 
 	public:
+		/* #region 构造函数 */
+
 		///
 		/// @brief 打开指定路径的表格。
 		///
@@ -28,7 +30,7 @@ namespace widget
 		///
 		/// @param file_path
 		///
-		XlsxDocumentEditor(QString const &file_path);
+		XlsxDocumentEditor(base::Path const &file_path);
 
 		///
 		/// @brief 绑定一个 IO 设备。将从此 IO 设备读取表格或写入表格。
@@ -36,6 +38,8 @@ namespace widget
 		/// @param io_device
 		///
 		XlsxDocumentEditor(std::shared_ptr<QIODevice> const &io_device);
+
+		/* #endregion */
 
 		/* #region Write */
 

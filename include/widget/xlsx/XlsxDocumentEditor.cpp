@@ -1,12 +1,19 @@
 #include "XlsxDocumentEditor.h"
+#include "base/file/IFileStream.h"
+#include "base/file/Path.h"
 #include "qcontainerfwd.h"
-#include "widget/convert.h"
+#include "widget/convert.h" // IWYU pragma: keep
+#include "widget/io/StreamIODevice.h"
 #include "xlsxdocument.h"
+#include <memory>
 
-widget::XlsxDocumentEditor::XlsxDocumentEditor(QString const &file_path)
+/* #region 构造函数 */
+
+widget::XlsxDocumentEditor::XlsxDocumentEditor(base::Path const &file_path)
 {
-	_file_path = file_path;
-	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{file_path}};
+	std::shared_ptr<base::IFileStream> fs = base::file::OpenOrCreate(file_path);
+	_io_device = std::shared_ptr<widget::StreamIODevice>{new widget::StreamIODevice{fs}};
+	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{_io_device.get()}};
 }
 
 widget::XlsxDocumentEditor::XlsxDocumentEditor(std::shared_ptr<QIODevice> const &io_device)
@@ -14,6 +21,8 @@ widget::XlsxDocumentEditor::XlsxDocumentEditor(std::shared_ptr<QIODevice> const 
 	_io_device = io_device;
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{io_device.get()}};
 }
+
+/* #endregion */
 
 /* #region Write */
 
@@ -135,21 +144,10 @@ void widget::XlsxDocumentEditor::Load() const
 
 void widget::XlsxDocumentEditor::Save() const
 {
-	if (_io_device == nullptr)
+	bool result = _xlsx_writer->saveAs(_io_device.get());
+	if (!result)
 	{
-		bool result = _xlsx_writer->saveAs(_file_path);
-		if (!result)
-		{
-			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
-		}
-	}
-	else
-	{
-		bool result = _xlsx_writer->saveAs(_io_device.get());
-		if (!result)
-		{
-			throw std::runtime_error{CODE_POS_STR + "保存失败。"};
-		}
+		throw std::runtime_error{CODE_POS_STR + "保存失败。"};
 	}
 }
 
