@@ -10,7 +10,7 @@
 /// 本类将 widget::ITableDataModel 对象包装为 QAbstractTableModel，这样才能被 qt
 /// 表格类 QTableView 使用。
 ///
-class widget::Table::TableDataModelWrapper :
+class widget::Table::TableDataModelWrapper final :
 	public QAbstractTableModel
 {
 private:
@@ -39,6 +39,8 @@ private:
 	/* #endregion */
 
 public:
+	/* #region 生命周期 */
+
 	///
 	/// @brief 传入一个 widget::ITableDataModel 对象以被本对象包装。
 	///
@@ -48,6 +50,8 @@ public:
 	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
 
 	~TableDataModelWrapper();
+
+	/* #endregion */
 
 	///
 	/// @brief 表格的行数。

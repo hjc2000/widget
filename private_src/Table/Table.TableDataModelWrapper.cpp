@@ -54,6 +54,8 @@ void widget::Table::TableDataModelWrapper::UnsubscribeEvents()
 
 /* #endregion */
 
+/* #region 生命周期 */
+
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
 {
 	if (model == nullptr)
@@ -69,6 +71,8 @@ widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 {
 	UnsubscribeEvents();
 }
+
+/* #endregion */
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
 {
