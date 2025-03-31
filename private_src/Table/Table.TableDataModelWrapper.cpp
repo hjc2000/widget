@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <string>
 
+/* #region 订阅、取消订阅来自 widget::ITableDataModel 的事件 */
+
 void widget::Table::TableDataModelWrapper::SubscribeEvents()
 {
 	_model_reset_event_token = _model->ModelRestEvent() += [this]()
@@ -42,6 +44,16 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 	};
 }
 
+void widget::Table::TableDataModelWrapper::UnsubscribeEvents()
+{
+	_model->ModelRestEvent() -= _model_reset_event_token;
+	_model->RowInsertedEvent() -= _row_inserted_event_token;
+	_model->RowRemovedEvent() -= _row_removed_event_token;
+	_model->DataChangeEvent() -= _data_change_event_token;
+}
+
+/* #endregion */
+
 widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
 {
 	if (model == nullptr)
@@ -55,10 +67,7 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widg
 
 widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 {
-	_model->ModelRestEvent() -= _model_reset_event_token;
-	_model->RowInsertedEvent() -= _row_inserted_event_token;
-	_model->RowRemovedEvent() -= _row_removed_event_token;
-	_model->DataChangeEvent() -= _data_change_event_token;
+	UnsubscribeEvents();
 }
 
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const

@@ -17,6 +17,8 @@ private:
 	std::shared_ptr<widget::ITableDataModel> _model;
 	widget::TableSortingParameter _table_sorting_paremeter{};
 
+	/* #region 订阅、取消订阅来自 widget::ITableDataModel 的事件 */
+
 	base::SpIIdToken _model_reset_event_token;
 	base::SpIIdToken _row_inserted_event_token;
 	base::SpIIdToken _row_removed_event_token;
@@ -27,6 +29,14 @@ private:
 	///
 	///
 	void SubscribeEvents();
+
+	///
+	/// @brief 取消订阅 widget::ITableDataModel 对象的事件。
+	///
+	///
+	void UnsubscribeEvents();
+
+	/* #endregion */
 
 public:
 	///
