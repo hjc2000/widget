@@ -1,4 +1,5 @@
 #include "SafeDelegate.h"
+#include "base/IDisposable.h"
 #include "base/string/define.h"
 #include <exception>
 
@@ -8,6 +9,11 @@ widget::SafeEmitter::SafeEmitter()
 						  &SafeEmitter::clicked,
 						  [this]()
 						  {
+							  if (_disposed)
+							  {
+								  return;
+							  }
+
 							  try
 							  {
 								  _callback.Invoke();
@@ -25,6 +31,18 @@ widget::SafeEmitter::SafeEmitter()
 
 widget::SafeEmitter::~SafeEmitter()
 {
+	Dispose();
+}
+
+void widget::SafeEmitter::Dispose()
+{
+	if (_disposed)
+	{
+		return;
+	}
+
+	_disposed = true;
+
 	disconnect(_connection);
 
 	// 因为只连接了一个信号，理论上 disconnect(_connection) 就行了，这里是为了做笔记，
@@ -38,6 +56,11 @@ widget::SafeEmitter::~SafeEmitter()
 
 void widget::SafeEmitter::Emit()
 {
+	if (_disposed)
+	{
+		throw base::ObjectDisposedException{CODE_POS_STR + "对象已经释放，禁止发射信号。"};
+	}
+
 	QMetaObject::invokeMethod(this,
 							  "clicked",
 							  Qt::QueuedConnection,

@@ -2,9 +2,11 @@
 #include "base/container/SafeQueue.h"
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "base/IDisposable.h"
 #include "base/IIdToken.h"
 #include "QPushButton"
 #include "qpushbutton.h"
+#include <atomic>
 #include <functional>
 
 namespace widget
@@ -13,12 +15,14 @@ namespace widget
 	/// @brief 安全发射器，可以在后台线程安全地向 UI 线程发射事件。
 	///
 	///
-	class SafeEmitter :
-		QPushButton
+	class SafeEmitter final :
+		private QPushButton,
+		public base::IDisposable
 	{
 	private:
 		base::Delegate<> _callback;
 		QMetaObject::Connection _connection;
+		std::atomic_bool _disposed = false;
 
 	public:
 		///
@@ -28,6 +32,12 @@ namespace widget
 		SafeEmitter();
 
 		~SafeEmitter();
+
+		///
+		/// @brief 主动释放对象，让对象不再能够工作。
+		///
+		///
+		virtual void Dispose() override;
 
 		///
 		/// @brief 在后台线程中安全地发射信号到前台。
@@ -74,6 +84,7 @@ namespace widget
 		~SafeDelegate()
 		{
 			_safe_emiter.CallbackEvent() -= _token;
+			_safe_emiter.Dispose();
 		}
 
 		///

@@ -33,7 +33,6 @@
 #include "QtGlobal"
 #include "QVariant"
 #include "QWidget"
-#include "widget/SafeDelegate.h"
 
 // IWYU pragma: end_exports
 // IWYU pragma: end_keep
