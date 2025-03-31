@@ -4,10 +4,12 @@
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
 #include "base/IIdToken.h"
+#include "base/string/define.h"
 #include "QPushButton"
 #include "qpushbutton.h"
 #include <atomic>
 #include <functional>
+#include <stdexcept>
 
 namespace widget
 {
@@ -31,11 +33,17 @@ namespace widget
 		///
 		SafeEmitter();
 
+		///
+		/// @brief 析构时会自动 Dispose.
+		///
+		///
 		~SafeEmitter();
 
 		///
-		/// @brief 主动释放对象，让对象不再能够工作。
+		/// @brief 释放后会断开信号连接，防止新的信号调用槽函数，然后清理事件队列中已经排队
+		/// 的信号，从而保证本函数调用后，不会再发生回调。
 		///
+		/// 此外，还会释放 CallbackEvent, 清理其中订阅的所有委托。
 		///
 		virtual void Dispose() override;
 
@@ -59,18 +67,19 @@ namespace widget
 	///
 	template <typename... Args>
 	class SafeDelegate :
-		public base::IEvent<Args...>
+		public base::IEvent<Args...>,
+		public base::IDisposable
 	{
 	private:
+		std::atomic_bool _disposed = false;
 		base::Delegate<Args...> _delegate;
 		base::SafeQueue<std::function<void()>> _capture_func_queue;
 		widget::SafeEmitter _safe_emiter;
-		base::SpIIdToken _token;
 
 	public:
 		SafeDelegate()
 		{
-			_token = _safe_emiter.CallbackEvent() += [this]()
+			_safe_emiter.CallbackEvent() += [this]()
 			{
 				std::function<void()> capture_func;
 				bool dequeue_result = _capture_func_queue.TryDequeue(capture_func);
@@ -83,8 +92,25 @@ namespace widget
 
 		~SafeDelegate()
 		{
-			_safe_emiter.CallbackEvent() -= _token;
+			Dispose();
+		}
+
+		///
+		/// @brief 主动释放对象，让对象不再能够工作。
+		///
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
 			_safe_emiter.Dispose();
+			_delegate.Dispose();
+			_capture_func_queue.Clear();
 		}
 
 		///
@@ -95,7 +121,18 @@ namespace widget
 		///
 		virtual base::SpIIdToken Subscribe(std::function<void(Args...)> const &func) override
 		{
-			return _delegate.Subscribe(func);
+			try
+			{
+				return _delegate.Subscribe(func);
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
 		}
 
 		///
@@ -105,7 +142,18 @@ namespace widget
 		///
 		virtual void Unsubscribe(base::SpIIdToken const &token) override
 		{
-			_delegate.Unsubscribe(token);
+			try
+			{
+				_delegate.Unsubscribe(token);
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
 		}
 
 		///
@@ -118,17 +166,33 @@ namespace widget
 		///
 		void InvokeAsync(Args... args)
 		{
-			// 将参数按值捕获，在 lambda 里面调用委托。
-			// 将 lmabda 交给 std::function 后将 std::function 入队，在后台线程发射信号后
-			// qt 就会将该信号加入 UI 线程的消息队列中排队。排到了之后从队列中取出 std::function
-			// 执行。
-			std::function<void()> capture_func = [this, ... args = std::forward<Args>(args)]()
+			if (_disposed)
 			{
-				_delegate.Invoke(args...);
-			};
+				throw base::ObjectDisposedException{CODE_POS_STR + "释放后无法调用。"};
+			}
 
-			_capture_func_queue.Enqueue(capture_func);
-			_safe_emiter.Emit();
+			try
+			{
+				// 将参数按值捕获，在 lambda 里面调用委托。
+				// 将 lmabda 交给 std::function 后将 std::function 入队，在后台线程发射信号后
+				// qt 就会将该信号加入 UI 线程的消息队列中排队。排到了之后从队列中取出 std::function
+				// 执行。
+				std::function<void()> capture_func = [this, ... args = std::forward<Args>(args)]()
+				{
+					_delegate.Invoke(args...);
+				};
+
+				_capture_func_queue.Enqueue(capture_func);
+				_safe_emiter.Emit();
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
 		}
 
 		///

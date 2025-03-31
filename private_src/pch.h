@@ -4,7 +4,37 @@
 
 #ifdef __cplusplus
 
-	#include "widget/pch.h"
+	#include "base/pch.h"
+	#include "QAbstractTableModel"
+	#include "QApplication"
+	#include "QBoxLayout"
+	#include "QCheckBox"
+	#include "QCoreApplication"
+	#include "QDateTimeEdit"
+	#include "QDebug"
+	#include "QDialog"
+	#include "QDir"
+	#include "qfiledialog.h"
+	#include "QHeaderView"
+	#include "QIODevice"
+	#include "QMainWindow"
+	#include "qmessagebox.h"
+	#include "qnamespace.h"
+	#include "QObject"
+	#include "QPainter"
+	#include "QPaintEvent"
+	#include "QPalette"
+	#include "QPen"
+	#include "QPushButton"
+	#include "QStyledItemDelegate"
+	#include "qstyleditemdelegate.h"
+	#include "qstyleoption.h"
+	#include "QTableView"
+	#include "QtCore"
+	#include "qtextoption.h"
+	#include "QtGlobal"
+	#include "QVariant"
+	#include "QWidget"
 
 #endif
 

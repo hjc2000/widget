@@ -52,6 +52,8 @@ void widget::SafeEmitter::Dispose()
 	// 除了断开连接，避免新的信号调用槽函数以外，还需要清理消息队列中已经有的信号，因为断开
 	// 连接不影响已经排队的信号，它们仍然会调用槽函数。
 	QCoreApplication::removePostedEvents(this, QEvent::MetaCall);
+
+	_callback.Dispose();
 }
 
 void widget::SafeEmitter::Emit()
