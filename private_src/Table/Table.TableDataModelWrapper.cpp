@@ -6,14 +6,8 @@
 #include <stdexcept>
 #include <string>
 
-widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
+void widget::Table::TableDataModelWrapper::SubscribeEvents()
 {
-	_model = model;
-	if (_model == nullptr)
-	{
-		throw std::invalid_argument{CODE_POS_STR + "禁止传入空指针。"};
-	}
-
 	_model_reset_event_token = _model->ModelRestEvent() += [this]()
 	{
 		beginResetModel();
@@ -46,6 +40,17 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widg
 		auto end = createIndex(range.End().Y(), range.End().X());
 		dataChanged(start, end);
 	};
+}
+
+widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
+{
+	if (model == nullptr)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "禁止传入空指针。"};
+	}
+
+	_model = model;
+	SubscribeEvents();
 }
 
 widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
@@ -177,4 +182,9 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSortingParameter() const
 {
 	return _table_sorting_paremeter;
+}
+
+widget::ITableDataModel &widget::Table::TableDataModelWrapper::InnerModel() const
+{
+	return *_model;
 }

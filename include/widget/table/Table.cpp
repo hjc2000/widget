@@ -106,7 +106,7 @@ int widget::Table::ColumnWidth(int column_index) const
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	if (column_index < 0 || column_index > _table_data_model->InnerModel()->ColumnCount())
+	if (column_index < 0 || column_index > _table_data_model->InnerModel().ColumnCount())
 	{
 		throw std::out_of_range{CODE_POS_STR + "列索引超出范围。"};
 	}
@@ -121,7 +121,7 @@ void widget::Table::SetColumnWidth(base::ColumnIndex const &index, int width)
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	if (index.Value() < 0 || index.Value() > _table_data_model->InnerModel()->ColumnCount())
+	if (index.Value() < 0 || index.Value() > _table_data_model->InnerModel().ColumnCount())
 	{
 		throw std::out_of_range{CODE_POS_STR + "列索引超出范围。"};
 	}
@@ -136,7 +136,7 @@ void widget::Table::SetColumnWidth(int width)
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	for (int i = 0; i < _table_data_model->InnerModel()->ColumnCount(); i++)
+	for (int i = 0; i < _table_data_model->InnerModel().ColumnCount(); i++)
 	{
 		_table->setColumnWidth(i, width);
 	}
@@ -149,7 +149,7 @@ void widget::Table::SetColumnWidth(std::vector<int> const &widths)
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	int column_count = std::min<int>(_table_data_model->InnerModel()->ColumnCount(), static_cast<int>(widths.size()));
+	int column_count = std::min<int>(_table_data_model->InnerModel().ColumnCount(), static_cast<int>(widths.size()));
 	for (int i = 0; i < column_count; i++)
 	{
 		_table->setColumnWidth(i, widths[i]);

@@ -22,7 +22,19 @@ private:
 	base::SpIIdToken _row_removed_event_token;
 	base::SpIIdToken _data_change_event_token;
 
+	///
+	/// @brief 订阅 widget::ITableDataModel 对象的事件。
+	///
+	///
+	void SubscribeEvents();
+
 public:
+	///
+	/// @brief 传入一个 widget::ITableDataModel 对象以被本对象包装。
+	///
+	/// @param model 要被包装的 widget::ITableDataModel 对象。禁止传入空指针。
+	/// 传入空指针会引发异常。
+	///
 	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
 
 	~TableDataModelWrapper();
@@ -66,8 +78,10 @@ public:
 	///
 	widget::TableSortingParameter CurrentSortingParameter() const;
 
-	std::shared_ptr<widget::ITableDataModel> InnerModel() const
-	{
-		return _model;
-	}
+	///
+	/// @brief 获取被本对象包装的 widget::ITableDataModel 对象。
+	///
+	/// @return widget::ITableDataModel&
+	///
+	widget::ITableDataModel &InnerModel() const;
 };

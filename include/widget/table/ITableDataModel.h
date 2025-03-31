@@ -102,7 +102,7 @@ namespace widget
 		/* #region 事件 */
 
 		///
-		/// @brief 数据发生大规模更改时触发。例如发生了排序、过滤等操作。
+		/// @brief 需要重置整个模型时触发。
 		///
 		/// @return base::IEvent<>&
 		///
