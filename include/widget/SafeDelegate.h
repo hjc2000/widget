@@ -2,6 +2,7 @@
 #include "base/container/SafeQueue.h"
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "base/IIdToken.h"
 #include "QPushButton"
 #include "qpushbutton.h"
 #include <functional>
@@ -17,6 +18,7 @@ namespace widget
 	{
 	private:
 		base::Delegate<> _callback;
+		QMetaObject::Connection _connection;
 
 	public:
 		///
@@ -24,6 +26,8 @@ namespace widget
 		///
 		///
 		SafeEmitter();
+
+		~SafeEmitter();
 
 		///
 		/// @brief 在后台线程中安全地发射信号到前台。
@@ -51,11 +55,12 @@ namespace widget
 		base::Delegate<Args...> _delegate;
 		base::SafeQueue<std::function<void()>> _capture_func_queue;
 		widget::SafeEmitter _safe_emiter;
+		base::SpIIdToken _token;
 
 	public:
 		SafeDelegate()
 		{
-			_safe_emiter.CallbackEvent() += [this]()
+			_token = _safe_emiter.CallbackEvent() += [this]()
 			{
 				std::function<void()> capture_func;
 				bool dequeue_result = _capture_func_queue.TryDequeue(capture_func);
@@ -64,6 +69,11 @@ namespace widget
 					capture_func();
 				}
 			};
+		}
+
+		~SafeDelegate()
+		{
+			_safe_emiter.CallbackEvent() -= _token;
 		}
 
 		///
