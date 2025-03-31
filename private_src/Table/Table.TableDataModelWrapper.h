@@ -53,6 +53,8 @@ public:
 
 	/* #endregion */
 
+	/* #region 实现 QAbstractTableModel */
+
 	///
 	/// @brief 表格的行数。
 	///
@@ -82,6 +84,8 @@ public:
 	/// @param order
 	///
 	virtual void sort(int column, Qt::SortOrder order) override;
+
+	/* #endregion */
 
 	///
 	/// @brief 当前的表格排序参数。

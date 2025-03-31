@@ -74,6 +74,8 @@ widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 
 /* #endregion */
 
+/* #region 实现 QAbstractTableModel */
+
 int widget::Table::TableDataModelWrapper::rowCount(QModelIndex const &parent) const
 {
 	try
@@ -191,6 +193,8 @@ void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 		std::cerr << CODE_POS_STR + "发生了未知异常。" << std::endl;
 	}
 }
+
+/* #endregion */
 
 widget::TableSortingParameter widget::Table::TableDataModelWrapper::CurrentSortingParameter() const
 {
