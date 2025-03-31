@@ -144,6 +144,8 @@ namespace widget
 		void Save() const;
 		/* #endregion */
 
+		/* #region 单元格 */
+
 		///
 		/// @brief 获取指定位置的单元格。
 		///
@@ -170,6 +172,8 @@ namespace widget
 		/// @return std::string
 		///
 		std::string ReadCellAsStdString(int row, int column) const;
+
+		/* #endregion */
 
 		///
 		/// @brief 获取当前工作表。

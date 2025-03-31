@@ -153,6 +153,8 @@ void widget::XlsxDocumentEditor::Save() const
 
 /* #endregion */
 
+/* #region 单元格 */
+
 std::shared_ptr<QXlsx::Cell> widget::XlsxDocumentEditor::GetCellAt(int row, int column) const
 {
 	return _xlsx_writer->cellAt(row, column);
@@ -176,6 +178,8 @@ std::string widget::XlsxDocumentEditor::ReadCellAsStdString(int row, int column)
 	QString qstring = ReadCellAsString(row, column);
 	return std::to_string(qstring);
 }
+
+/* #endregion */
 
 QXlsx::Worksheet *widget::XlsxDocumentEditor::CurrentWorksheet() const
 {
