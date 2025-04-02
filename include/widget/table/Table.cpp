@@ -157,3 +157,12 @@ void widget::Table::SetColumnWidth(std::vector<int> const &widths)
 }
 
 /* #endregion */
+
+/* #region 事件 */
+
+base::IEvent<base::Position const &> &widget::Table::DoubleClickEvent()
+{
+	return _table->DoubleClickEvent();
+}
+
+/* #endregion */

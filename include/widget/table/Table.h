@@ -1,5 +1,7 @@
 #pragma once
+#include "base/delegate/IEvent.h"
 #include "base/math/ColumnIndex.h"
+#include "base/math/Position.h"
 #include "QHeaderView"
 #include "QTableView"
 #include "widget/layout/HBoxLayout.h"
@@ -131,6 +133,17 @@ namespace widget
 		/// @param widths
 		///
 		void SetColumnWidth(std::vector<int> const &widths);
+
+		/* #endregion */
+
+		/* #region 事件 */
+
+		///
+		/// @brief 单元格被双击事件。
+		///
+		/// @return base::IEvent<base::Position const &>&
+		///
+		base::IEvent<base::Position const &> &DoubleClickEvent();
 
 		/* #endregion */
 	};

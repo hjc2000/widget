@@ -14,6 +14,14 @@ private:
 	QAbstractItemModel *_data_model = nullptr;
 
 	///
+	/// @brief 单元格被双击事件。
+	///
+	///
+	base::Delegate<base::Position const &> _double_click_event;
+
+	void ConnectSignals();
+
+	///
 	/// @brief 避免在启动后表格第一时间就已经聚焦到第一个单元格了。
 	///
 	///
@@ -47,4 +55,15 @@ public:
 	/// @param resize_modes
 	///
 	void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+
+	/* #region 事件 */
+
+	///
+	/// @brief 单元格被双击事件。
+	///
+	/// @return base::IEvent<base::Position const &>&
+	///
+	base::IEvent<base::Position const &> &DoubleClickEvent();
+
+	/* #endregion */
 };

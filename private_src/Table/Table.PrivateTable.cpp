@@ -1,7 +1,18 @@
 #include "Table.PrivateTable.h"
+#include "base/math/Position.h"
 #include <Table.CustomItemDelegate.h>
 #include <widget/convert.h>
 #include <widget/line-input-widget/Submit.h>
+
+void widget::Table::PrivateTable::ConnectSignals()
+{
+	connect(this,
+			&widget::Table::PrivateTable::doubleClicked,
+			[this](QModelIndex const &index)
+			{
+				_double_click_event.Invoke(base::Position{index.column(), index.row()});
+			});
+}
 
 void widget::Table::PrivateTable::ClearInitialFocus()
 {
@@ -91,3 +102,12 @@ void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::Resize
 		header->setSectionResizeMode(i, resize_modes[i]);
 	}
 }
+
+/* #region 事件 */
+
+base::IEvent<base::Position const &> &widget::Table::PrivateTable::DoubleClickEvent()
+{
+	return _double_click_event;
+}
+
+/* #endregion */
