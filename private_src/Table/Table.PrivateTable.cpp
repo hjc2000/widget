@@ -33,6 +33,7 @@ void widget::Table::PrivateTable::ClearSortIndicator()
 
 widget::Table::PrivateTable::PrivateTable()
 {
+	ConnectSignals();
 	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
 
 	{
