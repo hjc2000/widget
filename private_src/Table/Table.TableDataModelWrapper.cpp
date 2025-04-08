@@ -172,7 +172,7 @@ QVariant widget::Table::TableDataModelWrapper::headerData(int section,
 
 void widget::Table::TableDataModelWrapper::sort(int column, Qt::SortOrder order)
 {
-	if (column < 0 || column > columnCount())
+	if (column < 0 || column >= columnCount())
 	{
 		std::cout << CODE_POS_STR << "尝试以列号：" << std::to_string(column) << " 排序，不存在该列，返回。" << std::endl;
 		return;
