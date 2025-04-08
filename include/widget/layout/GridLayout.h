@@ -106,6 +106,12 @@ namespace widget
 		///
 		void RemoveWidget(int row, int column);
 
+		///
+		/// @brief 清空布局中的所有元素。
+		///
+		///
+		void ClearWidgets();
+
 		/* #endregion */
 
 		/* #region 查找控件 */

@@ -77,6 +77,18 @@ void widget::GridLayout::RemoveWidget(int row, int column)
 	}
 }
 
+void widget::GridLayout::ClearWidgets()
+{
+	while (_grid_layout->count() > 0)
+	{
+		QLayoutItem *item = _grid_layout->itemAt(0);
+		if (item != nullptr)
+		{
+			_grid_layout->removeItem(item);
+		}
+	}
+}
+
 /* #endregion */
 
 /* #region 查找控件 */
