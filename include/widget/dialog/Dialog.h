@@ -25,6 +25,7 @@ namespace widget
 	private:
 		widget::VBoxLayout _layout{this};
 		std::shared_ptr<QWidget> _content;
+		base::Size _size{1020, 720};
 
 		///
 		/// @brief 重写 QDialog 的关闭事件处理函数，转发到 OnClose 函数。

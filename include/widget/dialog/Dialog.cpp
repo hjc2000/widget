@@ -17,18 +17,15 @@ void widget::Dialog::closeEvent(QCloseEvent *event)
 
 widget::Dialog::Dialog()
 {
-	resize(1020, 720);
 }
 
 widget::Dialog::Dialog(std::string const &title)
 {
-	resize(1020, 720);
 	setWindowTitle(title.c_str());
 }
 
 widget::Dialog::Dialog(std::string const &title, std::shared_ptr<QWidget> content)
 {
-	resize(1020, 720);
 	setWindowTitle(title.c_str());
 	SetContent(content);
 }
@@ -64,12 +61,14 @@ void widget::Dialog::SetPadding(widget::Padding const &value)
 
 void widget::Dialog::ShowModal()
 {
+	resize(_size.XSize(), _size.YSize());
 	exec();
 }
 
 void widget::Dialog::ShowModal(base::Size const &size)
 {
-	resize(size.XSize(), size.YSize());
+	_size = size;
+	resize(_size.XSize(), _size.YSize());
 	exec();
 }
 
