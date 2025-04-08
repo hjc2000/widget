@@ -9,6 +9,12 @@
 
 namespace widget
 {
+	enum class CloseRequest
+	{
+		ShouldClose,
+		DoNotClose,
+	};
+
 	///
 	/// @brief 对话框。
 	///
@@ -19,6 +25,23 @@ namespace widget
 	private:
 		widget::VBoxLayout _layout{this};
 		std::shared_ptr<QWidget> _content;
+
+		///
+		/// @brief 重写 QDialog 的关闭事件处理函数，转发到 OnClose 函数。
+		///
+		/// @param event
+		///
+		virtual void closeEvent(QCloseEvent *event) override;
+
+	protected:
+		///
+		/// @brief 窗口关闭时触发。
+		///
+		///
+		virtual CloseRequest OnClose()
+		{
+			return CloseRequest::ShouldClose;
+		}
 
 	public:
 		/* #region 构造函数 */

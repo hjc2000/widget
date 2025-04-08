@@ -2,6 +2,17 @@
 #include "base/string/define.h"
 #include <stdexcept>
 
+void widget::Dialog::closeEvent(QCloseEvent *event)
+{
+	CloseRequest request = OnClose();
+	if (request == CloseRequest::DoNotClose)
+	{
+		event->ignore();
+	}
+
+	event->accept();
+}
+
 /* #region 构造函数 */
 
 widget::Dialog::Dialog()
