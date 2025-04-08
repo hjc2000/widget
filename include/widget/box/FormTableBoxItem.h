@@ -15,8 +15,6 @@ namespace widget
 		std::shared_ptr<QWidget> _left{};
 		std::shared_ptr<QWidget> _right{};
 
-		void Initialize();
-
 	public:
 		/* #region 构造函数 */
 

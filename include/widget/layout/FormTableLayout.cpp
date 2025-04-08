@@ -9,6 +9,7 @@ void widget::FormTableLayout::Initialize()
 	// 这里一共 2 列，其中第 0 列增长因子为 0，所以第 1 列就占据所有剩余宽度。
 	_grid_layout->SetColumnStretch(1, 1);
 
+	// 让表单中每一行从顶端开始一行一行往下排列。
 	_grid_layout->SetAlignment(Qt::AlignmentFlag::AlignTop);
 }
 
@@ -26,6 +27,13 @@ widget::FormTableLayout::FormTableLayout(QWidget *parent, widget::Padding const 
 
 void widget::FormTableLayout::SetItem(int row, QWidget *left, QWidget *right)
 {
+	// 水平展开，充满表单网格，
+	//
+	// 垂直固定高度，防止垂直方向将表单盒子撑开，使得表单盒子充满父容器，
+	// 然后每一行非常高。
+	left->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+	right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
 	_grid_layout->AddWidget(left, row, 0);
 	_grid_layout->AddWidget(right, row, 1);
 }

@@ -1,5 +1,7 @@
 #include "GridLayout.h"
 
+/* #region 构造函数 */
+
 widget::GridLayout::GridLayout(QWidget *parent)
 {
 	_grid_layout = std::shared_ptr<QGridLayout>{new QGridLayout{parent}};
@@ -13,7 +15,9 @@ widget::GridLayout::GridLayout(QWidget *parent, widget::Padding const &padding)
 	SetPadding(padding);
 }
 
-/* #region AddWidget */
+/* #endregion */
+
+/* #region 添加控件 */
 
 void widget::GridLayout::AddWidget(QWidget *widget, int row, int column)
 {
@@ -52,6 +56,8 @@ void widget::GridLayout::AddWidget(QWidget *widget,
 
 /* #endregion */
 
+/* #region 移除控件 */
+
 void widget::GridLayout::RemoveWidget(QWidget *widget)
 {
 	if (widget == nullptr)
@@ -70,6 +76,10 @@ void widget::GridLayout::RemoveWidget(int row, int column)
 		RemoveWidget(widget);
 	}
 }
+
+/* #endregion */
+
+/* #region 查找控件 */
 
 QWidget *widget::GridLayout::GetWidget(int row, int column) const
 {
@@ -100,6 +110,10 @@ widget::GridPosition widget::GridLayout::GetWidgetPosition(QWidget *widget)
 	throw std::runtime_error{CODE_POS_STR + "找不到该控件。"};
 }
 
+/* #endregion */
+
+/* #region 缩放因子 */
+
 int widget::GridLayout::RowStretch(int row) const
 {
 	return _grid_layout->rowStretch(row);
@@ -119,6 +133,10 @@ void widget::GridLayout::SetColumnStretch(int column, int stretch)
 {
 	_grid_layout->setColumnStretch(column, stretch);
 }
+
+/* #endregion */
+
+/* #region 网格盒子的样式 */
 
 Qt::AlignmentFlag widget::GridLayout::Alignment() const
 {
@@ -147,3 +165,5 @@ void widget::GridLayout::SetPadding(widget::Padding const &value)
 	_grid_layout->setContentsMargins(value.Left(), value.Top(),
 									 value.Right(), value.Bottom());
 }
+
+/* #endregion */

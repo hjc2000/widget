@@ -15,8 +15,24 @@ namespace widget
 		std::shared_ptr<QGridLayout> _grid_layout{};
 
 	public:
+		/* #region 构造函数 */
+
+		///
+		/// @brief 构造函数。
+		///
+		/// @param parent 要被网格布局接管布局的父控件。
+		///
 		GridLayout(QWidget *parent);
+
+		///
+		/// @brief 构造函数。
+		///
+		/// @param parent 要被网格布局接管布局的父控件。
+		/// @param padding 网格盒子内边距。
+		///
 		GridLayout(QWidget *parent, widget::Padding const &padding);
+
+		/* #endregion */
 
 		/* #region 添加控件 */
 
@@ -92,7 +108,7 @@ namespace widget
 
 		/* #endregion */
 
-		/* #region 查找 */
+		/* #region 查找控件 */
 
 		///
 		/// @brief 获取指定位置的控件。
