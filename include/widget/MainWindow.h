@@ -1,5 +1,6 @@
 #pragma once
 #include "box/FormTableBox.h"
+#include "indicator/IndicatorLight.h"
 #include "QCheckBox"
 #include "QDateTimeEdit"
 #include "QMainWindow"
@@ -32,9 +33,11 @@ namespace widget
 		}};
 
 		std::shared_ptr<widget::Button> _button{new widget::Button{}};
+		std::shared_ptr<widget::IndicatorLight> _light{new widget::IndicatorLight{}};
 
 		std::shared_ptr<widget::VBox> _vbox{new widget::VBox{
 			_button,
+			_light,
 			_form_table_box,
 		}};
 

@@ -13,4 +13,6 @@ widget::MainWindow::MainWindow()
 		widget::Dialog dialog;
 		dialog.ShowModal();
 	};
+
+	_light->SetState(base::Enum::SwitchState::On);
 }
