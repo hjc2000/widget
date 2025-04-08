@@ -20,7 +20,7 @@ namespace widget
 		QColor _off_color = Qt::GlobalColor::gray;
 
 	protected:
-		virtual void paintEvent(QPaintEvent *) override;
+		virtual void paintEvent(QPaintEvent *event) override;
 
 	public:
 		///

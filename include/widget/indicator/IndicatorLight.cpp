@@ -5,7 +5,7 @@
 #include "qnamespace.h"
 #include "qpainter.h"
 
-void widget::IndicatorLight::paintEvent(QPaintEvent *)
+void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 {
 	QPainter painter{this};
 	QColor color = CurrentColor();
