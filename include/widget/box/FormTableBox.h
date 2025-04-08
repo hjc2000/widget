@@ -19,8 +19,18 @@ namespace widget
 		base::Dictionary<int, widget::FormTableBoxItem> _widget_dic;
 
 	public:
+		/* #region 构造函数 */
+
 		FormTableBox() = default;
+
+		///
+		/// @brief 构造函数。构造的过程中添加一系列表单项到盒子中。
+		///
+		/// @param items
+		///
 		FormTableBox(std::initializer_list<widget::FormTableBoxItem> const &items);
+
+		/* #endregion */
 
 		///
 		/// @brief 设置一条表单项。
