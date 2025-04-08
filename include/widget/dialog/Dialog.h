@@ -9,10 +9,14 @@
 
 namespace widget
 {
-	enum class CloseRequest
+	///
+	/// @brief 关闭弹窗事件参数。
+	///
+	///
+	class CloseDialogEventParameters
 	{
-		ShouldClose,
-		DoNotClose,
+	public:
+		bool _should_close = true;
 	};
 
 	///
@@ -38,11 +42,9 @@ namespace widget
 		///
 		/// @brief 窗口关闭时触发。
 		///
+		/// @param param
 		///
-		virtual CloseRequest OnClose()
-		{
-			return CloseRequest::ShouldClose;
-		}
+		virtual void OnClose(widget::CloseDialogEventParameters &param);
 
 	public:
 		/* #region 构造函数 */

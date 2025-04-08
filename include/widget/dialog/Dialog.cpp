@@ -4,13 +4,20 @@
 
 void widget::Dialog::closeEvent(QCloseEvent *event)
 {
-	CloseRequest request = OnClose();
-	if (request == CloseRequest::DoNotClose)
+	widget::CloseDialogEventParameters param;
+	OnClose(param);
+	if (param._should_close)
+	{
+		event->accept();
+	}
+	else
 	{
 		event->ignore();
 	}
+}
 
-	event->accept();
+void widget::Dialog::OnClose(widget::CloseDialogEventParameters &param)
+{
 }
 
 /* #region 构造函数 */
