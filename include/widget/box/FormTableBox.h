@@ -49,6 +49,10 @@ namespace widget
 		///
 		void RemoveItem(int row);
 
+		///
+		/// @brief 清空所有表单项。
+		///
+		///
 		void ClearItems();
 
 		///
