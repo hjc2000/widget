@@ -15,22 +15,38 @@ namespace widget
 		void Initialize();
 
 	public:
+		/* #region 构造函数 */
+
+		///
+		/// @brief 构造函数。
+		///
+		/// @param parent 要被表单布局接管 UI 布局的父控件。
+		///
 		FormTableLayout(QWidget *parent);
+
+		///
+		/// @brief 构造函数。
+		///
+		/// @param parent 要被表单布局接管 UI 布局的父控件。
+		/// @param padding 表单盒子的内边距。
+		///
 		FormTableLayout(QWidget *parent, widget::Padding const &padding);
+
+		/* #endregion */
 
 		///
 		/// @brief 设置一条表单项。
 		///
-		/// @param row
-		/// @param left
-		/// @param right
+		/// @param row 要将表单项设置在哪一行。
+		/// @param left 表单项左侧控件。宽度根据内容调整。
+		/// @param right 表单项右侧控件。宽度充满剩余宽度。
 		///
 		void SetItem(int row, QWidget *left, QWidget *right);
 
 		///
-		/// @brief 移除某一行。
+		/// @brief 移除一条表单项。
 		///
-		/// @param row
+		/// @param row 要移除哪一行的表单项。
 		///
 		void RemoveItem(int row);
 
