@@ -1,6 +1,13 @@
 #include "VBoxLayout.h"
 
+/* #region 构造函数 */
+
 widget::VBoxLayout::VBoxLayout(QWidget *parent)
+	: VBoxLayout(parent, widget::Padding{})
+{
+}
+
+widget::VBoxLayout::VBoxLayout(QWidget *parent, widget::Padding const &padding)
 {
 	_layout = std::shared_ptr<QVBoxLayout>{new QVBoxLayout{parent}};
 
@@ -9,14 +16,10 @@ widget::VBoxLayout::VBoxLayout(QWidget *parent)
 	// 控件之间的间距。
 	_layout->setSpacing(10);
 
-	SetPadding(widget::Padding{});
-}
-
-widget::VBoxLayout::VBoxLayout(QWidget *parent, widget::Padding const &padding)
-	: widget::VBoxLayout{parent}
-{
 	SetPadding(padding);
 }
+
+/* #endregion */
 
 void widget::VBoxLayout::AddWidget(QWidget *widget)
 {

@@ -1,6 +1,9 @@
 #include "MainWindow.h"
+#include "base/math/Size.h"
 #include "dialog/Dialog.h"
+#include "widget/button/Button.h"
 #include "widget/layout/Padding.h"
+#include <memory>
 
 widget::MainWindow::MainWindow()
 {
@@ -11,7 +14,8 @@ widget::MainWindow::MainWindow()
 	_button->ClickedEvent() += []()
 	{
 		widget::Dialog dialog;
-		dialog.ShowModal();
+		dialog.SetContent(std::shared_ptr<widget::Button>{new widget::Button{}});
+		dialog.ShowModal(base::Size{1020, 720});
 	};
 
 	_light->SetState(base::Enum::SwitchState::On);
