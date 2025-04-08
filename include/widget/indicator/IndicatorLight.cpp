@@ -8,23 +8,40 @@
 void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 {
 	QPainter painter{this};
+
+	// 开启抗锯齿
+	painter.setRenderHint(QPainter::Antialiasing);
+
 	QColor color = CurrentColor();
 	painter.setBrush(color);
 
-	QPen pen{Qt::GlobalColor::white};
-	pen.setWidth(3);
+	int border_width = 1;
+	QPen pen{Qt::GlobalColor::black};
+	pen.setWidth(border_width);
 	painter.setPen(pen);
 
+	// 调整绘图区域，避免边线超出控件范围。
+	// 根据边线宽度调整
+	//
+	// 如果边线宽度不为 0，绘制边线一定会超出控件范围，导致虽然绘制的是圆形，看着是矩形。
+	// 因为控件的视图窗口是矩形，超出范围的边线就看不见了，导致边线外围好像被用一个矩形
+	// 模具切割。
+	QRect adjustedRect = rect().adjusted(border_width, border_width, -border_width, -border_width);
+
 	// 绘制圆形
-	painter.drawEllipse(rect());
+	painter.drawEllipse(adjustedRect);
 }
 
 /* #region 构造函数 */
 
 widget::IndicatorLight::IndicatorLight()
-	: IndicatorLight(base::Size{20, 20},
-					 Qt::GlobalColor::green,
+	: IndicatorLight(Qt::GlobalColor::green,
 					 Qt::GlobalColor::gray)
+{
+}
+
+widget::IndicatorLight::IndicatorLight(QColor on_color, QColor off_color)
+	: IndicatorLight(base::Size{24, 24}, on_color, off_color)
 {
 }
 

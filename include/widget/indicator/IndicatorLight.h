@@ -28,14 +28,40 @@ namespace widget
 		///
 		/// @brief 构造默认指示灯。
 		/// 	@li 打开状态是绿色，关闭状态是灰色。
-		/// 	@li 初始时处于关闭状态。
-		/// 	@li 大小为 20px * 20px.
+		/// 	@li 初始状态为关闭。
+		/// 	@li 大小为 24px * 24px.
 		///
 		///
 		IndicatorLight();
 
+		///
+		/// @brief 构造指示灯。
+		/// 	@li 初始状态为关闭。
+		/// 	@li 大小为 24px * 24px.
+		///
+		/// @param on_color 指示灯开启时的颜色。
+		/// @param off_color 指示灯关闭时的颜色。
+		///
+		IndicatorLight(QColor on_color, QColor off_color);
+
+		///
+		/// @brief 构造指示灯。
+		/// 	@note 初始状态为关闭。
+		///
+		/// @param size 指示灯大小。
+		/// @param on_color 指示灯开启时的颜色。
+		/// @param off_color 指示灯关闭时的颜色。
+		///
 		IndicatorLight(base::Size const &size, QColor on_color, QColor off_color);
 
+		///
+		/// @brief 构造指示灯。
+		///
+		/// @param size 指示灯大小。
+		/// @param initial_state
+		/// @param on_color 指示灯开启时的颜色。
+		/// @param off_color 指示灯关闭时的颜色。
+		///
 		IndicatorLight(base::Size const &size,
 					   base::Enum::SwitchState initial_state,
 					   QColor on_color,
