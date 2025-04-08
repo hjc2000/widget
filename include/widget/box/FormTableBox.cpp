@@ -70,6 +70,12 @@ void widget::FormTableBox::RemoveItem(int row)
 	}
 }
 
+void widget::FormTableBox::ClearItems()
+{
+	_layout.ClearItems();
+	_widget_dic.Clear();
+}
+
 widget::Padding widget::FormTableBox::Padding() const
 {
 	return _layout.Padding();

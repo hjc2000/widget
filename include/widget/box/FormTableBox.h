@@ -49,6 +49,8 @@ namespace widget
 		///
 		void RemoveItem(int row);
 
+		void ClearItems();
+
 		///
 		/// @brief 表单盒子内边距。
 		///
