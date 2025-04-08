@@ -51,6 +51,14 @@ namespace widget
 		void RemoveItem(int row);
 
 		///
+		/// @brief 清除表单布局中的所有表单项。
+		///
+		///
+		void ClearItems();
+
+		/* #region 样式 */
+
+		///
 		/// @brief 表单布局内边距。
 		///
 		/// @return widget::Padding
@@ -63,5 +71,7 @@ namespace widget
 		/// @param value
 		///
 		void SetPadding(widget::Padding const &value);
+
+		/* #endregion */
 	};
 } // namespace widget

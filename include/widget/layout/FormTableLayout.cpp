@@ -15,6 +15,8 @@ void widget::FormTableLayout::Initialize()
 	_grid_layout->SetAlignment(Qt::AlignmentFlag::AlignTop);
 }
 
+/* #region 构造函数 */
+
 widget::FormTableLayout::FormTableLayout(QWidget *parent)
 {
 	_grid_layout = std::shared_ptr<widget::GridLayout>{new widget::GridLayout{parent}};
@@ -26,6 +28,8 @@ widget::FormTableLayout::FormTableLayout(QWidget *parent, widget::Padding const 
 	_grid_layout = std::shared_ptr<widget::GridLayout>{new widget::GridLayout{parent, padding}};
 	Initialize();
 }
+
+/* #endregion */
 
 void widget::FormTableLayout::SetItem(int row, QWidget *left, QWidget *right)
 {
@@ -46,6 +50,13 @@ void widget::FormTableLayout::RemoveItem(int row)
 	_grid_layout->RemoveWidget(row, 1);
 }
 
+void widget::FormTableLayout::ClearItems()
+{
+	_grid_layout->ClearWidgets();
+}
+
+/* #region 样式 */
+
 widget::Padding widget::FormTableLayout::Padding() const
 {
 	return _grid_layout->Padding();
@@ -55,3 +66,5 @@ void widget::FormTableLayout::SetPadding(widget::Padding const &value)
 {
 	_grid_layout->SetPadding(value);
 }
+
+/* #endregion */
