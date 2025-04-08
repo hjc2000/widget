@@ -19,6 +19,8 @@ void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 	painter.drawEllipse(rect());
 }
 
+/* #region 构造函数 */
+
 widget::IndicatorLight::IndicatorLight()
 	: IndicatorLight(base::Size{20, 20},
 					 Qt::GlobalColor::green,
@@ -44,6 +46,10 @@ widget::IndicatorLight::IndicatorLight(base::Size const &size,
 	_on_color = on_color;
 	_off_color = off_color;
 }
+
+/* #endregion */
+
+/* #region 属性 */
 
 base::Enum::SwitchState widget::IndicatorLight::State() const
 {
@@ -108,3 +114,5 @@ QColor widget::IndicatorLight::CurrentColor() const
 
 	return _on_color;
 }
+
+/* #endregion */

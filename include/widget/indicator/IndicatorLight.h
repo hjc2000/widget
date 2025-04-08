@@ -23,6 +23,8 @@ namespace widget
 		virtual void paintEvent(QPaintEvent *event) override;
 
 	public:
+		/* #region 构造函数 */
+
 		///
 		/// @brief 构造默认指示灯。
 		/// 	@li 打开状态是绿色，关闭状态是灰色。
@@ -38,6 +40,10 @@ namespace widget
 					   base::Enum::SwitchState initial_state,
 					   QColor on_color,
 					   QColor off_color);
+
+		/* #endregion */
+
+		/* #region 属性 */
 
 		///
 		/// @brief 指示灯当前的开关状态。
@@ -87,5 +93,7 @@ namespace widget
 		/// @return QColor
 		///
 		QColor CurrentColor() const;
+
+		/* #endregion */
 	};
 } // namespace widget
