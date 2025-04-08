@@ -17,15 +17,18 @@ void widget::Dialog::closeEvent(QCloseEvent *event)
 
 widget::Dialog::Dialog()
 {
+	resize(1020, 720);
 }
 
 widget::Dialog::Dialog(std::string const &title)
 {
+	resize(1020, 720);
 	setWindowTitle(title.c_str());
 }
 
 widget::Dialog::Dialog(std::string const &title, std::shared_ptr<QWidget> content)
 {
+	resize(1020, 720);
 	setWindowTitle(title.c_str());
 	SetContent(content);
 }
