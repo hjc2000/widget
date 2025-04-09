@@ -13,15 +13,22 @@ namespace widget
 		public QWidget
 	{
 	private:
-		std::shared_ptr<QGridLayout> _grid_layout{};
+		QGridLayout _grid_layout{this};
 		base::List<widget::GridBoxItem> _item_list{};
 
 	public:
-		GridBox() = default;
+		GridBox();
 
 		GridBox(std::initializer_list<widget::GridBoxItem> items);
 
 		void AddItem(widget::GridBoxItem const &item);
+
+		///
+		/// @brief 设置一个项目。会移除同一个格子中的旧项目，然后才添加 item.
+		///
+		/// @param item
+		///
+		void SetItem(widget::GridBoxItem const &item);
 
 		/* #region 移除控件 */
 

@@ -2,7 +2,14 @@
 #include "base/string/define.h"
 #include <stdexcept>
 
+widget::GridBox::GridBox()
+{
+	_grid_layout.setSpacing(10);
+	SetPadding(widget::Padding{0});
+}
+
 widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> items)
+	: GridBox()
 {
 	try
 	{
@@ -23,14 +30,28 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> items)
 
 void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 {
-	_grid_layout->addWidget(item.Widget().get(),
-							item.Row(),
-							item.Column(),
-							item.RowSpan(),
-							item.ColumnSpan(),
-							item.Align());
+	for (auto &item_list_item : _item_list)
+	{
+		if (item_list_item.Widget() == item.Widget())
+		{
+			throw std::invalid_argument{CODE_POS_STR + "不能重复添加同一个对象。"};
+		}
+	}
+
+	_grid_layout.addWidget(item.Widget().get(),
+						   item.Row(),
+						   item.Column(),
+						   item.RowSpan(),
+						   item.ColumnSpan(),
+						   item.Align());
 
 	_item_list.Add(item);
+}
+
+void widget::GridBox::SetItem(widget::GridBoxItem const &item)
+{
+	RemoveWidget(item.Row(), item.Column());
+	AddItem(item);
 }
 
 /* #region 移除控件 */
@@ -41,9 +62,10 @@ void widget::GridBox::RemoveWidget(int row, int column)
 	{
 		if (_item_list[i].Row() == row && _item_list[i].Column() == column)
 		{
-			_grid_layout->removeWidget(_item_list[i].Widget().get());
+			_grid_layout.removeWidget(_item_list[i].Widget().get());
 			_item_list.RemoveAt(i);
-			return;
+
+			// 移除后不返回。因为可能有多个控件同时层叠放置在同一个格子。
 		}
 	}
 }
@@ -59,7 +81,7 @@ void widget::GridBox::RemoveWidget(std::shared_ptr<QWidget> widget)
 	{
 		if (_item_list[i].Widget() == widget)
 		{
-			_grid_layout->removeWidget(widget.get());
+			_grid_layout.removeWidget(widget.get());
 			_item_list.RemoveAt(i);
 			return;
 		}
@@ -70,7 +92,7 @@ void widget::GridBox::ClearWidgets()
 {
 	for (auto &item : _item_list)
 	{
-		_grid_layout->removeWidget(item.Widget().get());
+		_grid_layout.removeWidget(item.Widget().get());
 	}
 
 	_item_list.Clear();
@@ -82,22 +104,22 @@ void widget::GridBox::ClearWidgets()
 
 int widget::GridBox::RowStretch(int row) const
 {
-	return _grid_layout->rowStretch(row);
+	return _grid_layout.rowStretch(row);
 }
 
 void widget::GridBox::SetRowStretch(int row, int stretch)
 {
-	_grid_layout->setRowStretch(row, stretch);
+	_grid_layout.setRowStretch(row, stretch);
 }
 
 int widget::GridBox::ColumnStretch(int column) const
 {
-	return _grid_layout->columnStretch(column);
+	return _grid_layout.columnStretch(column);
 }
 
 void widget::GridBox::SetColumnStretch(int column, int stretch)
 {
-	_grid_layout->setColumnStretch(column, stretch);
+	_grid_layout.setColumnStretch(column, stretch);
 }
 
 /* #endregion */
@@ -106,17 +128,17 @@ void widget::GridBox::SetColumnStretch(int column, int stretch)
 
 Qt::AlignmentFlag widget::GridBox::Alignment() const
 {
-	return static_cast<Qt::AlignmentFlag>(_grid_layout->alignment().toInt());
+	return static_cast<Qt::AlignmentFlag>(_grid_layout.alignment().toInt());
 }
 
 void widget::GridBox::SetAlignment(Qt::AlignmentFlag alignment)
 {
-	_grid_layout->setAlignment(alignment);
+	_grid_layout.setAlignment(alignment);
 }
 
 widget::Padding widget::GridBox::Padding() const
 {
-	QMargins qmargin = _grid_layout->contentsMargins();
+	QMargins qmargin = _grid_layout.contentsMargins();
 
 	return widget::Padding{
 		qmargin.left(),
@@ -128,8 +150,8 @@ widget::Padding widget::GridBox::Padding() const
 
 void widget::GridBox::SetPadding(widget::Padding const &value)
 {
-	_grid_layout->setContentsMargins(value.Left(), value.Top(),
-									 value.Right(), value.Bottom());
+	_grid_layout.setContentsMargins(value.Left(), value.Top(),
+									value.Right(), value.Bottom());
 }
 
 /* #endregion */

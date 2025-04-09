@@ -1,9 +1,9 @@
 #pragma once
-#include "base/container/Dictionary.h"
+#include "GridBox.h"
 #include "QWidget"
 #include "widget/box/FormTableBoxItem.h"
-#include "widget/layout/FormTableLayout.h"
 #include "widget/layout/Padding.h"
+#include "widget/layout/VBoxLayout.h"
 
 namespace widget
 {
@@ -15,13 +15,13 @@ namespace widget
 		public QWidget
 	{
 	private:
-		widget::FormTableLayout _layout{this, widget::Padding{0}};
-		base::Dictionary<int, widget::FormTableBoxItem> _widget_dic;
+		widget::VBoxLayout _layout{this, widget::Padding{0}};
+		widget::GridBox _box{};
 
 	public:
 		/* #region 构造函数 */
 
-		FormTableBox() = default;
+		FormTableBox();
 
 		///
 		/// @brief 构造函数。构造的过程中添加一系列表单项到盒子中。
