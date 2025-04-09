@@ -1,5 +1,7 @@
 #include "HBox.h"
 
+/* #region 构造函数 */
+
 widget::HBox::HBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
 {
 	AddWidget(widgets);
@@ -14,6 +16,10 @@ widget::HBox::HBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
 {
 	AddWidget(widgets);
 }
+
+/* #endregion */
+
+/* #region AddWidget */
 
 void widget::HBox::AddWidget(std::shared_ptr<QWidget> const &widget)
 {
@@ -32,6 +38,32 @@ void widget::HBox::AddWidget(std::shared_ptr<QWidget> const &widget)
 	_widget_set.insert(widget);
 	_layout.AddWidget(widget.get());
 }
+
+void widget::HBox::AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
+{
+	for (auto widget : widgets)
+	{
+		AddWidget(widget);
+	}
+}
+
+void widget::HBox::AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets)
+{
+	for (auto widget : widgets)
+	{
+		AddWidget(widget);
+	}
+}
+
+void widget::HBox::AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
+{
+	for (auto widget : widgets)
+	{
+		AddWidget(widget);
+	}
+}
+
+/* #endregion */
 
 void widget::HBox::RemoveWidget(std::shared_ptr<QWidget> const &widget)
 {

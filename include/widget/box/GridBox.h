@@ -17,9 +17,13 @@ namespace widget
 		base::List<widget::GridBoxItem> _item_list{};
 
 	public:
+		/* #region 构造函数 */
+
 		GridBox();
 
 		GridBox(std::initializer_list<widget::GridBoxItem> items);
+
+		/* #endregion */
 
 		void AddItem(widget::GridBoxItem const &item);
 

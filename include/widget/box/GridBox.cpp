@@ -2,6 +2,8 @@
 #include "base/string/define.h"
 #include <stdexcept>
 
+/* #region 构造函数 */
+
 widget::GridBox::GridBox()
 {
 	_grid_layout.setSpacing(10);
@@ -27,6 +29,8 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> items)
 		throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
 	}
 }
+
+/* #endregion */
 
 void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 {

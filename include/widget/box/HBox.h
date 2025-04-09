@@ -45,39 +45,21 @@ namespace widget
 		///
 		/// @param widgets
 		///
-		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
-		{
-			for (auto widget : widgets)
-			{
-				AddWidget(widget);
-			}
-		}
+		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
 
 		///
 		/// @brief 向盒子添加一系列控件。
 		///
 		/// @param widgets
 		///
-		void AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets)
-		{
-			for (auto widget : widgets)
-			{
-				AddWidget(widget);
-			}
-		}
+		void AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets);
 
 		///
 		/// @brief 向盒子添加一系列控件。
 		///
 		/// @param widgets
 		///
-		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
-		{
-			for (auto widget : widgets)
-			{
-				AddWidget(widget);
-			}
-		}
+		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
 
 		///
 		/// @brief 向盒子添加一系列控件。

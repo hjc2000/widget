@@ -1,6 +1,8 @@
 #include "FormTableBox.h"
 #include "GridBoxItem.h"
 
+/* #region 构造函数 */
+
 widget::FormTableBox::FormTableBox()
 {
 	_layout.AddWidget(&_box);
@@ -30,6 +32,8 @@ widget::FormTableBox::FormTableBox(std::initializer_list<widget::FormTableBoxIte
 		throw new std::runtime_error{CODE_POS_STR + e.what()};
 	}
 }
+
+/* #endregion */
 
 void widget::FormTableBox::SetItem(int row, widget::FormTableBoxItem const &item)
 {
