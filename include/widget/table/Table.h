@@ -4,7 +4,7 @@
 #include "base/math/Position.h"
 #include "QHeaderView"
 #include "QTableView"
-#include "widget/layout/HBoxLayout.h"
+#include "widget/layout/VBoxLayout.h"
 #include "widget/table/ITableDataModel.h"
 #include "widget/table/TableSortingParameter.h"
 #include <vector>
@@ -25,7 +25,7 @@ namespace widget
 
 		std::shared_ptr<PrivateTable> _table;
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
-		widget::HBoxLayout _layout{this};
+		widget::VBoxLayout _layout{this};
 
 	public:
 		Table();
