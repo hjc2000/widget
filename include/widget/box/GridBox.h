@@ -9,6 +9,10 @@
 
 namespace widget
 {
+	///
+	/// @brief 网格盒子。
+	///
+	///
 	class GridBox :
 		public QWidget
 	{
