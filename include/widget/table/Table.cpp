@@ -7,6 +7,7 @@
 
 widget::Table::Table()
 {
+	// PrivateTable 的大小调整策略为撑开。会填满父容器。
 	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
 	_layout.AddWidget(_table.get());
 }

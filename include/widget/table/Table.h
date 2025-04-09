@@ -14,6 +14,7 @@ namespace widget
 	///
 	/// @brief 表格。
 	///
+	/// @note 表格默认会撑开，占满父容器，如果父容器可以被撑开，则会将父容器也撑开。
 	///
 	class Table :
 		public QWidget
