@@ -56,7 +56,15 @@ void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 void widget::GridBox::SetItem(widget::GridBoxItem const &item)
 {
 	RemoveWidget(item.Row(), item.Column());
-	AddItem(item);
+
+	_grid_layout.addWidget(item.Widget().get(),
+						   item.Row(),
+						   item.Column(),
+						   item.RowSpan(),
+						   item.ColumnSpan(),
+						   item.Align());
+
+	_item_list.Add(item);
 }
 
 /* #region 移除控件 */
