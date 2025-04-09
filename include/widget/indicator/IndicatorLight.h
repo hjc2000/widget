@@ -69,7 +69,17 @@ namespace widget
 
 		/* #endregion */
 
-		/* #region 属性 */
+		///
+		/// @brief 打开指示灯。
+		///
+		///
+		void TurnOn();
+
+		///
+		/// @brief 关闭指示灯。
+		///
+		///
+		void TurnOff();
 
 		///
 		/// @brief 指示灯当前的开关状态。
@@ -119,7 +129,5 @@ namespace widget
 		/// @return QColor
 		///
 		QColor CurrentColor() const;
-
-		/* #endregion */
 	};
 } // namespace widget

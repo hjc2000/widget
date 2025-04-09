@@ -66,7 +66,15 @@ widget::IndicatorLight::IndicatorLight(base::Size const &size,
 
 /* #endregion */
 
-/* #region 属性 */
+void widget::IndicatorLight::TurnOn()
+{
+	SetState(base::Enum::SwitchState::On);
+}
+
+void widget::IndicatorLight::TurnOff()
+{
+	SetState(base::Enum::SwitchState::Off);
+}
 
 base::Enum::SwitchState widget::IndicatorLight::State() const
 {
@@ -131,5 +139,3 @@ QColor widget::IndicatorLight::CurrentColor() const
 
 	return _on_color;
 }
-
-/* #endregion */
