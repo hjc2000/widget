@@ -23,6 +23,8 @@ namespace widget
 	public:
 		GridBoxItem(int row, int column, std::shared_ptr<QWidget> widget);
 
+		GridBoxItem(int row, int column, Qt::AlignmentFlag align, std::shared_ptr<QWidget> widget);
+
 		GridBoxItem(int row, int column,
 					int row_span, int column_span,
 					std::shared_ptr<QWidget> widget);
