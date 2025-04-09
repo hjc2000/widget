@@ -6,6 +6,7 @@
 #include "widget/layout/Padding.h"
 #include <initializer_list>
 #include <memory>
+#include <vector>
 
 namespace widget
 {
@@ -82,6 +83,13 @@ namespace widget
 		void SetRowStretch(int row, int stretch);
 
 		///
+		/// @brief 批量设置行缩放因子。
+		///
+		/// @param stretch_vec
+		///
+		void SetRowStretch(std::vector<int> const &stretch_vec);
+
+		///
 		/// @brief 列缩放因子。
 		///
 		/// @param column
@@ -96,6 +104,13 @@ namespace widget
 		/// @param stretch
 		///
 		void SetColumnStretch(int column, int stretch);
+
+		///
+		/// @brief 批量设置列缩放因子。
+		///
+		/// @param stretch_vec
+		///
+		void SetColumnStretch(std::vector<int> const &stretch_vec);
 
 		/* #endregion */
 

@@ -1,5 +1,6 @@
 #include "GridBox.h"
 #include "base/string/define.h"
+#include <cstdint>
 #include <stdexcept>
 
 /* #region 构造函数 */
@@ -116,6 +117,14 @@ void widget::GridBox::SetRowStretch(int row, int stretch)
 	_grid_layout.setRowStretch(row, stretch);
 }
 
+void widget::GridBox::SetRowStretch(std::vector<int> const &stretch_vec)
+{
+	for (uint32_t i = 0; i < stretch_vec.size(); i++)
+	{
+		SetRowStretch(i, stretch_vec[i]);
+	}
+}
+
 int widget::GridBox::ColumnStretch(int column) const
 {
 	return _grid_layout.columnStretch(column);
@@ -124,6 +133,14 @@ int widget::GridBox::ColumnStretch(int column) const
 void widget::GridBox::SetColumnStretch(int column, int stretch)
 {
 	_grid_layout.setColumnStretch(column, stretch);
+}
+
+void widget::GridBox::SetColumnStretch(std::vector<int> const &stretch_vec)
+{
+	for (uint32_t i = 0; i < stretch_vec.size(); i++)
+	{
+		SetColumnStretch(i, stretch_vec[i]);
+	}
 }
 
 /* #endregion */
