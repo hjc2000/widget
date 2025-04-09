@@ -1,6 +1,6 @@
 #pragma once
-#include "base/enum.h"
 #include "base/math/Size.h"
+#include "base/peripheral/IDigitalLed.h"
 #include "qcolor.h"
 #include "qnamespace.h"
 #include "qwidget.h"
@@ -12,10 +12,11 @@ namespace widget
 	///
 	///
 	class IndicatorLight :
-		public QWidget
+		public QWidget,
+		public base::led::IDigitalLed
 	{
 	private:
-		base::Enum::SwitchState _state = base::Enum::SwitchState::Off;
+		base::led::State _state = base::led::State::Off;
 		QColor _on_color = Qt::GlobalColor::green;
 		QColor _off_color = Qt::GlobalColor::gray;
 
@@ -63,7 +64,7 @@ namespace widget
 		/// @param off_color 指示灯关闭时的颜色。
 		///
 		IndicatorLight(base::Size const &size,
-					   base::Enum::SwitchState initial_state,
+					   base::led::State initial_state,
 					   QColor on_color,
 					   QColor off_color);
 
@@ -73,27 +74,29 @@ namespace widget
 		/// @brief 打开指示灯。
 		///
 		///
-		void TurnOn();
+		virtual void TurnOn() override;
 
 		///
 		/// @brief 关闭指示灯。
 		///
 		///
-		void TurnOff();
+		virtual void TurnOff() override;
 
 		///
-		/// @brief 指示灯当前的开关状态。
+		/// @brief 翻转 LED.
 		///
-		/// @return base::Enum::SwitchState
 		///
-		base::Enum::SwitchState State() const;
+		virtual void Toggle() override;
 
 		///
-		/// @brief 设置指示灯的开关状态。
+		/// @brief LED 灯的状态。
 		///
-		/// @param value
+		/// @return base::led::State
 		///
-		void SetState(base::Enum::SwitchState value);
+		virtual base::led::State State() const override
+		{
+			return _state;
+		}
 
 		///
 		/// @brief 指示灯打开时的颜色。

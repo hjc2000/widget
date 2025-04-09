@@ -1,5 +1,4 @@
 #include "IndicatorLight.h"
-#include "base/enum.h"
 #include "base/math/Size.h"
 #include "qcolor.h"
 #include "qnamespace.h"
@@ -47,14 +46,14 @@ widget::IndicatorLight::IndicatorLight(QColor on_color, QColor off_color)
 
 widget::IndicatorLight::IndicatorLight(base::Size const &size, QColor on_color, QColor off_color)
 	: IndicatorLight(size,
-					 base::Enum::SwitchState::Off,
+					 base::led::State::Off,
 					 on_color,
 					 off_color)
 {
 }
 
 widget::IndicatorLight::IndicatorLight(base::Size const &size,
-									   base::Enum::SwitchState initial_state,
+									   base::led::State initial_state,
 									   QColor on_color,
 									   QColor off_color)
 {
@@ -68,30 +67,36 @@ widget::IndicatorLight::IndicatorLight(base::Size const &size,
 
 void widget::IndicatorLight::TurnOn()
 {
-	SetState(base::Enum::SwitchState::On);
-}
-
-void widget::IndicatorLight::TurnOff()
-{
-	SetState(base::Enum::SwitchState::Off);
-}
-
-base::Enum::SwitchState widget::IndicatorLight::State() const
-{
-	return _state;
-}
-
-void widget::IndicatorLight::SetState(base::Enum::SwitchState value)
-{
-	if (_state == value)
+	if (_state == base::led::State::On)
 	{
 		return;
 	}
 
-	_state = value;
-
-	// 触发重绘
+	_state = base::led::State::On;
 	update();
+}
+
+void widget::IndicatorLight::TurnOff()
+{
+	if (_state == base::led::State::Off)
+	{
+		return;
+	}
+
+	_state = base::led::State::Off;
+	update();
+}
+
+void widget::IndicatorLight::Toggle()
+{
+	if (_state == base::led::State::On)
+	{
+		TurnOff();
+	}
+	else
+	{
+		TurnOn();
+	}
 }
 
 QColor widget::IndicatorLight::OnColor() const
@@ -132,7 +137,7 @@ void widget::IndicatorLight::SetOffColor(QColor value)
 
 QColor widget::IndicatorLight::CurrentColor() const
 {
-	if (_state == base::Enum::SwitchState::Off)
+	if (_state == base::led::State::Off)
 	{
 		return _off_color;
 	}

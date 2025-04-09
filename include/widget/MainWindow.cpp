@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "base/math/Size.h"
+#include "base/peripheral/IDigitalLed.h"
 #include "dialog/Dialog.h"
 #include "widget/button/Button.h"
 #include "widget/layout/Padding.h"
@@ -18,5 +19,5 @@ widget::MainWindow::MainWindow()
 		dialog.ShowModal(base::Size{1020, 720});
 	};
 
-	_light->SetState(base::Enum::SwitchState::On);
+	_light->SetState(base::led::State::On);
 }
