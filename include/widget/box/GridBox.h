@@ -23,9 +23,30 @@ namespace widget
 
 		void AddItem(widget::GridBoxItem const &item);
 
+		/* #region 移除控件 */
+
+		///
+		/// @brief 通过行列移除控件。
+		///
+		/// @param row
+		/// @param column
+		///
+		void RemoveWidget(int row, int column);
+
+		///
+		/// @brief 移除控件。
+		///
+		/// @param widget
+		///
 		void RemoveWidget(std::shared_ptr<QWidget> widget);
 
+		///
+		/// @brief 清空所有控件。
+		///
+		///
 		void ClearWidgets();
+
+		/* #endregion */
 
 		/* #region 缩放因子 */
 

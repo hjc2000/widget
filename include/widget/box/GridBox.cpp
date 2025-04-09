@@ -33,6 +33,21 @@ void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 	_item_list.Add(item);
 }
 
+/* #region 移除控件 */
+
+void widget::GridBox::RemoveWidget(int row, int column)
+{
+	for (int i = _item_list.Count() - 1; i >= 0; i--)
+	{
+		if (_item_list[i].Row() == row && _item_list[i].Column() == column)
+		{
+			_grid_layout->removeWidget(_item_list[i].Widget().get());
+			_item_list.RemoveAt(i);
+			return;
+		}
+	}
+}
+
 void widget::GridBox::RemoveWidget(std::shared_ptr<QWidget> widget)
 {
 	if (widget == nullptr)
@@ -60,6 +75,8 @@ void widget::GridBox::ClearWidgets()
 
 	_item_list.Clear();
 }
+
+/* #endregion */
 
 /* #region 缩放因子 */
 
