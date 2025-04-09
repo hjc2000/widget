@@ -31,6 +31,8 @@ namespace widget
 
 		/* #endregion */
 
+		/* #region AddWidget */
+
 		///
 		/// @brief 向盒子添加一个控件。
 		///
@@ -91,6 +93,8 @@ namespace widget
 				AddWidget(widget);
 			}
 		}
+
+		/* #endregion */
 
 		///
 		/// @brief 将控件从盒子中移除。
