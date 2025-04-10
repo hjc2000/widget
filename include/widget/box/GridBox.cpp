@@ -35,23 +35,14 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items
 
 widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
 {
-	int max_column = 0;
-	for (auto &item : items)
-	{
-		max_column = std::max(max_column, item.Column());
-	}
-
-	for (int i = 0; i <= max_column; i++)
-	{
-		SetColumnStretch(i * 3 + 0, 0);
-		SetColumnStretch(i * 3 + 1, 1);
-		SetColumnStretch(i * 3 + 2, 0);
-	}
-
 	try
 	{
+		int max_column = 0;
+
 		for (widget::LabelValueUnitGridItem const &item : items)
 		{
+			max_column = std::max(max_column, item.Column());
+
 			widget::GridBoxItem label{
 				item.Row(),
 				item.Column() * 3,
@@ -76,6 +67,13 @@ widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> c
 			AddItem(label);
 			AddItem(data);
 			AddItem(unit);
+		}
+
+		for (int i = 0; i <= max_column; i++)
+		{
+			SetColumnStretch(i * 3 + 0, 0);
+			SetColumnStretch(i * 3 + 1, 1);
+			SetColumnStretch(i * 3 + 2, 0);
 		}
 	}
 	catch (std::exception const &e)
