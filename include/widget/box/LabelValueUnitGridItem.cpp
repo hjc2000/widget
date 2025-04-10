@@ -23,6 +23,8 @@ widget::LabelValueUnitGridItem::LabelValueUnitGridItem(int row,
 		throw std::invalid_argument{CODE_POS_STR + "禁止传入空指针。"};
 	}
 
+	_row = row;
+	_column = column;
 	_label = label;
 	_data = data;
 	_unit = unit;
