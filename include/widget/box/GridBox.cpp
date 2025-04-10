@@ -1,6 +1,8 @@
 #include "GridBox.h"
+#include "base/Guard.h"
 #include "base/string/define.h"
 #include "GridBoxItem.h"
+#include <algorithm>
 #include <cstdint>
 #include <stdexcept>
 
@@ -34,12 +36,35 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items
 
 widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
 {
+	SetColumnStretch(std::vector<int>{
+		0, // 左侧标签
+		1, // 左侧数据
+		0, // 左侧单位
+
+		0, // 右侧标签
+		1, // 右侧数据
+		0  // 右侧单位
+	});
+
 	try
 	{
+		int max_column = 0;
 		for (widget::LabelValueUnitGridItem const &item : items)
 		{
+			max_column = std::max(max_column, item.Column());
 			AddItem(item);
 		}
+
+		// base::Guard g{
+		// 	[max_column, this]()
+		// 	{
+		// 		for (int i = 0; i < max_column; i++)
+		// 		{
+		// 			SetColumnStretch(i * 3, 0);
+		// 			SetColumnStretch(i * 3 + 1, 1);
+		// 			SetColumnStretch(i * 3 + 2, 0);
+		// 		}
+		// 	}};
 	}
 	catch (std::exception const &e)
 	{
