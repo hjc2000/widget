@@ -1,5 +1,4 @@
 #include "GridBox.h"
-#include "base/Guard.h"
 #include "base/string/define.h"
 #include "GridBoxItem.h"
 #include <algorithm>
@@ -54,17 +53,6 @@ widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> c
 			max_column = std::max(max_column, item.Column());
 			AddItem(item);
 		}
-
-		// base::Guard g{
-		// 	[max_column, this]()
-		// 	{
-		// 		for (int i = 0; i < max_column; i++)
-		// 		{
-		// 			SetColumnStretch(i * 3, 0);
-		// 			SetColumnStretch(i * 3 + 1, 1);
-		// 			SetColumnStretch(i * 3 + 2, 0);
-		// 		}
-		// 	}};
 	}
 	catch (std::exception const &e)
 	{
