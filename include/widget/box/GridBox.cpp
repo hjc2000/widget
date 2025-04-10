@@ -35,15 +35,12 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items
 
 widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
 {
-	SetColumnStretch(std::vector<int>{
-		0, // 左侧标签
-		1, // 左侧数据
-		0, // 左侧单位
-
-		0, // 右侧标签
-		1, // 右侧数据
-		0  // 右侧单位
-	});
+	for (int i = 0; i < 2; i++)
+	{
+		SetColumnStretch(i * 3 + 0, 0);
+		SetColumnStretch(i * 3 + 1, 1);
+		SetColumnStretch(i * 3 + 2, 0);
+	}
 
 	try
 	{
