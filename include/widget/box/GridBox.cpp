@@ -35,7 +35,13 @@ widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items
 
 widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
 {
-	for (int i = 0; i < 2; i++)
+	int max_column = 0;
+	for (auto &item : items)
+	{
+		max_column = std::max(max_column, item.Column());
+	}
+
+	for (int i = 0; i <= max_column; i++)
 	{
 		SetColumnStretch(i * 3 + 0, 0);
 		SetColumnStretch(i * 3 + 1, 1);
@@ -44,11 +50,32 @@ widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> c
 
 	try
 	{
-		int max_column = 0;
 		for (widget::LabelValueUnitGridItem const &item : items)
 		{
-			max_column = std::max(max_column, item.Column());
-			AddItem(item);
+			widget::GridBoxItem label{
+				item.Row(),
+				item.Column() * 3,
+				Qt::AlignmentFlag::AlignLeft,
+				item.Lable(),
+			};
+
+			widget::GridBoxItem data{
+				item.Row(),
+				item.Column() * 3 + 1,
+				Qt::AlignmentFlag::AlignLeft,
+				item.Data(),
+			};
+
+			widget::GridBoxItem unit{
+				item.Row(),
+				item.Column() * 3 + 2,
+				Qt::AlignmentFlag::AlignLeft,
+				item.Unit(),
+			};
+
+			AddItem(label);
+			AddItem(data);
+			AddItem(unit);
 		}
 	}
 	catch (std::exception const &e)
@@ -81,34 +108,6 @@ void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 						   item.Align());
 
 	_item_list.Add(item);
-}
-
-void widget::GridBox::AddItem(widget::LabelValueUnitGridItem const &item)
-{
-	widget::GridBoxItem label{
-		item.Row(),
-		item.Column() * 3,
-		Qt::AlignmentFlag::AlignLeft,
-		item.Lable(),
-	};
-
-	widget::GridBoxItem data{
-		item.Row(),
-		item.Column() * 3 + 1,
-		Qt::AlignmentFlag::AlignLeft,
-		item.Data(),
-	};
-
-	widget::GridBoxItem unit{
-		item.Row(),
-		item.Column() * 3 + 2,
-		Qt::AlignmentFlag::AlignLeft,
-		item.Unit(),
-	};
-
-	AddItem(label);
-	AddItem(data);
-	AddItem(unit);
 }
 
 void widget::GridBox::SetItem(widget::GridBoxItem const &item)

@@ -35,8 +35,6 @@ namespace widget
 
 		void AddItem(widget::GridBoxItem const &item);
 
-		void AddItem(widget::LabelValueUnitGridItem const &item);
-
 		///
 		/// @brief 设置一个项目。会移除同一个格子中的旧项目，然后才添加 item.
 		///
