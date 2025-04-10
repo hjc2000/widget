@@ -93,7 +93,7 @@ void widget::GridBox::AddItem(widget::LabelValueUnitGridItem const &item)
 		item.Row(),
 		item.Column() * 3 + 2,
 		Qt::AlignmentFlag::AlignLeft,
-		item.Data(),
+		item.Unit(),
 	};
 
 	AddItem(label);
