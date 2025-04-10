@@ -99,13 +99,6 @@ void widget::GridBox::AddItem(widget::LabelValueUnitGridItem const &item)
 	AddItem(label);
 	AddItem(data);
 	AddItem(unit);
-
-	for (int i = 0; i < item.Column(); i++)
-	{
-		SetColumnStretch(i * 3, 0);
-		SetColumnStretch(i * 3 + 1, 1);
-		SetColumnStretch(i * 3 + 2, 0);
-	}
 }
 
 void widget::GridBox::SetItem(widget::GridBoxItem const &item)
