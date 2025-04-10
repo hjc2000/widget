@@ -2,7 +2,9 @@
 #include "base/string/define.h"
 #include <stdexcept>
 
-widget::LabelValueUnitGridItem::LabelValueUnitGridItem(std::shared_ptr<QWidget> label,
+widget::LabelValueUnitGridItem::LabelValueUnitGridItem(int row,
+													   int column,
+													   std::shared_ptr<QWidget> label,
 													   std::shared_ptr<QWidget> data,
 													   std::shared_ptr<QWidget> unit)
 {

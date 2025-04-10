@@ -1,5 +1,6 @@
 #include "GridBox.h"
 #include "base/string/define.h"
+#include "GridBoxItem.h"
 #include <cstdint>
 #include <stdexcept>
 
@@ -11,12 +12,31 @@ widget::GridBox::GridBox()
 	SetPadding(widget::Padding{0});
 }
 
-widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> items)
+widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items)
 	: GridBox()
 {
 	try
 	{
 		for (widget::GridBoxItem const &item : items)
+		{
+			AddItem(item);
+		}
+	}
+	catch (std::exception const &e)
+	{
+		throw std::runtime_error{CODE_POS_STR + e.what()};
+	}
+	catch (...)
+	{
+		throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+	}
+}
+
+widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
+{
+	try
+	{
+		for (widget::LabelValueUnitGridItem const &item : items)
 		{
 			AddItem(item);
 		}
@@ -51,6 +71,41 @@ void widget::GridBox::AddItem(widget::GridBoxItem const &item)
 						   item.Align());
 
 	_item_list.Add(item);
+}
+
+void widget::GridBox::AddItem(widget::LabelValueUnitGridItem const &item)
+{
+	widget::GridBoxItem label{
+		item.Row(),
+		item.Column() * 3,
+		Qt::AlignmentFlag::AlignLeft,
+		item.Lable(),
+	};
+
+	widget::GridBoxItem data{
+		item.Row(),
+		item.Column() * 3 + 1,
+		Qt::AlignmentFlag::AlignLeft,
+		item.Data(),
+	};
+
+	widget::GridBoxItem unit{
+		item.Row(),
+		item.Column() * 3 + 2,
+		Qt::AlignmentFlag::AlignLeft,
+		item.Data(),
+	};
+
+	AddItem(label);
+	AddItem(data);
+	AddItem(unit);
+
+	for (int i = 0; i < item.Column(); i++)
+	{
+		SetColumnStretch(i * 3, 0);
+		SetColumnStretch(i * 3 + 1, 1);
+		SetColumnStretch(i * 3 + 2, 0);
+	}
 }
 
 void widget::GridBox::SetItem(widget::GridBoxItem const &item)

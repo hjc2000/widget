@@ -1,6 +1,7 @@
 #pragma once
 #include "base/container/List.h"
 #include "GridBoxItem.h"
+#include "LabelValueUnitGridItem.h"
 #include "qgridlayout.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
@@ -26,11 +27,15 @@ namespace widget
 
 		GridBox();
 
-		GridBox(std::initializer_list<widget::GridBoxItem> items);
+		GridBox(std::initializer_list<widget::GridBoxItem> const &items);
+
+		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items);
 
 		/* #endregion */
 
 		void AddItem(widget::GridBoxItem const &item);
+
+		void AddItem(widget::LabelValueUnitGridItem const &item);
 
 		///
 		/// @brief 设置一个项目。会移除同一个格子中的旧项目，然后才添加 item.
