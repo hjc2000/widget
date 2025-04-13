@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "base/math/Size.h"
-#include "base/peripheral/IDigitalLed.h"
+#include "base/peripheral/led/IDigitalLed.h"
 #include "dialog/Dialog.h"
 #include "widget/button/Button.h"
 #include "widget/layout/Padding.h"

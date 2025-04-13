@@ -1,6 +1,6 @@
 #pragma once
 #include "base/math/Size.h"
-#include "base/peripheral/IDigitalLed.h"
+#include "base/peripheral/led/IDigitalLed.h"
 #include "qcolor.h"
 #include "qnamespace.h"
 #include "qwidget.h"
@@ -12,8 +12,7 @@ namespace widget
 	///
 	///
 	class IndicatorLight :
-		public QWidget,
-		public base::led::IDigitalLed
+		public QWidget
 	{
 	private:
 		base::led::State _state = base::led::State::Off;
@@ -74,28 +73,45 @@ namespace widget
 		/// @brief 打开指示灯。
 		///
 		///
-		virtual void TurnOn() override;
+		void TurnOn();
 
 		///
 		/// @brief 关闭指示灯。
 		///
 		///
-		virtual void TurnOff() override;
+		void TurnOff();
 
 		///
 		/// @brief 翻转 LED.
 		///
 		///
-		virtual void Toggle() override;
+		void Toggle();
 
 		///
 		/// @brief LED 灯的状态。
 		///
 		/// @return base::led::State
 		///
-		virtual base::led::State State() const override
+		base::led::State State() const
 		{
 			return _state;
+		}
+
+		///
+		/// @brief 设置 LED 灯的状态。
+		///
+		/// @param value
+		///
+		void SetState(base::led::State value)
+		{
+			if (value == base::led::State::On)
+			{
+				TurnOn();
+			}
+			else
+			{
+				TurnOff();
+			}
 		}
 
 		///
