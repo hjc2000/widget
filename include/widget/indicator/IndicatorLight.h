@@ -1,6 +1,6 @@
 #pragma once
+#include "base/embedded/led/parameter.h"
 #include "base/math/Size.h"
-#include "base/peripheral/led/parameter.h"
 #include "qcolor.h"
 #include "qnamespace.h"
 #include "qwidget.h"
