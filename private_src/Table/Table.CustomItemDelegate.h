@@ -10,7 +10,7 @@ class widget::Table::CustomItemDelegate :
 	public QStyledItemDelegate
 {
 private:
-	widget::Padding _padding{10, 0, 10, 0};
+	widget::Padding _padding{10, 5, 10, 5};
 
 public:
 	CustomItemDelegate() = default;
