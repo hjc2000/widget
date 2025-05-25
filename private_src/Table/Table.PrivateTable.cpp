@@ -92,6 +92,14 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 		// 所以不会造成性能问题。
 		QHeaderView *header = verticalHeader();
 		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+
+		header->setStyleSheet(
+			"QHeaderView::section {"
+			"    padding-left: 10px;"  // 替换为你的 _padding.Left() 值
+			"    padding-right: 10px;" // 替换为你的 _padding.Right() 值
+			"    padding-top: 5px;"    // 替换为你的 _padding.Top() 值
+			"    padding-bottom: 5px;" // 替换为你的 _padding.Bottom() 值
+			"}");
 	}
 
 	// 添加、删除数据或者数据被编辑后表格实际上可能变成乱序了，所以需要清除排序箭头。
