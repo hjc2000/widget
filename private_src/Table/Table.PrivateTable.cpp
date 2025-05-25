@@ -83,6 +83,14 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 
 		// 允许用户调整列宽。
 		header->setSectionResizeMode(QHeaderView::Interactive);
+
+		header->setStyleSheet(
+			"QHeaderView::section {"
+			"    padding-left: 10px;"
+			"    padding-right: 10px;"
+			"    padding-top: 5px;"
+			"    padding-bottom: 5px;"
+			"}");
 	}
 
 	{
@@ -95,10 +103,10 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 
 		header->setStyleSheet(
 			"QHeaderView::section {"
-			"    padding-left: 10px;"  // 替换为你的 _padding.Left() 值
-			"    padding-right: 10px;" // 替换为你的 _padding.Right() 值
-			"    padding-top: 5px;"    // 替换为你的 _padding.Top() 值
-			"    padding-bottom: 5px;" // 替换为你的 _padding.Bottom() 值
+			"    padding-left: 10px;"
+			"    padding-right: 10px;"
+			"    padding-top: 5px;"
+			"    padding-bottom: 5px;"
 			"}");
 	}
 
