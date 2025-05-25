@@ -16,7 +16,11 @@ namespace widget
 	public:
 		TableSortingParameter() = default;
 
-		TableSortingParameter(int column, Qt::SortOrder order);
+		TableSortingParameter(int column, Qt::SortOrder order)
+			: _column(column),
+			  _order(order)
+		{
+		}
 
 		///
 		/// @brief 排序的列。
