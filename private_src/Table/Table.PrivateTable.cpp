@@ -104,12 +104,12 @@ void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::Resize
 	}
 }
 
-int32_t widget::Table::PrivateTable::ItemPadding() const
+widget::Padding widget::Table::PrivateTable::ItemPadding() const
 {
 	return _custom_item_delegate->Padding();
 }
 
-void widget::Table::PrivateTable::SetItemPadding(int32_t value)
+void widget::Table::PrivateTable::SetItemPadding(widget::Padding const &value)
 {
 	_custom_item_delegate->SetPadding(value);
 	update();

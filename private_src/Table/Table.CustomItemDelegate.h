@@ -1,6 +1,6 @@
 #pragma once
+#include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
-#include <cstdint>
 
 ///
 /// @brief 按照自定义的方式绘制单元格。
@@ -10,7 +10,7 @@ class widget::Table::CustomItemDelegate :
 	public QStyledItemDelegate
 {
 private:
-	int32_t _padding = 10;
+	widget::Padding _padding{10, 0, 10, 0};
 
 public:
 	CustomItemDelegate() = default;
@@ -37,12 +37,12 @@ public:
 	///
 	QSize sizeHint(QStyleOptionViewItem const &option, QModelIndex const &index) const override;
 
-	int32_t Padding() const
+	widget::Padding Padding() const
 	{
 		return _padding;
 	}
 
-	void SetPadding(int32_t value)
+	void SetPadding(widget::Padding const value)
 	{
 		_padding = value;
 	}

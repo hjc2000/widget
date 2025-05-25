@@ -20,7 +20,7 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 	text_option.setWrapMode(QTextOption::WrapMode::NoWrap);
 
 	QRect text_rect = new_option.rect;
-	text_rect.adjust(_padding, 0, -_padding, 0);
+	text_rect.adjust(_padding.Left(), _padding.Top(), -_padding.Right(), -_padding.Bottom());
 
 	if (new_option.state & QStyle::State_Selected)
 	{
@@ -49,7 +49,7 @@ QSize widget::Table::CustomItemDelegate::sizeHint(QStyleOptionViewItem const &op
 	// 获取文本宽度并加上左右内边距
 	QFontMetrics fm(option.font);
 	QString text = index.data(Qt::DisplayRole).toString();
-	int textWidth = fm.horizontalAdvance(text) + 2 * _padding;
+	int textWidth = fm.horizontalAdvance(text) + _padding.Left() + _padding.Right();
 	size.setWidth(qMax(size.width(), textWidth));
 	return size;
 }
