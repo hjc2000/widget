@@ -1,5 +1,6 @@
 #pragma once
 #include "widget/table/Table.h"
+#include <cstdint>
 
 ///
 /// @brief 私有的表格。派生 QTableView 以支持一些自定义特性，然后隐藏起来，作为私有代码，
@@ -55,6 +56,10 @@ public:
 	/// @param resize_modes
 	///
 	void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+
+	int32_t ItemPadding() const;
+
+	void SetItemPadding(int32_t value);
 
 	/* #region 事件 */
 

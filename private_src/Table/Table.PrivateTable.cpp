@@ -104,6 +104,17 @@ void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::Resize
 	}
 }
 
+int32_t widget::Table::PrivateTable::ItemPadding() const
+{
+	return _custom_item_delegate->Padding();
+}
+
+void widget::Table::PrivateTable::SetItemPadding(int32_t value)
+{
+	_custom_item_delegate->SetPadding(value);
+	update();
+}
+
 /* #region 事件 */
 
 base::IEvent<base::Position const &> &widget::Table::PrivateTable::DoubleClickEvent()
