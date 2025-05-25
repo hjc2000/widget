@@ -47,9 +47,18 @@ QSize widget::Table::CustomItemDelegate::sizeHint(QStyleOptionViewItem const &op
 	QSize size = QStyledItemDelegate::sizeHint(option, index);
 
 	// 获取文本宽度并加上左右内边距
-	QFontMetrics fm(option.font);
 	QString text = index.data(Qt::DisplayRole).toString();
-	int textWidth = fm.horizontalAdvance(text) + _padding.Left() + _padding.Right();
-	size.setWidth(qMax(size.width(), textWidth));
+
+	QFontMetrics fm(option.font);
+
+	QRect text_rectangle = fm.boundingRect(
+		option.rect,
+		option.displayAlignment,
+		text,
+		0,
+		nullptr);
+
+	size.setWidth(std::max(size.width(), text_rectangle.width() + _padding.Left() + _padding.Right()));
+	size.setHeight(std::max(size.height(), text_rectangle.height() + _padding.Top() + _padding.Bottom()));
 	return size;
 }
