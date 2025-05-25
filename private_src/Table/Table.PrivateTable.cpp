@@ -121,6 +121,9 @@ widget::Padding widget::Table::PrivateTable::ItemPadding() const
 void widget::Table::PrivateTable::SetItemPadding(widget::Padding const &value)
 {
 	_custom_item_delegate->SetPadding(value);
+
+	// 放心地在样式设置函数中调用 update, 因为同一个事件循环周期中，多个
+	// update 调用会合并成一个。
 	update();
 }
 
