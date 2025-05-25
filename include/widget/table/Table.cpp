@@ -88,6 +88,16 @@ void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> re
 	_table->SetResizeModes(resize_modes);
 }
 
+widget::Padding widget::Table::ItemPadding() const
+{
+	return _table->ItemPadding();
+}
+
+void widget::Table::SetItemPadding(widget::Padding const &value)
+{
+	_table->SetItemPadding(value);
+}
+
 /* #region 列宽 */
 
 void widget::Table::ResizeColumnsToContents()

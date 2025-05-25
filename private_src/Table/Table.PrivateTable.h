@@ -64,6 +64,11 @@ public:
 	///
 	widget::Padding ItemPadding() const;
 
+	///
+	/// @brief 设置单元格的边距。
+	///
+	/// @param value
+	///
 	void SetItemPadding(widget::Padding const &value);
 
 	/* #region 事件 */
