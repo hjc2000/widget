@@ -33,6 +33,12 @@ private:
 	///
 	void ClearSortIndicator();
 
+	void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
+	{
+		QTableView::currentChanged(current, previous);
+		_current_change_event(current, previous);
+	}
+
 public:
 	///
 	/// @brief 构造函数。
@@ -69,12 +75,6 @@ public:
 	/// @param value
 	///
 	void SetItemPadding(widget::Padding const &value);
-
-	void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
-	{
-		QTableView::currentChanged(current, previous);
-		_current_change_event(current, previous);
-	}
 
 	/* #region 事件 */
 
