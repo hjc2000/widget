@@ -162,6 +162,15 @@ namespace widget
 		///
 		base::IEvent<base::Position const &> &DoubleClickEvent();
 
+		///
+		/// @brief 当前焦点单元格发生改变的事件。
+		///
+		/// @note 事件参数为 (QModelIndex const &current, QModelIndex const &previous)
+		///
+		/// @return
+		///
+		base::IEvent<QModelIndex const &, QModelIndex const &> &CurrentChangeEvent();
+
 		/* #endregion */
 	};
 } // namespace widget

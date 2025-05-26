@@ -190,4 +190,9 @@ base::IEvent<base::Position const &> &widget::Table::DoubleClickEvent()
 	return _table->DoubleClickEvent();
 }
 
+base::IEvent<QModelIndex const &, QModelIndex const &> &widget::Table::CurrentChangeEvent()
+{
+	return _table->CurrentChangeEvent();
+}
+
 /* #endregion */
