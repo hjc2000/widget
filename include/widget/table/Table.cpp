@@ -11,6 +11,17 @@ widget::Table::Table()
 	// PrivateTable 的大小调整策略为撑开。会填满父容器。
 	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
 	_layout.AddWidget(_table.get());
+
+	_table->CurrentChangeEvent() += [this](QModelIndex const &current, QModelIndex const &previous)
+	{
+		if (_row_header_view == nullptr)
+		{
+			return;
+		}
+
+		_row_header_view->SetSelectedIndex(current.row());
+		update();
+	};
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)

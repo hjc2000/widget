@@ -1,6 +1,8 @@
 #pragma once
+#include "base/string/define.h"
 #include "qheaderview.h"
 #include "widget/table/Table.h"
+#include <iostream>
 
 class widget::Table::HeaderView :
 	public QHeaderView
@@ -48,5 +50,6 @@ public:
 	void SetSelectedIndex(int index)
 	{
 		_selected_index = index;
+		std::cout << CODE_POS_STR << "选中了" << index << std::endl;
 	}
 };

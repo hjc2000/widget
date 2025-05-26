@@ -125,12 +125,3 @@ void widget::Table::PrivateTable::SetItemPadding(widget::Padding const &value)
 	// update 调用会合并成一个。
 	update();
 }
-
-/* #region 事件 */
-
-base::IEvent<base::Position const &> &widget::Table::PrivateTable::DoubleClickEvent()
-{
-	return _double_click_event;
-}
-
-/* #endregion */

@@ -1,4 +1,6 @@
 #pragma once
+#include "base/delegate/IEvent.h"
+#include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
 
@@ -14,11 +16,8 @@ private:
 	std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 	QAbstractItemModel *_data_model = nullptr;
 
-	///
-	/// @brief 单元格被双击事件。
-	///
-	///
 	base::Delegate<base::Position const &> _double_click_event;
+	base::Delegate<QModelIndex const &, QModelIndex const &> _current_change_event;
 
 	void ConnectSignals();
 
@@ -71,14 +70,37 @@ public:
 	///
 	void SetItemPadding(widget::Padding const &value);
 
+	void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
+	{
+		QTableView::currentChanged(current, previous);
+		_current_change_event(current, previous);
+	}
+
 	/* #region 事件 */
 
 	///
 	/// @brief 单元格被双击事件。
 	///
+	/// @note 事件参数为 (base::Position const &position)
+	///
 	/// @return base::IEvent<base::Position const &>&
 	///
-	base::IEvent<base::Position const &> &DoubleClickEvent();
+	base::IEvent<base::Position const &> &DoubleClickEvent()
+	{
+		return _double_click_event;
+	}
+
+	///
+	/// @brief 当前焦点单元格发生改变的事件。
+	///
+	/// @note 事件参数为 (QModelIndex const &current, QModelIndex const &previous)
+	///
+	/// @return
+	///
+	base::IEvent<QModelIndex const &, QModelIndex const &> &CurrentChangeEvent()
+	{
+		return _current_change_event;
+	}
 
 	/* #endregion */
 };
