@@ -23,9 +23,11 @@ namespace widget
 		class PrivateTable;
 		class CustomItemDelegate;
 		class TableDataModelWrapper;
+		class HeaderView;
 
 		std::shared_ptr<PrivateTable> _table;
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
+		std::shared_ptr<HeaderView> _row_header_view;
 		widget::VBoxLayout _layout{this};
 
 	public:

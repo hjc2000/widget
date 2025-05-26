@@ -1,6 +1,7 @@
 #include "Table.h"
 #include "base/math/ColumnIndex.h"
 #include "base/string/define.h"
+#include "Table.HeaderView.h"
 #include "Table.PrivateTable.h"
 #include "Table.TableDataModelWrapper.h"
 #include <stdexcept>
@@ -23,7 +24,9 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	}
 
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
+	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
 	_table->setModel(_table_data_model.get());
+	_table->setVerticalHeader(_row_header_view.get());
 
 	{
 		// 有列标题则让水平的表格头可见。

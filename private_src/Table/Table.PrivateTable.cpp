@@ -93,23 +93,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 			"}");
 	}
 
-	{
-		// 单元格行高适应内容高度。
-		//
-		// 因为表格是虚拟化的，所以并不需要遍历所有行，只需要适应显示的那几行的高度，
-		// 所以不会造成性能问题。
-		QHeaderView *header = verticalHeader();
-		header->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
-
-		header->setStyleSheet(
-			"QHeaderView::section {"
-			"    padding-left: 10px;"
-			"    padding-right: 10px;"
-			"    padding-top: 5px;"
-			"    padding-bottom: 5px;"
-			"}");
-	}
-
 	// 添加、删除数据或者数据被编辑后表格实际上可能变成乱序了，所以需要清除排序箭头。
 	ClearSortIndicator();
 }
