@@ -5,6 +5,9 @@
 class widget::Table::HeaderView :
 	public QHeaderView
 {
+private:
+	int _selected_index = -1;
+
 protected:
 	void paintSection(QPainter *painter, QRect const &rect, int logicalIndex) const override
 	{
@@ -16,6 +19,14 @@ protected:
 
 		// 绘制文本（居中）
 		QString text = model()->headerData(logicalIndex, orientation()).toString();
+
+		if (logicalIndex == _selected_index)
+		{
+			QFont font = painter->font();
+			font.setBold(true);
+			painter->setFont(font);
+		}
+
 		painter->drawText(paddedRect, Qt::AlignmentFlag::AlignLeft, text);
 	}
 
@@ -32,5 +43,10 @@ public:
 		: QHeaderView(orientation, nullptr)
 	{
 		setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+	}
+
+	void SetSelectedIndex(int index)
+	{
+		_selected_index = index;
 	}
 };
