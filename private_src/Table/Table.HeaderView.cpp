@@ -41,7 +41,7 @@ void widget::Table::HeaderView::paintSection(QPainter *painter,
 			painter->setFont(font);
 		}
 
-		painter->drawText(paddedRect, Qt::AlignmentFlag::AlignLeft, text);
+		painter->drawText(paddedRect, _text_alignment, text);
 	}
 }
 

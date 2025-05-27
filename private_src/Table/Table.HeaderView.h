@@ -8,6 +8,7 @@ class widget::Table::HeaderView :
 {
 private:
 	int _selected_index = -1;
+	Qt::AlignmentFlag _text_alignment = Qt::AlignmentFlag::AlignLeft;
 	widget::Padding _padding{10, 5, 10, 5};
 
 protected:
@@ -35,5 +36,15 @@ public:
 	void SetPadding(widget::Padding const &value)
 	{
 		_padding = value;
+	}
+
+	Qt::AlignmentFlag TextAlignment() const
+	{
+		return _text_alignment;
+	}
+
+	void SetTextAlignment(Qt::AlignmentFlag value)
+	{
+		_text_alignment = value;
 	}
 };
