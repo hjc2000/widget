@@ -41,6 +41,27 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	_table->setVerticalHeader(_row_header_view.get());
 
 	{
+		QHeaderView *header = _table->horizontalHeader();
+
+		// 允许用户移动列
+		header->setSectionsMovable(true);
+
+		// 允许用户点击列头
+		header->setSectionsClickable(true);
+
+		// 允许用户调整列宽。
+		header->setSectionResizeMode(QHeaderView::Interactive);
+
+		header->setStyleSheet(
+			"QHeaderView::section {"
+			"    padding-left: 10px;"
+			"    padding-right: 10px;"
+			"    padding-top: 5px;"
+			"    padding-bottom: 5px;"
+			"}");
+	}
+
+	{
 		// 有列标题则让水平的表格头可见。
 		_table->horizontalHeader()->setVisible(model->HasColumnTitle());
 

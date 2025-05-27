@@ -72,27 +72,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 
 	ClearInitialFocus();
 
-	{
-		QHeaderView *header = horizontalHeader();
-
-		// 允许用户移动列
-		header->setSectionsMovable(true);
-
-		// 允许用户点击列头
-		header->setSectionsClickable(true);
-
-		// 允许用户调整列宽。
-		header->setSectionResizeMode(QHeaderView::Interactive);
-
-		header->setStyleSheet(
-			"QHeaderView::section {"
-			"    padding-left: 10px;"
-			"    padding-right: 10px;"
-			"    padding-top: 5px;"
-			"    padding-bottom: 5px;"
-			"}");
-	}
-
 	// 添加、删除数据或者数据被编辑后表格实际上可能变成乱序了，所以需要清除排序箭头。
 	ClearSortIndicator();
 }
