@@ -123,7 +123,17 @@ void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> re
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	_table->SetColumnResizeModes(resize_modes);
+	QHeaderView *header = _table->horizontalHeader();
+	if (header == nullptr)
+	{
+		return;
+	}
+
+	int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
+	for (int i = 0; i < count; ++i)
+	{
+		header->setSectionResizeMode(i, resize_modes[i]);
+	}
 }
 
 void widget::Table::ResizeColumnsToContents()

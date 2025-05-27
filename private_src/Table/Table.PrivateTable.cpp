@@ -76,21 +76,6 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	ClearSortIndicator();
 }
 
-void widget::Table::PrivateTable::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
-{
-	QHeaderView *header = horizontalHeader();
-	if (header == nullptr)
-	{
-		return;
-	}
-
-	int count = std::min(header->count(), static_cast<int>(resize_modes.size()));
-	for (int i = 0; i < count; ++i)
-	{
-		header->setSectionResizeMode(i, resize_modes[i]);
-	}
-}
-
 widget::Padding widget::Table::PrivateTable::ItemPadding() const
 {
 	return _custom_item_delegate->Padding();

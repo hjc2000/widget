@@ -56,13 +56,6 @@ public:
 	virtual void setModel(QAbstractItemModel *model) override;
 
 	///
-	/// @brief 设置每一列的大小调整方式。
-	///
-	/// @param resize_modes
-	///
-	void SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
-
-	///
 	/// @brief 单元格的边距。
 	///
 	/// @return
