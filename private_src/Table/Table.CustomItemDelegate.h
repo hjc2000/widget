@@ -15,8 +15,6 @@ private:
 public:
 	CustomItemDelegate() = default;
 
-	CustomItemDelegate(int padding);
-
 	///
 	/// @brief 绘制单元格。
 	///

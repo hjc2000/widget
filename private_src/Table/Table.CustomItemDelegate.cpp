@@ -1,10 +1,5 @@
 #include "Table.CustomItemDelegate.h"
 
-widget::Table::CustomItemDelegate::CustomItemDelegate(int padding)
-	: _padding(padding)
-{
-}
-
 void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 											  QStyleOptionViewItem const &option,
 											  QModelIndex const &index) const
@@ -49,20 +44,7 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 QSize widget::Table::CustomItemDelegate::sizeHint(QStyleOptionViewItem const &option, QModelIndex const &index) const
 {
 	QSize size = QStyledItemDelegate::sizeHint(option, index);
-
-	// 获取文本宽度并加上左右内边距
-	QString text = index.data(Qt::DisplayRole).toString();
-
-	QFontMetrics fm(option.font);
-
-	QRect text_rectangle = fm.boundingRect(
-		option.rect,
-		option.displayAlignment,
-		text,
-		0,
-		nullptr);
-
-	size.setWidth(std::max(size.width(), text_rectangle.width() + _padding.Left() + _padding.Right()));
-	size.setHeight(std::max(size.height(), text_rectangle.height() + _padding.Top() + _padding.Bottom()));
+	size.setWidth(size.width() + _padding.Left() + _padding.Right());
+	size.setHeight(size.height() + _padding.Top() + _padding.Bottom());
 	return size;
 }
