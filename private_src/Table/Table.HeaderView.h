@@ -11,13 +11,7 @@ private:
 protected:
 	void paintSection(QPainter *painter, QRect const &rect, int logicalIndex) const override;
 
-	QSize sizeHint() const override
-	{
-		QSize size = QHeaderView::sizeHint();
-		size.setWidth(size.width() + 20);   // 左右各增加10px
-		size.setHeight(size.height() + 10); // 上下各增加5px
-		return size;
-	}
+	QSize sizeHint() const override;
 
 public:
 	HeaderView(Qt::Orientation orientation)

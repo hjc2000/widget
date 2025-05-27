@@ -41,3 +41,11 @@ void widget::Table::HeaderView::paintSection(QPainter *painter,
 		painter->drawText(paddedRect, Qt::AlignmentFlag::AlignLeft, text);
 	}
 }
+
+QSize widget::Table::HeaderView::sizeHint() const
+{
+	QSize size = QHeaderView::sizeHint();
+	size.setWidth(size.width() + 20);   // 左右各增加10px
+	size.setHeight(size.height() + 10); // 上下各增加5px
+	return size;
+}
