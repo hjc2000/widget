@@ -215,6 +215,28 @@ void widget::Table::SetItemPadding(widget::Padding const &value)
 	_table->SetItemPadding(value);
 }
 
+widget::Padding widget::Table::RowHeaderPadding() const
+{
+	return _row_header_view->Padding();
+}
+
+void widget::Table::SetRowHeaderPadding(widget::Padding const &value)
+{
+	_row_header_view->SetPadding(value);
+	update();
+}
+
+Qt::AlignmentFlag widget::Table::RowHeaderTextAlignment() const
+{
+	return _row_header_view->TextAlignment();
+}
+
+void widget::Table::SetRowHeaderTextAlignment(Qt::AlignmentFlag value)
+{
+	_row_header_view->SetTextAlignment(value);
+	update();
+}
+
 /* #region 事件 */
 
 base::IEvent<base::Position const &> &widget::Table::DoubleClickEvent()

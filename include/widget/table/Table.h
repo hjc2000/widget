@@ -153,6 +153,14 @@ namespace widget
 		///
 		void SetItemPadding(widget::Padding const &value);
 
+		widget::Padding RowHeaderPadding() const;
+
+		void SetRowHeaderPadding(widget::Padding const &value);
+
+		Qt::AlignmentFlag RowHeaderTextAlignment() const;
+
+		void SetRowHeaderTextAlignment(Qt::AlignmentFlag value);
+
 		/* #region 事件 */
 
 		///
