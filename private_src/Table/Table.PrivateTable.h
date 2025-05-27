@@ -60,7 +60,7 @@ public:
 	///
 	/// @param resize_modes
 	///
-	void SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
+	void SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
 
 	///
 	/// @brief 单元格的边距。

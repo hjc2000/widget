@@ -99,7 +99,7 @@ void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> re
 		throw std::runtime_error{CODE_POS_STR + "需要先设置表格数据模型。"};
 	}
 
-	_table->SetResizeModes(resize_modes);
+	_table->SetColumnResizeModes(resize_modes);
 }
 
 /* #region 列宽 */

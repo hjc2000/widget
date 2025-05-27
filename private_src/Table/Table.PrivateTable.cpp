@@ -97,7 +97,7 @@ void widget::Table::PrivateTable::setModel(QAbstractItemModel *model)
 	ClearSortIndicator();
 }
 
-void widget::Table::PrivateTable::SetResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
+void widget::Table::PrivateTable::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
 	QHeaderView *header = horizontalHeader();
 	if (header == nullptr)

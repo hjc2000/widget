@@ -26,4 +26,14 @@ public:
 	{
 		_selected_index = index;
 	}
+
+	widget::Padding Padding() const
+	{
+		return _padding;
+	}
+
+	void SetPadding(widget::Padding const &value)
+	{
+		_padding = value;
+	}
 };
