@@ -50,7 +50,7 @@ widget::Table::PrivateTable::PrivateTable()
 
 	{
 		// 设置单元格绘制代理，按照自定义的方式绘制单元格。
-		_custom_item_delegate = std::shared_ptr<CustomItemDelegate>{new CustomItemDelegate{}};
+		_custom_item_delegate = std::shared_ptr<widget::Table::CustomItemDelegate>{new widget::Table::CustomItemDelegate{}};
 		setItemDelegate(_custom_item_delegate.get());
 	}
 }

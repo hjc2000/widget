@@ -69,6 +69,11 @@ public:
 	///
 	void SetItemPadding(widget::Padding const &value);
 
+	widget::Table::CustomItemDelegate &CustomItemDelegate()
+	{
+		return *_custom_item_delegate;
+	}
+
 	/* #region 事件 */
 
 	///
