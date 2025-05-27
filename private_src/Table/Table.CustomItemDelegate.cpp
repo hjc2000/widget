@@ -11,7 +11,15 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 	QString text = index.data(Qt::DisplayRole).toString();
 
 	QTextOption text_option{};
-	text_option.setAlignment(Qt::AlignmentFlag::AlignLeft | Qt::AlignmentFlag::AlignVCenter);
+	if (index.column() >= static_cast<int>(_alignments.size()))
+	{
+		text_option.setAlignment(_default_alignment);
+	}
+	else
+	{
+		text_option.setAlignment(_alignments[index.column()]);
+	}
+
 	text_option.setWrapMode(QTextOption::WrapMode::NoWrap);
 
 	QRect text_rect = new_option.rect;
