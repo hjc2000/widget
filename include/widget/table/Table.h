@@ -193,6 +193,13 @@ namespace widget
 		///
 		void SetRowHeaderTextAlignment(Qt::AlignmentFlag value);
 
+		///
+		/// @brief 设置内容的各个列的对齐方式。不包括表头。
+		///
+		/// @param alignments
+		///
+		void SetItemColumnAlignments(std::vector<Qt::AlignmentFlag> const &alignments);
+
 		/* #region 事件 */
 
 		///

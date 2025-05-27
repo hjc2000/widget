@@ -1,6 +1,7 @@
 #include "Table.h"
 #include "base/math/ColumnIndex.h"
 #include "base/string/define.h"
+#include "Table.CustomItemDelegate.h"
 #include "Table.HeaderView.h"
 #include "Table.PrivateTable.h"
 #include "Table.TableDataModelWrapper.h"
@@ -252,6 +253,12 @@ Qt::AlignmentFlag widget::Table::RowHeaderTextAlignment() const
 void widget::Table::SetRowHeaderTextAlignment(Qt::AlignmentFlag value)
 {
 	_row_header_view->SetTextAlignment(value);
+	update();
+}
+
+void widget::Table::SetItemColumnAlignments(std::vector<Qt::AlignmentFlag> const &alignments)
+{
+	_table->CustomItemDelegate().SetColumnAlignments(alignments);
 	update();
 }
 
