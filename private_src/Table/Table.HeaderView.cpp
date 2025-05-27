@@ -9,7 +9,10 @@ void widget::Table::HeaderView::paintSection(QPainter *painter,
 	widget::PainterGuard g{painter};
 
 	// 设置内边距（左10px，右10px，上5px，下5px）
-	QRect paddedRect = rect.adjusted(10, 5, -10, -5);
+	QRect paddedRect = rect.adjusted(_padding.Left(),
+									 _padding.Top(),
+									 -_padding.Right(),
+									 -_padding.Bottom());
 
 	// 绘制背景（可选）
 	painter->fillRect(rect, QColor{240, 240, 240});
@@ -45,7 +48,7 @@ void widget::Table::HeaderView::paintSection(QPainter *painter,
 QSize widget::Table::HeaderView::sizeHint() const
 {
 	QSize size = QHeaderView::sizeHint();
-	size.setWidth(size.width() + 20);   // 左右各增加10px
-	size.setHeight(size.height() + 10); // 上下各增加5px
+	size.setWidth(size.width() + _padding.Left() + _padding.Right());
+	size.setHeight(size.height() + _padding.Top() + _padding.Bottom());
 	return size;
 }
