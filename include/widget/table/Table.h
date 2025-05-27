@@ -28,7 +28,10 @@ namespace widget
 		std::shared_ptr<PrivateTable> _table;
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
 		std::shared_ptr<HeaderView> _row_header_view;
+		std::shared_ptr<HeaderView> _column_header_view;
 		widget::VBoxLayout _layout{this};
+
+		void SetColumnHeaderStyle();
 
 	public:
 		Table();
@@ -153,12 +156,32 @@ namespace widget
 		///
 		void SetItemPadding(widget::Padding const &value);
 
+		///
+		/// @brief 行标题单元格的内边距。
+		///
+		/// @return
+		///
 		widget::Padding RowHeaderPadding() const;
 
+		///
+		/// @brief 设置行标题单元格的内边距。
+		///
+		/// @param value
+		///
 		void SetRowHeaderPadding(widget::Padding const &value);
 
+		///
+		/// @brief 行标题单元格的文本对齐方式。
+		///
+		/// @return
+		///
 		Qt::AlignmentFlag RowHeaderTextAlignment() const;
 
+		///
+		/// @brief 设置行标题单元格的文本对齐方式。
+		///
+		/// @param value
+		///
 		void SetRowHeaderTextAlignment(Qt::AlignmentFlag value);
 
 		/* #region 事件 */

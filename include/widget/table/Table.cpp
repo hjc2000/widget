@@ -6,11 +6,26 @@
 #include "Table.TableDataModelWrapper.h"
 #include <stdexcept>
 
+void widget::Table::SetColumnHeaderStyle()
+{
+	_column_header_view->SetTextAlignment(Qt::AlignmentFlag::AlignCenter);
+
+	// 允许用户移动列
+	_column_header_view->setSectionsMovable(true);
+
+	// 允许用户点击列头
+	_column_header_view->setSectionsClickable(true);
+
+	// 允许用户调整列宽。
+	_column_header_view->setSectionResizeMode(QHeaderView::Interactive);
+}
+
 widget::Table::Table()
 {
 	// PrivateTable 的大小调整策略为撑开。会填满父容器。
 	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
 	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
+	_column_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Horizontal}};
 
 	_layout.AddWidget(_table.get());
 
@@ -22,8 +37,11 @@ widget::Table::Table()
 		}
 
 		_row_header_view->SetSelectedIndex(current.row());
+		_column_header_view->SetSelectedIndex(current.column());
 		update();
 	};
+
+	SetColumnHeaderStyle();
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
@@ -39,28 +57,9 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
 	_table->setModel(_table_data_model.get());
 	_table->setVerticalHeader(_row_header_view.get());
+	_table->setHorizontalHeader(_column_header_view.get());
 
-	{
-		QHeaderView *header = _table->horizontalHeader();
-
-		// 允许用户移动列
-		header->setSectionsMovable(true);
-
-		// 允许用户点击列头
-		header->setSectionsClickable(true);
-
-		// 允许用户调整列宽。
-		header->setSectionResizeMode(QHeaderView::Interactive);
-
-		header->setStyleSheet(
-			"QHeaderView::section {"
-			"    padding-left: 10px;"
-			"    padding-right: 10px;"
-			"    padding-top: 5px;"
-			"    padding-bottom: 5px;"
-			"}");
-	}
-
+	// 设置行列标题的可见性
 	{
 		// 有列标题则让水平的表格头可见。
 		_table->horizontalHeader()->setVisible(model->HasColumnTitle());
