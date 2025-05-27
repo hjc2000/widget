@@ -15,7 +15,7 @@ void widget::Table::HeaderView::paintSection(QPainter *painter,
 									 -_padding.Bottom());
 
 	// 绘制背景（可选）
-	painter->fillRect(rect, QColor{240, 240, 240});
+	painter->fillRect(rect, QColor{245, 245, 245});
 
 	{
 		// 绘制边框
