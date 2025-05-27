@@ -10,6 +10,8 @@ widget::Table::Table()
 {
 	// PrivateTable 的大小调整策略为撑开。会填满父容器。
 	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
+	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
+
 	_layout.AddWidget(_table.get());
 
 	_table->CurrentChangeEvent() += [this](QModelIndex const &current, QModelIndex const &previous)
@@ -35,7 +37,6 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 	}
 
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
-	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
 	_table->setModel(_table_data_model.get());
 	_table->setVerticalHeader(_row_header_view.get());
 
