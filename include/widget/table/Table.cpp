@@ -92,6 +92,8 @@ void widget::Table::Sort(int column, Qt::SortOrder order)
 
 /* #endregion */
 
+/* #region 列宽 */
+
 void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes)
 {
 	if (_table_data_model == nullptr)
@@ -101,8 +103,6 @@ void widget::Table::SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> re
 
 	_table->SetColumnResizeModes(resize_modes);
 }
-
-/* #region 列宽 */
 
 void widget::Table::ResizeColumnsToContents()
 {

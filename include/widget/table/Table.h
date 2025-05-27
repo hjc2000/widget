@@ -92,14 +92,14 @@ namespace widget
 
 		/* #endregion */
 
+		/* #region 列宽 */
+
 		///
 		/// @brief 设置每一列的大小调整方式。
 		///
 		/// @param resize_modes
 		///
 		void SetColumnResizeModes(std::vector<QHeaderView::ResizeMode> resize_modes);
-
-		/* #region 列宽 */
 
 		///
 		/// @brief 调整所有列的宽度为适应内容。
