@@ -1,5 +1,6 @@
 #pragma once
 #include "base/delegate/IEvent.h"
+#include "base/IIdToken.h"
 #include "base/math/ColumnIndex.h"
 #include "base/math/Position.h"
 #include "QHeaderView"
@@ -31,10 +32,18 @@ namespace widget
 		std::shared_ptr<HeaderView> _column_header_view;
 		widget::VBoxLayout _layout{this};
 
+		base::SpIIdToken _table_current_index_index_change_event_token;
+
 		void SetColumnHeaderStyle();
+
+		void SubscribeEvents();
+
+		void UnsubscribeEvents();
 
 	public:
 		Table();
+
+		~Table();
 
 		///
 		/// @brief 设置数据模型。

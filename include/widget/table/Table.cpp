@@ -20,16 +20,12 @@ void widget::Table::SetColumnHeaderStyle()
 	_column_header_view->setSectionResizeMode(QHeaderView::Interactive);
 }
 
-widget::Table::Table()
+/* #region 订阅、取消订阅事件 */
+
+void widget::Table::SubscribeEvents()
 {
-	// PrivateTable 的大小调整策略为撑开。会填满父容器。
-	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
-	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
-	_column_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Horizontal}};
-
-	_layout.AddWidget(_table.get());
-
-	_table->CurrentChangeEvent() += [this](QModelIndex const &current, QModelIndex const &previous)
+	_table_current_index_index_change_event_token = _table->CurrentChangeEvent() +=
+		[this](QModelIndex const &current, QModelIndex const &previous)
 	{
 		if (_row_header_view == nullptr)
 		{
@@ -40,8 +36,31 @@ widget::Table::Table()
 		_column_header_view->SetSelectedIndex(current.column());
 		update();
 	};
+}
 
+void widget::Table::UnsubscribeEvents()
+{
+	_table->CurrentChangeEvent() -= _table_current_index_index_change_event_token;
+}
+
+/* #endregion */
+
+widget::Table::Table()
+{
+	// PrivateTable 的大小调整策略为撑开。会填满父容器。
+	_table = std::shared_ptr<PrivateTable>{new PrivateTable{}};
+	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
+	_column_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Horizontal}};
+
+	_layout.AddWidget(_table.get());
+
+	SubscribeEvents();
 	SetColumnHeaderStyle();
+}
+
+widget::Table::~Table()
+{
+	UnsubscribeEvents();
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
