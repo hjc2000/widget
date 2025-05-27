@@ -20,7 +20,11 @@ void widget::Table::CustomItemDelegate::paint(QPainter *painter,
 	text_option.setWrapMode(QTextOption::WrapMode::NoWrap);
 
 	QRect text_rect = new_option.rect;
-	text_rect.adjust(_padding.Left(), _padding.Top(), -_padding.Right(), -_padding.Bottom());
+
+	text_rect.adjust(_padding.Left(),
+					 _padding.Top(),
+					 -_padding.Right(),
+					 -_padding.Bottom());
 
 	if (new_option.state & QStyle::State_Selected)
 	{
