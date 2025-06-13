@@ -4,6 +4,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "QString"
+#include <cstdint>
 
 namespace widget
 {
@@ -131,7 +132,7 @@ namespace widget
 		///
 		/// @return base::IEvent<base::PositionRange const &>& 事件参数指示了发生更改的数据的范围。
 		///
-		virtual base::IEvent<base::PositionRange const &> &DataChangeEvent() = 0;
+		virtual base::IEvent<base::PositionRange<int32_t> const &> &DataChangeEvent() = 0;
 
 		/* #endregion */
 	};

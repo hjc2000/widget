@@ -16,7 +16,7 @@ private:
 	std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 	QAbstractItemModel *_data_model = nullptr;
 
-	base::Delegate<base::Position const &> _double_click_event;
+	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<QModelIndex const &, QModelIndex const &> _current_change_event;
 
 	void ConnectSignals();
@@ -83,7 +83,7 @@ public:
 	///
 	/// @return base::IEvent<base::Position const &>&
 	///
-	base::IEvent<base::Position const &> &DoubleClickEvent()
+	base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent()
 	{
 		return _double_click_event;
 	}

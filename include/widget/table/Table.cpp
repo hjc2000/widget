@@ -264,7 +264,7 @@ void widget::Table::SetItemColumnAlignments(std::vector<Qt::AlignmentFlag> const
 
 /* #region 事件 */
 
-base::IEvent<base::Position const &> &widget::Table::DoubleClickEvent()
+base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
 {
 	return _table->DoubleClickEvent();
 }

@@ -207,7 +207,7 @@ namespace widget
 		///
 		/// @return base::IEvent<base::Position const &>&
 		///
-		base::IEvent<base::Position const &> &DoubleClickEvent();
+		base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent();
 
 		///
 		/// @brief 当前焦点单元格发生改变的事件。

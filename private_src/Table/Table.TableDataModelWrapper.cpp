@@ -36,7 +36,7 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		endRemoveRows();
 	};
 
-	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange const &range)
+	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange<int32_t> const &range)
 	{
 		auto start = createIndex(range.Start().Y(), range.Start().X());
 		auto end = createIndex(range.End().Y(), range.End().X());
