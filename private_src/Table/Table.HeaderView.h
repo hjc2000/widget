@@ -20,7 +20,7 @@ public:
 	HeaderView(Qt::Orientation orientation)
 		: QHeaderView(orientation, nullptr)
 	{
-		setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+		setSectionResizeMode(QHeaderView::ResizeMode::Fixed);
 	}
 
 	void SetSelectedIndex(int index)
