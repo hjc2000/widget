@@ -1,16 +1,16 @@
 #pragma once
 #include "qheaderview.h"
 #include "qnamespace.h"
+#include "widget/AlignmentFlag.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
-#include <cstdint>
 
 class widget::Table::HeaderView :
 	public QHeaderView
 {
 private:
 	int _selected_index = -1;
-	Qt::AlignmentFlag _text_alignment = static_cast<Qt::AlignmentFlag>(static_cast<uint32_t>(Qt::AlignmentFlag::AlignLeft) | static_cast<uint32_t>(Qt::AlignmentFlag::AlignVCenter));
+	Qt::AlignmentFlag _text_alignment{};
 	widget::Padding _padding{10, 5, 10, 5};
 
 protected:
@@ -31,6 +31,21 @@ public:
 			//
 			// 对于列标题来说，Section 大小控制的是宽度。
 			setDefaultSectionSize(defaultSectionSize() + 10);
+		}
+
+		if (orientation == Qt::Orientation::Vertical)
+		{
+			_text_alignment = widget::AlignmentFlag{
+				Qt::AlignmentFlag::AlignRight,
+				Qt::AlignmentFlag::AlignVCenter,
+			};
+		}
+		else
+		{
+			_text_alignment = widget::AlignmentFlag{
+				Qt::AlignmentFlag::AlignHCenter,
+				Qt::AlignmentFlag::AlignVCenter,
+			};
 		}
 	}
 
