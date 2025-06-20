@@ -9,8 +9,6 @@
 
 void widget::Table::SetColumnHeaderStyle()
 {
-	_column_header_view->SetTextAlignment(Qt::AlignmentFlag::AlignCenter);
-
 	// 允许用户移动列
 	_column_header_view->setSectionsMovable(true);
 
