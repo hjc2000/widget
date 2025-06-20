@@ -95,7 +95,7 @@ void widget::Input::SetPlaceholderText(char const *value)
 
 std::string widget::Input::PlaceholderTextStdString() const
 {
-	std::string ret = std::to_string(PlaceholderText());
+	std::string ret = base::to_string(PlaceholderText());
 	return ret;
 }
 
@@ -136,7 +136,7 @@ void widget::Input::SetText(char const *value)
 
 std::string widget::Input::TextStdString() const
 {
-	std::string ret = std::to_string(Text());
+	std::string ret = base::to_string(Text());
 	return ret;
 }
 

@@ -4,7 +4,7 @@
 #include "widget/line-input-widget/CheckState.h"
 #include <string>
 
-namespace std
+namespace base
 {
 	///
 	/// @brief 将 QString 转换为 std::string.
@@ -14,7 +14,7 @@ namespace std
 	///
 	std::string to_string(QString const &qstr);
 
-} // namespace std
+} // namespace base
 
 namespace widget
 {

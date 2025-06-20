@@ -57,7 +57,7 @@ void widget::RangeSubmit::SetLeftPlaceholderText(char const *value)
 
 std::string widget::RangeSubmit::LeftPlaceholderTextStdString() const
 {
-	return std::to_string(LeftPlaceholderText());
+	return base::to_string(LeftPlaceholderText());
 }
 
 QString widget::RangeSubmit::RightPlaceholderText() const
@@ -82,7 +82,7 @@ void widget::RangeSubmit::SetRightPlaceholderText(char const *value)
 
 std::string widget::RangeSubmit::RightPlaceholderTextStdString() const
 {
-	return std::to_string(RightPlaceholderText());
+	return base::to_string(RightPlaceholderText());
 }
 
 /* #endregion */
@@ -111,7 +111,7 @@ void widget::RangeSubmit::SetLeftText(char const *value)
 
 std::string widget::RangeSubmit::LeftTextStdString() const
 {
-	return std::to_string(LeftText());
+	return base::to_string(LeftText());
 }
 
 QString widget::RangeSubmit::RightText() const
@@ -136,7 +136,7 @@ void widget::RangeSubmit::SetRightText(char const *value)
 
 std::string widget::RangeSubmit::RightTextStdString() const
 {
-	return std::to_string(RightText());
+	return base::to_string(RightText());
 }
 
 /* #endregion */

@@ -1,7 +1,7 @@
 #include "convert.h"
 #include "qcontainerfwd.h"
 
-std::string std::to_string(QString const &qstr)
+std::string base::to_string(QString const &qstr)
 {
 	// 使用 toUtf8() 将 QString 转换为 QByteArray
 	QByteArray utf8Bytes = qstr.toUtf8();
