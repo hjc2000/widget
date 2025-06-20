@@ -2,7 +2,7 @@
 #include "base/file/IFileStream.h"
 #include "base/file/Path.h"
 #include "qcontainerfwd.h"
-#include "widget/convert.h" // IWYU pragma: keep
+#include "widget/convert.h"
 #include "widget/io/StreamIODevice.h"
 #include "xlsxdocument.h"
 #include <memory>
