@@ -3,6 +3,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include <iostream>
 #include <stdexcept>
 #include <string>
 

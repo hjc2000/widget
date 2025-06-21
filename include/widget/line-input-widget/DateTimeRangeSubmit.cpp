@@ -1,5 +1,7 @@
 #include "DateTimeRangeSubmit.h"
+#include "base/string/define.h"
 #include "qwindowdefs.h"
+#include <iostream>
 
 void widget::DateTimeRangeSubmit::ConnectSignal()
 {
@@ -61,7 +63,7 @@ void widget::DateTimeRangeSubmit::OnLeftDateTimeChanged()
 	}
 	catch (std::exception const &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << CODE_POS_STR << e.what() << std::endl;
 	}
 	catch (...)
 	{

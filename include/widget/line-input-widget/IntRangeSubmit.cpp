@@ -1,5 +1,7 @@
 #include "IntRangeSubmit.h"
+#include "base/string/define.h"
 #include "base/string/Parse.h"
+#include <iostream>
 
 bool widget::IntRangeSubmit::TryParseLeftValue(int64_t &out)
 {

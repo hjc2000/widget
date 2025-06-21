@@ -2,6 +2,7 @@
 #include "base/IDisposable.h"
 #include "base/string/define.h"
 #include <exception>
+#include <iostream>
 
 widget::SafeEmitter::SafeEmitter()
 {

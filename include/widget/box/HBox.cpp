@@ -1,4 +1,5 @@
 #include "HBox.h"
+#include "base/string/define.h"
 
 /* #region 构造函数 */
 

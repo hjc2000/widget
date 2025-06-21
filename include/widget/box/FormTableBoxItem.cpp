@@ -1,4 +1,5 @@
 #include "FormTableBoxItem.h"
+#include "base/string/define.h"
 #include "qlabel.h"
 
 /* #region 构造函数 */

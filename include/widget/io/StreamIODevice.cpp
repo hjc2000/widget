@@ -1,4 +1,6 @@
 #include "StreamIODevice.h"
+#include "base/string/define.h"
+#include <iostream>
 
 qint64 widget::StreamIODevice::readData(char *data, qint64 maxlen)
 {

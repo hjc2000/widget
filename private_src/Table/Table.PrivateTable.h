@@ -1,4 +1,5 @@
 #pragma once
+#include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "qtableview.h"
 #include "widget/layout/Padding.h"

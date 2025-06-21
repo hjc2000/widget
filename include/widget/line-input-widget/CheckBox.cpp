@@ -1,5 +1,7 @@
 #include "CheckBox.h"
+#include "base/string/define.h"
 #include "widget/convert.h"
+#include <iostream>
 
 void widget::CheckBox::ConnectSignals()
 {
