@@ -49,7 +49,7 @@ namespace widget
 		///
 		/// @brief 后台线程发射了信号就会触发此回调事件。
 		///
-		/// @return base::IEvent<>&
+		/// @return
 		///
 		base::IEvent<> &CallbackEvent();
 	};
