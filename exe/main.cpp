@@ -31,7 +31,16 @@ int TestCoreApplication()
 	// 设置流控制
 	serial.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
-	std::cout << "这是一个Qt终端应用程序" << std::endl;
+	serial.open(QIODeviceBase::OpenModeFlag::ReadWrite);
+
+	QSerialPort::connect(&serial,
+						 &QSerialPort::readyRead,
+						 [&]()
+						 {
+							 QByteArray receive_data = serial.readAll();
+							 std::cout.write(receive_data.data(), receive_data.size());
+						 });
+
 	return app.exec();
 }
 
