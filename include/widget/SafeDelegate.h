@@ -5,8 +5,8 @@
 #include "base/IDisposable.h"
 #include "base/IIdToken.h"
 #include "base/string/define.h"
+#include "qobject.h"
 #include "QPushButton"
-#include "qpushbutton.h"
 #include <atomic>
 #include <functional>
 #include <stdexcept>
@@ -18,21 +18,14 @@ namespace widget
 	///
 	///
 	class SafeEmitter final :
-		private QPushButton,
+		private QObject,
 		public base::IDisposable
 	{
 	private:
 		base::Delegate<> _callback;
-		QMetaObject::Connection _connection;
 		std::atomic_bool _disposed = false;
 
 	public:
-		///
-		/// @brief 构造一个安全发射器。
-		///
-		///
-		SafeEmitter();
-
 		///
 		/// @brief 析构时会自动 Dispose.
 		///
