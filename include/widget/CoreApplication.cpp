@@ -7,6 +7,7 @@ namespace
 	char *null_argv[] = {
 		nullptr,
 	};
+
 } // namespace
 
 widget::CoreApplication::CoreApplication()

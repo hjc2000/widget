@@ -24,6 +24,7 @@
 	#include "QPalette"
 	#include "QPen"
 	#include "QPushButton"
+	#include "QSerialPort"
 	#include "QStyledItemDelegate"
 	#include "qstyleditemdelegate.h"
 	#include "qstyleoption.h"
