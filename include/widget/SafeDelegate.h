@@ -117,7 +117,7 @@ namespace widget
 		/// @brief 订阅事件。
 		///
 		/// @param func
-		/// @return std::shared_ptr<typename base::IIdToken> 用来取消订阅的 token.
+		/// @return
 		///
 		virtual base::SpIIdToken Subscribe(std::function<void(Args...)> const &func) override
 		{
