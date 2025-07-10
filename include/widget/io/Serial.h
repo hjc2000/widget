@@ -3,6 +3,7 @@
 #include "qserialport.h"
 #include "serial_handle.h"
 #include "widget/thread/Thread.h"
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -15,6 +16,18 @@ namespace widget
 		widget::Thread _thread{};
 		std::weak_ptr<QSerialPort> _serial{};
 
+		void OnReceiveData()
+		{
+			std::shared_ptr<QSerialPort> serial = _serial.lock();
+			if (serial == nullptr)
+			{
+				return;
+			}
+
+			QByteArray receive_data = serial->readAll();
+			std::cout.write(receive_data.data(), receive_data.size());
+		}
+
 	public:
 		Serial(std::string const &name)
 		{
@@ -23,14 +36,18 @@ namespace widget
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 				[this]()
 				{
-					{
-						// 后续只能通过 std::weak_ptr<QSerialPort> _serial{} 访问，
-						// 特别是 lambda 表达式不能直接按值捕获 std::shared_ptr<QSerialPort> serial,
-						// 否则会出现循环引用。
-						std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
-						_thread.AddResource(serial);
-						_serial = serial;
-					}
+					std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
+					_thread.AddResource(serial);
+					_serial = serial;
+
+					// 这里的 lambda 表达式千万不能按值捕获 std::shared_ptr<QSerialPort> serial,
+					// 因为 lambda 表达式会被储存在 serial 中，进而导致循环引用。
+					QSerialPort::connect(serial.get(),
+										 &QSerialPort::readyRead,
+										 [this]()
+										 {
+											 OnReceiveData();
+										 });
 				});
 
 			task->Wait();
@@ -38,6 +55,7 @@ namespace widget
 
 		~Serial()
 		{
+			_thread.Dispose();
 		}
 
 		virtual void Start(base::serial::Direction direction,
