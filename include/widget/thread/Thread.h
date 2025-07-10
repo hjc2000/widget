@@ -6,6 +6,7 @@
 #include <atomic>
 #include <functional>
 #include <memory>
+#include <vector>
 
 namespace widget
 {
@@ -16,11 +17,13 @@ namespace widget
 	private:
 		std::function<void()> _func;
 		std::atomic_bool _disposed = false;
+		std::vector<std::shared_ptr<void>> _resources{};
 
 		virtual void run() override
 		{
 			QEventLoop loop;
 			loop.exec();
+			_resources.clear();
 		}
 
 	public:
@@ -66,6 +69,16 @@ namespace widget
 		/// @return 可以用来等待任务完成。
 		///
 		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void()> const &func);
+
+		///
+		/// @brief 添加要托管到本线程的资源。在线程退出前会清空容器，触发共享指针的析构。
+		///
+		/// @param resource
+		///
+		void AddResource(std::shared_ptr<void> const &resource)
+		{
+			_resources.push_back(resource);
+		}
 	};
 
 } // namespace widget
