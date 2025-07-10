@@ -16,7 +16,7 @@ int TestCoreApplication()
 {
 	widget::CoreApplication app{};
 	QSerialPort serial{};
-	serial.setPortName("COM4");
+	serial.setPortName("COM5");
 	serial.setBaudRate(115200);
 
 	// 设置数据位

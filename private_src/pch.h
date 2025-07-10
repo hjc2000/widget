@@ -32,6 +32,7 @@
 	#include "QtCore"
 	#include "qtextoption.h"
 	#include "QtGlobal"
+	#include "qthread.h"
 	#include "QVariant"
 	#include "QWidget"
 
