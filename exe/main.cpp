@@ -15,7 +15,17 @@ int TestFusionApplication()
 int TestCoreApplication()
 {
 	widget::CoreApplication app{};
+
 	QSerialPort serial{};
+
+	QSerialPort::connect(&serial,
+						 &QSerialPort::readyRead,
+						 [&]()
+						 {
+							 QByteArray receive_data = serial.readAll();
+							 std::cout.write(receive_data.data(), receive_data.size());
+						 });
+
 	serial.setPortName("COM5");
 	serial.setBaudRate(115200);
 
@@ -32,14 +42,6 @@ int TestCoreApplication()
 	serial.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
 	serial.open(QIODeviceBase::OpenModeFlag::ReadWrite);
-
-	QSerialPort::connect(&serial,
-						 &QSerialPort::readyRead,
-						 [&]()
-						 {
-							 QByteArray receive_data = serial.readAll();
-							 std::cout.write(receive_data.data(), receive_data.size());
-						 });
 
 	return app.exec();
 }
