@@ -1,8 +1,6 @@
 #pragma once
 #include "base/embedded/serial/serial_parameter.h"
-#include "qserialport.h"
 #include "serial_handle.h"
-#include <memory>
 #include <string>
 
 namespace widget
@@ -11,11 +9,6 @@ namespace widget
 		public base::serial::serial_handle
 	{
 	private:
-		class Thread;
-
-		std::weak_ptr<QSerialPort> _serial{};
-		std::shared_ptr<Thread> _thread{};
-
 	public:
 		Serial(std::string const &name)
 		{
