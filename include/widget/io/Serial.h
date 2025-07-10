@@ -14,6 +14,11 @@ namespace widget
 	{
 	private:
 		widget::Thread _thread{};
+
+		///
+		/// @brief 后台线程中创建对象后赋值给本弱指针。后台线程退出前要负责析构，
+		/// 所以这里不能直接持有共享指针，否则会阻止后台线程对串口对象的析构。
+		///
 		std::weak_ptr<QSerialPort> _serial{};
 
 		void OnReceiveData()
