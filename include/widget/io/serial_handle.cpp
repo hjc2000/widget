@@ -1,6 +1,7 @@
 #include "serial_handle.h" // IWYU pragma: keep
 #include "qserialportinfo.h"
 #include "widget/convert.h"
+#include "widget/io/Serial.h"
 
 std::vector<std::string> base::serial::scan_serials()
 {
@@ -33,52 +34,22 @@ std::vector<base::serial::SerialPortInfomation> base::serial::scan_serials_for_d
 	return results;
 }
 
-/* #region open */
+std::shared_ptr<base::serial::serial_handle> base::serial::open(std::string const &name)
+{
+	std::shared_ptr<base::serial::serial_handle> ret{new widget::Serial{name}};
+	return ret;
+}
 
-///
-/// @brief 通过串口名称打开串口。
-///
-/// @param name 串口名称。
-///		@note 通用操作系统中使用这种方式。
-///
-/// @return std::shared_ptr<base::serial::serial_handle>
-///
-std::shared_ptr<base::serial::serial_handle> base::serial::open(std::string const &name);
-
-///
-/// @brief 通过串口 ID 打开串口。
-///
-/// @param id 串口 ID.
-/// 	@note 单片机中使用这种方式。例如想要打开 UART1 就传入 1.
-///
-/// @return std::shared_ptr<base::serial::serial_handle>
-///
-std::shared_ptr<base::serial::serial_handle> base::serial::open(uint32_t id);
-
-/* #endregion */
-
-/* #region 启动串口 */
-
-///
-/// @brief 启动串口。
-///
-/// @param h
-/// @param direction
-/// @param baud_rate
-/// @param data_bits
-/// @param parity
-/// @param stop_bits
-/// @param hardware_flow_control
-///
 void base::serial::start(base::serial::serial_handle &h,
 						 base::serial::Direction direction,
 						 base::serial::BaudRate const &baud_rate,
 						 base::serial::DataBits const &data_bits,
 						 base::serial::Parity parity,
 						 base::serial::StopBits stop_bits,
-						 base::serial::HardwareFlowControl hardware_flow_control);
-
-/* #endregion */
+						 base::serial::HardwareFlowControl hardware_flow_control)
+{
+	h.Start(direction, baud_rate, data_bits, parity, stop_bits, hardware_flow_control);
+}
 
 /* #region 串口属性 */
 
@@ -88,7 +59,10 @@ void base::serial::start(base::serial::serial_handle &h,
 /// @param h
 /// @return std::string
 ///
-std::string base::serial::name(base::serial::serial_handle &h);
+std::string base::serial::name(base::serial::serial_handle &h)
+{
+	return h.Name();
+}
 
 ///
 /// @brief 数据传输方向。
@@ -96,7 +70,10 @@ std::string base::serial::name(base::serial::serial_handle &h);
 /// @param h
 /// @return base::serial::Direction
 ///
-base::serial::Direction base::serial::direction(base::serial::serial_handle &h);
+base::serial::Direction base::serial::direction(base::serial::serial_handle &h)
+{
+	return h.Direction();
+}
 
 ///
 /// @brief 波特率。
@@ -104,7 +81,10 @@ base::serial::Direction base::serial::direction(base::serial::serial_handle &h);
 /// @param h
 /// @return uint32_t
 ///
-uint32_t base::serial::baud_rate(base::serial::serial_handle &h);
+uint32_t base::serial::baud_rate(base::serial::serial_handle &h)
+{
+	return h.BaudRate();
+}
 
 ///
 /// @brief 数据位的个数。
@@ -112,7 +92,10 @@ uint32_t base::serial::baud_rate(base::serial::serial_handle &h);
 /// @param h
 /// @return uint8_t
 ///
-uint8_t base::serial::data_bits(base::serial::serial_handle &h);
+uint8_t base::serial::data_bits(base::serial::serial_handle &h)
+{
+	return h.DataBits();
+}
 
 ///
 /// @brief 校验位。
@@ -120,7 +103,10 @@ uint8_t base::serial::data_bits(base::serial::serial_handle &h);
 /// @param h
 /// @return base::serial::Parity
 ///
-base::serial::Parity base::serial::parity(base::serial::serial_handle &h);
+base::serial::Parity base::serial::parity(base::serial::serial_handle &h)
+{
+	return h.Parity();
+}
 
 ///
 /// @brief 停止位个数。
@@ -128,7 +114,10 @@ base::serial::Parity base::serial::parity(base::serial::serial_handle &h);
 /// @param h
 /// @return base::serial::StopBits
 ///
-base::serial::StopBits base::serial::stop_bits(base::serial::serial_handle &h);
+base::serial::StopBits base::serial::stop_bits(base::serial::serial_handle &h)
+{
+	return h.StopBits();
+}
 
 ///
 /// @brief 硬件流控。
@@ -136,20 +125,17 @@ base::serial::StopBits base::serial::stop_bits(base::serial::serial_handle &h);
 /// @param h
 /// @return base::serial::HardwareFlowControl
 ///
-base::serial::HardwareFlowControl base::serial::hardware_flow_control(base::serial::serial_handle &h);
+base::serial::HardwareFlowControl base::serial::hardware_flow_control(base::serial::serial_handle &h)
+{
+	return h.HardwareFlowControl();
+}
 
 /* #endregion */
 
-///
-/// @brief 从串口读取数据
-///
-/// @param h
-/// @param span
-///
-/// @return int32_t 成功读取的字节数。永远不应该返回 0. 应该将本函数实现为等同 Stream
-/// 的 Read 方法。
-///
-int32_t base::serial::read(base::serial::serial_handle &h, base::Span const &span);
+int32_t base::serial::read(base::serial::serial_handle &h, base::Span const &span)
+{
+	return h.Read(span);
+}
 
 ///
 /// @brief 向串口写入数据。
@@ -157,11 +143,17 @@ int32_t base::serial::read(base::serial::serial_handle &h, base::Span const &spa
 /// @param h
 /// @param span
 ///
-void base::serial::write(base::serial::serial_handle &h, base::ReadOnlySpan const &span);
+void base::serial::write(base::serial::serial_handle &h, base::ReadOnlySpan const &span)
+{
+	h.Write(span);
+}
 
 ///
 /// @brief 冲洗串口。
 ///
 /// @param h
 ///
-void base::serial::flush(base::serial::serial_handle &h);
+void base::serial::flush(base::serial::serial_handle &h)
+{
+	h.Flush();
+}

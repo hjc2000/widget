@@ -277,6 +277,13 @@ namespace widget
 		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
 		QSerialPort *_serial{};
 
+		base::serial::Direction _direction{};
+		base::serial::BaudRate _baud_rate{115200};
+		base::serial::DataBits _data_bits{8};
+		base::serial::Parity _parity{};
+		base::serial::StopBits _stop_bits{};
+		base::serial::HardwareFlowControl _hardware_flow_control{};
+
 		void OnReceiveData();
 
 	public:
@@ -323,6 +330,45 @@ namespace widget
 
 			task->Wait();
 		}
+
+		/* #region 串口信息 */
+
+		virtual std::string Name() const override
+		{
+			return _port_name;
+		}
+
+		virtual base::serial::Direction Direction() const override
+		{
+			return _direction;
+		}
+
+		virtual uint32_t BaudRate() const override
+		{
+			return _baud_rate.Value();
+		}
+
+		virtual uint8_t DataBits() const override
+		{
+			return _data_bits.Value();
+		}
+
+		virtual base::serial::Parity Parity() const override
+		{
+			return _parity;
+		}
+
+		virtual base::serial::StopBits StopBits() const override
+		{
+			return _stop_bits;
+		}
+
+		virtual base::serial::HardwareFlowControl HardwareFlowControl() const override
+		{
+			return _hardware_flow_control;
+		}
+
+		/* #endregion */
 	};
 
 } // namespace widget

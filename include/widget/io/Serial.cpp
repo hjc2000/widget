@@ -51,6 +51,13 @@ void widget::Serial::Start(base::serial::Direction direction,
 						   base::serial::StopBits stop_bits,
 						   base::serial::HardwareFlowControl hardware_flow_control)
 {
+	_direction = direction;
+	_baud_rate = baud_rate;
+	_data_bits = data_bits;
+	_parity = parity;
+	_stop_bits = stop_bits;
+	_hardware_flow_control = hardware_flow_control;
+
 	std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 		[&]()
 		{
