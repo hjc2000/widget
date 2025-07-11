@@ -1,10 +1,10 @@
+#include "base/embedded/serial/Serial.h"
 #include "base/embedded/serial/serial_handle.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
 #include "base/task/task.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
-#include "widget/io/Serial.h"
 #include "widget/MainWindow.h"
 #include <cstdint>
 #include <iostream>
@@ -32,7 +32,7 @@ int TestCoreApplication()
 	base::task::run(
 		[&]()
 		{
-			widget::Serial serial{"COM3"};
+			base::serial::Serial serial{"COM3"};
 
 			serial.Start(base::serial::Direction::RX_TX,
 						 base::serial::BaudRate{115200},
