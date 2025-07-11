@@ -1,9 +1,11 @@
 #pragma once
 #include "base/embedded/serial/serial_parameter.h"
+#include "base/stream/BlockingCircleBufferMemoryStream.h"
+#include "base/stream/ReadOnlySpan.h"
 #include "qserialport.h"
 #include "serial_handle.h"
 #include "widget/thread/Thread.h"
-#include <iostream>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -15,6 +17,7 @@ namespace widget
 	private:
 		widget::Thread _thread{};
 		std::string _port_name{};
+		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
 
 		///
 		/// @brief 后台线程中创建对象后赋值给本弱指针。后台线程退出前要负责析构，
@@ -24,36 +27,23 @@ namespace widget
 
 		void OnReceiveData()
 		{
+			if (_received_stream.AvailableToWrite() == 0)
+			{
+				return;
+			}
+
 			QByteArray receive_data = _serial->readAll();
-			std::cout.write(receive_data.data(), receive_data.size());
+
+			base::ReadOnlySpan span{
+				reinterpret_cast<uint8_t const *>(receive_data.data()),
+				static_cast<int32_t>(receive_data.size()),
+			};
+
+			_received_stream.Write(span);
 		}
 
 	public:
-		Serial(std::string const &name)
-		{
-			_port_name = name;
-
-			{
-				std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-					[this]()
-					{
-						std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
-						_thread.AddResource(serial);
-						_serial = serial.get();
-
-						// 槽函数禁止用值捕获的方式捕获 qt 信号源对象的共享指针，因为 lambda 槽函数会被信号源
-						// 对象储存，会直接导致共享指针循环引用。
-						QSerialPort::connect(_serial,
-											 &QSerialPort::readyRead,
-											 [this]()
-											 {
-												 OnReceiveData();
-											 });
-					});
-
-				task->Wait();
-			}
-		}
+		Serial(std::string const &name);
 
 		~Serial()
 		{
@@ -67,36 +57,34 @@ namespace widget
 						   base::serial::StopBits stop_bits,
 						   base::serial::HardwareFlowControl hardware_flow_control) override
 		{
-			{
-				std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-					[this]()
-					{
-						_serial->setPortName(_port_name.c_str());
+			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
+				[this]()
+				{
+					_serial->setPortName(_port_name.c_str());
 
-						_serial->setBaudRate(115200);
+					_serial->setBaudRate(115200);
 
-						// 设置数据位
-						_serial->setDataBits(QSerialPort::DataBits::Data8);
+					// 设置数据位
+					_serial->setDataBits(QSerialPort::DataBits::Data8);
 
-						// 设置校验位
-						_serial->setParity(QSerialPort::Parity::NoParity);
+					// 设置校验位
+					_serial->setParity(QSerialPort::Parity::NoParity);
 
-						// 设置停止位
-						_serial->setStopBits(QSerialPort::StopBits::OneStop);
+					// 设置停止位
+					_serial->setStopBits(QSerialPort::StopBits::OneStop);
 
-						// 设置流控制
-						_serial->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+					// 设置流控制
+					_serial->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
-						_serial->open(QIODeviceBase::OpenModeFlag::ReadWrite);
-					});
+					_serial->open(QIODeviceBase::OpenModeFlag::ReadWrite);
+				});
 
-				task->Wait();
-			}
+			task->Wait();
 		}
 
 		virtual int32_t Read(base::Span const &span) override
 		{
-			return 0;
+			return _received_stream.Read(span);
 		}
 
 		virtual void Write(base::ReadOnlySpan const &span) override
