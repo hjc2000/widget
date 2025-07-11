@@ -17,6 +17,56 @@ namespace widget
 	/* #region Convert */
 
 	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, QIODeviceBase::OpenModeFlag>)
+	constexpr ReturnType Convert(base::serial::Direction value)
+	{
+		switch (value)
+		{
+		case base::serial::Direction::RX:
+			{
+				return QIODeviceBase::OpenModeFlag::ReadOnly;
+			}
+		case base::serial::Direction::TX:
+			{
+				return QIODeviceBase::OpenModeFlag::WriteOnly;
+			}
+		case base::serial::Direction::RX_TX:
+			{
+				return QIODeviceBase::OpenModeFlag::ReadWrite;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的方向。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, base::serial::Direction>)
+	constexpr ReturnType Convert(QIODeviceBase::OpenModeFlag value)
+	{
+		switch (value)
+		{
+		case QIODeviceBase::OpenModeFlag::ReadOnly:
+			{
+				return base::serial::Direction::RX;
+			}
+		case QIODeviceBase::OpenModeFlag::WriteOnly:
+			{
+				return base::serial::Direction::TX;
+			}
+		case QIODeviceBase::OpenModeFlag::ReadWrite:
+			{
+				return base::serial::Direction::RX_TX;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的方向。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
 		requires(std::is_same_v<ReturnType, QSerialPort::DataBits>)
 	constexpr ReturnType Convert(base::serial::DataBits const &value)
 	{
@@ -170,6 +220,48 @@ namespace widget
 		default:
 			{
 				throw std::invalid_argument{CODE_POS_STR + "不支持的停止位个数。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, QSerialPort::FlowControl>)
+	constexpr ReturnType Convert(base::serial::HardwareFlowControl value)
+	{
+		switch (value)
+		{
+		case base::serial::HardwareFlowControl::None:
+			{
+				return QSerialPort::FlowControl::NoFlowControl;
+			}
+		case base::serial::HardwareFlowControl::RTS_CTS:
+			{
+				return QSerialPort::FlowControl::HardwareControl;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的流控方式。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, base::serial::HardwareFlowControl>)
+	constexpr ReturnType Convert(QSerialPort::FlowControl value)
+	{
+		switch (value)
+		{
+		case QSerialPort::FlowControl::NoFlowControl:
+			{
+				return base::serial::HardwareFlowControl::None;
+			}
+		case QSerialPort::FlowControl::HardwareControl:
+			{
+				return base::serial::HardwareFlowControl::RTS_CTS;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的流控方式。"};
 			}
 		}
 	}

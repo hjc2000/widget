@@ -59,9 +59,9 @@ void widget::Serial::Start(base::serial::Direction direction,
 			_serial->setDataBits(widget::Convert<QSerialPort::DataBits>(data_bits));
 			_serial->setParity(widget::Convert<QSerialPort::Parity>(parity));
 			_serial->setStopBits(widget::Convert<QSerialPort::StopBits>(stop_bits));
-			_serial->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+			_serial->setFlowControl(widget::Convert<QSerialPort::FlowControl>(hardware_flow_control));
 
-			_serial->open(QIODeviceBase::OpenModeFlag::ReadWrite);
+			_serial->open(widget::Convert<QIODeviceBase::OpenModeFlag>(direction));
 		});
 
 	task->Wait();
