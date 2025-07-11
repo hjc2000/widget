@@ -18,11 +18,6 @@ namespace widget
 		widget::Thread _thread{};
 		std::string _port_name{};
 		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
-
-		///
-		/// @brief 后台线程中创建对象后赋值给本弱指针。后台线程退出前要负责析构，
-		/// 所以这里不能直接持有共享指针，否则会阻止后台线程对串口对象的析构。
-		///
 		QSerialPort *_serial{};
 
 		void OnReceiveData()
@@ -48,6 +43,7 @@ namespace widget
 		~Serial()
 		{
 			_thread.Dispose();
+			_serial = nullptr;
 		}
 
 		virtual void Start(base::serial::Direction direction,
@@ -58,11 +54,11 @@ namespace widget
 						   base::serial::HardwareFlowControl hardware_flow_control) override
 		{
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[this]()
+				[&]()
 				{
 					_serial->setPortName(_port_name.c_str());
 
-					_serial->setBaudRate(115200);
+					_serial->setBaudRate(baud_rate.Value());
 
 					// 设置数据位
 					_serial->setDataBits(QSerialPort::DataBits::Data8);
@@ -89,10 +85,26 @@ namespace widget
 
 		virtual void Write(base::ReadOnlySpan const &span) override
 		{
+			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
+				[&]()
+				{
+					_serial->write(reinterpret_cast<char const *>(span.Buffer()),
+								   span.Size());
+				});
+
+			// 写入必须等待，因为引用捕获的 span 只在本函数没有返回时有效。
+			task->Wait();
 		}
 
 		virtual void Flush() override
 		{
+			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
+				[&]()
+				{
+					_serial->flush();
+				});
+
+			task->Wait();
 		}
 	};
 
