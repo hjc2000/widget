@@ -44,7 +44,6 @@ int TestCoreApplication()
 		[&]()
 		{
 			uint8_t buffer[1024]{};
-			std::string str{"6666666666\n"};
 
 			while (true)
 			{
