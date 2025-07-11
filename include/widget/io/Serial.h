@@ -124,6 +124,56 @@ namespace widget
 		}
 	}
 
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, QSerialPort::StopBits>)
+	constexpr ReturnType Convert(base::serial::StopBits value)
+	{
+		switch (value)
+		{
+		case base::serial::StopBits::One:
+			{
+				return QSerialPort::StopBits::OneStop;
+			}
+		case base::serial::StopBits::OnePointFive:
+			{
+				return QSerialPort::StopBits::OneAndHalfStop;
+			}
+		case base::serial::StopBits::Two:
+			{
+				return QSerialPort::StopBits::TwoStop;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的停止位个数。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, base::serial::StopBits>)
+	constexpr ReturnType Convert(QSerialPort::StopBits value)
+	{
+		switch (value)
+		{
+		case QSerialPort::StopBits::OneStop:
+			{
+				return base::serial::StopBits::One;
+			}
+		case QSerialPort::StopBits::OneAndHalfStop:
+			{
+				return base::serial::StopBits::OnePointFive;
+			}
+		case QSerialPort::StopBits::TwoStop:
+			{
+				return base::serial::StopBits::Two;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的停止位个数。"};
+			}
+		}
+	}
+
 	/* #endregion */
 
 	class Serial :

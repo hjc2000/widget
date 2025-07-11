@@ -55,19 +55,10 @@ void widget::Serial::Start(base::serial::Direction direction,
 		[&]()
 		{
 			_serial->setPortName(_port_name.c_str());
-
 			_serial->setBaudRate(baud_rate.Value());
-
-			// 设置数据位
 			_serial->setDataBits(widget::Convert<QSerialPort::DataBits>(data_bits));
-
-			// 设置校验位
 			_serial->setParity(widget::Convert<QSerialPort::Parity>(parity));
-
-			// 设置停止位
-			_serial->setStopBits(QSerialPort::StopBits::OneStop);
-
-			// 设置流控制
+			_serial->setStopBits(widget::Convert<QSerialPort::StopBits>(stop_bits));
 			_serial->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
 			_serial->open(QIODeviceBase::OpenModeFlag::ReadWrite);
