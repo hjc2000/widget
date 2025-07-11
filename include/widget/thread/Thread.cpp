@@ -13,7 +13,7 @@ std::shared_ptr<base::task::ITask> widget::Thread::InvokeAsync(std::function<voi
 
 	std::shared_ptr<base::task::TaskCompletionSignal> signal{new base::task::TaskCompletionSignal{false}};
 
-	QMetaObject::invokeMethod(this, [func, signal]()
+	QMetaObject::invokeMethod(_object, [func, signal]()
 							  {
 								  base::task::TaskCompletionSignalGuard g{*signal};
 

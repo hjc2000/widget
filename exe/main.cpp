@@ -1,7 +1,12 @@
+#include "base/task/delay.h"
+#include "base/task/task.h"
 #include "qserialport.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
+#include "widget/io/Serial.h"
 #include "widget/MainWindow.h"
+#include "widget/thread/Thread.h"
+#include <chrono>
 #include <iostream>
 
 int TestFusionApplication()
@@ -16,32 +21,14 @@ int TestCoreApplication()
 {
 	widget::CoreApplication app{};
 
-	QSerialPort serial{};
+	widget::Serial serial{"COM3"};
 
-	QSerialPort::connect(&serial,
-						 &QSerialPort::readyRead,
-						 [&]()
-						 {
-							 QByteArray receive_data = serial.readAll();
-							 std::cout.write(receive_data.data(), receive_data.size());
-						 });
-
-	serial.setPortName("COM5");
-	serial.setBaudRate(115200);
-
-	// 设置数据位
-	serial.setDataBits(QSerialPort::DataBits::Data8);
-
-	// 设置校验位
-	serial.setParity(QSerialPort::Parity::NoParity);
-
-	// 设置停止位
-	serial.setStopBits(QSerialPort::StopBits::OneStop);
-
-	// 设置流控制
-	serial.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-
-	serial.open(QIODeviceBase::OpenModeFlag::ReadWrite);
+	serial.Start(base::serial::Direction::RX_TX,
+				 base::serial::BaudRate{115200},
+				 base::serial::DataBits{8},
+				 base::serial::Parity::None,
+				 base::serial::StopBits::One,
+				 base::serial::HardwareFlowControl::None);
 
 	return app.exec();
 }

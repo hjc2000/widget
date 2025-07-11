@@ -1,7 +1,9 @@
 #pragma once
 #include "base/IDisposable.h"
 #include "base/task/ITask.h"
+#include "base/task/TaskCompletionSignal.h"
 #include "qeventloop.h"
+#include "qobject.h"
 #include "qthread.h"
 #include <atomic>
 #include <functional>
@@ -11,25 +13,33 @@
 namespace widget
 {
 	class Thread final :
-		public QThread,
+		private QThread,
 		public base::IDisposable
 	{
 	private:
 		std::function<void()> _func;
 		std::atomic_bool _disposed = false;
 		std::vector<std::shared_ptr<void>> _resources{};
+		QObject *_object{};
+		base::task::TaskCompletionSignal _thread_started{false};
 
 		virtual void run() override
 		{
 			QEventLoop loop;
+			QObject object;
+			_object = &object;
+			_thread_started.SetResult();
 			loop.exec();
 			_resources.clear();
+			_object = nullptr;
 		}
 
 	public:
 		Thread()
 			: QThread(nullptr)
 		{
+			start();
+			_thread_started.Wait();
 		}
 
 		~Thread()
@@ -74,7 +84,7 @@ namespace widget
 		/// @brief 添加要托管到本线程的资源。在线程退出前会清空容器，触发共享指针的析构。
 		///
 		/// @warning 共享指针添加进来后，外部要通过裸指针进行操作，避免潜在的循环引用，特别是有
-		/// lambda 表达式进行值捕获时。
+		/// lambda 表达式进行值捕获时。要使用托管到本对象的资源，就必须保证本对象存活。
 		///
 		/// @param resource
 		///
