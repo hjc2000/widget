@@ -74,6 +74,56 @@ namespace widget
 		}
 	}
 
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, base::serial::Parity>)
+	constexpr ReturnType Convert(QSerialPort::Parity value)
+	{
+		switch (value)
+		{
+		case QSerialPort::Parity::OddParity:
+			{
+				return base::serial::Parity::Odd;
+			}
+		case QSerialPort::Parity::EvenParity:
+			{
+				return base::serial::Parity::Even;
+			}
+		case QSerialPort::Parity::NoParity:
+			{
+				return base::serial::Parity::None;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的校验方式。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, QSerialPort::Parity>)
+	constexpr ReturnType Convert(base::serial::Parity value)
+	{
+		switch (value)
+		{
+		case base::serial::Parity::Odd:
+			{
+				return QSerialPort::Parity::OddParity;
+			}
+		case base::serial::Parity::Even:
+			{
+				return QSerialPort::Parity::EvenParity;
+			}
+		case base::serial::Parity::None:
+			{
+				return QSerialPort::Parity::NoParity;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的校验方式。"};
+			}
+		}
+	}
+
 	/* #endregion */
 
 	class Serial :

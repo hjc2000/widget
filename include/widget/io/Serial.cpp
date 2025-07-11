@@ -59,10 +59,10 @@ void widget::Serial::Start(base::serial::Direction direction,
 			_serial->setBaudRate(baud_rate.Value());
 
 			// 设置数据位
-			_serial->setDataBits(QSerialPort::DataBits::Data8);
+			_serial->setDataBits(widget::Convert<QSerialPort::DataBits>(data_bits));
 
 			// 设置校验位
-			_serial->setParity(QSerialPort::Parity::NoParity);
+			_serial->setParity(widget::Convert<QSerialPort::Parity>(parity));
 
 			// 设置停止位
 			_serial->setStopBits(QSerialPort::StopBits::OneStop);
