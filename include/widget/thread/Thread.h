@@ -73,6 +73,9 @@ namespace widget
 		///
 		/// @brief 添加要托管到本线程的资源。在线程退出前会清空容器，触发共享指针的析构。
 		///
+		/// @warning 共享指针添加进来后，外部要通过裸指针进行操作，避免潜在的循环引用，特别是有
+		/// lambda 表达式进行值捕获时。
+		///
 		/// @param resource
 		///
 		void AddResource(std::shared_ptr<void> const &resource)

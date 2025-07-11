@@ -19,17 +19,11 @@ namespace widget
 		/// @brief 后台线程中创建对象后赋值给本弱指针。后台线程退出前要负责析构，
 		/// 所以这里不能直接持有共享指针，否则会阻止后台线程对串口对象的析构。
 		///
-		std::weak_ptr<QSerialPort> _serial{};
+		QSerialPort *_serial{};
 
 		void OnReceiveData()
 		{
-			std::shared_ptr<QSerialPort> serial = _serial.lock();
-			if (serial == nullptr)
-			{
-				return;
-			}
-
-			QByteArray receive_data = serial->readAll();
+			QByteArray receive_data = _serial->readAll();
 			std::cout.write(receive_data.data(), receive_data.size());
 		}
 
@@ -43,11 +37,11 @@ namespace widget
 				{
 					std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
 					_thread.AddResource(serial);
-					_serial = serial;
+					_serial = serial.get();
 
-					// 这里的 lambda 表达式千万不能按值捕获 std::shared_ptr<QSerialPort> serial,
-					// 因为 lambda 表达式会被储存在 serial 中，进而导致循环引用。
-					QSerialPort::connect(serial.get(),
+					// 槽函数禁止用值捕获的方式捕获 qt 信号源对象的共享指针，因为 lambda 槽函数会被信号源
+					// 对象储存，会直接导致共享指针循环引用。
+					QSerialPort::connect(_serial,
 										 &QSerialPort::readyRead,
 										 [this]()
 										 {
