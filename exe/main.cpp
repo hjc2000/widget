@@ -2,10 +2,12 @@
 #include "base/embedded/serial/serial_handle.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
+#include "base/task/delay.h"
 #include "base/task/task.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
+#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <string>
@@ -29,18 +31,18 @@ int TestCoreApplication()
 		std::cout << serial.Description() << std::endl;
 	}
 
+	base::serial::Serial serial{"COM3"};
+
+	serial.Start(base::serial::Direction::RX_TX,
+				 base::serial::BaudRate{115200},
+				 base::serial::DataBits{8},
+				 base::serial::Parity::None,
+				 base::serial::StopBits::One,
+				 base::serial::HardwareFlowControl::None);
+
 	base::task::run(
 		[&]()
 		{
-			base::serial::Serial serial{"COM3"};
-
-			serial.Start(base::serial::Direction::RX_TX,
-						 base::serial::BaudRate{115200},
-						 base::serial::DataBits{8},
-						 base::serial::Parity::None,
-						 base::serial::StopBits::One,
-						 base::serial::HardwareFlowControl::None);
-
 			uint8_t buffer[1024]{};
 			std::string str{"6666666666\n"};
 
@@ -48,13 +50,23 @@ int TestCoreApplication()
 			{
 				int32_t have_read = serial.Read(base::Span{buffer, sizeof(buffer)});
 				std::cout.write(reinterpret_cast<char const *>(buffer), have_read);
+			}
+		});
 
+	base::task::run(
+		[&]()
+		{
+			std::string str{"6666666666\n"};
+
+			while (true)
+			{
 				base::ReadOnlySpan span{
 					reinterpret_cast<uint8_t const *>(str.c_str()),
 					static_cast<int32_t>(str.size()),
 				};
 
 				serial.Write(span);
+				base::task::Delay(std::chrono::milliseconds{1000});
 			}
 		});
 
