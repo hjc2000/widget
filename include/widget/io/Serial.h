@@ -2,15 +2,80 @@
 #include "base/embedded/serial/serial_parameter.h"
 #include "base/stream/BlockingCircleBufferMemoryStream.h"
 #include "base/stream/ReadOnlySpan.h"
+#include "base/string/define.h"
 #include "qserialport.h"
 #include "serial_handle.h"
 #include "widget/thread/Thread.h"
 #include <cstdint>
 #include <memory>
+#include <stdexcept>
 #include <string>
+#include <type_traits>
 
 namespace widget
 {
+	/* #region Convert */
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, QSerialPort::DataBits>)
+	constexpr ReturnType Convert(base::serial::DataBits const &value)
+	{
+		switch (value.Value())
+		{
+		case 5:
+			{
+				return QSerialPort::DataBits::Data5;
+			}
+		case 6:
+			{
+				return QSerialPort::DataBits::Data6;
+			}
+		case 7:
+			{
+				return QSerialPort::DataBits::Data7;
+			}
+		case 8:
+			{
+				return QSerialPort::DataBits::Data8;
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的数据位数。"};
+			}
+		}
+	}
+
+	template <typename ReturnType>
+		requires(std::is_same_v<ReturnType, base::serial::DataBits>)
+	constexpr ReturnType Convert(QSerialPort::DataBits value)
+	{
+		switch (value)
+		{
+		case QSerialPort::DataBits::Data5:
+			{
+				return base::serial::DataBits{5};
+			}
+		case QSerialPort::DataBits::Data6:
+			{
+				return base::serial::DataBits{6};
+			}
+		case QSerialPort::DataBits::Data7:
+			{
+				return base::serial::DataBits{7};
+			}
+		case QSerialPort::DataBits::Data8:
+			{
+				return base::serial::DataBits{8};
+			}
+		default:
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不支持的数据位数。"};
+			}
+		}
+	}
+
+	/* #endregion */
+
 	class Serial :
 		public base::serial::serial_handle
 	{

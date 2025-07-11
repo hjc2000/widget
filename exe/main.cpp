@@ -1,3 +1,4 @@
+#include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
 #include "base/task/task.h"
 #include "widget/CoreApplication.h"
@@ -6,6 +7,7 @@
 #include "widget/MainWindow.h"
 #include <cstdint>
 #include <iostream>
+#include <string>
 
 int TestFusionApplication()
 {
@@ -32,11 +34,19 @@ int TestCoreApplication()
 						 base::serial::HardwareFlowControl::None);
 
 			uint8_t buffer[1024]{};
+			std::string str{"6666666666\n"};
 
 			while (true)
 			{
 				int32_t have_read = serial.Read(base::Span{buffer, sizeof(buffer)});
 				std::cout.write(reinterpret_cast<char const *>(buffer), have_read);
+
+				base::ReadOnlySpan span{
+					reinterpret_cast<uint8_t const *>(str.c_str()),
+					static_cast<int32_t>(str.size()),
+				};
+
+				serial.Write(span);
 			}
 		});
 
