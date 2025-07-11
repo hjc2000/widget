@@ -1,3 +1,4 @@
+#include "base/embedded/serial/serial_handle.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
 #include "base/task/task.h"
@@ -20,6 +21,13 @@ int TestFusionApplication()
 int TestCoreApplication()
 {
 	widget::CoreApplication app{};
+
+	auto serials = base::serial::scan_serials_for_details();
+	for (auto const &serial : serials)
+	{
+		std::cout << serial.Name() << std::endl;
+		std::cout << serial.Description() << std::endl;
+	}
 
 	base::task::run(
 		[&]()
