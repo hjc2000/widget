@@ -53,78 +53,36 @@ void base::serial::start(base::serial::serial_handle &h,
 
 /* #region 串口属性 */
 
-///
-/// @brief 获取串口名称。
-///
-/// @param h
-/// @return std::string
-///
 std::string base::serial::name(base::serial::serial_handle &h)
 {
 	return h.Name();
 }
 
-///
-/// @brief 数据传输方向。
-///
-/// @param h
-/// @return base::serial::Direction
-///
 base::serial::Direction base::serial::direction(base::serial::serial_handle &h)
 {
 	return h.Direction();
 }
 
-///
-/// @brief 波特率。
-///
-/// @param h
-/// @return uint32_t
-///
 uint32_t base::serial::baud_rate(base::serial::serial_handle &h)
 {
 	return h.BaudRate();
 }
 
-///
-/// @brief 数据位的个数。
-///
-/// @param h
-/// @return uint8_t
-///
 uint8_t base::serial::data_bits(base::serial::serial_handle &h)
 {
 	return h.DataBits();
 }
 
-///
-/// @brief 校验位。
-///
-/// @param h
-/// @return base::serial::Parity
-///
 base::serial::Parity base::serial::parity(base::serial::serial_handle &h)
 {
 	return h.Parity();
 }
 
-///
-/// @brief 停止位个数。
-///
-/// @param h
-/// @return base::serial::StopBits
-///
 base::serial::StopBits base::serial::stop_bits(base::serial::serial_handle &h)
 {
 	return h.StopBits();
 }
 
-///
-/// @brief 硬件流控。
-///
-/// @param h
-/// @return base::serial::HardwareFlowControl
-///
 base::serial::HardwareFlowControl base::serial::hardware_flow_control(base::serial::serial_handle &h)
 {
 	return h.HardwareFlowControl();
@@ -137,22 +95,11 @@ int32_t base::serial::read(base::serial::serial_handle &h, base::Span const &spa
 	return h.Read(span);
 }
 
-///
-/// @brief 向串口写入数据。
-///
-/// @param h
-/// @param span
-///
 void base::serial::write(base::serial::serial_handle &h, base::ReadOnlySpan const &span)
 {
 	h.Write(span);
 }
 
-///
-/// @brief 冲洗串口。
-///
-/// @param h
-///
 void base::serial::flush(base::serial::serial_handle &h)
 {
 	h.Flush();
