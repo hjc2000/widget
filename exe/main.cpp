@@ -1,13 +1,7 @@
-#include "base/task/delay.h"
-#include "base/task/task.h"
-#include "qserialport.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/io/Serial.h"
 #include "widget/MainWindow.h"
-#include "widget/thread/Thread.h"
-#include <chrono>
-#include <iostream>
 
 int TestFusionApplication()
 {
