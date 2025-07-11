@@ -1,11 +1,23 @@
 #include "serial_handle.h" // IWYU pragma: keep
+#include "qserialportinfo.h"
+#include "widget/convert.h"
 
 ///
 /// @brief 扫描可用的串口。
 ///
 /// @return std::vector<std::string>
 ///
-std::vector<std::string> base::serial::scan_serials();
+std::vector<std::string> base::serial::scan_serials()
+{
+	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+	std::vector<std::string> results;
+	for (auto const &info : ports)
+	{
+		results.push_back(base::to_string(info.portName()));
+	}
+
+	return results;
+}
 
 /* #region open */
 
