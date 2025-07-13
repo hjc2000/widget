@@ -104,3 +104,8 @@ void base::serial::flush(base::serial::serial_handle &h)
 {
 	h.Flush();
 }
+
+void base::serial::close(base::serial::serial_handle &h)
+{
+	h.Close();
+}

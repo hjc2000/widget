@@ -276,6 +276,7 @@ namespace widget
 		std::string _port_name{};
 		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
 		QSerialPort *_serial{};
+		bool _closed = false;
 
 		base::serial::Direction _direction{};
 		base::serial::BaudRate _baud_rate{115200};
@@ -291,8 +292,7 @@ namespace widget
 
 		~Serial()
 		{
-			_thread.Dispose();
-			_serial = nullptr;
+			Close();
 		}
 
 		virtual void Start(base::serial::Direction direction,
@@ -329,6 +329,19 @@ namespace widget
 				});
 
 			task->Wait();
+		}
+
+		virtual void Close() override
+		{
+			if (_closed)
+			{
+				return;
+			}
+
+			_closed = true;
+
+			_thread.Dispose();
+			_serial = nullptr;
 		}
 
 		/* #region 串口信息 */

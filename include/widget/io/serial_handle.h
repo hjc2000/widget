@@ -19,6 +19,8 @@ public:
 
 	virtual void Flush() = 0;
 
+	virtual void Close() = 0;
+
 	/* #region 串口信息 */
 
 	virtual std::string Name() const = 0;
