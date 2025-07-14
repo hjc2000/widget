@@ -340,6 +340,7 @@ namespace widget
 
 			_closed = true;
 
+			_received_stream.Close();
 			_thread.Dispose();
 			_serial = nullptr;
 		}
