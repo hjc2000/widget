@@ -39,12 +39,7 @@ int TestCoreApplication()
 		20,
 	}};
 
-	soft_serial->Start(base::serial::Direction::RX_TX,
-					   base::serial::BaudRate{115200},
-					   base::serial::DataBits{8},
-					   base::serial::Parity::None,
-					   base::serial::StopBits::One,
-					   base::serial::HardwareFlowControl::None);
+	soft_serial->Start();
 
 	base::task::run(
 		[&]()
