@@ -44,11 +44,24 @@ int TestCoreApplication()
 		[&]()
 		{
 			uint8_t buffer[1024]{};
+			int64_t count = 0;
 
 			while (true)
 			{
 				int32_t have_read = serial.Read(base::Span{buffer, sizeof(buffer)});
+				if (have_read == 0)
+				{
+					std::cout << "Read 函数返回 0, 流结束。读线程退出。" << std::endl;
+					return;
+				}
+
 				std::cout.write(reinterpret_cast<char const *>(buffer), have_read);
+
+				count++;
+				if (count > 10)
+				{
+					serial.Close();
+				}
 			}
 		});
 

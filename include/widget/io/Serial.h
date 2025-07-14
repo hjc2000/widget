@@ -1,5 +1,6 @@
 #pragma once
 #include "base/embedded/serial/serial_parameter.h"
+#include "base/IDisposable.h"
 #include "base/stream/BlockingCircleBufferMemoryStream.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/string/define.h"
@@ -309,6 +310,11 @@ namespace widget
 
 		virtual void Write(base::ReadOnlySpan const &span) override
 		{
+			if (_closed)
+			{
+				throw base::ObjectDisposedException{CODE_POS_STR + "串口已关闭，无法写入。"};
+			}
+
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 				[&]()
 				{
@@ -322,6 +328,11 @@ namespace widget
 
 		virtual void Flush() override
 		{
+			if (_closed)
+			{
+				throw base::ObjectDisposedException{CODE_POS_STR + "串口已关闭，无法冲洗。"};
+			}
+
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 				[&]()
 				{
