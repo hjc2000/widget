@@ -1,20 +1,32 @@
 #include "Serial.h"
+#include <iostream>
 
 void widget::Serial::OnReceiveData()
 {
-	if (_received_stream.AvailableToWrite() == 0)
+	try
 	{
-		return;
+		if (_received_stream.AvailableToWrite() == 0)
+		{
+			return;
+		}
+
+		QByteArray receive_data = _serial->readAll();
+
+		base::ReadOnlySpan span{
+			reinterpret_cast<uint8_t const *>(receive_data.data()),
+			static_cast<int32_t>(receive_data.size()),
+		};
+
+		_received_stream.Write(span);
 	}
-
-	QByteArray receive_data = _serial->readAll();
-
-	base::ReadOnlySpan span{
-		reinterpret_cast<uint8_t const *>(receive_data.data()),
-		static_cast<int32_t>(receive_data.size()),
-	};
-
-	_received_stream.Write(span);
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR + e.what() << std::endl;
+	}
+	catch (...)
+	{
+		std::cerr << CODE_POS_STR + "未知异常。" << std::endl;
+	}
 }
 
 widget::Serial::Serial(std::string const &name)
