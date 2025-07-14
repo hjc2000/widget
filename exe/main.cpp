@@ -1,5 +1,6 @@
 #include "base/embedded/serial/Serial.h"
 #include "base/embedded/serial/serial_handle.h"
+#include "base/embedded/serial/SoftWareTimeoutSerial.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
 #include "base/task/delay.h"
@@ -10,6 +11,7 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <string>
 
 int TestFusionApplication()
@@ -31,14 +33,18 @@ int TestCoreApplication()
 		std::cout << serial.Description() << std::endl;
 	}
 
-	base::serial::Serial serial{"COM3"};
+	std::shared_ptr<base::serial::SoftWareTimeoutSerial> soft_serial{new base::serial::SoftWareTimeoutSerial{
+		std::shared_ptr<base::serial::Serial>{new base::serial::Serial{"COM3"}},
+		1024 * 10,
+		20,
+	}};
 
-	serial.Start(base::serial::Direction::RX_TX,
-				 base::serial::BaudRate{115200},
-				 base::serial::DataBits{8},
-				 base::serial::Parity::None,
-				 base::serial::StopBits::One,
-				 base::serial::HardwareFlowControl::None);
+	soft_serial->Start(base::serial::Direction::RX_TX,
+					   base::serial::BaudRate{115200},
+					   base::serial::DataBits{8},
+					   base::serial::Parity::None,
+					   base::serial::StopBits::One,
+					   base::serial::HardwareFlowControl::None);
 
 	base::task::run(
 		[&]()
@@ -48,7 +54,7 @@ int TestCoreApplication()
 
 			while (true)
 			{
-				int32_t have_read = serial.Read(base::Span{buffer, sizeof(buffer)});
+				int32_t have_read = soft_serial->Read(base::Span{buffer, sizeof(buffer)});
 				if (have_read == 0)
 				{
 					std::cout << "Read 函数返回 0, 流结束。读线程退出。" << std::endl;
@@ -60,7 +66,7 @@ int TestCoreApplication()
 				count++;
 				if (count > 10)
 				{
-					serial.Close();
+					soft_serial->Close();
 				}
 			}
 		});
@@ -77,7 +83,7 @@ int TestCoreApplication()
 					static_cast<int32_t>(str.size()),
 				};
 
-				serial.Write(span);
+				soft_serial->Write(span);
 				base::task::Delay(std::chrono::milliseconds{1000});
 			}
 		});
