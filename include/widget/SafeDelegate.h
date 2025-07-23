@@ -18,7 +18,7 @@ namespace widget
 	///
 	///
 	template <typename... Args>
-	class SafeDelegate :
+	class SafeDelegate final :
 		public base::IEvent<Args...>,
 		public base::IDisposable
 	{
