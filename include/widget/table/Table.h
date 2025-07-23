@@ -27,6 +27,8 @@ namespace widget
 		class HeaderView;
 
 	public:
+		/* #region CurrentChangeEventArgs */
+
 		class CurrentChangeEventArgs
 		{
 		private:
@@ -51,6 +53,8 @@ namespace widget
 				return _previous;
 			}
 		};
+
+		/* #endregion */
 
 	private:
 		std::shared_ptr<PrivateTable> _table;
@@ -245,4 +249,5 @@ namespace widget
 
 		/* #endregion */
 	};
+
 } // namespace widget
