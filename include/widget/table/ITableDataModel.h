@@ -45,6 +45,30 @@ namespace widget
 			}
 		};
 
+		class RowRemovedEventArgs
+		{
+		private:
+			base::RowIndex _row_index;
+			base::RowCount _row_count;
+
+		public:
+			RowRemovedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
+			{
+				_row_index = row_index;
+				_row_count = row_count;
+			}
+
+			base::RowIndex RowIndex() const
+			{
+				return _row_index;
+			}
+
+			base::RowCount RowCount() const
+			{
+				return _row_count;
+			}
+		};
+
 	public:
 		///
 		/// @brief 行数。
@@ -137,25 +161,21 @@ namespace widget
 		///
 		/// @brief 行被插入事件。
 		///
-		/// @return base::IEvent<base::RowIndex const &, base::RowCount const &>&
-		///
-		/// 	@note 其中 RowIndex 指的是新行插入后，新行所在的起始索引在哪。
-		/// 	例如在末尾插入，当前有 2 行，最后一行的索引是 1, 新插入 2 行到末尾，
-		/// 	则 RowIndex = 2, RowCount = 2.
+		/// @return
 		///
 		virtual base::IEvent<widget::ITableDataModel::RowInsertedEventArgs const &> &RowInsertedEvent() = 0;
 
 		///
 		/// @brief 行被移除事件。
 		///
-		/// @return base::IEvent<base::RowIndex const &, base::RowCount const &>&
+		/// @return
 		///
-		virtual base::IEvent<base::RowIndex const &, base::RowCount const &> &RowRemovedEvent() = 0;
+		virtual base::IEvent<widget::ITableDataModel::RowRemovedEventArgs const &> &RowRemovedEvent() = 0;
 
 		///
 		/// @brief 数据发生更改。
 		///
-		/// @return base::IEvent<base::PositionRange const &>& 事件参数指示了发生更改的数据的范围。
+		/// @return 事件参数指示了发生更改的数据的范围。
 		///
 		virtual base::IEvent<base::PositionRange<int32_t> const &> &DataChangeEvent() = 0;
 

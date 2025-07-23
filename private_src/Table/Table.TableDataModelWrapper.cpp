@@ -26,11 +26,11 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		endInsertRows();
 	};
 
-	_row_removed_event_token = _model->RowRemovedEvent() += [this](base::RowIndex const &row_index, base::RowCount const &row_count)
+	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::ITableDataModel::RowRemovedEventArgs const &args)
 	{
 		beginRemoveRows(QModelIndex{},
-						row_index.Value(),
-						row_index.Value() + row_count.Value() - 1);
+						args.RowIndex().Value(),
+						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endRemoveRows();
 	};
