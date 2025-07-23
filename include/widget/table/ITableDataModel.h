@@ -73,14 +73,14 @@ namespace widget
 		///
 		/// @brief 行数。
 		///
-		/// @return int
+		/// @return
 		///
 		virtual int RowCount() const = 0;
 
 		///
 		/// @brief 列数。
 		///
-		/// @return int
+		/// @return
 		///
 		virtual int ColumnCount() const = 0;
 
@@ -89,8 +89,7 @@ namespace widget
 		///
 		/// @note 默认实现为没有。
 		///
-		/// @return true 有行标题。
-		/// @return false 无行标题。
+		/// @return
 		///
 		virtual bool HasRowTitle() const
 		{
@@ -102,8 +101,7 @@ namespace widget
 		///
 		/// @note 默认实现为有。
 		///
-		/// @return true 有列标题。
-		/// @return false 无列标题。
+		/// @return
 		///
 		virtual bool HasColumnTitle() const
 		{
@@ -117,7 +115,8 @@ namespace widget
 		/// @note 默认实现返回行号字符串。
 		///
 		/// @param row
-		/// @return QString
+		///
+		/// @return
 		///
 		virtual QString RowTitle(int row) const;
 
@@ -128,7 +127,8 @@ namespace widget
 		/// @note 默认实现返回列号字符串。
 		///
 		/// @param column
-		/// @return QString
+		///
+		/// @return
 		///
 		virtual QString ColumnTitle(int column) const;
 
@@ -137,7 +137,8 @@ namespace widget
 		///
 		/// @param row 数据单元格所在的行。
 		/// @param column 数据单元格所在的列。
-		/// @return QString
+		///
+		/// @return
 		///
 		virtual QString Data(int row, int column) const = 0;
 
