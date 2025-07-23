@@ -21,6 +21,8 @@ namespace widget
 	class ITableDataModel
 	{
 	public:
+		/* #region 事件参数 */
+
 		class RowInsertedEventArgs
 		{
 		private:
@@ -68,6 +70,8 @@ namespace widget
 				return _row_count;
 			}
 		};
+
+		/* #endregion */
 
 	public:
 		///
