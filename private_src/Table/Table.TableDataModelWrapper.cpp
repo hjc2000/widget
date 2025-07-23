@@ -17,18 +17,16 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		endResetModel();
 	};
 
-	_row_inserted_event_token = _model->RowInsertedEvent() +=
-		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
+	_row_inserted_event_token = _model->RowInsertedEvent() += [this](widget::ITableDataModel::RowInsertedEventArgs const &args)
 	{
 		beginInsertRows(QModelIndex{},
-						row_index.Value(),
-						row_index.Value() + row_count.Value() - 1);
+						args.RowIndex().Value(),
+						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endInsertRows();
 	};
 
-	_row_removed_event_token = _model->RowRemovedEvent() +=
-		[this](base::RowIndex const &row_index, base::RowCount const &row_count)
+	_row_removed_event_token = _model->RowRemovedEvent() += [this](base::RowIndex const &row_index, base::RowCount const &row_count)
 	{
 		beginRemoveRows(QModelIndex{},
 						row_index.Value(),

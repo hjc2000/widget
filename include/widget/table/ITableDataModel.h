@@ -21,6 +21,31 @@ namespace widget
 	class ITableDataModel
 	{
 	public:
+		class RowInsertedEventArgs
+		{
+		private:
+			base::RowIndex _row_index;
+			base::RowCount _row_count;
+
+		public:
+			RowInsertedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
+			{
+				_row_index = row_index;
+				_row_count = row_count;
+			}
+
+			base::RowIndex RowIndex() const
+			{
+				return _row_index;
+			}
+
+			base::RowCount RowCount() const
+			{
+				return _row_count;
+			}
+		};
+
+	public:
 		///
 		/// @brief 行数。
 		///
@@ -105,7 +130,7 @@ namespace widget
 		///
 		/// @brief 需要重置整个模型时触发。
 		///
-		/// @return base::IEvent<>&
+		/// @return
 		///
 		virtual base::IEvent<> &ModelRestEvent() = 0;
 
@@ -118,7 +143,7 @@ namespace widget
 		/// 	例如在末尾插入，当前有 2 行，最后一行的索引是 1, 新插入 2 行到末尾，
 		/// 	则 RowIndex = 2, RowCount = 2.
 		///
-		virtual base::IEvent<base::RowIndex const &, base::RowCount const &> &RowInsertedEvent() = 0;
+		virtual base::IEvent<widget::ITableDataModel::RowInsertedEventArgs const &> &RowInsertedEvent() = 0;
 
 		///
 		/// @brief 行被移除事件。
