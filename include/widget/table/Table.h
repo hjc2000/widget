@@ -26,6 +26,33 @@ namespace widget
 		class TableDataModelWrapper;
 		class HeaderView;
 
+	public:
+		class CurrentChangeEventArgs
+		{
+		private:
+			QModelIndex _current;
+			QModelIndex _previous;
+
+		public:
+			CurrentChangeEventArgs(QModelIndex const &current,
+								   QModelIndex const &previous)
+			{
+				_current = current;
+				_previous = previous;
+			}
+
+			QModelIndex Current() const
+			{
+				return _current;
+			}
+
+			QModelIndex Previous() const
+			{
+				return _previous;
+			}
+		};
+
+	private:
 		std::shared_ptr<PrivateTable> _table;
 		std::shared_ptr<TableDataModelWrapper> _table_data_model;
 		std::shared_ptr<HeaderView> _row_header_view;
@@ -212,11 +239,9 @@ namespace widget
 		///
 		/// @brief 当前焦点单元格发生改变的事件。
 		///
-		/// @note 事件参数为 (QModelIndex const &current, QModelIndex const &previous)
-		///
 		/// @return
 		///
-		base::IEvent<QModelIndex const &, QModelIndex const &> &CurrentChangeEvent();
+		base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent();
 
 		/* #endregion */
 	};

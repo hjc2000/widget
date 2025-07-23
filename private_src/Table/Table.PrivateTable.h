@@ -18,7 +18,7 @@ private:
 	QAbstractItemModel *_data_model = nullptr;
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
-	base::Delegate<QModelIndex const &, QModelIndex const &> _current_change_event;
+	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
 
 	void ConnectSignals();
 
@@ -37,7 +37,9 @@ private:
 	void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
 	{
 		QTableView::currentChanged(current, previous);
-		_current_change_event(current, previous);
+
+		widget::Table::CurrentChangeEventArgs args{current, previous};
+		_current_change_event(args);
 	}
 
 public:
@@ -92,11 +94,9 @@ public:
 	///
 	/// @brief 当前焦点单元格发生改变的事件。
 	///
-	/// @note 事件参数为 (QModelIndex const &current, QModelIndex const &previous)
-	///
 	/// @return
 	///
-	base::IEvent<QModelIndex const &, QModelIndex const &> &CurrentChangeEvent()
+	base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent()
 	{
 		return _current_change_event;
 	}

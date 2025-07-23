@@ -23,16 +23,15 @@ void widget::Table::SetColumnHeaderStyle()
 
 void widget::Table::SubscribeEvents()
 {
-	_table_current_index_index_change_event_token = _table->CurrentChangeEvent() +=
-		[this](QModelIndex const &current, QModelIndex const &previous)
+	_table_current_index_index_change_event_token = _table->CurrentChangeEvent() += [this](widget::Table::CurrentChangeEventArgs const &args)
 	{
 		if (_row_header_view == nullptr)
 		{
 			return;
 		}
 
-		_row_header_view->SetSelectedIndex(current.row());
-		_column_header_view->SetSelectedIndex(current.column());
+		_row_header_view->SetSelectedIndex(args.Current().row());
+		_column_header_view->SetSelectedIndex(args.Current().column());
 		update();
 	};
 }
@@ -267,7 +266,7 @@ base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
 	return _table->DoubleClickEvent();
 }
 
-base::IEvent<QModelIndex const &, QModelIndex const &> &widget::Table::CurrentChangeEvent()
+base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::CurrentChangeEvent()
 {
 	return _table->CurrentChangeEvent();
 }
