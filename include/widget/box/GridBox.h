@@ -1,12 +1,16 @@
 #pragma once
 #include "base/container/List.h"
+#include "base/string/define.h"
 #include "GridBoxItem.h"
 #include "LabelValueUnitGridItem.h"
 #include "qgridlayout.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
+#include <algorithm>
+#include <cstdint>
 #include <initializer_list>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 namespace widget
@@ -51,7 +55,58 @@ namespace widget
 			}
 		}
 
-		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items);
+		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
+		{
+			try
+			{
+				int max_column = 0;
+
+				for (widget::LabelValueUnitGridItem const &item : items)
+				{
+					max_column = std::max(max_column, item.Column());
+
+					widget::GridBoxItem label{
+						item.Row(),
+						item.Column() * 3,
+						Qt::AlignmentFlag::AlignLeft,
+						item.Lable(),
+					};
+
+					widget::GridBoxItem data{
+						item.Row(),
+						item.Column() * 3 + 1,
+						Qt::AlignmentFlag::AlignLeft,
+						item.Data(),
+					};
+
+					widget::GridBoxItem unit{
+						item.Row(),
+						item.Column() * 3 + 2,
+						Qt::AlignmentFlag::AlignLeft,
+						item.Unit(),
+					};
+
+					AddItem(label);
+					AddItem(data);
+					AddItem(unit);
+				}
+
+				for (int i = 0; i <= max_column; i++)
+				{
+					SetColumnStretch(i * 3 + 0, 0);
+					SetColumnStretch(i * 3 + 1, 1);
+					SetColumnStretch(i * 3 + 2, 0);
+				}
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
+		}
 
 		/* #endregion */
 
@@ -163,7 +218,10 @@ namespace widget
 		/// @param row
 		/// @return int
 		///
-		int RowStretch(int row) const;
+		int RowStretch(int row) const
+		{
+			return _grid_layout.rowStretch(row);
+		}
 
 		///
 		/// @brief 设置行缩放因子。
@@ -171,14 +229,23 @@ namespace widget
 		/// @param row
 		/// @param stretch
 		///
-		void SetRowStretch(int row, int stretch);
+		void SetRowStretch(int row, int stretch)
+		{
+			_grid_layout.setRowStretch(row, stretch);
+		}
 
 		///
 		/// @brief 批量设置行缩放因子。
 		///
 		/// @param stretch_vec
 		///
-		void SetRowStretch(std::vector<int> const &stretch_vec);
+		void SetRowStretch(std::vector<int> const &stretch_vec)
+		{
+			for (uint32_t i = 0; i < stretch_vec.size(); i++)
+			{
+				SetRowStretch(i, stretch_vec[i]);
+			}
+		}
 
 		///
 		/// @brief 列缩放因子。
@@ -186,7 +253,10 @@ namespace widget
 		/// @param column
 		/// @return int
 		///
-		int ColumnStretch(int column) const;
+		int ColumnStretch(int column) const
+		{
+			return _grid_layout.columnStretch(column);
+		}
 
 		///
 		/// @brief 设置列缩放因子。
@@ -194,14 +264,23 @@ namespace widget
 		/// @param column
 		/// @param stretch
 		///
-		void SetColumnStretch(int column, int stretch);
+		void SetColumnStretch(int column, int stretch)
+		{
+			_grid_layout.setColumnStretch(column, stretch);
+		}
 
 		///
 		/// @brief 批量设置列缩放因子。
 		///
 		/// @param stretch_vec
 		///
-		void SetColumnStretch(std::vector<int> const &stretch_vec);
+		void SetColumnStretch(std::vector<int> const &stretch_vec)
+		{
+			for (uint32_t i = 0; i < stretch_vec.size(); i++)
+			{
+				SetColumnStretch(i, stretch_vec[i]);
+			}
+		}
 
 		/* #endregion */
 
@@ -210,9 +289,12 @@ namespace widget
 		///
 		/// @brief 网格盒子的对齐方式。
 		///
-		/// @return Qt::AlignmentFlag
+		/// @return
 		///
-		Qt::AlignmentFlag Alignment() const;
+		Qt::AlignmentFlag Alignment() const
+		{
+			return static_cast<Qt::AlignmentFlag>(_grid_layout.alignment().toInt());
+		}
 
 		///
 		/// @brief 设置网格盒子的对齐方式。
@@ -224,22 +306,40 @@ namespace widget
 		///
 		/// @param alignment 对齐方式。
 		///
-		void SetAlignment(Qt::AlignmentFlag alignment);
+		void SetAlignment(Qt::AlignmentFlag alignment)
+		{
+			_grid_layout.setAlignment(alignment);
+		}
 
 		///
 		/// @brief 网格盒子的内边距。
 		///
-		/// @return widget::Padding
+		/// @return
 		///
-		widget::Padding Padding() const;
+		widget::Padding Padding() const
+		{
+			QMargins qmargin = _grid_layout.contentsMargins();
+
+			return widget::Padding{
+				qmargin.left(),
+				qmargin.top(),
+				qmargin.right(),
+				qmargin.bottom(),
+			};
+		}
 
 		///
 		/// @brief 设置网格盒子的内边距。
 		///
 		/// @param value
 		///
-		void SetPadding(widget::Padding const &value);
+		void SetPadding(widget::Padding const &value)
+		{
+			_grid_layout.setContentsMargins(value.Left(), value.Top(),
+											value.Right(), value.Bottom());
+		}
 
 		/* #endregion */
 	};
+
 } // namespace widget
