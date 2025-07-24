@@ -19,14 +19,17 @@ namespace widget
 		/// @brief 无参构造函数。左上右下 4 个内边距都是 0.
 		///
 		///
-		Padding() = default;
+		constexpr Padding() = default;
 
 		///
 		/// @brief 左上右下 4 个边距设置为相同的值。
 		///
 		/// @param value
 		///
-		Padding(int value);
+		constexpr Padding(int value)
+			: Padding(value, value, value, value)
+		{
+		}
 
 		///
 		/// @brief 分别设置左上右下 4 个边距。
@@ -36,11 +39,33 @@ namespace widget
 		/// @param right
 		/// @param bottom
 		///
-		Padding(int left, int top, int right, int bottom);
+		constexpr Padding(int left, int top, int right, int bottom)
+			: _left(left),
+			  _top(top),
+			  _right(right),
+			  _bottom(bottom)
+		{
+		}
 
-		int Left() const;
-		int Top() const;
-		int Right() const;
-		int Bottom() const;
+		constexpr int Left() const
+		{
+			return _left;
+		}
+
+		constexpr int Top() const
+		{
+			return _top;
+		}
+
+		constexpr int Right() const
+		{
+			return _right;
+		}
+
+		constexpr int Bottom() const
+		{
+			return _bottom;
+		}
 	};
+
 } // namespace widget
