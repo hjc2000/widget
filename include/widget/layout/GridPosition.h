@@ -15,16 +15,35 @@ namespace widget
 		int _column_span = 1;
 
 	public:
-		GridPosition() = default;
+		constexpr GridPosition() = default;
 
-		explicit GridPosition(int row, int column, int row_span, int column_span);
+		constexpr GridPosition(int row, int column, int row_span, int column_span)
+		{
+			_row = row;
+			_column = column;
+			_row_span = row_span;
+			_column_span = column_span;
+		}
 
-		int Row() const;
+		constexpr int Row() const
+		{
+			return _row;
+		}
 
-		int Column() const;
+		constexpr int Column() const
+		{
+			return _column;
+		}
 
-		int RowSpan() const;
+		constexpr int RowSpan() const
+		{
+			return _row_span;
+		}
 
-		int ColumnSpan() const;
+		constexpr int ColumnSpan() const
+		{
+			return _column_span;
+		}
 	};
+
 } // namespace widget
