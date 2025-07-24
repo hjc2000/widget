@@ -1,25 +1,6 @@
 #include "VBox.h"
 #include "base/string/define.h"
 
-/* #region 构造函数 */
-
-widget::VBox::VBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
-{
-	AddWidget(widgets);
-}
-
-widget::VBox::VBox(std::vector<std::shared_ptr<QWidget>> const &widgets)
-{
-	AddWidget(widgets);
-}
-
-widget::VBox::VBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
-{
-	AddWidget(widgets);
-}
-
-/* #endregion */
-
 /* #region AddWidget */
 
 void widget::VBox::AddWidget(std::shared_ptr<QWidget> const &widget)

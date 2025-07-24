@@ -23,9 +23,21 @@ namespace widget
 		/* #region 构造函数 */
 
 		VBox() = default;
-		VBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
-		VBox(std::vector<std::shared_ptr<QWidget>> const &widgets);
-		VBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
+
+		VBox(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
+		{
+			AddWidget(widgets);
+		}
+
+		VBox(std::vector<std::shared_ptr<QWidget>> const &widgets)
+		{
+			AddWidget(widgets);
+		}
+
+		VBox(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
+		{
+			AddWidget(widgets);
+		}
 
 		template <size_t TCount>
 		VBox(std::array<std::shared_ptr<QWidget>, TCount> const &widgets)
@@ -98,7 +110,7 @@ namespace widget
 		///
 		/// @brief 获取内边距。
 		///
-		/// @return widget::Padding
+		/// @return
 		///
 		widget::Padding Padding() const;
 
@@ -109,4 +121,5 @@ namespace widget
 		///
 		void SetPadding(widget::Padding const &value);
 	};
+
 } // namespace widget
