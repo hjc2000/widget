@@ -68,15 +68,22 @@ namespace widget
 		///
 		/// @brief 表单盒子内边距。
 		///
-		/// @return widget::Padding
+		/// @return
 		///
-		widget::Padding Padding() const;
+		widget::Padding Padding() const
+		{
+			return _box.Padding();
+		}
 
 		///
 		/// @brief 设置表单盒子内边距。
 		///
 		/// @param value
 		///
-		void SetPadding(widget::Padding const &value);
+		void SetPadding(widget::Padding const &value)
+		{
+			_box.SetPadding(value);
+		}
 	};
+
 } // namespace widget

@@ -100,13 +100,3 @@ void widget::FormTableBox::ClearItems()
 {
 	_box.ClearWidgets();
 }
-
-widget::Padding widget::FormTableBox::Padding() const
-{
-	return _box.Padding();
-}
-
-void widget::FormTableBox::SetPadding(widget::Padding const &value)
-{
-	_box.SetPadding(value);
-}
