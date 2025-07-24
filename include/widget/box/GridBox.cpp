@@ -7,32 +7,6 @@
 
 /* #region 构造函数 */
 
-widget::GridBox::GridBox()
-{
-	_grid_layout.setSpacing(10);
-	SetPadding(widget::Padding{0});
-}
-
-widget::GridBox::GridBox(std::initializer_list<widget::GridBoxItem> const &items)
-	: GridBox()
-{
-	try
-	{
-		for (widget::GridBoxItem const &item : items)
-		{
-			AddItem(item);
-		}
-	}
-	catch (std::exception const &e)
-	{
-		throw std::runtime_error{CODE_POS_STR + e.what()};
-	}
-	catch (...)
-	{
-		throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
-	}
-}
-
 widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
 {
 	try
@@ -84,86 +58,6 @@ widget::GridBox::GridBox(std::initializer_list<widget::LabelValueUnitGridItem> c
 	{
 		throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
 	}
-}
-
-/* #endregion */
-
-void widget::GridBox::AddItem(widget::GridBoxItem const &item)
-{
-	for (auto &item_list_item : _item_list)
-	{
-		if (item_list_item.Widget() == item.Widget())
-		{
-			throw std::invalid_argument{CODE_POS_STR + "不能重复添加同一个对象。"};
-		}
-	}
-
-	_grid_layout.addWidget(item.Widget().get(),
-						   item.Row(),
-						   item.Column(),
-						   item.RowSpan(),
-						   item.ColumnSpan(),
-						   item.Align());
-
-	_item_list.Add(item);
-}
-
-void widget::GridBox::SetItem(widget::GridBoxItem const &item)
-{
-	RemoveWidget(item.Row(), item.Column());
-
-	_grid_layout.addWidget(item.Widget().get(),
-						   item.Row(),
-						   item.Column(),
-						   item.RowSpan(),
-						   item.ColumnSpan(),
-						   item.Align());
-
-	_item_list.Add(item);
-}
-
-/* #region 移除控件 */
-
-void widget::GridBox::RemoveWidget(int row, int column)
-{
-	for (int i = _item_list.Count() - 1; i >= 0; i--)
-	{
-		if (_item_list[i].Row() == row && _item_list[i].Column() == column)
-		{
-			_grid_layout.removeWidget(_item_list[i].Widget().get());
-			_item_list.RemoveAt(i);
-
-			// 移除后不返回。因为可能有多个控件同时层叠放置在同一个格子。
-		}
-	}
-}
-
-void widget::GridBox::RemoveWidget(std::shared_ptr<QWidget> widget)
-{
-	if (widget == nullptr)
-	{
-		return;
-	}
-
-	for (int i = _item_list.Count() - 1; i >= 0; i--)
-	{
-		if (_item_list[i].Widget() == widget)
-		{
-			_grid_layout.removeWidget(widget.get());
-			_item_list.RemoveAt(i);
-			return;
-		}
-	}
-}
-
-void widget::GridBox::ClearWidgets()
-{
-	for (auto &item : _item_list)
-	{
-		_grid_layout.removeWidget(item.Widget().get());
-	}
-
-	_item_list.Clear();
 }
 
 /* #endregion */

@@ -25,22 +25,74 @@ namespace widget
 	public:
 		/* #region 构造函数 */
 
-		GridBox();
+		GridBox()
+		{
+			_grid_layout.setSpacing(10);
+			SetPadding(widget::Padding{0});
+		}
 
-		GridBox(std::initializer_list<widget::GridBoxItem> const &items);
+		GridBox(std::initializer_list<widget::GridBoxItem> const &items)
+			: GridBox()
+		{
+			try
+			{
+				for (widget::GridBoxItem const &item : items)
+				{
+					AddItem(item);
+				}
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
+		}
 
 		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items);
 
 		/* #endregion */
 
-		void AddItem(widget::GridBoxItem const &item);
+		void AddItem(widget::GridBoxItem const &item)
+		{
+			for (auto &item_list_item : _item_list)
+			{
+				if (item_list_item.Widget() == item.Widget())
+				{
+					throw std::invalid_argument{CODE_POS_STR + "不能重复添加同一个对象。"};
+				}
+			}
+
+			_grid_layout.addWidget(item.Widget().get(),
+								   item.Row(),
+								   item.Column(),
+								   item.RowSpan(),
+								   item.ColumnSpan(),
+								   item.Align());
+
+			_item_list.Add(item);
+		}
 
 		///
 		/// @brief 设置一个项目。会移除同一个格子中的旧项目，然后才添加 item.
 		///
 		/// @param item
 		///
-		void SetItem(widget::GridBoxItem const &item);
+		void SetItem(widget::GridBoxItem const &item)
+		{
+			RemoveWidget(item.Row(), item.Column());
+
+			_grid_layout.addWidget(item.Widget().get(),
+								   item.Row(),
+								   item.Column(),
+								   item.RowSpan(),
+								   item.ColumnSpan(),
+								   item.Align());
+
+			_item_list.Add(item);
+		}
 
 		/* #region 移除控件 */
 
@@ -50,20 +102,56 @@ namespace widget
 		/// @param row
 		/// @param column
 		///
-		void RemoveWidget(int row, int column);
+		void RemoveWidget(int row, int column)
+		{
+			for (int i = _item_list.Count() - 1; i >= 0; i--)
+			{
+				if (_item_list[i].Row() == row && _item_list[i].Column() == column)
+				{
+					_grid_layout.removeWidget(_item_list[i].Widget().get());
+					_item_list.RemoveAt(i);
+
+					// 移除后不返回。因为可能有多个控件同时层叠放置在同一个格子。
+				}
+			}
+		}
 
 		///
 		/// @brief 移除控件。
 		///
 		/// @param widget
 		///
-		void RemoveWidget(std::shared_ptr<QWidget> widget);
+		void RemoveWidget(std::shared_ptr<QWidget> widget)
+		{
+			if (widget == nullptr)
+			{
+				return;
+			}
+
+			for (int i = _item_list.Count() - 1; i >= 0; i--)
+			{
+				if (_item_list[i].Widget() == widget)
+				{
+					_grid_layout.removeWidget(widget.get());
+					_item_list.RemoveAt(i);
+					return;
+				}
+			}
+		}
 
 		///
 		/// @brief 清空所有控件。
 		///
 		///
-		void ClearWidgets();
+		void ClearWidgets()
+		{
+			for (auto &item : _item_list)
+			{
+				_grid_layout.removeWidget(item.Widget().get());
+			}
+
+			_item_list.Clear();
+		}
 
 		/* #endregion */
 
