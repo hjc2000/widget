@@ -1,5 +1,6 @@
 #pragma once
 #include "base/container/iterator/IEnumerable.h"
+#include "base/string/define.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
@@ -54,28 +55,62 @@ namespace widget
 		///
 		/// @param widget
 		///
-		void AddWidget(std::shared_ptr<QWidget> const &widget);
+		void AddWidget(std::shared_ptr<QWidget> const &widget)
+		{
+			if (widget == nullptr)
+			{
+				throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
+			}
+
+			auto it = _widget_set.find(widget);
+			if (it != _widget_set.end())
+			{
+				// 如果已经添加过了，就不重复添加了。
+				return;
+			}
+
+			_widget_set.insert(widget);
+			_layout.AddWidget(widget.get());
+		}
 
 		///
 		/// @brief 向盒子添加一系列控件。
 		///
 		/// @param widgets
 		///
-		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets);
+		void AddWidget(std::initializer_list<std::shared_ptr<QWidget>> const &widgets)
+		{
+			for (auto widget : widgets)
+			{
+				AddWidget(widget);
+			}
+		}
 
 		///
 		/// @brief 向盒子添加一系列控件。
 		///
 		/// @param widgets
 		///
-		void AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets);
+		void AddWidget(std::vector<std::shared_ptr<QWidget>> const &widgets)
+		{
+			for (auto widget : widgets)
+			{
+				AddWidget(widget);
+			}
+		}
 
 		///
 		/// @brief 向盒子添加一系列控件。
 		///
 		/// @param widgets
 		///
-		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets);
+		void AddWidget(base::IEnumerable<std::shared_ptr<QWidget>> const &widgets)
+		{
+			for (auto widget : widgets)
+			{
+				AddWidget(widget);
+			}
+		}
 
 		///
 		/// @brief 向盒子添加一系列控件。
