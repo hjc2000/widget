@@ -99,27 +99,51 @@ namespace widget
 		///
 		/// @param widget
 		///
-		void RemoveWidget(std::shared_ptr<QWidget> const &widget);
+		void RemoveWidget(std::shared_ptr<QWidget> const &widget)
+		{
+			auto it = _widget_set.find(widget);
+			if (it == _widget_set.end())
+			{
+				return;
+			}
+
+			_widget_set.erase(widget);
+			_layout.RemoveWidget(widget.get());
+		}
 
 		///
 		/// @brief 清空盒子中的所有控件。
 		///
 		///
-		void ClearWidget();
+		void ClearWidget()
+		{
+			for (auto widget : _widget_set)
+			{
+				_layout.RemoveWidget(widget.get());
+			}
+
+			_widget_set.clear();
+		}
 
 		///
 		/// @brief 获取内边距。
 		///
 		/// @return
 		///
-		widget::Padding Padding() const;
+		widget::Padding Padding() const
+		{
+			return _layout.Padding();
+		}
 
 		///
 		/// @brief 设置内边距。
 		///
 		/// @param value
 		///
-		void SetPadding(widget::Padding const &value);
+		void SetPadding(widget::Padding const &value)
+		{
+			_layout.SetPadding(value);
+		}
 	};
 
 } // namespace widget
