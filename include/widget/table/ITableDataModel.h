@@ -74,6 +74,8 @@ namespace widget
 		/* #endregion */
 
 	public:
+		virtual ~ITableDataModel() = default;
+
 		///
 		/// @brief 行数。
 		///
