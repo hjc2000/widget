@@ -6,6 +6,8 @@
 class base::serial::serial_handle
 {
 public:
+	virtual ~serial_handle() = default;
+
 	virtual void Start(base::serial::Direction direction,
 					   base::serial::BaudRate const &baud_rate,
 					   base::serial::DataBits const &data_bits,
