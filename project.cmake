@@ -9,7 +9,7 @@ target_import_qt_serial_port(${ProjectName} PUBLIC)
 
 # 添加测试程序
 if(1)
-	set(exe_name "test")
+	set(exe_name "widget-test")
 
 	if(CMAKE_BUILD_TYPE STREQUAL "Release")
 		# set(exe_type "WIN32")
@@ -21,4 +21,5 @@ if(1)
 	add_executable(${exe_name} ${exe_type} ${CMAKE_CURRENT_SOURCE_DIR}/exe/main.cpp)
 	target_link_libraries(${exe_name} PUBLIC ${ProjectName})
 	target_install(${exe_name})
+	target_total_install(${exe_name})
 endif()
