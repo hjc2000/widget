@@ -12,7 +12,7 @@ namespace widget
 	/// @brief 按钮。
 	///
 	///
-	class Button :
+	class Button final :
 		public QPushButton
 	{
 	private:
@@ -64,8 +64,45 @@ namespace widget
 
 		/* #region 本类的事件处理函数 */
 
-		virtual void enterEvent(QEnterEvent *event) override;
-		virtual void leaveEvent(QEvent *event) override;
+		virtual void enterEvent(QEnterEvent *event) override
+		{
+			_palette_before_enter_event = palette();
+
+			QPushButton::enterEvent(event);
+			QPalette temp_palette = palette();
+			temp_palette.setColor(QPalette::Button, QColor{150, 190, 230});
+			setPalette(temp_palette);
+
+			try
+			{
+				_enter_event.Invoke();
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << CODE_POS_STR + e.what() << std::endl;
+			}
+			catch (...)
+			{
+			}
+		}
+
+		virtual void leaveEvent(QEvent *event) override
+		{
+			QPushButton::leaveEvent(event);
+			setPalette(_palette_before_enter_event);
+
+			try
+			{
+				_leave_event.Invoke();
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << CODE_POS_STR + e.what() << std::endl;
+			}
+			catch (...)
+			{
+			}
+		}
 
 		void OnClicked()
 		{
@@ -273,4 +310,5 @@ namespace widget
 
 		/* #endregion */
 	};
+
 } // namespace widget
