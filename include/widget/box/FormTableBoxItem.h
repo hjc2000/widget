@@ -1,4 +1,6 @@
 #pragma once
+#include "base/string/define.h"
+#include "qlabel.h"
 #include "qwidget.h"
 #include <memory>
 #include <string>
@@ -31,7 +33,21 @@ namespace widget
 		/// @param right
 		///
 		FormTableBoxItem(std::shared_ptr<QWidget> const &left,
-						 std::shared_ptr<QWidget> const &right);
+						 std::shared_ptr<QWidget> const &right)
+		{
+			if (left == nullptr)
+			{
+				throw new std::runtime_error{CODE_POS_STR + "left 不能为空指针。"};
+			}
+
+			if (right == nullptr)
+			{
+				throw new std::runtime_error{CODE_POS_STR + "right 不能为空指针。"};
+			}
+
+			_left = left;
+			_right = right;
+		}
 
 		///
 		/// @brief 构造一个左边是文本标签，右边是自定义控件的表单项。
@@ -40,22 +56,38 @@ namespace widget
 		/// @param right 自定义控件。
 		///
 		FormTableBoxItem(std::string const &left_label_text,
-						 std::shared_ptr<QWidget> const &right);
+						 std::shared_ptr<QWidget> const &right)
+		{
+			if (right == nullptr)
+			{
+				throw new std::runtime_error{CODE_POS_STR + "right 不能为空指针。"};
+			}
+
+			_left = std::shared_ptr<QLabel>{new QLabel{left_label_text.c_str()}};
+			_right = right;
+		}
 
 		/* #endregion */
 
 		///
 		/// @brief 左侧控件。
 		///
-		/// @return std::shared_ptr<QWidget>
+		/// @return
 		///
-		std::shared_ptr<QWidget> LeftWidget() const;
+		std::shared_ptr<QWidget> LeftWidget() const
+		{
+			return _left;
+		}
 
 		///
 		/// @brief 右侧控件。
 		///
-		/// @return std::shared_ptr<QWidget>
+		/// @return
 		///
-		std::shared_ptr<QWidget> RightWidget() const;
+		std::shared_ptr<QWidget> RightWidget() const
+		{
+			return _right;
+		}
 	};
+
 } // namespace widget
