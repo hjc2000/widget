@@ -1,6 +1,8 @@
 #pragma once
 #include "base/delegate/Delegate.h"
+#include "base/IDisposable.h"
 #include "base/string/define.h"
+#include "qcoreapplication.h"
 #include "QPushButton"
 #include "widget/convert.h"
 #include <iostream>
@@ -13,7 +15,8 @@ namespace widget
 	///
 	///
 	class Button final :
-		public QPushButton
+		public QPushButton,
+		public base::IDisposable
 	{
 	private:
 		///
@@ -28,29 +31,7 @@ namespace widget
 		///
 		QPalette _palette_before_pressed_event;
 
-		void ConnectSignal()
-		{
-			connect(this,
-					&QPushButton::clicked,
-					[this]()
-					{
-						OnClicked();
-					});
-
-			connect(this,
-					&QPushButton::pressed,
-					[this]()
-					{
-						OnPressed();
-					});
-
-			connect(this,
-					&QPushButton::released,
-					[this]()
-					{
-						OnReleased();
-					});
-		}
+		bool _disposed = false;
 
 		/* #region 对外提供事件 */
 
@@ -159,6 +140,30 @@ namespace widget
 
 		/* #endregion */
 
+		void ConnectSignal()
+		{
+			connect(this,
+					&QPushButton::clicked,
+					[this]()
+					{
+						OnClicked();
+					});
+
+			connect(this,
+					&QPushButton::pressed,
+					[this]()
+					{
+						OnPressed();
+					});
+
+			connect(this,
+					&QPushButton::released,
+					[this]()
+					{
+						OnReleased();
+					});
+		}
+
 	public:
 		/* #region 构造函数 */
 
@@ -211,6 +216,36 @@ namespace widget
 		}
 
 		/* #endregion */
+
+		~Button()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
+			disconnect();
+			QCoreApplication::removePostedEvents(this);
+
+			_clicked_event.Dispose();
+			_pressed_event.Dispose();
+			_released_event.Dispose();
+			_enter_event.Dispose();
+			_leave_event.Dispose();
+		}
 
 		/* #region 对外提供事件 */
 
