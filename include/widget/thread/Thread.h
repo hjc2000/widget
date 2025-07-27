@@ -1,5 +1,6 @@
 #pragma once
 #include "base/IDisposable.h"
+#include "base/string/define.h"
 #include "base/task/ITask.h"
 #include "base/task/TaskCompletionSignal.h"
 #include "qeventloop.h"
@@ -7,6 +8,7 @@
 #include "qthread.h"
 #include <atomic>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -20,9 +22,23 @@ namespace widget
 		std::function<void()> _func;
 		std::atomic_bool _disposed = false;
 		std::vector<std::shared_ptr<void>> _resources{};
+
+		///
+		/// @brief 线程启动后构造一个 QObject 对象，将指针赋值到本字段。
+		///
+		///
 		QObject *_object{};
+
+		///
+		/// @brief 线程启动后就设置本信号的结果。
+		///
+		///
 		base::task::TaskCompletionSignal _thread_started{false};
 
+		///
+		/// @brief 重写 QThread 的 run.
+		/// 这个函数是线程启动后的线程函数。
+		///
 		virtual void run() override
 		{
 			QEventLoop loop;
@@ -78,7 +94,36 @@ namespace widget
 		///
 		/// @return 可以用来等待任务完成。
 		///
-		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void()> const &func);
+		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void()> const &func)
+		{
+			if (_disposed)
+			{
+				throw base::ObjectDisposedException{};
+			}
+
+			std::shared_ptr<base::task::TaskCompletionSignal> signal{new base::task::TaskCompletionSignal{false}};
+
+			QMetaObject::invokeMethod(_object, [func, signal]()
+									  {
+										  base::task::TaskCompletionSignalGuard g{*signal};
+
+										  try
+										  {
+											  func();
+										  }
+										  catch (std::exception const &e)
+										  {
+											  std::cerr << CODE_POS_STR << e.what() << std::endl;
+										  }
+										  catch (...)
+										  {
+											  std::cerr << CODE_POS_STR << "未知的异常。" << std::endl;
+										  }
+									  },
+									  Qt::QueuedConnection);
+
+			return signal;
+		}
 
 		///
 		/// @brief 添加要托管到本线程的资源。在线程退出前会清空容器，触发共享指针的析构。
