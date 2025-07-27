@@ -9,7 +9,7 @@
 
 namespace widget
 {
-	class HBox :
+	class HBox final :
 		public QWidget
 	{
 	private:
