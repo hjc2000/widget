@@ -1,10 +1,12 @@
 #pragma once
 #include "base/math/Size.h"
+#include "base/string/define.h"
 #include "qdialog.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
 #include <memory>
+#include <stdexcept>
 #include <string>
 
 namespace widget
@@ -13,10 +15,21 @@ namespace widget
 	/// @brief 关闭弹窗事件参数。
 	///
 	///
-	class CloseDialogEventParameters
+	class CloseDialogEventArgs
 	{
-	public:
+	private:
 		bool _should_close = true;
+
+	public:
+		constexpr bool ShouldClose() const
+		{
+			return _should_close;
+		}
+
+		constexpr void SetShouldClose(bool value)
+		{
+			_should_close = value;
+		}
 	};
 
 	///
@@ -36,7 +49,19 @@ namespace widget
 		///
 		/// @param event
 		///
-		virtual void closeEvent(QCloseEvent *event) override;
+		virtual void closeEvent(QCloseEvent *event) override
+		{
+			widget::CloseDialogEventArgs param;
+			OnClose(param);
+			if (param.ShouldClose())
+			{
+				event->accept();
+			}
+			else
+			{
+				event->ignore();
+			}
+		}
 
 	protected:
 		///
@@ -44,7 +69,9 @@ namespace widget
 		///
 		/// @param param
 		///
-		virtual void OnClose(widget::CloseDialogEventParameters &param);
+		virtual void OnClose(widget::CloseDialogEventArgs &param)
+		{
+		}
 
 	public:
 		/* #region 构造函数 */
@@ -53,14 +80,17 @@ namespace widget
 		/// @brief 构造函数。
 		///
 		///
-		Dialog();
+		Dialog() = default;
 
 		///
 		/// @brief 构造函数。
 		///
 		/// @param title 窗口标题。
 		///
-		Dialog(std::string const &title);
+		Dialog(std::string const &title)
+		{
+			setWindowTitle(title.c_str());
+		}
 
 		///
 		/// @brief 构造函数
@@ -68,7 +98,11 @@ namespace widget
 		/// @param title 弹窗标题。
 		/// @param content 弹窗内容。
 		///
-		Dialog(std::string const &title, std::shared_ptr<QWidget> content);
+		Dialog(std::string const &title, std::shared_ptr<QWidget> content)
+		{
+			setWindowTitle(title.c_str());
+			SetContent(content);
+		}
 
 		/* #endregion */
 
@@ -79,10 +113,26 @@ namespace widget
 		///
 		/// @param content
 		///
-		void SetContent(std::shared_ptr<QWidget> content);
+		void SetContent(std::shared_ptr<QWidget> content)
+		{
+			if (content == nullptr)
+			{
+				throw std::invalid_argument{CODE_POS_STR + "不能传入空指针。"};
+			}
 
-		widget::Padding Padding() const;
-		void SetPadding(widget::Padding const &value);
+			_content = content;
+			_layout.AddWidget(_content.get());
+		}
+
+		widget::Padding Padding() const
+		{
+			return _layout.Padding();
+		}
+
+		void SetPadding(widget::Padding const &value)
+		{
+			_layout.SetPadding(value);
+		}
 
 		/* #endregion */
 
@@ -92,15 +142,25 @@ namespace widget
 		/// @brief 以模态方式展示弹窗。
 		///
 		///
-		void ShowModal();
+		void ShowModal()
+		{
+			resize(_size.XSize(), _size.YSize());
+			exec();
+		}
 
 		///
 		/// @brief 以模态方式展示弹窗。
 		///
 		/// @param size 弹窗大小。
 		///
-		void ShowModal(base::Size const &size);
+		void ShowModal(base::Size const &size)
+		{
+			_size = size;
+			resize(_size.XSize(), _size.YSize());
+			exec();
+		}
 
 		/* #endregion */
 	};
+
 } // namespace widget
