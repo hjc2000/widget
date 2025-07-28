@@ -60,7 +60,7 @@ namespace widget
 			_combo_box.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 		}
 
-		ComboBox(std::initializer_list<std::string> items)
+		ComboBox(std::initializer_list<std::string> const &items)
 		{
 			for (std::string const &item : items)
 			{
