@@ -57,6 +57,7 @@ namespace widget
 		}
 
 		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
+			: GridBox()
 		{
 			try
 			{
@@ -109,6 +110,7 @@ namespace widget
 		}
 
 		GridBox(std::initializer_list<widget::LabelValueGridItem> const &items)
+			: GridBox()
 		{
 			try
 			{
