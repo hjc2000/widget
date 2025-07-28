@@ -2,11 +2,14 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/math/Interval.h"
+#include "base/string/define.h"
 #include "base/time/TimePointSinceEpoch.h"
 #include "QDateTimeEdit"
 #include "QHBoxLayout"
 #include "QLabel"
+#include "qwindowdefs.h"
 #include "widget/layout/HBoxLayout.h"
+#include <iostream>
 
 namespace widget
 {
@@ -32,12 +35,157 @@ namespace widget
 		base::TimePointSinceEpoch _max{std::chrono::nanoseconds{INT64_MAX}};
 		base::Delegate<> _submit_event;
 
-		void ConnectSignal();
-		void OnLeftDateTimeChanged();
-		void OnRightDateTimeChanged();
+		void ConnectSignal()
+		{
+			connect(&_left_edit,
+					&QDateTimeEdit::dateTimeChanged,
+					[this](QDateTime const &date_time)
+					{
+						OnLeftDateTimeChanged();
+					});
+
+			connect(&_right_edit,
+					&QDateTimeEdit::dateTimeChanged,
+					[this](QDateTime const &date_time)
+					{
+						OnRightDateTimeChanged();
+					});
+		}
+
+		void OnLeftDateTimeChanged()
+		{
+			try
+			{
+				{
+					// 检查非法输入
+					bool error = false;
+					if (LeftTimePoint() > RightTimePoint())
+					{
+						SetLeftInvalidInputStyle(true);
+						SetRightInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (LeftTimePoint() < _min)
+					{
+						SetLeftInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (RightTimePoint() > _max)
+					{
+						SetRightInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (error)
+					{
+						return;
+					}
+				}
+
+				{
+					// 输入合法，开始处理
+					SetLeftInvalidInputStyle(false);
+					SetRightInvalidInputStyle(false);
+					_submit_event.Invoke();
+				}
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << CODE_POS_STR << e.what() << std::endl;
+			}
+			catch (...)
+			{
+			}
+		}
+
+		void OnRightDateTimeChanged()
+		{
+			try
+			{
+				{
+					// 检查非法输入
+					bool error = false;
+					if (LeftTimePoint() > RightTimePoint())
+					{
+						SetLeftInvalidInputStyle(true);
+						SetRightInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (LeftTimePoint() < _min)
+					{
+						SetLeftInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (RightTimePoint() > _max)
+					{
+						SetRightInvalidInputStyle(true);
+						error = true;
+					}
+
+					if (error)
+					{
+						return;
+					}
+				}
+
+				{
+					// 输入合法，开始处理
+					SetLeftInvalidInputStyle(false);
+					SetRightInvalidInputStyle(false);
+					_submit_event.Invoke();
+				}
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << e.what() << std::endl;
+			}
+			catch (...)
+			{
+			}
+		}
 
 	public:
-		DateTimeRangeSubmit();
+		DateTimeRangeSubmit()
+		{
+			{
+				_left_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
+				// 设置当前日期和时间
+				_left_edit.setDateTime(QDateTime::currentDateTime());
+
+				// 设置显示格式
+				_left_edit.setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+			}
+
+			{
+				_right_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
+				// 设置当前日期和时间
+				_right_edit.setDateTime(QDateTime::currentDateTime());
+
+				// 设置显示格式
+				_right_edit.setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+			}
+
+			{
+				_layout.AddWidget(&_left_edit);
+				_layout.AddWidget(&_label);
+				_layout.AddWidget(&_right_edit);
+			}
+
+			{
+				setAutoFillBackground(true);
+				QPalette temp_palette = palette();
+				temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
+				setPalette(temp_palette);
+			}
+
+			ConnectSignal();
+		}
 
 		///
 		/// @brief
@@ -46,39 +194,58 @@ namespace widget
 		/// @param max 允许输入的时间点最大值。
 		///
 		DateTimeRangeSubmit(base::TimePointSinceEpoch const &min,
-							base::TimePointSinceEpoch const &max);
+							base::TimePointSinceEpoch const &max)
+			: widget::DateTimeRangeSubmit()
+		{
+			_min = min;
+			_max = max;
+		}
 
 		///
 		/// @brief 提交事件。
 		///
 		/// @note 提交后可以读取日期范围。
 		///
-		/// @return base::IEvent<>&
+		/// @return
 		///
-		base::IEvent<> &SubmitEvent();
+		base::IEvent<> &SubmitEvent()
+		{
+			return _submit_event;
+		}
 
 		/* #region 日期时间数据 */
 
 		///
 		/// @brief 左侧日期时间输入框的时间点。
 		///
-		/// @return base::TimePointSinceEpoch
+		/// @return
 		///
-		base::TimePointSinceEpoch LeftTimePoint() const;
+		base::TimePointSinceEpoch LeftTimePoint() const
+		{
+			QDateTime selectedDateTime = _left_edit.dateTime();
+			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
+		}
 
 		///
 		/// @brief 右侧日期时间输入框的时间点。
 		///
-		/// @return base::TimePointSinceEpoch
+		/// @return
 		///
-		base::TimePointSinceEpoch RightTimePoint() const;
+		base::TimePointSinceEpoch RightTimePoint() const
+		{
+			QDateTime selectedDateTime = _right_edit.dateTime();
+			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
+		}
 
 		///
 		/// @brief 获取区间。
 		///
-		/// @return base::ClosedInterval<base::TimePointSinceEpoch>
+		/// @return
 		///
-		base::ClosedInterval<base::TimePointSinceEpoch> Interval() const;
+		base::ClosedInterval<base::TimePointSinceEpoch> Interval() const
+		{
+			return base::ClosedInterval<base::TimePointSinceEpoch>{LeftTimePoint(), RightTimePoint()};
+		}
 
 		/* #endregion */
 
@@ -89,15 +256,38 @@ namespace widget
 		///
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
-		void SetLeftInvalidInputStyle(bool is_invalid);
+		void SetLeftInvalidInputStyle(bool is_invalid)
+		{
+			if (is_invalid)
+			{
+				_left_edit.setStyleSheet("border: 2px solid red;");
+			}
+			else
+			{
+				// 恢复默认样式
+				_left_edit.setStyleSheet("");
+			}
+		}
 
 		///
 		/// @brief 设置右边输入框的输入非法样式。
 		///
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
-		void SetRightInvalidInputStyle(bool is_invalid);
+		void SetRightInvalidInputStyle(bool is_invalid)
+		{
+			if (is_invalid)
+			{
+				_right_edit.setStyleSheet("border: 2px solid red;");
+			}
+			else
+			{
+				// 恢复默认样式
+				_right_edit.setStyleSheet("");
+			}
+		}
 
 		/* #endregion */
 	};
+
 } // namespace widget

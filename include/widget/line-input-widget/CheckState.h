@@ -26,4 +26,5 @@ namespace widget
 		///
 		Checked,
 	};
+
 } // namespace widget
