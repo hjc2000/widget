@@ -4,12 +4,11 @@
 widget::RangeSubmit::RangeSubmit()
 {
 	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+	_layout.AddWidget(_grid_box.get());
 
-	{
-		_layout.AddWidget(&_left_edit);
-		_layout.AddWidget(&_label);
-		_layout.AddWidget(&_right_edit);
-	}
+	_grid_box->SetColumnStretch(0, 1);
+	_grid_box->SetColumnStretch(1, 0);
+	_grid_box->SetColumnStretch(2, 1);
 
 	{
 		setAutoFillBackground(true);
@@ -20,15 +19,15 @@ widget::RangeSubmit::RangeSubmit()
 
 	{
 		// 订阅事件
-		_left_edit.TextChangingFinishedEvent().Subscribe([this](QString const &text)
-														 {
-															 _submit_event.Invoke();
-														 });
-
-		_right_edit.TextChangingFinishedEvent().Subscribe([this](QString const &text)
+		_left_edit->TextChangingFinishedEvent().Subscribe([this](QString const &text)
 														  {
 															  _submit_event.Invoke();
 														  });
+
+		_right_edit->TextChangingFinishedEvent().Subscribe([this](QString const &text)
+														   {
+															   _submit_event.Invoke();
+														   });
 	}
 }
 
@@ -36,22 +35,22 @@ widget::RangeSubmit::RangeSubmit()
 
 QString widget::RangeSubmit::LeftPlaceholderText() const
 {
-	return _left_edit.PlaceholderText();
+	return _left_edit->PlaceholderText();
 }
 
 void widget::RangeSubmit::SetLeftPlaceholderText(QString const &value)
 {
-	_left_edit.SetPlaceholderText(value);
+	_left_edit->SetPlaceholderText(value);
 }
 
 void widget::RangeSubmit::SetLeftPlaceholderText(std::string const &value)
 {
-	_left_edit.SetPlaceholderText(value.c_str());
+	_left_edit->SetPlaceholderText(value.c_str());
 }
 
 void widget::RangeSubmit::SetLeftPlaceholderText(char const *value)
 {
-	_left_edit.SetPlaceholderText(value);
+	_left_edit->SetPlaceholderText(value);
 }
 
 std::string widget::RangeSubmit::LeftPlaceholderTextStdString() const
@@ -61,22 +60,22 @@ std::string widget::RangeSubmit::LeftPlaceholderTextStdString() const
 
 QString widget::RangeSubmit::RightPlaceholderText() const
 {
-	return _right_edit.PlaceholderText();
+	return _right_edit->PlaceholderText();
 }
 
 void widget::RangeSubmit::SetRightPlaceholderText(QString const &value)
 {
-	_right_edit.SetPlaceholderText(value);
+	_right_edit->SetPlaceholderText(value);
 }
 
 void widget::RangeSubmit::SetRightPlaceholderText(std::string const &value)
 {
-	_right_edit.SetPlaceholderText(value.c_str());
+	_right_edit->SetPlaceholderText(value.c_str());
 }
 
 void widget::RangeSubmit::SetRightPlaceholderText(char const *value)
 {
-	_right_edit.SetPlaceholderText(value);
+	_right_edit->SetPlaceholderText(value);
 }
 
 std::string widget::RangeSubmit::RightPlaceholderTextStdString() const
@@ -90,22 +89,22 @@ std::string widget::RangeSubmit::RightPlaceholderTextStdString() const
 
 QString widget::RangeSubmit::LeftText() const
 {
-	return _left_edit.Text();
+	return _left_edit->Text();
 }
 
 void widget::RangeSubmit::SetLeftText(QString const &value)
 {
-	_left_edit.SetText(value);
+	_left_edit->SetText(value);
 }
 
 void widget::RangeSubmit::SetLeftText(std::string const &value)
 {
-	_left_edit.SetText(value);
+	_left_edit->SetText(value);
 }
 
 void widget::RangeSubmit::SetLeftText(char const *value)
 {
-	_left_edit.SetText(value);
+	_left_edit->SetText(value);
 }
 
 std::string widget::RangeSubmit::LeftTextStdString() const
@@ -115,22 +114,22 @@ std::string widget::RangeSubmit::LeftTextStdString() const
 
 QString widget::RangeSubmit::RightText() const
 {
-	return _right_edit.Text();
+	return _right_edit->Text();
 }
 
 void widget::RangeSubmit::SetRightText(QString const &value)
 {
-	_right_edit.SetText(value);
+	_right_edit->SetText(value);
 }
 
 void widget::RangeSubmit::SetRightText(std::string const &value)
 {
-	_right_edit.SetText(value);
+	_right_edit->SetText(value);
 }
 
 void widget::RangeSubmit::SetRightText(char const *value)
 {
-	_right_edit.SetText(value);
+	_right_edit->SetText(value);
 }
 
 std::string widget::RangeSubmit::RightTextStdString() const
@@ -147,10 +146,10 @@ base::IEvent<> &widget::RangeSubmit::SubmitEvent()
 
 void widget::RangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
 {
-	_left_edit.SetInvalidInputStyle(is_invalid);
+	_left_edit->SetInvalidInputStyle(is_invalid);
 }
 
 void widget::RangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 {
-	_right_edit.SetInvalidInputStyle(is_invalid);
+	_right_edit->SetInvalidInputStyle(is_invalid);
 }

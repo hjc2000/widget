@@ -1,6 +1,10 @@
 #pragma once
 #include "qlabel.h"
+#include "widget/box/GridBox.h"
+#include "widget/box/GridBoxItem.h"
+#include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/Input.h"
+#include <memory>
 
 namespace widget
 {
@@ -14,10 +18,16 @@ namespace widget
 		public QWidget
 	{
 	private:
-		widget::HBoxLayout _layout{this};
-		widget::Input _left_edit{};
-		widget::Input _right_edit{};
-		QLabel _label{"-"};
+		widget::VBoxLayout _layout{this};
+		std::shared_ptr<widget::Input> _left_edit{new widget::Input{}};
+		std::shared_ptr<QLabel> _label{new QLabel{"-"}};
+		std::shared_ptr<widget::Input> _right_edit{new widget::Input{}};
+
+		std::shared_ptr<widget::GridBox> _grid_box{new widget::GridBox{
+			widget::GridBoxItem{0, 0, _left_edit},
+			widget::GridBoxItem{0, 1, _label},
+			widget::GridBoxItem{0, 2, _right_edit},
+		}};
 
 		///
 		/// @brief 提交数据时触发的事件。
