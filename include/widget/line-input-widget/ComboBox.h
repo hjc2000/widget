@@ -7,6 +7,7 @@
 #include "qwidget.h"
 #include "widget/convert.h"
 #include "widget/layout/VBoxLayout.h"
+#include <initializer_list>
 #include <string>
 #include <vector>
 
@@ -59,6 +60,14 @@ namespace widget
 			_combo_box.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 		}
 
+		ComboBox(std::initializer_list<std::string> items)
+		{
+			for (std::string const &item : items)
+			{
+				AddItem(item);
+			}
+		}
+
 		~ComboBox()
 		{
 			Dispose();
@@ -90,6 +99,8 @@ namespace widget
 			QCoreApplication::removePostedEvents(this);
 		}
 
+		/* #region AddItem */
+
 		void AddItem(QString const &item)
 		{
 			_combo_box.addItem(item);
@@ -105,11 +116,23 @@ namespace widget
 			AddItem(widget::ToQString(item));
 		}
 
+		/* #endregion */
+
+		///
+		/// @brief 当前索引改变事件。
+		///
+		/// @return
+		///
 		base::IEvent<int> &CurrentIndexChanged()
 		{
 			return _current_index_changed;
 		}
 
+		///
+		/// @brief 当前文本改变事件。
+		///
+		/// @return
+		///
 		base::IEvent<std::string const &> &CurrentTextChanged()
 		{
 			return _current_text_changed;
