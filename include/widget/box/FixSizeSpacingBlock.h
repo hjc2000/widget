@@ -11,6 +11,12 @@ namespace widget
 		public QWidget
 	{
 	public:
+		FixSizeSpacingBlock(int size)
+			: QWidget(nullptr)
+		{
+			setFixedSize(size, size);
+		}
+
 		FixSizeSpacingBlock(int width, int height)
 			: QWidget(nullptr)
 		{
