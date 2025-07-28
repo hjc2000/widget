@@ -1,36 +1,5 @@
 #include "IntRangeSubmit.h"
 
-void widget::IntRangeSubmit::CheckLeftRightValues(int64_t left_value, int64_t right_value)
-{
-	if (left_value > right_value)
-	{
-		std::cerr << CODE_POS_STR + "左侧值不能大于右侧值。" << std::endl;
-		SetLeftInvalidInputStyle(true);
-		SetRightInvalidInputStyle(true);
-		return;
-	}
-
-	if (left_value < _min)
-	{
-		std::cerr << CODE_POS_STR + "左侧值不能小于最小值。" << std::endl;
-		SetLeftInvalidInputStyle(true);
-		return;
-	}
-
-	if (right_value > _max)
-	{
-		std::cerr << CODE_POS_STR + "右侧值不能大于最大值。" << std::endl;
-		SetRightInvalidInputStyle(true);
-		return;
-	}
-
-	// 数据合法
-	_left_value = left_value;
-	_right_value = right_value;
-	SetLeftInvalidInputStyle(false);
-	SetRightInvalidInputStyle(false);
-}
-
 void widget::IntRangeSubmit::OnSubmit()
 {
 	int64_t left_value = 0;
@@ -60,20 +29,6 @@ void widget::IntRangeSubmit::OnSubmit()
 }
 
 /* #region 区间 */
-
-/* #endregion */
-
-/* #region 输入非法样式 */
-
-void widget::IntRangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
-{
-	_range_submit.SetLeftInvalidInputStyle(is_invalid);
-}
-
-void widget::IntRangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
-{
-	_range_submit.SetRightInvalidInputStyle(is_invalid);
-}
 
 /* #endregion */
 
