@@ -101,6 +101,7 @@ namespace widget
 
 			_left_edit->Dispose();
 			_right_edit->Dispose();
+			_submit_event.Dispose();
 		}
 
 		/* #region PlaceholderText */
