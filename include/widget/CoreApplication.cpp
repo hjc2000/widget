@@ -1,4 +1,4 @@
-#include "CoreApplication.h"
+#include "CoreApplication.h" // IWYU pragma: keep
 
 namespace
 {

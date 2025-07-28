@@ -1,4 +1,4 @@
-#include "FusionApplication.h"
+#include "FusionApplication.h" // IWYU pragma: keep
 
 namespace
 {
