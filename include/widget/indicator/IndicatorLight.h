@@ -3,6 +3,7 @@
 #include "base/math/Size.h"
 #include "qcolor.h"
 #include "qnamespace.h"
+#include "qpainter.h"
 #include "qwidget.h"
 
 namespace widget
@@ -45,7 +46,10 @@ namespace widget
 		/// @param on_color 指示灯开启时的颜色。
 		/// @param off_color 指示灯关闭时的颜色。
 		///
-		IndicatorLight(QColor on_color, QColor off_color);
+		IndicatorLight(QColor on_color, QColor off_color)
+			: IndicatorLight(base::Size{24, 24}, on_color, off_color)
+		{
+		}
 
 		///
 		/// @brief 构造指示灯。
@@ -55,7 +59,13 @@ namespace widget
 		/// @param on_color 指示灯开启时的颜色。
 		/// @param off_color 指示灯关闭时的颜色。
 		///
-		IndicatorLight(base::Size const &size, QColor on_color, QColor off_color);
+		IndicatorLight(base::Size const &size, QColor on_color, QColor off_color)
+			: IndicatorLight(size,
+							 base::led::State::Off,
+							 on_color,
+							 off_color)
+		{
+		}
 
 		///
 		/// @brief 构造指示灯。
@@ -68,7 +78,13 @@ namespace widget
 		IndicatorLight(base::Size const &size,
 					   base::led::State initial_state,
 					   QColor on_color,
-					   QColor off_color);
+					   QColor off_color)
+		{
+			setFixedSize(size.XSize(), size.YSize());
+			_state = initial_state;
+			_on_color = on_color;
+			_off_color = off_color;
+		}
 
 		/* #endregion */
 
@@ -134,22 +150,45 @@ namespace widget
 		///
 		/// @brief 指示灯关闭时的颜色。
 		///
-		/// @return QColor
+		/// @return
 		///
-		QColor OffColor() const;
+		QColor OffColor() const
+		{
+			return _off_color;
+		}
 
 		///
 		/// @brief 设置指示灯关闭时的颜色。
 		///
 		/// @param value
 		///
-		void SetOffColor(QColor value);
+		void SetOffColor(QColor value)
+		{
+			if (_off_color == value)
+			{
+				return;
+			}
+
+			_off_color = value;
+
+			// 触发重绘
+			update();
+		}
 
 		///
 		/// @brief 指示灯当前的颜色。
 		///
-		/// @return QColor
+		/// @return
 		///
-		QColor CurrentColor() const;
+		QColor CurrentColor() const
+		{
+			if (_state == base::led::State::Off)
+			{
+				return _off_color;
+			}
+
+			return _on_color;
+		}
 	};
+
 } // namespace widget

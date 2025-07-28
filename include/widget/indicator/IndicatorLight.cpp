@@ -1,8 +1,4 @@
 #include "IndicatorLight.h"
-#include "base/math/Size.h"
-#include "qcolor.h"
-#include "qnamespace.h"
-#include "qpainter.h"
 
 void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 {
@@ -30,34 +26,6 @@ void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 	// 绘制圆形
 	painter.drawEllipse(adjustedRect);
 }
-
-/* #region 构造函数 */
-
-widget::IndicatorLight::IndicatorLight(QColor on_color, QColor off_color)
-	: IndicatorLight(base::Size{24, 24}, on_color, off_color)
-{
-}
-
-widget::IndicatorLight::IndicatorLight(base::Size const &size, QColor on_color, QColor off_color)
-	: IndicatorLight(size,
-					 base::led::State::Off,
-					 on_color,
-					 off_color)
-{
-}
-
-widget::IndicatorLight::IndicatorLight(base::Size const &size,
-									   base::led::State initial_state,
-									   QColor on_color,
-									   QColor off_color)
-{
-	setFixedSize(size.XSize(), size.YSize());
-	_state = initial_state;
-	_on_color = on_color;
-	_off_color = off_color;
-}
-
-/* #endregion */
 
 void widget::IndicatorLight::TurnOn()
 {
@@ -109,32 +77,4 @@ void widget::IndicatorLight::SetOnColor(QColor value)
 
 	// 触发重绘
 	update();
-}
-
-QColor widget::IndicatorLight::OffColor() const
-{
-	return _off_color;
-}
-
-void widget::IndicatorLight::SetOffColor(QColor value)
-{
-	if (_off_color == value)
-	{
-		return;
-	}
-
-	_off_color = value;
-
-	// 触发重绘
-	update();
-}
-
-QColor widget::IndicatorLight::CurrentColor() const
-{
-	if (_state == base::led::State::Off)
-	{
-		return _off_color;
-	}
-
-	return _on_color;
 }
