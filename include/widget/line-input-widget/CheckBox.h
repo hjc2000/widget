@@ -114,7 +114,7 @@ namespace widget
 		///
 		widget::CheckState CheckState() const
 		{
-			return widget::ToCheckState(_check_box->checkState());
+			return widget::Convert<widget::CheckState>(_check_box->checkState());
 		}
 
 		///
@@ -124,7 +124,7 @@ namespace widget
 		///
 		void SetCheckState(widget::CheckState value)
 		{
-			_check_box->setCheckState(widget::ToQtCheckState(value));
+			_check_box->setCheckState(widget::Convert<Qt::CheckState>(value));
 		}
 
 		///

@@ -3,6 +3,7 @@
 #include "qnamespace.h"
 #include "widget/line-input-widget/CheckState.h"
 #include <string>
+#include <type_traits>
 
 namespace base
 {
@@ -48,7 +49,9 @@ namespace widget
 	///
 	/// @return
 	///
-	inline widget::CheckState ToCheckState(Qt::CheckState const q_check_state)
+	template <typename T>
+		requires(std::is_same_v<T, widget::CheckState>)
+	constexpr T Convert(Qt::CheckState q_check_state)
 	{
 		switch (q_check_state)
 		{
@@ -75,7 +78,9 @@ namespace widget
 	///
 	/// @return
 	///
-	inline Qt::CheckState ToQtCheckState(widget::CheckState const &check_state)
+	template <typename T>
+		requires(std::is_same_v<T, Qt::CheckState>)
+	constexpr T Convert(widget::CheckState check_state)
 	{
 		switch (check_state)
 		{
