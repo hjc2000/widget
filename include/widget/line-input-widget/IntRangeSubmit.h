@@ -26,6 +26,8 @@ namespace widget
 		int64_t _left_value = 0;
 		int64_t _right_value = 0;
 
+		base::Delegate<> _submit_event;
+
 		bool TryParseLeftValue(int64_t &out)
 		{
 			try
@@ -99,9 +101,33 @@ namespace widget
 			SetRightInvalidInputStyle(false);
 		}
 
-		void OnSubmit();
+		void OnSubmit()
+		{
+			int64_t left_value = 0;
+			int64_t right_value = 0;
+			bool parse_left_value_result = TryParseLeftValue(left_value);
+			bool parse_right_value_result = TryParseRightValue(right_value);
 
-		base::Delegate<> _submit_event;
+			if (!(parse_left_value_result && parse_right_value_result))
+			{
+				return;
+			}
+
+			CheckLeftRightValues(left_value, right_value);
+
+			try
+			{
+				_submit_event.Invoke();
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << CODE_POS_STR + e.what() << std::endl;
+			}
+			catch (...)
+			{
+				std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
+			}
+		}
 
 	public:
 		IntRangeSubmit()
@@ -255,14 +281,20 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(char const *value);
+		void SetLeftPlaceholderText(char const *value)
+		{
+			_range_submit.SetLeftPlaceholderText(value);
+		}
 
 		///
 		/// @brief 左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @return std::string
 		///
-		std::string LeftPlaceholderTextStdString() const;
+		std::string LeftPlaceholderTextStdString() const
+		{
+			return _range_submit.LeftPlaceholderTextStdString();
+		}
 
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
@@ -299,7 +331,10 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(char const *value);
+		void SetRightPlaceholderText(char const *value)
+		{
+			_range_submit.SetRightPlaceholderText(value);
+		}
 
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
@@ -417,4 +452,5 @@ namespace widget
 
 		/* #endregion */
 	};
+
 } // namespace widget
