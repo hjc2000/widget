@@ -97,6 +97,8 @@ namespace widget
 					SetColumnStretch(i * 3 + 1, 1);
 					SetColumnStretch(i * 3 + 2, 0);
 				}
+
+				SetAlignment(Qt::AlignmentFlag::AlignTop);
 			}
 			catch (std::exception const &e)
 			{

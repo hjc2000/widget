@@ -42,6 +42,10 @@ namespace widget
 			_label = label;
 			_data = data;
 			_unit = unit;
+
+			_label->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_data->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_unit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 		}
 
 		int Row() const
