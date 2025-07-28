@@ -68,21 +68,18 @@ namespace widget
 					widget::GridBoxItem label{
 						item.Row(),
 						item.Column() * 3,
-						Qt::AlignmentFlag::AlignLeft,
 						item.Lable(),
 					};
 
 					widget::GridBoxItem data{
 						item.Row(),
 						item.Column() * 3 + 1,
-						Qt::AlignmentFlag::AlignLeft,
 						item.Data(),
 					};
 
 					widget::GridBoxItem unit{
 						item.Row(),
 						item.Column() * 3 + 2,
-						Qt::AlignmentFlag::AlignLeft,
 						item.Unit(),
 					};
 
