@@ -6,7 +6,7 @@
 
 namespace widget
 {
-	class LabelValueGridItem
+	class LabelDataGridItem
 	{
 	private:
 		int _row = 0;
@@ -15,10 +15,10 @@ namespace widget
 		std::shared_ptr<QWidget> _data{};
 
 	public:
-		LabelValueGridItem(int row,
-						   int column,
-						   std::shared_ptr<QWidget> label,
-						   std::shared_ptr<QWidget> data)
+		LabelDataGridItem(int row,
+						  int column,
+						  std::shared_ptr<QWidget> label,
+						  std::shared_ptr<QWidget> data)
 		{
 			if (label == nullptr)
 			{
