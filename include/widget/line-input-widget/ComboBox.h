@@ -61,6 +61,7 @@ namespace widget
 		}
 
 		ComboBox(std::initializer_list<std::string> const &items)
+			: ComboBox()
 		{
 			for (std::string const &item : items)
 			{
