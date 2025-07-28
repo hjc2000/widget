@@ -1,6 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "qlineedit.h"
+#include "widget/convert.h"
 #include "widget/layout/HBoxLayout.h"
 
 namespace widget
@@ -9,14 +10,74 @@ namespace widget
 	/// @brief 输入框控件。
 	///
 	///
-	class Input :
+	class Input final :
 		public QWidget
 	{
 	private:
 		widget::HBoxLayout _layout{this};
 		QLineEdit _line_edit{};
 
-		void ConnectSignal();
+		void ConnectSignal()
+		{
+			connect(&_line_edit,
+					&QLineEdit::textChanged,
+					[this]()
+					{
+						try
+						{
+							_text_changed_event.Invoke(_line_edit.text());
+						}
+						catch (std::exception const &e)
+						{
+						}
+						catch (...)
+						{
+						}
+					});
+
+			connect(&_line_edit,
+					&QLineEdit::textEdited,
+					[this]()
+					{
+						try
+						{
+							_text_edited_event.Invoke(_line_edit.text());
+						}
+						catch (std::exception const &e)
+						{
+						}
+						catch (...)
+						{
+						}
+					});
+
+			connect(&_line_edit,
+					&QLineEdit::editingFinished,
+					[this]()
+					{
+						try
+						{
+							_text_editing_finished_event.Invoke(_line_edit.text());
+						}
+						catch (std::exception const &e)
+						{
+						}
+						catch (...)
+						{
+						}
+
+						try
+						{
+							_text_changing_finished_event.Invoke(_line_edit.text());
+						}
+						catch (std::exception const &e)
+						{
+						}
+						catch (...)
+						{
+						}
+					});
+		}
 
 		/* #region 对外提供事件 */
 
@@ -28,44 +89,66 @@ namespace widget
 		/* #endregion */
 
 	public:
-		Input();
+		Input()
+		{
+			_line_edit.setPlaceholderText("在此处输入内容...");
+			_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_layout.AddWidget(&_line_edit);
+			ConnectSignal();
+		}
 
 		/* #region PlaceholderText */
 
 		///
 		/// @brief 输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString PlaceholderText() const;
+		QString PlaceholderText() const
+		{
+			return _line_edit.placeholderText();
+		}
 
 		///
 		/// @brief 设置：输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetPlaceholderText(QString const &value);
+		void SetPlaceholderText(QString const &value)
+		{
+			_line_edit.setPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置：输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetPlaceholderText(std::string const &value);
+		void SetPlaceholderText(std::string const &value)
+		{
+			SetPlaceholderText(QString{value.c_str()});
+		}
 
 		///
 		/// @brief 设置：输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetPlaceholderText(char const *value);
+		void SetPlaceholderText(char const *value)
+		{
+			SetPlaceholderText(QString{value});
+		}
 
 		///
 		/// @brief 输入框在没有输入内容时显示的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string PlaceholderTextStdString() const;
+		std::string PlaceholderTextStdString() const
+		{
+			std::string ret = base::to_string(PlaceholderText());
+			return ret;
+		}
 
 		/* #endregion */
 
@@ -74,37 +157,64 @@ namespace widget
 		///
 		/// @brief 编辑框中的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString Text() const;
+		QString Text() const
+		{
+			return _line_edit.text();
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(QString const &value);
+		void SetText(QString const &value)
+		{
+			_line_edit.setText(value);
+
+			try
+			{
+				_text_changing_finished_event.Invoke(_line_edit.text());
+			}
+			catch (std::exception const &e)
+			{
+			}
+			catch (...)
+			{
+			}
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(std::string const &value);
+		void SetText(std::string const &value)
+		{
+			SetText(QString{value.c_str()});
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(char const *value);
+		void SetText(char const *value)
+		{
+			SetText(QString{value});
+		}
 
 		///
 		/// @brief 编辑框中的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string TextStdString() const;
+		std::string TextStdString() const
+		{
+			std::string ret = base::to_string(Text());
+			return ret;
+		}
 
 		/* #endregion */
 
@@ -118,7 +228,7 @@ namespace widget
 		/// @note 如果是程序引起的改变，调用完文本设置函数后触发。如果是用户编辑引起的改变，
 		/// 将在用户编辑每个字符时实时触发。
 		///
-		/// @return base::IEvent<QString const &>&
+		/// @return
 		///
 		base::IEvent<QString const &> &TextChangedEvent();
 
@@ -130,7 +240,7 @@ namespace widget
 		/// @note 如果是程序引起的改变，调用完文本设置函数后触发。如果是用户编辑引起的改变，
 		/// 将在用户按下回车或者让输入框失去焦点后触发。
 		///
-		/// @return base::IEvent<QString const &>&
+		/// @return
 		///
 		base::IEvent<QString const &> &TextChangingFinishedEvent();
 
@@ -141,7 +251,7 @@ namespace widget
 		///
 		/// @note 用户编辑时会实时触发，不需要按下回车或让输入框失去焦点。
 		///
-		/// @return base::IEvent<QString const &>&
+		/// @return
 		///
 		base::IEvent<QString const &> &TextEditedEvent();
 
@@ -150,7 +260,7 @@ namespace widget
 		///
 		/// @note 用户编辑完成后，在输入框中按下回车或输入框失去焦点时触发。
 		///
-		/// @return base::IEvent<QString const &>&
+		/// @return
 		///
 		base::IEvent<QString const &> &TextEditingFinishedEvent();
 
