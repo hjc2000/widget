@@ -10,6 +10,7 @@
 #include "widget/layout/HBoxLayout.h"
 #include "widget/line-input-widget/CheckState.h"
 #include <iostream>
+#include <vector>
 
 namespace widget
 {
@@ -28,25 +29,31 @@ namespace widget
 
 		base::Delegate<> _check_state_changed_event;
 
+		std::vector<QMetaObject::Connection> _connections;
+
 		void ConnectSignals()
 		{
-			connect(_check_box.get(),
-					&QCheckBox::checkStateChanged,
-					[this](Qt::CheckState q_check_state)
-					{
-						try
-						{
-							_check_state_changed_event.Invoke();
-						}
-						catch (std::exception const &e)
-						{
-							std::cerr << CODE_POS_STR + e.what() << std::endl;
-						}
-						catch (...)
-						{
-							std::cerr << CODE_POS_STR + "发生了未知异常。" << std::endl;
-						}
-					});
+			QMetaObject::Connection connection;
+
+			connection = connect(_check_box.get(),
+								 &QCheckBox::checkStateChanged,
+								 [this](Qt::CheckState q_check_state)
+								 {
+									 try
+									 {
+										 _check_state_changed_event.Invoke();
+									 }
+									 catch (std::exception const &e)
+									 {
+										 std::cerr << CODE_POS_STR + e.what() << std::endl;
+									 }
+									 catch (...)
+									 {
+										 std::cerr << CODE_POS_STR + "发生了未知异常。" << std::endl;
+									 }
+								 });
+
+			_connections.push_back(connection);
 		}
 
 	public:
@@ -92,7 +99,11 @@ namespace widget
 
 			_check_state_changed_event.Dispose();
 
-			disconnect();
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
 			QCoreApplication::removePostedEvents(this);
 		}
 

@@ -7,6 +7,7 @@
 #include "widget/convert.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace widget
 {
@@ -32,6 +33,8 @@ namespace widget
 		QPalette _palette_before_pressed_event;
 
 		bool _disposed = false;
+
+		std::vector<QMetaObject::Connection> _connections;
 
 		/* #region 对外提供事件 */
 
@@ -142,26 +145,34 @@ namespace widget
 
 		void ConnectSignal()
 		{
-			connect(this,
-					&QPushButton::clicked,
-					[this]()
-					{
-						OnClicked();
-					});
+			QMetaObject::Connection connection;
 
-			connect(this,
-					&QPushButton::pressed,
-					[this]()
-					{
-						OnPressed();
-					});
+			connection = connect(this,
+								 &QPushButton::clicked,
+								 [this]()
+								 {
+									 OnClicked();
+								 });
 
-			connect(this,
-					&QPushButton::released,
-					[this]()
-					{
-						OnReleased();
-					});
+			_connections.push_back(connection);
+
+			connection = connect(this,
+								 &QPushButton::pressed,
+								 [this]()
+								 {
+									 OnPressed();
+								 });
+
+			_connections.push_back(connection);
+
+			connection = connect(this,
+								 &QPushButton::released,
+								 [this]()
+								 {
+									 OnReleased();
+								 });
+
+			_connections.push_back(connection);
 		}
 
 	public:
@@ -243,7 +254,11 @@ namespace widget
 			_enter_event.Dispose();
 			_leave_event.Dispose();
 
-			disconnect();
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
 			QCoreApplication::removePostedEvents(this);
 		}
 

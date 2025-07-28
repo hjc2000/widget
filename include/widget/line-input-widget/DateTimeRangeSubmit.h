@@ -12,6 +12,7 @@
 #include "qwindowdefs.h"
 #include "widget/layout/HBoxLayout.h"
 #include <iostream>
+#include <vector>
 
 namespace widget
 {
@@ -40,21 +41,29 @@ namespace widget
 
 		base::Delegate<> _submit_event;
 
+		std::vector<QMetaObject::Connection> _connections;
+
 		void ConnectSignal()
 		{
-			connect(&_left_edit,
-					&QDateTimeEdit::dateTimeChanged,
-					[this](QDateTime const &date_time)
-					{
-						OnLeftDateTimeChanged();
-					});
+			QMetaObject::Connection connection;
 
-			connect(&_right_edit,
-					&QDateTimeEdit::dateTimeChanged,
-					[this](QDateTime const &date_time)
-					{
-						OnRightDateTimeChanged();
-					});
+			connection = connect(&_left_edit,
+								 &QDateTimeEdit::dateTimeChanged,
+								 [this](QDateTime const &date_time)
+								 {
+									 OnLeftDateTimeChanged();
+								 });
+
+			_connections.push_back(connection);
+
+			connection = connect(&_right_edit,
+								 &QDateTimeEdit::dateTimeChanged,
+								 [this](QDateTime const &date_time)
+								 {
+									 OnRightDateTimeChanged();
+								 });
+
+			_connections.push_back(connection);
 		}
 
 		void OnLeftDateTimeChanged()
@@ -228,7 +237,11 @@ namespace widget
 
 			_submit_event.Dispose();
 
-			disconnect();
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
 			QCoreApplication::removePostedEvents(this);
 		}
 

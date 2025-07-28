@@ -5,6 +5,7 @@
 #include "qlineedit.h"
 #include "widget/convert.h"
 #include "widget/layout/HBoxLayout.h"
+#include <vector>
 
 namespace widget
 {
@@ -30,66 +31,76 @@ namespace widget
 
 		/* #endregion */
 
+		std::vector<QMetaObject::Connection> _connections;
+
 		void ConnectSignal()
 		{
-			connect(&_line_edit,
-					&QLineEdit::textChanged,
-					[this]()
-					{
-						try
-						{
-							_text_changed_event.Invoke(_line_edit.text());
-						}
-						catch (std::exception const &e)
-						{
-						}
-						catch (...)
-						{
-						}
-					});
+			QMetaObject::Connection connection;
 
-			connect(&_line_edit,
-					&QLineEdit::textEdited,
-					[this]()
-					{
-						try
-						{
-							_text_edited_event.Invoke(_line_edit.text());
-						}
-						catch (std::exception const &e)
-						{
-						}
-						catch (...)
-						{
-						}
-					});
+			connection = connect(&_line_edit,
+								 &QLineEdit::textChanged,
+								 [this]()
+								 {
+									 try
+									 {
+										 _text_changed_event.Invoke(_line_edit.text());
+									 }
+									 catch (std::exception const &e)
+									 {
+									 }
+									 catch (...)
+									 {
+									 }
+								 });
 
-			connect(&_line_edit,
-					&QLineEdit::editingFinished,
-					[this]()
-					{
-						try
-						{
-							_text_editing_finished_event.Invoke(_line_edit.text());
-						}
-						catch (std::exception const &e)
-						{
-						}
-						catch (...)
-						{
-						}
+			_connections.push_back(connection);
 
-						try
-						{
-							_text_changing_finished_event.Invoke(_line_edit.text());
-						}
-						catch (std::exception const &e)
-						{
-						}
-						catch (...)
-						{
-						}
-					});
+			connection = connect(&_line_edit,
+								 &QLineEdit::textEdited,
+								 [this]()
+								 {
+									 try
+									 {
+										 _text_edited_event.Invoke(_line_edit.text());
+									 }
+									 catch (std::exception const &e)
+									 {
+									 }
+									 catch (...)
+									 {
+									 }
+								 });
+
+			_connections.push_back(connection);
+
+			connection = connect(&_line_edit,
+								 &QLineEdit::editingFinished,
+								 [this]()
+								 {
+									 try
+									 {
+										 _text_editing_finished_event.Invoke(_line_edit.text());
+									 }
+									 catch (std::exception const &e)
+									 {
+									 }
+									 catch (...)
+									 {
+									 }
+
+									 try
+									 {
+										 _text_changing_finished_event.Invoke(_line_edit.text());
+									 }
+									 catch (std::exception const &e)
+									 {
+									 }
+									 catch (...)
+									 {
+									 }
+								 });
+
+			_connections.push_back(connection);
 		}
 
 	public:
@@ -126,7 +137,11 @@ namespace widget
 			_text_edited_event.Dispose();
 			_text_editing_finished_event.Dispose();
 
-			disconnect();
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
 			QCoreApplication::removePostedEvents(this);
 		}
 
