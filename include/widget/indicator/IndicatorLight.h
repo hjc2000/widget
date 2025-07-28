@@ -32,7 +32,10 @@ namespace widget
 		/// 	@li 大小为 24px * 24px.
 		///
 		///
-		IndicatorLight();
+		IndicatorLight()
+			: IndicatorLight(Qt::GlobalColor::green, Qt::GlobalColor::gray)
+		{
+		}
 
 		///
 		/// @brief 构造指示灯。

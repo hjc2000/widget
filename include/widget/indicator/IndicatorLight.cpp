@@ -33,12 +33,6 @@ void widget::IndicatorLight::paintEvent(QPaintEvent *event)
 
 /* #region 构造函数 */
 
-widget::IndicatorLight::IndicatorLight()
-	: IndicatorLight(Qt::GlobalColor::green,
-					 Qt::GlobalColor::gray)
-{
-}
-
 widget::IndicatorLight::IndicatorLight(QColor on_color, QColor off_color)
 	: IndicatorLight(base::Size{24, 24}, on_color, off_color)
 {

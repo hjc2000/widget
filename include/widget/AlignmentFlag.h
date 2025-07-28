@@ -1,5 +1,4 @@
 #pragma once
-
 #include "qnamespace.h"
 #include <cstdint>
 #include <initializer_list>
