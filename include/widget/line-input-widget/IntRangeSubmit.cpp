@@ -59,42 +59,6 @@ void widget::IntRangeSubmit::OnSubmit()
 	}
 }
 
-widget::IntRangeSubmit::IntRangeSubmit(int64_t min, int64_t max)
-	: IntRangeSubmit()
-{
-	if (min > max)
-	{
-		throw std::invalid_argument{CODE_POS_STR + "最小值不能大于最大值。"};
-	}
-
-	_min = min;
-	_max = max;
-}
-
-/* #region 最大最小值 */
-
-int64_t widget::IntRangeSubmit::MinValue() const
-{
-	return _min;
-}
-
-void widget::IntRangeSubmit::SetMinValue(int64_t value)
-{
-	_min = value;
-}
-
-int64_t widget::IntRangeSubmit::MaxValue() const
-{
-	return _max;
-}
-
-void widget::IntRangeSubmit::SetMaxValue(int64_t value)
-{
-	_max = value;
-}
-
-/* #endregion */
-
 /* #region 区间 */
 
 int64_t widget::IntRangeSubmit::LeftValue() const
@@ -135,21 +99,6 @@ void widget::IntRangeSubmit::SetRightInvalidInputStyle(bool is_invalid)
 
 /* #region PlaceholderText */
 
-QString widget::IntRangeSubmit::LeftPlaceholderText() const
-{
-	return _range_submit.LeftPlaceholderText();
-}
-
-void widget::IntRangeSubmit::SetLeftPlaceholderText(QString const &value)
-{
-	_range_submit.SetLeftPlaceholderText(value);
-}
-
-void widget::IntRangeSubmit::SetLeftPlaceholderText(std::string const &value)
-{
-	_range_submit.SetLeftPlaceholderText(value);
-}
-
 void widget::IntRangeSubmit::SetLeftPlaceholderText(char const *value)
 {
 	_range_submit.SetLeftPlaceholderText(value);
@@ -160,29 +109,9 @@ std::string widget::IntRangeSubmit::LeftPlaceholderTextStdString() const
 	return _range_submit.LeftPlaceholderTextStdString();
 }
 
-QString widget::IntRangeSubmit::RightPlaceholderText() const
-{
-	return _range_submit.RightPlaceholderText();
-}
-
-void widget::IntRangeSubmit::SetRightPlaceholderText(QString const &value)
-{
-	_range_submit.SetRightPlaceholderText(value);
-}
-
-void widget::IntRangeSubmit::SetRightPlaceholderText(std::string const &value)
-{
-	_range_submit.SetRightPlaceholderText(value);
-}
-
 void widget::IntRangeSubmit::SetRightPlaceholderText(char const *value)
 {
 	_range_submit.SetRightPlaceholderText(value);
-}
-
-std::string widget::IntRangeSubmit::RightPlaceholderTextStdString() const
-{
-	return _range_submit.RightPlaceholderTextStdString();
 }
 
 /* #endregion */

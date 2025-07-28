@@ -89,12 +89,37 @@ namespace widget
 			_range_submit.SetRightText(std::to_string(_right_value));
 		}
 
-		IntRangeSubmit(int64_t min, int64_t max);
+		IntRangeSubmit(int64_t min, int64_t max)
+			: IntRangeSubmit()
+		{
+			if (min > max)
+			{
+				throw std::invalid_argument{CODE_POS_STR + "最小值不能大于最大值。"};
+			}
 
-		int64_t MinValue() const;
-		void SetMinValue(int64_t value);
-		int64_t MaxValue() const;
-		void SetMaxValue(int64_t value);
+			_min = min;
+			_max = max;
+		}
+
+		int64_t MinValue() const
+		{
+			return _min;
+		}
+
+		void SetMinValue(int64_t value)
+		{
+			_min = value;
+		}
+
+		int64_t MaxValue() const
+		{
+			return _max;
+		}
+
+		void SetMaxValue(int64_t value)
+		{
+			_max = value;
+		}
 
 		/* #region 区间 */
 
@@ -142,6 +167,7 @@ namespace widget
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
 		void SetRightInvalidInputStyle(bool is_invalid);
+
 		/* #endregion */
 
 		/* #region PlaceholderText */
@@ -149,23 +175,32 @@ namespace widget
 		///
 		/// @brief 左侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString LeftPlaceholderText() const;
+		QString LeftPlaceholderText() const
+		{
+			return _range_submit.LeftPlaceholderText();
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(QString const &value);
+		void SetLeftPlaceholderText(QString const &value)
+		{
+			_range_submit.SetLeftPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(std::string const &value);
+		void SetLeftPlaceholderText(std::string const &value)
+		{
+			_range_submit.SetLeftPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
@@ -184,23 +219,32 @@ namespace widget
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString RightPlaceholderText() const;
+		QString RightPlaceholderText() const
+		{
+			return _range_submit.RightPlaceholderText();
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(QString const &value);
+		void SetRightPlaceholderText(QString const &value)
+		{
+			_range_submit.SetRightPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(std::string const &value);
+		void SetRightPlaceholderText(std::string const &value)
+		{
+			_range_submit.SetRightPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
@@ -212,9 +256,13 @@ namespace widget
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string RightPlaceholderTextStdString() const;
+		std::string RightPlaceholderTextStdString() const
+		{
+			return _range_submit.RightPlaceholderTextStdString();
+		}
+
 		/* #endregion */
 
 		/* #region 输入框的文本 */
