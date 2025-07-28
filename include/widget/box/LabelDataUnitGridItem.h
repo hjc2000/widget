@@ -6,6 +6,10 @@
 
 namespace widget
 {
+	///
+	/// @brief 含有标签、数据、单位三列的网格项。
+	///
+	///
 	class LabelDataUnitGridItem
 	{
 	private:
