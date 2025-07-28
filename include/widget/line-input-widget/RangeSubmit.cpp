@@ -1,6 +1,5 @@
 #include "RangeSubmit.h"
 #include "widget/convert.h"
-#include <climits>
 
 widget::RangeSubmit::RangeSubmit()
 {
