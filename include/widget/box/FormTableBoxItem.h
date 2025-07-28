@@ -47,6 +47,13 @@ namespace widget
 
 			_left = left;
 			_right = right;
+
+			// 水平展开，充满表单网格，
+			//
+			// 垂直固定高度，防止垂直方向将表单盒子撑开，使得表单盒子充满父容器，
+			// 然后每一行非常高。
+			_left->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_right->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 		}
 
 		///

@@ -81,13 +81,6 @@ namespace widget
 
 			try
 			{
-				// 水平展开，充满表单网格，
-				//
-				// 垂直固定高度，防止垂直方向将表单盒子撑开，使得表单盒子充满父容器，
-				// 然后每一行非常高。
-				item.LeftWidget()->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-				item.RightWidget()->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
 				_box.SetItem(widget::GridBoxItem{row, 0, item.LeftWidget()});
 				_box.SetItem(widget::GridBoxItem{row, 1, item.RightWidget()});
 			}
