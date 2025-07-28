@@ -230,7 +230,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<QString const &> &TextChangedEvent();
+		base::IEvent<QString const &> &TextChangedEvent()
+		{
+			return _text_changed_event;
+		}
 
 		///
 		/// @brief 输入框中的文本改变完成事件。
@@ -242,7 +245,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<QString const &> &TextChangingFinishedEvent();
+		base::IEvent<QString const &> &TextChangingFinishedEvent()
+		{
+			return _text_changing_finished_event;
+		}
 
 		///
 		/// @brief 输入框中的文本正在被编辑事件。
@@ -253,7 +259,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<QString const &> &TextEditedEvent();
+		base::IEvent<QString const &> &TextEditedEvent()
+		{
+			return _text_edited_event;
+		}
 
 		///
 		/// @brief 用户编辑完成事件。
@@ -262,7 +271,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<QString const &> &TextEditingFinishedEvent();
+		base::IEvent<QString const &> &TextEditingFinishedEvent()
+		{
+			return _text_editing_finished_event;
+		}
 
 		/* #endregion */
 
@@ -271,7 +283,18 @@ namespace widget
 		///
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
-		void SetInvalidInputStyle(bool is_invalid);
+		void SetInvalidInputStyle(bool is_invalid)
+		{
+			if (is_invalid)
+			{
+				_line_edit.setStyleSheet("border: 2px solid red;");
+			}
+			else
+			{
+				// 恢复默认样式
+				_line_edit.setStyleSheet("");
+			}
+		}
 	};
 
 } // namespace widget
