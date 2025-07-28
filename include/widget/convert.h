@@ -51,9 +51,9 @@ namespace widget
 	///
 	template <typename T>
 		requires(std::is_same_v<T, widget::CheckState>)
-	constexpr T Convert(Qt::CheckState q_check_state)
+	constexpr T Convert(Qt::CheckState value)
 	{
-		switch (q_check_state)
+		switch (value)
 		{
 		case Qt::CheckState::Checked:
 			{
@@ -80,9 +80,9 @@ namespace widget
 	///
 	template <typename T>
 		requires(std::is_same_v<T, Qt::CheckState>)
-	constexpr T Convert(widget::CheckState check_state)
+	constexpr T Convert(widget::CheckState value)
 	{
-		switch (check_state)
+		switch (value)
 		{
 		case widget::CheckState::Checked:
 			{
