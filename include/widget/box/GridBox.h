@@ -3,7 +3,7 @@
 #include "base/string/define.h"
 #include "GridBoxItem.h"
 #include "LabelDataGridItem.h"
-#include "LabelValueUnitGridItem.h"
+#include "LabelDataUnitGridItem.h"
 #include "qgridlayout.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
@@ -56,14 +56,14 @@ namespace widget
 			}
 		}
 
-		GridBox(std::initializer_list<widget::LabelValueUnitGridItem> const &items)
+		GridBox(std::initializer_list<widget::LabelDataUnitGridItem> const &items)
 			: GridBox()
 		{
 			try
 			{
 				int max_column = 0;
 
-				for (widget::LabelValueUnitGridItem const &item : items)
+				for (widget::LabelDataUnitGridItem const &item : items)
 				{
 					max_column = std::max(max_column, item.Column());
 
