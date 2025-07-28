@@ -41,7 +41,39 @@ namespace widget
 		base::Delegate<> _submit_event;
 
 	public:
-		RangeSubmit();
+		RangeSubmit()
+		{
+			setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_layout.AddWidget(_grid_box.get());
+
+			_left_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_label->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_right_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
+			_grid_box->SetColumnStretch(0, 1);
+			_grid_box->SetColumnStretch(1, 0);
+			_grid_box->SetColumnStretch(2, 1);
+
+			{
+				setAutoFillBackground(true);
+				QPalette temp_palette = palette();
+				temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
+				setPalette(temp_palette);
+			}
+
+			{
+				// 订阅事件
+				_left_edit->TextChangingFinishedEvent().Subscribe([this](QString const &text)
+																  {
+																	  _submit_event.Invoke();
+																  });
+
+				_right_edit->TextChangingFinishedEvent().Subscribe([this](QString const &text)
+																   {
+																	   _submit_event.Invoke();
+																   });
+			}
+		}
 
 		/* #region PlaceholderText */
 
@@ -152,30 +184,42 @@ namespace widget
 		///
 		/// @brief 左侧输入框的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString LeftText() const;
+		QString LeftText() const
+		{
+			return _left_edit->Text();
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetLeftText(QString const &value);
+		void SetLeftText(QString const &value)
+		{
+			_left_edit->SetText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetLeftText(std::string const &value);
+		void SetLeftText(std::string const &value)
+		{
+			_left_edit->SetText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetLeftText(char const *value);
+		void SetLeftText(char const *value)
+		{
+			_left_edit->SetText(value);
+		}
 
 		///
 		/// @brief 左侧输入框的文本。
@@ -192,14 +236,20 @@ namespace widget
 		///
 		/// @return
 		///
-		QString RightText() const;
+		QString RightText() const
+		{
+			return _right_edit->Text();
+		}
 
 		///
 		/// @brief 设置右侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetRightText(QString const &value);
+		void SetRightText(QString const &value)
+		{
+			_right_edit->SetText(value);
+		}
 
 		///
 		/// @brief 设置右侧输入框的文本。
@@ -252,13 +302,20 @@ namespace widget
 		///
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
-		void SetLeftInvalidInputStyle(bool is_invalid);
+		void SetLeftInvalidInputStyle(bool is_invalid)
+		{
+			_left_edit->SetInvalidInputStyle(is_invalid);
+		}
 
 		///
 		/// @brief 设置右边输入框的输入非法样式。
 		///
 		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
 		///
-		void SetRightInvalidInputStyle(bool is_invalid);
+		void SetRightInvalidInputStyle(bool is_invalid)
+		{
+			_right_edit->SetInvalidInputStyle(is_invalid);
+		}
 	};
+
 } // namespace widget
