@@ -1,8 +1,10 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "base/IDisposable.h"
 #include "base/string/define.h"
 #include "QCheckBox"
+#include "qcoreapplication.h"
 #include "QWidget"
 #include "widget/convert.h"
 #include "widget/layout/HBoxLayout.h"
@@ -16,9 +18,11 @@ namespace widget
 	///
 	///
 	class CheckBox final :
-		public QWidget
+		public QWidget,
+		public base::IDisposable
 	{
 	private:
+		bool _disposed = false;
 		std::shared_ptr<QCheckBox> _check_box;
 		widget::HBoxLayout _layout{this};
 
@@ -64,6 +68,32 @@ namespace widget
 			_layout.AddWidget(_check_box.get());
 
 			ConnectSignals();
+		}
+
+		~CheckBox()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
+			_check_state_changed_event.Dispose();
+
+			disconnect();
+			QCoreApplication::removePostedEvents(this);
 		}
 
 		///
