@@ -1,6 +1,7 @@
 #pragma once
 #include "base/delegate/IEvent.h"
 #include "base/math/Interval.h"
+#include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/RangeSubmit.h"
 #include <cstdint>
 
@@ -13,7 +14,7 @@ namespace widget
 		public QWidget
 	{
 	private:
-		widget::HBoxLayout _layout{this};
+		widget::VBoxLayout _layout{this};
 		widget::RangeSubmit _range_submit = widget::RangeSubmit{};
 
 		int64_t _min = INT64_MIN;
