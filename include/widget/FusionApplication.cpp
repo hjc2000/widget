@@ -1,5 +1,4 @@
 #include "FusionApplication.h"
-#include "QFont"
 
 namespace
 {
@@ -9,13 +8,6 @@ namespace
 		nullptr,
 	};
 } // namespace
-
-void widget::FusionApplication::SetFont()
-{
-	QFont qfont = font();
-	qfont.setPointSize(16);
-	setFont(qfont);
-}
 
 widget::FusionApplication::FusionApplication()
 	: FusionApplication(null_argc, null_argv)
