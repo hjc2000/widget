@@ -124,7 +124,11 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual QString RowTitle(int row) const;
+		virtual QString RowTitle(int row) const
+		{
+			std::string str = std::to_string(row);
+			return QString{str.c_str()};
+		}
 
 		///
 		/// @brief 列标题。
@@ -136,7 +140,11 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual QString ColumnTitle(int column) const;
+		virtual QString ColumnTitle(int column) const
+		{
+			std::string str = std::to_string(column);
+			return QString{str.c_str()};
+		}
 
 		///
 		/// @brief 数据。

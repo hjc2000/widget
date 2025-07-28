@@ -43,4 +43,5 @@ namespace widget
 			return _order;
 		}
 	};
+
 } // namespace widget
