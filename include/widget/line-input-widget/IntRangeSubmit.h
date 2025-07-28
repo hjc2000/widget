@@ -342,21 +342,31 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetRightText(std::string const &value);
+		void SetRightText(std::string const &value)
+		{
+			_range_submit.SetRightText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetRightText(char const *value);
+		void SetRightText(char const *value)
+		{
+			_range_submit.SetRightText(value);
+		}
 
 		///
 		/// @brief 右侧输入框的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string RightTextStdString() const;
+		std::string RightTextStdString() const
+		{
+			return _range_submit.RightTextStdString();
+		}
+
 		/* #endregion */
 	};
 } // namespace widget
