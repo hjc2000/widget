@@ -1,9 +1,11 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "base/IDisposable.h"
 #include "base/math/Interval.h"
 #include "base/string/define.h"
 #include "base/time/TimePointSinceEpoch.h"
+#include "qcoreapplication.h"
 #include "QDateTimeEdit"
 #include "QHBoxLayout"
 #include "QLabel"
@@ -18,9 +20,11 @@ namespace widget
 	///
 	///
 	class DateTimeRangeSubmit final :
-		public QWidget
+		public QWidget,
+		public base::IDisposable
 	{
 	private:
+		bool _disposed = false;
 		widget::HBoxLayout _layout{this};
 		QDateTimeEdit _left_edit{};
 		QDateTimeEdit _right_edit{};
@@ -33,6 +37,7 @@ namespace widget
 
 		base::TimePointSinceEpoch _min{std::chrono::nanoseconds{INT64_MIN}};
 		base::TimePointSinceEpoch _max{std::chrono::nanoseconds{INT64_MAX}};
+
 		base::Delegate<> _submit_event;
 
 		void ConnectSignal()
@@ -199,6 +204,32 @@ namespace widget
 		{
 			_min = min;
 			_max = max;
+		}
+
+		~DateTimeRangeSubmit()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
+			_submit_event.Dispose();
+
+			disconnect();
+			QCoreApplication::removePostedEvents(this);
 		}
 
 		///
