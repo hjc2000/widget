@@ -310,23 +310,32 @@ namespace widget
 		///
 		/// @brief 左侧输入框的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string LeftTextStdString() const;
+		std::string LeftTextStdString() const
+		{
+			return _range_submit.LeftTextStdString();
+		}
 
 		///
 		/// @brief 右侧输入框的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString RightText() const;
+		QString RightText() const
+		{
+			return _range_submit.RightText();
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetRightText(QString const &value);
+		void SetRightText(QString const &value)
+		{
+			_range_submit.SetRightText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框的文本。

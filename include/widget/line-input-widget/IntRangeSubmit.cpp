@@ -118,21 +118,6 @@ void widget::IntRangeSubmit::SetRightPlaceholderText(char const *value)
 
 /* #region 输入框的文本 */
 
-std::string widget::IntRangeSubmit::LeftTextStdString() const
-{
-	return _range_submit.LeftTextStdString();
-}
-
-QString widget::IntRangeSubmit::RightText() const
-{
-	return _range_submit.RightText();
-}
-
-void widget::IntRangeSubmit::SetRightText(QString const &value)
-{
-	_range_submit.SetRightText(value);
-}
-
 void widget::IntRangeSubmit::SetRightText(std::string const &value)
 {
 	_range_submit.SetRightText(value);
