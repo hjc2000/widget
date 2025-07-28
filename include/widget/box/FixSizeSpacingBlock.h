@@ -11,12 +11,23 @@ namespace widget
 		public QWidget
 	{
 	public:
+		///
+		/// @brief 构造宽高相等的空白块。
+		///
+		/// @param size
+		///
 		FixSizeSpacingBlock(int size)
 			: QWidget(nullptr)
 		{
 			setFixedSize(size, size);
 		}
 
+		///
+		/// @brief 构造指定宽高的空白块。
+		///
+		/// @param width
+		/// @param height
+		///
 		FixSizeSpacingBlock(int width, int height)
 			: QWidget(nullptr)
 		{
