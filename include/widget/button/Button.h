@@ -237,14 +237,14 @@ namespace widget
 
 			_disposed = true;
 
-			disconnect();
-			QCoreApplication::removePostedEvents(this);
-
 			_clicked_event.Dispose();
 			_pressed_event.Dispose();
 			_released_event.Dispose();
 			_enter_event.Dispose();
 			_leave_event.Dispose();
+
+			disconnect();
+			QCoreApplication::removePostedEvents(this);
 		}
 
 		/* #region 对外提供事件 */
