@@ -1,5 +1,4 @@
 #include "RangeSubmit.h"
-#include "widget/convert.h"
 
 widget::RangeSubmit::RangeSubmit()
 {
@@ -34,60 +33,6 @@ widget::RangeSubmit::RangeSubmit()
 														   });
 	}
 }
-
-/* #region PlaceholderText */
-
-QString widget::RangeSubmit::LeftPlaceholderText() const
-{
-	return _left_edit->PlaceholderText();
-}
-
-void widget::RangeSubmit::SetLeftPlaceholderText(QString const &value)
-{
-	_left_edit->SetPlaceholderText(value);
-}
-
-void widget::RangeSubmit::SetLeftPlaceholderText(std::string const &value)
-{
-	_left_edit->SetPlaceholderText(value.c_str());
-}
-
-void widget::RangeSubmit::SetLeftPlaceholderText(char const *value)
-{
-	_left_edit->SetPlaceholderText(value);
-}
-
-std::string widget::RangeSubmit::LeftPlaceholderTextStdString() const
-{
-	return base::to_string(LeftPlaceholderText());
-}
-
-QString widget::RangeSubmit::RightPlaceholderText() const
-{
-	return _right_edit->PlaceholderText();
-}
-
-void widget::RangeSubmit::SetRightPlaceholderText(QString const &value)
-{
-	_right_edit->SetPlaceholderText(value);
-}
-
-void widget::RangeSubmit::SetRightPlaceholderText(std::string const &value)
-{
-	_right_edit->SetPlaceholderText(value.c_str());
-}
-
-void widget::RangeSubmit::SetRightPlaceholderText(char const *value)
-{
-	_right_edit->SetPlaceholderText(value);
-}
-
-std::string widget::RangeSubmit::RightPlaceholderTextStdString() const
-{
-	return base::to_string(RightPlaceholderText());
-}
-
-/* #endregion */
 
 /* #region 输入框的文本 */
 

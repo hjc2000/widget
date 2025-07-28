@@ -2,6 +2,7 @@
 #include "qlabel.h"
 #include "widget/box/GridBox.h"
 #include "widget/box/GridBoxItem.h"
+#include "widget/convert.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/Input.h"
 #include <memory>
@@ -14,7 +15,7 @@ namespace widget
 	/// @note 分成左右 2 个输入框，2 个输入框中间一条短横线，表示 从...到... ，右侧一个提交按钮，
 	/// 点击后就是确认提交。
 	///
-	class RangeSubmit :
+	class RangeSubmit final :
 		public QWidget
 	{
 	private:
@@ -47,72 +48,102 @@ namespace widget
 		///
 		/// @brief 左侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString LeftPlaceholderText() const;
+		QString LeftPlaceholderText() const
+		{
+			return _left_edit->PlaceholderText();
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(QString const &value);
+		void SetLeftPlaceholderText(QString const &value)
+		{
+			_left_edit->SetPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(std::string const &value);
+		void SetLeftPlaceholderText(std::string const &value)
+		{
+			_left_edit->SetPlaceholderText(value.c_str());
+		}
 
 		///
 		/// @brief 设置左侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetLeftPlaceholderText(char const *value);
+		void SetLeftPlaceholderText(char const *value)
+		{
+			_left_edit->SetPlaceholderText(value);
+		}
 
 		///
 		/// @brief 左侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string LeftPlaceholderTextStdString() const;
+		std::string LeftPlaceholderTextStdString() const
+		{
+			return base::to_string(LeftPlaceholderText());
+		}
 
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString RightPlaceholderText() const;
+		QString RightPlaceholderText() const
+		{
+			return _right_edit->PlaceholderText();
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(QString const &value);
+		void SetRightPlaceholderText(QString const &value)
+		{
+			_right_edit->SetPlaceholderText(value);
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(std::string const &value);
+		void SetRightPlaceholderText(std::string const &value)
+		{
+			_right_edit->SetPlaceholderText(value.c_str());
+		}
 
 		///
 		/// @brief 设置右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetRightPlaceholderText(char const *value);
+		void SetRightPlaceholderText(char const *value)
+		{
+			_right_edit->SetPlaceholderText(value);
+		}
 
 		///
 		/// @brief 右侧输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		std::string RightPlaceholderTextStdString() const;
+		std::string RightPlaceholderTextStdString() const
+		{
+			return base::to_string(RightPlaceholderText());
+		}
 
 		/* #endregion */
 
