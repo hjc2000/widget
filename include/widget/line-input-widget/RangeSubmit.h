@@ -23,6 +23,7 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
+
 		std::shared_ptr<widget::Input> _left_edit{new widget::Input{}};
 		std::shared_ptr<QLabel> _label{new QLabel{"-"}};
 		std::shared_ptr<widget::Input> _right_edit{new widget::Input{}};
@@ -97,6 +98,9 @@ namespace widget
 			}
 
 			_disposed = true;
+
+			_left_edit->Dispose();
+			_right_edit->Dispose();
 		}
 
 		/* #region PlaceholderText */

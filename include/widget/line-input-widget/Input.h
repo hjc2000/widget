@@ -1,5 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
+#include "base/IDisposable.h"
+#include "qcoreapplication.h"
 #include "qlineedit.h"
 #include "widget/convert.h"
 #include "widget/layout/HBoxLayout.h"
@@ -11,11 +13,22 @@ namespace widget
 	///
 	///
 	class Input final :
-		public QWidget
+		public QWidget,
+		public base::IDisposable
 	{
 	private:
+		bool _disposed = false;
 		widget::HBoxLayout _layout{this};
 		QLineEdit _line_edit{};
+
+		/* #region 对外提供事件 */
+
+		base::Delegate<QString const &> _text_changed_event;
+		base::Delegate<QString const &> _text_changing_finished_event;
+		base::Delegate<QString const &> _text_edited_event;
+		base::Delegate<QString const &> _text_editing_finished_event;
+
+		/* #endregion */
 
 		void ConnectSignal()
 		{
@@ -79,15 +92,6 @@ namespace widget
 					});
 		}
 
-		/* #region 对外提供事件 */
-
-		base::Delegate<QString const &> _text_changed_event;
-		base::Delegate<QString const &> _text_changing_finished_event;
-		base::Delegate<QString const &> _text_edited_event;
-		base::Delegate<QString const &> _text_editing_finished_event;
-
-		/* #endregion */
-
 	public:
 		Input()
 		{
@@ -95,6 +99,35 @@ namespace widget
 			_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 			_layout.AddWidget(&_line_edit);
 			ConnectSignal();
+		}
+
+		~Input()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
+			_text_changed_event.Dispose();
+			_text_changing_finished_event.Dispose();
+			_text_edited_event.Dispose();
+			_text_editing_finished_event.Dispose();
+
+			disconnect();
+			QCoreApplication::removePostedEvents(this);
 		}
 
 		/* #region PlaceholderText */
