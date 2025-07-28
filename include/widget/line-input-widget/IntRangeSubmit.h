@@ -126,31 +126,44 @@ namespace widget
 		///
 		/// @brief 区间左端点。
 		///
-		/// @return int64_t
+		/// @return
 		///
-		int64_t LeftValue() const;
+		int64_t LeftValue() const
+		{
+			return _left_value;
+		}
 
 		///
 		/// @brief 区间右端点。
 		///
-		/// @return int64_t
+		/// @return
 		///
-		int64_t RightValue() const;
+		int64_t RightValue() const
+		{
+			return _right_value;
+		}
 
 		///
 		/// @brief 获取区间。
 		///
-		/// @return base::ClosedInterval<int64_t>
+		/// @return
 		///
-		base::ClosedInterval<int64_t> Interval() const;
+		base::ClosedInterval<int64_t> Interval() const
+		{
+			return base::ClosedInterval<int64_t>{LeftValue(), RightValue()};
+		}
+
 		/* #endregion */
 
 		///
 		/// @brief 提交事件。
 		///
-		/// @return base::IEvent<>&
+		/// @return
 		///
-		base::IEvent<> &SubmitEvent();
+		base::IEvent<> &SubmitEvent()
+		{
+			return _submit_event;
+		}
 
 		/* #region 输入非法样式 */
 

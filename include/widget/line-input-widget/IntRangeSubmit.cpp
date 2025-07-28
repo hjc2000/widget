@@ -61,27 +61,7 @@ void widget::IntRangeSubmit::OnSubmit()
 
 /* #region 区间 */
 
-int64_t widget::IntRangeSubmit::LeftValue() const
-{
-	return _left_value;
-}
-
-int64_t widget::IntRangeSubmit::RightValue() const
-{
-	return _right_value;
-}
-
-base::ClosedInterval<int64_t> widget::IntRangeSubmit::Interval() const
-{
-	return base::ClosedInterval<int64_t>{LeftValue(), RightValue()};
-}
-
 /* #endregion */
-
-base::IEvent<> &widget::IntRangeSubmit::SubmitEvent()
-{
-	return _submit_event;
-}
 
 /* #region 输入非法样式 */
 
