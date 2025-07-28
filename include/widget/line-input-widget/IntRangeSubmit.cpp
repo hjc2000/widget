@@ -106,6 +106,7 @@ void widget::IntRangeSubmit::OnSubmit()
 
 widget::IntRangeSubmit::IntRangeSubmit()
 {
+	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 	_layout.AddWidget(&_range_submit);
 
 	_range_submit.SubmitEvent().Subscribe([this]()
