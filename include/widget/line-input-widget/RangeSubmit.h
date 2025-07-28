@@ -1,4 +1,5 @@
 #pragma once
+#include "base/IDisposable.h"
 #include "qlabel.h"
 #include "widget/box/GridBox.h"
 #include "widget/box/GridBoxItem.h"
@@ -16,9 +17,11 @@ namespace widget
 	/// 点击后就是确认提交。
 	///
 	class RangeSubmit final :
-		public QWidget
+		public QWidget,
+		public base::IDisposable
 	{
 	private:
+		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
 		std::shared_ptr<widget::Input> _left_edit{new widget::Input{}};
 		std::shared_ptr<QLabel> _label{new QLabel{"-"}};
@@ -73,6 +76,27 @@ namespace widget
 																	   _submit_event.Invoke();
 																   });
 			}
+		}
+
+		~RangeSubmit()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
 		}
 
 		/* #region PlaceholderText */
