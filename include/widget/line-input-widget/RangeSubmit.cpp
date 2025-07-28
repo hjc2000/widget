@@ -56,11 +56,6 @@ void widget::RangeSubmit::SetLeftText(char const *value)
 	_left_edit->SetText(value);
 }
 
-std::string widget::RangeSubmit::LeftTextStdString() const
-{
-	return base::to_string(LeftText());
-}
-
 QString widget::RangeSubmit::RightText() const
 {
 	return _right_edit->Text();

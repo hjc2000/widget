@@ -180,14 +180,17 @@ namespace widget
 		///
 		/// @brief 左侧输入框的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string LeftTextStdString() const;
+		std::string LeftTextStdString() const
+		{
+			return base::to_string(LeftText());
+		}
 
 		///
 		/// @brief 右侧输入框的文本。
 		///
-		/// @return QString
+		/// @return
 		///
 		QString RightText() const;
 
