@@ -1,49 +1,4 @@
 #include "IntRangeSubmit.h"
-#include "base/string/define.h"
-#include "base/string/Parse.h"
-#include <iostream>
-
-bool widget::IntRangeSubmit::TryParseLeftValue(int64_t &out)
-{
-	try
-	{
-		out = base::ParseInt64(_range_submit.LeftTextStdString());
-		return true;
-	}
-	catch (std::exception const &e)
-	{
-		SetLeftInvalidInputStyle(true);
-		std::cerr << CODE_POS_STR + e.what() << std::endl;
-	}
-	catch (...)
-	{
-		SetLeftInvalidInputStyle(true);
-		std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
-	}
-
-	return false;
-}
-
-bool widget::IntRangeSubmit::TryParseRightValue(int64_t &out)
-{
-	try
-	{
-		out = base::ParseInt64(_range_submit.RightTextStdString());
-		return true;
-	}
-	catch (std::exception const &e)
-	{
-		SetRightInvalidInputStyle(true);
-		std::cerr << CODE_POS_STR + e.what() << std::endl;
-	}
-	catch (...)
-	{
-		SetRightInvalidInputStyle(true);
-		std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
-	}
-
-	return false;
-}
 
 void widget::IntRangeSubmit::CheckLeftRightValues(int64_t left_value, int64_t right_value)
 {
@@ -102,20 +57,6 @@ void widget::IntRangeSubmit::OnSubmit()
 	{
 		std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
 	}
-}
-
-widget::IntRangeSubmit::IntRangeSubmit()
-{
-	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-	_layout.AddWidget(&_range_submit);
-
-	_range_submit.SubmitEvent().Subscribe([this]()
-										  {
-											  OnSubmit();
-										  });
-
-	_range_submit.SetLeftText(std::to_string(_left_value));
-	_range_submit.SetRightText(std::to_string(_right_value));
 }
 
 widget::IntRangeSubmit::IntRangeSubmit(int64_t min, int64_t max)

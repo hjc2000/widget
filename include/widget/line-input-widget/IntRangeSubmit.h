@@ -1,16 +1,19 @@
 #pragma once
 #include "base/delegate/IEvent.h"
 #include "base/math/Interval.h"
+#include "base/string/define.h"
+#include "base/string/Parse.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/RangeSubmit.h"
 #include <cstdint>
+#include <iostream>
 
 namespace widget
 {
 	///
 	/// @brief 整型范围提交控件。
 	///
-	class IntRangeSubmit :
+	class IntRangeSubmit final :
 		public QWidget
 	{
 	private:
@@ -23,8 +26,48 @@ namespace widget
 		int64_t _left_value = 0;
 		int64_t _right_value = 0;
 
-		bool TryParseLeftValue(int64_t &out);
-		bool TryParseRightValue(int64_t &out);
+		bool TryParseLeftValue(int64_t &out)
+		{
+			try
+			{
+				out = base::ParseInt64(_range_submit.LeftTextStdString());
+				return true;
+			}
+			catch (std::exception const &e)
+			{
+				SetLeftInvalidInputStyle(true);
+				std::cerr << CODE_POS_STR + e.what() << std::endl;
+			}
+			catch (...)
+			{
+				SetLeftInvalidInputStyle(true);
+				std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
+			}
+
+			return false;
+		}
+
+		bool TryParseRightValue(int64_t &out)
+		{
+			try
+			{
+				out = base::ParseInt64(_range_submit.RightTextStdString());
+				return true;
+			}
+			catch (std::exception const &e)
+			{
+				SetRightInvalidInputStyle(true);
+				std::cerr << CODE_POS_STR + e.what() << std::endl;
+			}
+			catch (...)
+			{
+				SetRightInvalidInputStyle(true);
+				std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
+			}
+
+			return false;
+		}
+
 		void CheckLeftRightValues(int64_t left_value, int64_t right_value);
 
 		void OnSubmit();
@@ -32,7 +75,20 @@ namespace widget
 		base::Delegate<> _submit_event;
 
 	public:
-		IntRangeSubmit();
+		IntRangeSubmit()
+		{
+			setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_layout.AddWidget(&_range_submit);
+
+			_range_submit.SubmitEvent().Subscribe([this]()
+												  {
+													  OnSubmit();
+												  });
+
+			_range_submit.SetLeftText(std::to_string(_left_value));
+			_range_submit.SetRightText(std::to_string(_right_value));
+		}
+
 		IntRangeSubmit(int64_t min, int64_t max);
 
 		int64_t MinValue() const;
