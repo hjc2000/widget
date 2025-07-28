@@ -126,27 +126,7 @@ void widget::RangeSubmit::SetRightText(QString const &value)
 	_right_edit->SetText(value);
 }
 
-void widget::RangeSubmit::SetRightText(std::string const &value)
-{
-	_right_edit->SetText(value);
-}
-
-void widget::RangeSubmit::SetRightText(char const *value)
-{
-	_right_edit->SetText(value);
-}
-
-std::string widget::RangeSubmit::RightTextStdString() const
-{
-	return base::to_string(RightText());
-}
-
 /* #endregion */
-
-base::IEvent<> &widget::RangeSubmit::SubmitEvent()
-{
-	return _submit_event;
-}
 
 void widget::RangeSubmit::SetLeftInvalidInputStyle(bool is_invalid)
 {

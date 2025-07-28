@@ -172,21 +172,30 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetRightText(std::string const &value);
+		void SetRightText(std::string const &value)
+		{
+			_right_edit->SetText(value);
+		}
 
 		///
 		/// @brief 设置右侧输入框的文本。
 		///
 		/// @param value
 		///
-		void SetRightText(char const *value);
+		void SetRightText(char const *value)
+		{
+			_right_edit->SetText(value);
+		}
 
 		///
 		/// @brief 右侧输入框的文本。
 		///
-		/// @return std::string
+		/// @return
 		///
-		std::string RightTextStdString() const;
+		std::string RightTextStdString() const
+		{
+			return base::to_string(RightText());
+		}
 
 		/* #endregion */
 
@@ -197,9 +206,12 @@ namespace widget
 		/// 	@li 用户在左右 2 个输入框中的任意一个按下回车。
 		/// 	@li 用户在左右 2 个输入框中的任意一个编辑后让输入框失去焦点。
 		///
-		/// @return base::IEvent<>&
+		/// @return
 		///
-		base::IEvent<> &SubmitEvent();
+		base::IEvent<> &SubmitEvent()
+		{
+			return _submit_event;
+		}
 
 		///
 		/// @brief 设置左边输入框的输入非法样式。
