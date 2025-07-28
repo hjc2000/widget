@@ -57,23 +57,51 @@ namespace widget
 		}
 
 	public:
-		Submit();
+		Submit()
+		{
+			{
+				setAutoFillBackground(true);
+				QPalette temp_palette = palette();
+				temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
+				setPalette(temp_palette);
+			}
+
+			{
+				// 将控件添加到布局中
+				_layout.addWidget(&_line_edit);
+				_layout.addWidget(&_button);
+
+				// 控件之间的间距。在这里就是设置输入框和提交按钮之间的间距。
+				_layout.setSpacing(10);
+
+				// 布局内的内容区域与布局边框的间距。实际上相当于网页中的盒子内边距。
+				_layout.setContentsMargins(0, 0, 0, 0);
+			}
+
+			ConnectSignal();
+		}
 
 		/* #region PlaceholderText */
 
 		///
 		/// @brief 输入框在没有输入内容时显示的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString PlaceholderText() const;
+		QString PlaceholderText() const
+		{
+			return _line_edit.PlaceholderText();
+		}
 
 		///
 		/// @brief 设置：输入框在没有输入内容时显示的文本。
 		///
 		/// @param value
 		///
-		void SetPlaceholderText(QString const &value);
+		void SetPlaceholderText(QString const &value)
+		{
+			_line_edit.SetPlaceholderText(value);
+		}
 
 		/* #endregion */
 
@@ -82,30 +110,42 @@ namespace widget
 		///
 		/// @brief 编辑框中的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString Text() const;
+		QString Text() const
+		{
+			return _line_edit.Text();
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(QString const &value);
+		void SetText(QString const &value)
+		{
+			_line_edit.SetText(value);
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(std::string const &value);
+		void SetText(std::string const &value)
+		{
+			SetText(QString{value.c_str()});
+		}
 
 		///
 		/// @brief 设置：编辑框中的文本。
 		///
 		/// @param value
 		///
-		void SetText(char const *value);
+		void SetText(char const *value)
+		{
+			SetText(QString{value});
+		}
 
 		/* #endregion */
 
@@ -114,16 +154,22 @@ namespace widget
 		///
 		/// @brief 按钮的文本。
 		///
-		/// @return QString
+		/// @return
 		///
-		QString ButtonText() const;
+		QString ButtonText() const
+		{
+			return _button.text();
+		}
 
 		///
 		/// @brief 设置按钮的文本。
 		///
 		/// @param value
 		///
-		void SetButtonText(QString const &value);
+		void SetButtonText(QString const &value)
+		{
+			_button.setText(value);
+		}
 
 		///
 		/// @brief 设置按钮的文本。
@@ -138,6 +184,7 @@ namespace widget
 		/// @param value
 		///
 		void SetButtonText(char const *value);
+
 		/* #endregion */
 
 		///
@@ -145,7 +192,7 @@ namespace widget
 		///
 		/// @note 提交按钮被点击或输入框中按下回车时触发此事件。
 		///
-		/// @return base::IEvent<QString const &>&
+		/// @return
 		///
 		base::IEvent<QString const &> &SubmitEvent();
 
@@ -166,8 +213,7 @@ namespace widget
 		///
 		/// @brief 提交按钮的可见性。
 		///
-		/// @return true
-		/// @return false
+		/// @return
 		///
 		bool SubmissionButtonVisibility() const;
 
