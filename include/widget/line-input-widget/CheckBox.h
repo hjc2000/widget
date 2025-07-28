@@ -6,7 +6,6 @@
 #include "QCheckBox"
 #include "qcoreapplication.h"
 #include "QWidget"
-#include "widget/convert.h"
 #include "widget/layout/HBoxLayout.h"
 #include "widget/line-input-widget/CheckState.h"
 #include <iostream>

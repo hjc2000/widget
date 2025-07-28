@@ -1,21 +1,118 @@
 #pragma once
+#include "base/delegate/Delegate.h"
+#include "base/delegate/IEvent.h"
+#include "base/IDisposable.h"
 #include "qcombobox.h"
+#include "qcoreapplication.h"
 #include "qwidget.h"
+#include "widget/convert.h"
 #include "widget/layout/VBoxLayout.h"
+#include <string>
+#include <vector>
 
 namespace widget
 {
 	class ComboBox :
-		public QWidget
+		public QWidget,
+		public base::IDisposable
 	{
 	private:
+		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
 		QComboBox _combo_box{};
+		std::vector<QMetaObject::Connection> _connections{};
+
+		base::Delegate<int> _current_index_changed{};
+		base::Delegate<std::string const &> _current_text_changed{};
+
+		void ConnectSignals()
+		{
+			QMetaObject::Connection connection;
+
+			{
+				connection = connect(&_combo_box,
+									 &QComboBox::currentIndexChanged,
+									 [this](int index)
+									 {
+										 _current_index_changed.Invoke(index);
+									 });
+
+				_connections.push_back(connection);
+			}
+
+			{
+				connection = connect(&_combo_box,
+									 &QComboBox::currentTextChanged,
+									 [this](QString const &text)
+									 {
+										 _current_text_changed.Invoke(base::to_string(text));
+									 });
+
+				_connections.push_back(connection);
+			}
+		}
 
 	public:
 		ComboBox()
 		{
 			_layout.AddWidget(&_combo_box);
+			_combo_box.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+		}
+
+		~ComboBox()
+		{
+			Dispose();
+		}
+
+		///
+		/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+		///
+		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+		/// 符合 “准备后事” 的工作。
+		///
+		virtual void Dispose() override
+		{
+			if (_disposed)
+			{
+				return;
+			}
+
+			_disposed = true;
+
+			_current_index_changed.Dispose();
+			_current_text_changed.Dispose();
+
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
+			QCoreApplication::removePostedEvents(this);
+		}
+
+		void AddItem(QString const &item)
+		{
+			_combo_box.addItem(item);
+		}
+
+		void AddItem(std::string const &item)
+		{
+			AddItem(widget::ToQString(item));
+		}
+
+		void AddItem(char const *item)
+		{
+			AddItem(widget::ToQString(item));
+		}
+
+		base::IEvent<int> &CurrentIndexChanged()
+		{
+			return _current_index_changed;
+		}
+
+		base::IEvent<std::string const &> &CurrentTextChanged()
+		{
+			return _current_text_changed;
 		}
 	};
 
