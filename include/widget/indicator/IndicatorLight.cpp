@@ -48,33 +48,3 @@ void widget::IndicatorLight::TurnOff()
 	_state = base::led::State::Off;
 	update();
 }
-
-void widget::IndicatorLight::Toggle()
-{
-	if (_state == base::led::State::On)
-	{
-		TurnOff();
-	}
-	else
-	{
-		TurnOn();
-	}
-}
-
-QColor widget::IndicatorLight::OnColor() const
-{
-	return _on_color;
-}
-
-void widget::IndicatorLight::SetOnColor(QColor value)
-{
-	if (_on_color == value)
-	{
-		return;
-	}
-
-	_on_color = value;
-
-	// 触发重绘
-	update();
-}

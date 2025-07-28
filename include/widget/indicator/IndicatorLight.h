@@ -101,15 +101,25 @@ namespace widget
 		void TurnOff();
 
 		///
-		/// @brief 翻转 LED.
+		/// @brief 翻转指示灯。
 		///
 		///
-		void Toggle();
+		void Toggle()
+		{
+			if (_state == base::led::State::On)
+			{
+				TurnOff();
+			}
+			else
+			{
+				TurnOn();
+			}
+		}
 
 		///
 		/// @brief LED 灯的状态。
 		///
-		/// @return base::led::State
+		/// @return
 		///
 		base::led::State State() const
 		{
@@ -136,16 +146,30 @@ namespace widget
 		///
 		/// @brief 指示灯打开时的颜色。
 		///
-		/// @return QColor
+		/// @return
 		///
-		QColor OnColor() const;
+		QColor OnColor() const
+		{
+			return _on_color;
+		}
 
 		///
 		/// @brief 设置指示灯打开时的颜色。
 		///
 		/// @param value
 		///
-		void SetOnColor(QColor value);
+		void SetOnColor(QColor value)
+		{
+			if (_on_color == value)
+			{
+				return;
+			}
+
+			_on_color = value;
+
+			// 触发重绘
+			update();
+		}
 
 		///
 		/// @brief 指示灯关闭时的颜色。
