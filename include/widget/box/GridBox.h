@@ -2,6 +2,7 @@
 #include "base/container/List.h"
 #include "base/string/define.h"
 #include "GridBoxItem.h"
+#include "LabelValueGridItem.h"
 #include "LabelValueUnitGridItem.h"
 #include "qgridlayout.h"
 #include "qwidget.h"
@@ -93,6 +94,50 @@ namespace widget
 					SetColumnStretch(i * 3 + 0, 0);
 					SetColumnStretch(i * 3 + 1, 1);
 					SetColumnStretch(i * 3 + 2, 0);
+				}
+
+				SetAlignment(Qt::AlignmentFlag::AlignTop);
+			}
+			catch (std::exception const &e)
+			{
+				throw std::runtime_error{CODE_POS_STR + e.what()};
+			}
+			catch (...)
+			{
+				throw std::runtime_error{CODE_POS_STR + "未知的异常。"};
+			}
+		}
+
+		GridBox(std::initializer_list<widget::LabelValueGridItem> const &items)
+		{
+			try
+			{
+				int max_column = 0;
+
+				for (widget::LabelValueGridItem const &item : items)
+				{
+					max_column = std::max(max_column, item.Column());
+
+					widget::GridBoxItem label{
+						item.Row(),
+						item.Column() * 2,
+						item.Lable(),
+					};
+
+					widget::GridBoxItem data{
+						item.Row(),
+						item.Column() * 2 + 1,
+						item.Data(),
+					};
+
+					AddItem(label);
+					AddItem(data);
+				}
+
+				for (int i = 0; i <= max_column; i++)
+				{
+					SetColumnStretch(i * 2 + 0, 0);
+					SetColumnStretch(i * 2 + 1, 1);
 				}
 
 				SetAlignment(Qt::AlignmentFlag::AlignTop);
