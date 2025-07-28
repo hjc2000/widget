@@ -386,6 +386,70 @@ namespace widget
 		}
 
 		/* #endregion */
+
+		/* #region 网格盒子的行列间距 */
+
+		///
+		/// @brief 网格盒子的行列间距。
+		///
+		/// @return
+		///
+		int Spacing() const
+		{
+			return _grid_layout.spacing();
+		}
+
+		///
+		/// @brief 设置网格盒子的行列间距。
+		///
+		/// @param value
+		///
+		void SetSpacing(int value)
+		{
+			_grid_layout.setSpacing(value);
+		}
+
+		///
+		/// @brief 网格盒子的水平间距。
+		///
+		/// @return
+		///
+		int HorizontalSpacing() const
+		{
+			return _grid_layout.horizontalSpacing();
+		}
+
+		///
+		/// @brief 设置网格盒子的水平间距。
+		///
+		/// @param value
+		///
+		void SetHorizontalSpacing(int value)
+		{
+			_grid_layout.setHorizontalSpacing(value);
+		}
+
+		///
+		/// @brief 网格盒子的垂直间距。
+		///
+		/// @return
+		///
+		int VerticalSpacing() const
+		{
+			return _grid_layout.verticalSpacing();
+		}
+
+		///
+		/// @brief 设置网格盒子的垂直间距。
+		///
+		/// @param value
+		///
+		void SetVerticalSpacing(int value)
+		{
+			_grid_layout.setVerticalSpacing(value);
+		}
+
+		/* #endregion */
 	};
 
 } // namespace widget
