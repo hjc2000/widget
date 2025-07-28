@@ -176,14 +176,20 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetButtonText(std::string const &value);
+		void SetButtonText(std::string const &value)
+		{
+			SetButtonText(QString{value.c_str()});
+		}
 
 		///
 		/// @brief 设置按钮的文本。
 		///
 		/// @param value
 		///
-		void SetButtonText(char const *value);
+		void SetButtonText(char const *value)
+		{
+			SetButtonText(QString{value});
+		}
 
 		/* #endregion */
 
@@ -194,7 +200,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<QString const &> &SubmitEvent();
+		base::IEvent<QString const &> &SubmitEvent()
+		{
+			return _submit_event;
+		}
 
 		/* #region 提交按钮可见性 */
 
@@ -202,20 +211,29 @@ namespace widget
 		/// @brief 隐藏提交按钮。
 		///
 		///
-		void HideSubmissionButton();
+		void HideSubmissionButton()
+		{
+			_button.hide();
+		}
 
 		///
 		/// @brief 展示提交按钮。
 		///
 		///
-		void ShowSubmissionButton();
+		void ShowSubmissionButton()
+		{
+			_button.show();
+		}
 
 		///
 		/// @brief 提交按钮的可见性。
 		///
 		/// @return
 		///
-		bool SubmissionButtonVisibility() const;
+		bool SubmissionButtonVisibility() const
+		{
+			return !_button.isHidden();
+		}
 
 		///
 		/// @brief 设置提交按钮的可见性。
@@ -224,7 +242,18 @@ namespace widget
 		///
 		/// @param value
 		///
-		void SetSubmissionButtonVisibility(bool value);
+		void SetSubmissionButtonVisibility(bool value)
+		{
+			if (SubmissionButtonVisibility())
+			{
+				HideSubmissionButton();
+			}
+			else
+			{
+				ShowSubmissionButton();
+			}
+		}
+
 		/* #endregion */
 	};
 
