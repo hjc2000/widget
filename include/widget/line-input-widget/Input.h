@@ -163,4 +163,5 @@ namespace widget
 		///
 		void SetInvalidInputStyle(bool is_invalid);
 	};
+
 } // namespace widget

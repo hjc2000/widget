@@ -23,7 +23,38 @@ namespace widget
 
 		base::Delegate<QString const &> _submit_event;
 
-		void ConnectSignal();
+		void ConnectSignal()
+		{
+			_button.ClickedEvent().Subscribe(
+				[this]()
+				{
+					try
+					{
+						_submit_event.Invoke(_line_edit.Text());
+					}
+					catch (std::exception const &e)
+					{
+					}
+					catch (...)
+					{
+					}
+				});
+
+			_line_edit.TextChangingFinishedEvent().Subscribe(
+				[this](QString const &text)
+				{
+					try
+					{
+						_submit_event.Invoke(_line_edit.Text());
+					}
+					catch (std::exception const &e)
+					{
+					}
+					catch (...)
+					{
+					}
+				});
+		}
 
 	public:
 		Submit();
@@ -150,4 +181,5 @@ namespace widget
 		void SetSubmissionButtonVisibility(bool value);
 		/* #endregion */
 	};
+
 } // namespace widget

@@ -15,7 +15,7 @@ namespace widget
 	/// @brief 选择框。
 	///
 	///
-	class CheckBox :
+	class CheckBox final :
 		public QWidget
 	{
 	private:

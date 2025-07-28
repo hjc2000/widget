@@ -17,7 +17,7 @@ namespace widget
 	/// @brief 日期时间范围提交控件。
 	///
 	///
-	class DateTimeRangeSubmit :
+	class DateTimeRangeSubmit final :
 		public QWidget
 	{
 	private:
