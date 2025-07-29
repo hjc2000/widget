@@ -138,6 +138,52 @@ namespace widget
 		{
 			return _current_text_changed;
 		}
+
+		///
+		/// @brief 当前索引。
+		///
+		/// @return
+		///
+		int CurrentIndex() const
+		{
+			return _combo_box.currentIndex();
+		}
+
+		///
+		/// @brief 设置当前索引。
+		///
+		/// @param index
+		///
+		void SetCurrentIndex(int index)
+		{
+			if (_combo_box.currentIndex() != index)
+			{
+				_combo_box.setCurrentIndex(index);
+			}
+		}
+
+		///
+		/// @brief 设置当前文本。
+		///
+		/// @return
+		///
+		std::string CurrentText() const
+		{
+			return base::to_string(_combo_box.currentText());
+		}
+
+		///
+		/// @brief 当前文本。
+		///
+		/// @param value
+		///
+		void SetCurrentText(std::string const &value)
+		{
+			if (CurrentText() != value)
+			{
+				_combo_box.setCurrentText(widget::ToQString(value));
+			}
+		}
 	};
 
 } // namespace widget
