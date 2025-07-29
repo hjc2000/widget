@@ -124,7 +124,7 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<int> &CurrentIndexChanged()
+		base::IEvent<int> &CurrentIndexChangedEvent()
 		{
 			return _current_index_changed;
 		}
@@ -134,7 +134,7 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<std::string const &> &CurrentTextChanged()
+		base::IEvent<std::string const &> &CurrentTextChangedEvent()
 		{
 			return _current_text_changed;
 		}
