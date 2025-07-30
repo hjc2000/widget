@@ -1,6 +1,7 @@
 #pragma once
 #include "QApplication"
 #include "QFont"
+#include "widget/plugin.h" // IWYU pragma: keep
 
 namespace widget
 {
