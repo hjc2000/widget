@@ -8,6 +8,7 @@
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
+#include "widget/plugin.h"
 #include <chrono>
 #include <cstdint>
 #include <iostream>
