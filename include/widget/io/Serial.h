@@ -303,7 +303,7 @@ namespace widget
 						   base::serial::StopBits stop_bits,
 						   base::serial::HardwareFlowControl hardware_flow_control) override;
 
-		virtual int32_t Read(base::Span const &span) override
+		virtual int64_t Read(base::Span const &span) override
 		{
 			return _received_stream.Read(span);
 		}

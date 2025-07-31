@@ -15,7 +15,7 @@ public:
 					   base::serial::StopBits stop_bits,
 					   base::serial::HardwareFlowControl hardware_flow_control) = 0;
 
-	virtual int32_t Read(base::Span const &span) = 0;
+	virtual int64_t Read(base::Span const &span) = 0;
 
 	virtual void Write(base::ReadOnlySpan const &span) = 0;
 
