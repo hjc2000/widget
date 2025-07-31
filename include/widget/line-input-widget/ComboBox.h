@@ -13,6 +13,10 @@
 
 namespace widget
 {
+	///
+	/// @brief 下拉选择框组件。
+	///
+	///
 	class ComboBox :
 		public QWidget,
 		public base::IDisposable
