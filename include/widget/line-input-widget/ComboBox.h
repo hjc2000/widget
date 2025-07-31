@@ -58,6 +58,7 @@ namespace widget
 		{
 			_layout.AddWidget(&_combo_box);
 			_combo_box.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			ConnectSignals();
 		}
 
 		ComboBox(std::initializer_list<std::string> const &items)
