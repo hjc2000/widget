@@ -14,7 +14,7 @@ void widget::Serial::OnReceiveData()
 
 		base::ReadOnlySpan span{
 			reinterpret_cast<uint8_t const *>(receive_data.data()),
-			static_cast<int32_t>(receive_data.size()),
+			static_cast<int64_t>(receive_data.size()),
 		};
 
 		_received_stream.Write(span);

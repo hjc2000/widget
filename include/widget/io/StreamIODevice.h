@@ -20,11 +20,9 @@ namespace widget
 		{
 			try
 			{
-				int32_t size = std::min<int64_t>(INT32_MAX, maxlen);
-
 				base::Span span{
 					reinterpret_cast<uint8_t *>(data),
-					size,
+					maxlen,
 				};
 
 				return _stream->Read(span);
@@ -40,22 +38,13 @@ namespace widget
 		{
 			try
 			{
-				int64_t have_written = 0;
+				base::ReadOnlySpan span{
+					reinterpret_cast<uint8_t const *>(data),
+					len,
+				};
 
-				while (have_written < len)
-				{
-					int32_t size = std::min<int64_t>(INT32_MAX, len - have_written);
-
-					base::ReadOnlySpan span{
-						reinterpret_cast<uint8_t const *>(data + have_written),
-						size,
-					};
-
-					_stream->Write(span);
-					have_written += size;
-				}
-
-				return have_written;
+				_stream->Write(span);
+				return len;
 			}
 			catch (std::exception const &e)
 			{
