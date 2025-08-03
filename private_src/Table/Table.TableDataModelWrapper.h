@@ -59,7 +59,8 @@ public:
 	/// @brief 表格的行数。
 	///
 	/// @param parent
-	/// @return int
+	///
+	/// @return
 	///
 	virtual int rowCount(QModelIndex const &parent = QModelIndex{}) const override;
 
@@ -67,7 +68,8 @@ public:
 	/// @brief 表格的列数。
 	///
 	/// @param parent
-	/// @return int
+	///
+	/// @return
 	///
 	virtual int columnCount(QModelIndex const &parent = QModelIndex{}) const override;
 
@@ -92,14 +94,14 @@ public:
 	///
 	/// @note 每次 sort 方法被调用，都会记录参数。如果 sort 方法从来没被调用过，则是默认参数。
 	///
-	/// @return widget::TableSortingParameter
+	/// @return
 	///
 	widget::TableSortingParameter CurrentSortingParameter() const;
 
 	///
 	/// @brief 获取被本对象包装的 widget::ITableDataModel 对象。
 	///
-	/// @return widget::ITableDataModel&
+	/// @return
 	///
 	widget::ITableDataModel &InnerModel() const;
 };
