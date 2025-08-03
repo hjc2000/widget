@@ -2,7 +2,7 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
-#include "base/math/Interval.h"
+#include "base/math/interval/Interval.h"
 #include "base/string/define.h"
 #include "base/time/TimePointSinceEpoch.h"
 #include "qcoreapplication.h"
