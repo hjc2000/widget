@@ -4,6 +4,7 @@
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
 #include "qscrollbar.h"
+#include "Table.PrivateTable.h"
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -116,7 +117,7 @@ void widget::Table::TableDataModelWrapper::UnsubscribeEvents()
 
 /* #endregion */
 
-widget::Table::TableDataModelWrapper::TableDataModelWrapper(QTableView *table_view,
+widget::Table::TableDataModelWrapper::TableDataModelWrapper(widget::Table::PrivateTable *table_view,
 															std::shared_ptr<widget::ITableDataModel> const &model)
 {
 	if (model == nullptr)
