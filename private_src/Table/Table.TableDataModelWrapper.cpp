@@ -35,9 +35,7 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 			return;
 		}
 
-		// 获取视窗坐标中 0 像素坐标位置对应的是哪一行。
-		// 这就是第一个可见行。
-		int first_visible_row = _table_view->rowAt(0);
+		int first_visible_row = _table_view->FirstVisibleRowIndex();
 		if (args.RowIndex().Value() > first_visible_row)
 		{
 			return;
@@ -75,9 +73,7 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 			return;
 		}
 
-		// 获取视窗坐标中 0 像素坐标位置对应的是哪一行。
-		// 这就是第一个可见行。
-		int first_visible_row = _table_view->rowAt(0);
+		int first_visible_row = _table_view->FirstVisibleRowIndex();
 		if (args.RowIndex().Value() > first_visible_row)
 		{
 			return;
