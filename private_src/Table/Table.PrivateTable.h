@@ -6,6 +6,7 @@
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
+#include <vector>
 
 ///
 /// @brief 私有的表格。派生 QTableView 以支持一些自定义特性，然后隐藏起来，作为私有代码，
@@ -24,6 +25,8 @@ private:
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
 	base::Delegate<int> _vertical_scroll_event;
+
+	std::vector<QMetaObject::Connection> _connections;
 
 	void ConnectSignals();
 
@@ -89,6 +92,11 @@ public:
 		_double_click_event.Dispose();
 		_current_change_event.Dispose();
 		_vertical_scroll_event.Dispose();
+
+		for (QMetaObject::Connection const &connection : _connections)
+		{
+			disconnect(connection);
+		}
 	}
 
 	///

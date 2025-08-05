@@ -6,19 +6,29 @@
 
 void widget::Table::PrivateTable::ConnectSignals()
 {
-	connect(this,
+	{
+		QMetaObject::Connection connection = connect(
+			this,
 			&widget::Table::PrivateTable::doubleClicked,
 			[this](QModelIndex const &index)
 			{
 				_double_click_event.Invoke(base::Position{index.column(), index.row()});
 			});
 
-	connect(verticalScrollBar(),
+		_connections.push_back(connection);
+	}
+
+	{
+		QMetaObject::Connection connection = connect(
+			verticalScrollBar(),
 			&QScrollBar::valueChanged,
 			[this](int value)
 			{
 				_vertical_scroll_event.Invoke(verticalScrollBar()->value());
 			});
+
+		_connections.push_back(connection);
+	}
 }
 
 void widget::Table::PrivateTable::ClearInitialFocus()
