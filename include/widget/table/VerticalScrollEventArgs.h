@@ -3,6 +3,10 @@
 
 namespace widget
 {
+	///
+	/// @brief 垂直滚动事件参数。
+	///
+	///
 	class VerticalScrollEventArgs
 	{
 	private:
@@ -16,11 +20,23 @@ namespace widget
 			_first_visible_row = first_visible_row;
 		}
 
+		///
+		/// @brief 当前表格视图的滚动条对象。
+		///
+		/// @return
+		///
 		constexpr QScrollBar *ScrollBar() const
 		{
 			return _scroll_bar;
 		}
 
+		///
+		/// @brief 当前第一个可见行的行索引。
+		///
+		/// @note 如果表格内没有行，将会返回 -1.
+		///
+		/// @return
+		///
 		constexpr int FirstVisibleRowIndex() const
 		{
 			return _first_visible_row;
