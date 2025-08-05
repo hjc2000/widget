@@ -227,6 +227,13 @@ namespace widget
 		///
 		void SetItemColumnAlignments(std::vector<Qt::AlignmentFlag> const &alignments);
 
+		///
+		/// @brief 第一个可见行的行索引。
+		///
+		/// @return
+		///
+		int FirstVisibleRowIndex() const;
+
 		/* #region 事件 */
 
 		///

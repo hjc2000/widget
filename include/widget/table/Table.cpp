@@ -264,6 +264,11 @@ void widget::Table::SetItemColumnAlignments(std::vector<Qt::AlignmentFlag> const
 	update();
 }
 
+int widget::Table::FirstVisibleRowIndex() const
+{
+	return _table->FirstVisibleRowIndex();
+}
+
 /* #region 事件 */
 
 base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()

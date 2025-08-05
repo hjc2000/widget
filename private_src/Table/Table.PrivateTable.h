@@ -129,6 +129,16 @@ public:
 		return *_custom_item_delegate;
 	}
 
+	///
+	/// @brief 第一个可见行的行索引。
+	///
+	/// @return
+	///
+	int FirstVisibleRowIndex() const
+	{
+		return rowAt(0);
+	}
+
 	/* #region 事件 */
 
 	///
