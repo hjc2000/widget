@@ -39,8 +39,6 @@ private:
 	/* #endregion */
 
 public:
-	/* #region 生命周期 */
-
 	///
 	/// @brief 传入一个 widget::ITableDataModel 对象以被本对象包装。
 	///
@@ -50,8 +48,6 @@ public:
 	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
 
 	~TableDataModelWrapper();
-
-	/* #endregion */
 
 	/* #region 实现 QAbstractTableModel */
 
