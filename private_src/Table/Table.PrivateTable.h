@@ -1,6 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "base/IDisposable.h"
 #include "qscrollbar.h"
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
@@ -11,16 +12,18 @@
 /// 被公共的 Table 类以组合的方式进行包装。
 ///
 ///
-class widget::Table::PrivateTable :
-	public QTableView
+class widget::Table::PrivateTable final :
+	public QTableView,
+	public base::IDisposable
 {
 private:
+	bool _disposed = false;
 	std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 	QAbstractItemModel *_data_model = nullptr;
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
-	base::Delegate<int> _vertical_scroll_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
+	base::Delegate<int> _vertical_scroll_event;
 
 	void ConnectSignals();
 
@@ -62,6 +65,31 @@ public:
 	///
 	///
 	PrivateTable();
+
+	~PrivateTable()
+	{
+		Dispose();
+	}
+
+	///
+	/// @brief 处置对象，让对象准备好结束生命周期。类似于进入 “准备后事” 的状态。
+	///
+	/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
+	/// 符合 “准备后事” 的工作。
+	///
+	virtual void Dispose() override
+	{
+		if (_disposed)
+		{
+			return;
+		}
+
+		_disposed = true;
+
+		_double_click_event.Dispose();
+		_current_change_event.Dispose();
+		_vertical_scroll_event.Dispose();
+	}
 
 	///
 	/// @brief 设置数据模型。

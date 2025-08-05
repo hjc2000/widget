@@ -23,7 +23,7 @@ void widget::Table::SetColumnHeaderStyle()
 
 void widget::Table::SubscribeEvents()
 {
-	_table_current_index_index_change_event_token = _table->CurrentChangeEvent() += [this](widget::Table::CurrentChangeEventArgs const &args)
+	_table->CurrentChangeEvent() += [this](widget::Table::CurrentChangeEventArgs const &args)
 	{
 		if (_row_header_view == nullptr)
 		{
@@ -34,11 +34,16 @@ void widget::Table::SubscribeEvents()
 		_column_header_view->SetSelectedIndex(args.Current().column());
 		update();
 	};
-}
 
-void widget::Table::UnsubscribeEvents()
-{
-	_table->CurrentChangeEvent() -= _table_current_index_index_change_event_token;
+	_table->VerticalScrollEvent() += [this](int position)
+	{
+		if (_table_data_model == nullptr)
+		{
+			return;
+		}
+
+		_table_data_model->InnerModel().OnVerticalScroll(position);
+	};
 }
 
 /* #endregion */
@@ -58,7 +63,7 @@ widget::Table::Table()
 
 widget::Table::~Table()
 {
-	UnsubscribeEvents();
+	_table->Dispose();
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
