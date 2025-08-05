@@ -271,4 +271,9 @@ base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::Curr
 	return _table->CurrentChangeEvent();
 }
 
+base::IEvent<int> &widget::Table::VerticalScrollEvent()
+{
+	return _table->VerticalScrollEvent();
+}
+
 /* #endregion */

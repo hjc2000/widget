@@ -12,6 +12,13 @@ void widget::Table::PrivateTable::ConnectSignals()
 			{
 				_double_click_event.Invoke(base::Position{index.column(), index.row()});
 			});
+
+	connect(verticalScrollBar(),
+			&QScrollBar::valueChanged,
+			[this](int value)
+			{
+				_vertical_scroll_event.Invoke(verticalScrollBar()->value());
+			});
 }
 
 void widget::Table::PrivateTable::ClearInitialFocus()

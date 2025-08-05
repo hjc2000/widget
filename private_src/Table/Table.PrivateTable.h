@@ -1,6 +1,7 @@
 #pragma once
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
+#include "qscrollbar.h"
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
@@ -18,6 +19,7 @@ private:
 	QAbstractItemModel *_data_model = nullptr;
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
+	base::Delegate<int> _vertical_scroll_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
 
 	void ConnectSignals();
@@ -34,12 +36,24 @@ private:
 	///
 	void ClearSortIndicator();
 
-	void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
+	virtual void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
 	{
 		QTableView::currentChanged(current, previous);
 
 		widget::Table::CurrentChangeEventArgs args{current, previous};
 		_current_change_event(args);
+	}
+
+	virtual void wheelEvent(QWheelEvent *event) override
+	{
+		// 调用基类处理滚动
+		QTableView::wheelEvent(event);
+
+		if (verticalScrollBar()->value() <= verticalScrollBar()->minimum() ||
+			verticalScrollBar()->value() >= verticalScrollBar()->maximum())
+		{
+			_vertical_scroll_event.Invoke(verticalScrollBar()->value());
+		}
 	}
 
 public:
@@ -84,7 +98,7 @@ public:
 	///
 	/// @note 事件参数为 (base::Position const &position)
 	///
-	/// @return base::IEvent<base::Position const &>&
+	/// @return
 	///
 	base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent()
 	{
@@ -99,6 +113,23 @@ public:
 	base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent()
 	{
 		return _current_change_event;
+	}
+
+	///
+	/// @brief 垂直滚动事件。
+	///
+	/// @note 只要尝试滚动就会触发此事件。
+	///
+	/// @note 滚动条没有到顶或到底时，滚动会触发此事件，传入当前滚动到的位置。
+	///
+	/// @note 滚动条已经到顶或到底了，继续尝试滚动，滚不动了，当前位置不会改变，但是仍然会
+	/// 触发此事件，只不过传入的位置信息一直是不变的，一直是顶部或底部位置。
+	///
+	/// @return
+	///
+	base::IEvent<int> &VerticalScrollEvent()
+	{
+		return _vertical_scroll_event;
 	}
 
 	/* #endregion */

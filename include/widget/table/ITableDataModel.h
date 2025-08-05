@@ -196,4 +196,5 @@ namespace widget
 
 		/* #endregion */
 	};
+
 } // namespace widget
