@@ -164,6 +164,14 @@ namespace widget
 		///
 		virtual void Sort(int column, bool ascending) = 0;
 
+		///
+		/// @brief 垂直滚动事件处理函数。
+		///
+		/// @param position 当前的像素位置。
+		/// 	@note 要能够应对不断传入相同的值。
+		///
+		virtual void OnVerticalScroll(int position) = 0;
+
 		/* #region 事件 */
 
 		///
