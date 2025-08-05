@@ -3,6 +3,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include "qscrollbar.h"
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -24,6 +25,34 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endInsertRows();
+
+		// 插入行后需要进行像素补偿，防止视窗内的行发生移动。
+		if (_table_view->verticalScrollBar()->maximum() == 0)
+		{
+			return;
+		}
+
+		int first_visible_row = _table_view->rowAt(0);
+		if (args.RowIndex().Value() > first_visible_row)
+		{
+			return;
+		}
+
+		// 插入点的行的当前像素位置。
+		int start_row_position = _table_view->rowViewportPosition(args.RowIndex().Value());
+
+		// 插入后获取原来的插入点处的行的现在的像素位置。
+		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
+
+		QTimer::singleShot(
+			0,
+			this,
+			[this, end_row_position, start_row_position]
+			{
+				int delta_position = end_row_position - start_row_position;
+				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() + delta_position;
+				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
+			});
 	};
 
 	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::ITableDataModel::RowRemovedEventArgs const &args)
@@ -33,6 +62,32 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endRemoveRows();
+
+		// 删除行后需要进行像素补偿，防止视窗内的行发生移动。
+		if (_table_view->verticalScrollBar()->maximum() == 0)
+		{
+			return;
+		}
+
+		int first_visible_row = _table_view->rowAt(0);
+		if (args.RowIndex().Value() > first_visible_row)
+		{
+			return;
+		}
+
+		int start_row_position = _table_view->rowViewportPosition(args.RowIndex().Value());
+
+		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
+
+		QTimer::singleShot(
+			0,
+			this,
+			[this, end_row_position, start_row_position]
+			{
+				int delta_position = end_row_position - start_row_position;
+				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() - delta_position;
+				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
+			});
 	};
 
 	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange<int32_t> const &range)
@@ -53,15 +108,15 @@ void widget::Table::TableDataModelWrapper::UnsubscribeEvents()
 
 /* #endregion */
 
-/* #region 生命周期 */
-
-widget::Table::TableDataModelWrapper::TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model)
+widget::Table::TableDataModelWrapper::TableDataModelWrapper(QTableView *table_view,
+															std::shared_ptr<widget::ITableDataModel> const &model)
 {
 	if (model == nullptr)
 	{
 		throw std::invalid_argument{CODE_POS_STR + "禁止传入空指针。"};
 	}
 
+	_table_view = table_view;
 	_model = model;
 	SubscribeEvents();
 }
@@ -70,8 +125,6 @@ widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 {
 	UnsubscribeEvents();
 }
-
-/* #endregion */
 
 /* #region 实现 QAbstractTableModel */
 

@@ -71,7 +71,7 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 		return;
 	}
 
-	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{model}};
+	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{_table.get(), model}};
 	_table->setModel(_table_data_model.get());
 	_table->setVerticalHeader(_row_header_view.get());
 	_table->setHorizontalHeader(_column_header_view.get());

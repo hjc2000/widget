@@ -14,6 +14,7 @@ class widget::Table::TableDataModelWrapper final :
 	public QAbstractTableModel
 {
 private:
+	QTableView *_table_view = nullptr;
 	std::shared_ptr<widget::ITableDataModel> _model;
 	widget::TableSortingParameter _table_sorting_paremeter{};
 
@@ -45,7 +46,7 @@ public:
 	/// @param model 要被包装的 widget::ITableDataModel 对象。禁止传入空指针。
 	/// 传入空指针会引发异常。
 	///
-	TableDataModelWrapper(std::shared_ptr<widget::ITableDataModel> const &model);
+	TableDataModelWrapper(QTableView *table_view, std::shared_ptr<widget::ITableDataModel> const &model);
 
 	~TableDataModelWrapper();
 
