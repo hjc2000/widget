@@ -27,6 +27,8 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		endInsertRows();
 
 		// 插入行后需要进行像素补偿，防止视窗内的行发生移动。
+		// 我写了一篇博客：
+		// https://blog.csdn.net/qq_36148047/article/details/149935903?sharetype=blogdetail&sharerId=149935903&sharerefer=PC&sharesource=qq_36148047&spm=1011.2480.3001.8118
 		if (_table_view->verticalScrollBar()->maximum() == 0)
 		{
 			return;
