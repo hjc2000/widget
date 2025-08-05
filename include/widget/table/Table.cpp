@@ -35,14 +35,14 @@ void widget::Table::SubscribeEvents()
 		update();
 	};
 
-	_table->VerticalScrollEvent() += [this](int position)
+	_table->VerticalScrollEvent() += [this](QScrollBar &scroll_bar)
 	{
 		if (_table_data_model == nullptr)
 		{
 			return;
 		}
 
-		_table_data_model->InnerModel().OnVerticalScroll(position);
+		_table_data_model->InnerModel().OnVerticalScroll(scroll_bar);
 	};
 }
 
@@ -276,7 +276,7 @@ base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::Curr
 	return _table->CurrentChangeEvent();
 }
 
-base::IEvent<int> &widget::Table::VerticalScrollEvent()
+base::IEvent<QScrollBar &> &widget::Table::VerticalScrollEvent()
 {
 	return _table->VerticalScrollEvent();
 }

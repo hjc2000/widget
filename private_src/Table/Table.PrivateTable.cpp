@@ -24,7 +24,7 @@ void widget::Table::PrivateTable::ConnectSignals()
 			&QScrollBar::valueChanged,
 			[this](int value)
 			{
-				_vertical_scroll_event.Invoke(verticalScrollBar()->value());
+				_vertical_scroll_event.Invoke(*verticalScrollBar());
 			});
 
 		_connections.push_back(connection);

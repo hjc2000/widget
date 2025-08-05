@@ -3,6 +3,7 @@
 #include "base/math/PositionRange.h"
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
+#include "qscrollbar.h"
 #include "QString"
 #include <cstdint>
 
@@ -167,10 +168,9 @@ namespace widget
 		///
 		/// @brief 垂直滚动事件处理函数。
 		///
-		/// @param position 当前的像素位置。
-		/// 	@note 要能够应对不断传入相同的值。
+		/// @param scroll_bar
 		///
-		virtual void OnVerticalScroll(int position) = 0;
+		virtual void OnVerticalScroll(QScrollBar &scroll_bar) = 0;
 
 		/* #region 事件 */
 

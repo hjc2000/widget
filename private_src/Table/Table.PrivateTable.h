@@ -24,7 +24,7 @@ private:
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
-	base::Delegate<int> _vertical_scroll_event;
+	base::Delegate<QScrollBar &> _vertical_scroll_event;
 
 	std::vector<QMetaObject::Connection> _connections;
 
@@ -58,7 +58,9 @@ private:
 		if (verticalScrollBar()->value() <= verticalScrollBar()->minimum() ||
 			verticalScrollBar()->value() >= verticalScrollBar()->maximum())
 		{
-			_vertical_scroll_event.Invoke(verticalScrollBar()->value());
+			// 没有滚动到顶部或底部时，交给滚动条的滚动值改变事件来触发 _vertical_scroll_event,
+			// 滚动到顶部或底部时才有这里的滚轮事件触发 _vertical_scroll_event.
+			_vertical_scroll_event.Invoke(*verticalScrollBar());
 		}
 	}
 
@@ -156,14 +158,12 @@ public:
 	///
 	/// @note 只要尝试滚动就会触发此事件。
 	///
-	/// @note 滚动条没有到顶或到底时，滚动会触发此事件，传入当前滚动到的位置。
-	///
 	/// @note 滚动条已经到顶或到底了，继续尝试滚动，滚不动了，当前位置不会改变，但是仍然会
-	/// 触发此事件，只不过传入的位置信息一直是不变的，一直是顶部或底部位置。
+	/// 触发此事件。
 	///
 	/// @return
 	///
-	base::IEvent<int> &VerticalScrollEvent()
+	base::IEvent<QScrollBar &> &VerticalScrollEvent()
 	{
 		return _vertical_scroll_event;
 	}

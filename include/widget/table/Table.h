@@ -3,6 +3,7 @@
 #include "base/math/ColumnIndex.h"
 #include "base/math/Position.h"
 #include "QHeaderView"
+#include "qscrollbar.h"
 #include "QTableView"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/table/ITableDataModel.h"
@@ -254,7 +255,7 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<int> &VerticalScrollEvent();
+		base::IEvent<QScrollBar &> &VerticalScrollEvent();
 
 		/* #endregion */
 	};
