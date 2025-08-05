@@ -3,8 +3,8 @@
 #include "base/math/PositionRange.h"
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
-#include "qscrollbar.h"
 #include "QString"
+#include "VerticalScrollEventArgs.h"
 #include <cstdint>
 
 namespace widget
@@ -168,9 +168,9 @@ namespace widget
 		///
 		/// @brief 垂直滚动事件处理函数。
 		///
-		/// @param scroll_bar
+		/// @param args
 		///
-		virtual void OnVerticalScroll(QScrollBar &scroll_bar) = 0;
+		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) = 0;
 
 		/* #region 事件 */
 

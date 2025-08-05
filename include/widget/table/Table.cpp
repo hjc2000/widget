@@ -5,6 +5,7 @@
 #include "Table.HeaderView.h"
 #include "Table.PrivateTable.h"
 #include "Table.TableDataModelWrapper.h"
+#include "VerticalScrollEventArgs.h"
 #include <stdexcept>
 
 void widget::Table::SetColumnHeaderStyle()
@@ -35,14 +36,14 @@ void widget::Table::SubscribeEvents()
 		update();
 	};
 
-	_table->VerticalScrollEvent() += [this](QScrollBar &scroll_bar)
+	_table->VerticalScrollEvent() += [this](widget::VerticalScrollEventArgs const &args)
 	{
 		if (_table_data_model == nullptr)
 		{
 			return;
 		}
 
-		_table_data_model->InnerModel().OnVerticalScroll(scroll_bar);
+		_table_data_model->InnerModel().OnVerticalScroll(args);
 	};
 }
 
@@ -281,7 +282,7 @@ base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::Curr
 	return _table->CurrentChangeEvent();
 }
 
-base::IEvent<QScrollBar &> &widget::Table::VerticalScrollEvent()
+base::IEvent<widget::VerticalScrollEventArgs const &> &widget::Table::VerticalScrollEvent()
 {
 	return _table->VerticalScrollEvent();
 }

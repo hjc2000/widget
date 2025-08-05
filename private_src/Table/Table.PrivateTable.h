@@ -6,6 +6,7 @@
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
+#include "widget/table/VerticalScrollEventArgs.h"
 #include <vector>
 
 ///
@@ -24,7 +25,7 @@ private:
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
-	base::Delegate<QScrollBar &> _vertical_scroll_event;
+	base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
 
 	std::vector<QMetaObject::Connection> _connections;
 
@@ -60,7 +61,13 @@ private:
 		{
 			// 没有滚动到顶部或底部时，交给滚动条的滚动值改变事件来触发 _vertical_scroll_event,
 			// 滚动到顶部或底部时才有这里的滚轮事件触发 _vertical_scroll_event.
-			_vertical_scroll_event.Invoke(*verticalScrollBar());
+
+			widget::VerticalScrollEventArgs args{
+				verticalScrollBar(),
+				FirstVisibleRowIndex(),
+			};
+
+			_vertical_scroll_event.Invoke(args);
 		}
 	}
 
@@ -173,7 +180,7 @@ public:
 	///
 	/// @return
 	///
-	base::IEvent<QScrollBar &> &VerticalScrollEvent()
+	base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent()
 	{
 		return _vertical_scroll_event;
 	}
