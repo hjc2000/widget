@@ -19,7 +19,7 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		endResetModel();
 	};
 
-	_row_inserted_event_token = _model->RowInsertedEvent() += [this](widget::ITableDataModel::RowInsertedEventArgs const &args)
+	_row_inserted_event_token = _model->RowInsertedEvent() += [this](widget::RowInsertedEventArgs const &args)
 	{
 		beginInsertRows(QModelIndex{},
 						args.RowIndex().Value(),
@@ -59,7 +59,7 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 			});
 	};
 
-	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::ITableDataModel::RowRemovedEventArgs const &args)
+	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::RowRemovedEventArgs const &args)
 	{
 		beginRemoveRows(QModelIndex{},
 						args.RowIndex().Value(),

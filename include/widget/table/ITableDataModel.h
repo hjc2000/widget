@@ -9,6 +9,54 @@
 
 namespace widget
 {
+	class RowInsertedEventArgs
+	{
+	private:
+		base::RowIndex _row_index;
+		base::RowCount _row_count;
+
+	public:
+		RowInsertedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
+		{
+			_row_index = row_index;
+			_row_count = row_count;
+		}
+
+		base::RowIndex RowIndex() const
+		{
+			return _row_index;
+		}
+
+		base::RowCount RowCount() const
+		{
+			return _row_count;
+		}
+	};
+
+	class RowRemovedEventArgs
+	{
+	private:
+		base::RowIndex _row_index;
+		base::RowCount _row_count;
+
+	public:
+		RowRemovedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
+		{
+			_row_index = row_index;
+			_row_count = row_count;
+		}
+
+		base::RowIndex RowIndex() const
+		{
+			return _row_index;
+		}
+
+		base::RowCount RowCount() const
+		{
+			return _row_count;
+		}
+	};
+
 	///
 	/// @brief 表格数据模型。
 	///
@@ -21,59 +69,6 @@ namespace widget
 	///
 	class ITableDataModel
 	{
-	public:
-		/* #region 事件参数 */
-
-		class RowInsertedEventArgs
-		{
-		private:
-			base::RowIndex _row_index;
-			base::RowCount _row_count;
-
-		public:
-			RowInsertedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
-			{
-				_row_index = row_index;
-				_row_count = row_count;
-			}
-
-			base::RowIndex RowIndex() const
-			{
-				return _row_index;
-			}
-
-			base::RowCount RowCount() const
-			{
-				return _row_count;
-			}
-		};
-
-		class RowRemovedEventArgs
-		{
-		private:
-			base::RowIndex _row_index;
-			base::RowCount _row_count;
-
-		public:
-			RowRemovedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
-			{
-				_row_index = row_index;
-				_row_count = row_count;
-			}
-
-			base::RowIndex RowIndex() const
-			{
-				return _row_index;
-			}
-
-			base::RowCount RowCount() const
-			{
-				return _row_count;
-			}
-		};
-
-		/* #endregion */
-
 	public:
 		virtual ~ITableDataModel() = default;
 
@@ -186,14 +181,14 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual base::IEvent<widget::ITableDataModel::RowInsertedEventArgs const &> &RowInsertedEvent() = 0;
+		virtual base::IEvent<widget::RowInsertedEventArgs const &> &RowInsertedEvent() = 0;
 
 		///
 		/// @brief 行被移除事件。
 		///
 		/// @return
 		///
-		virtual base::IEvent<widget::ITableDataModel::RowRemovedEventArgs const &> &RowRemovedEvent() = 0;
+		virtual base::IEvent<widget::RowRemovedEventArgs const &> &RowRemovedEvent() = 0;
 
 		///
 		/// @brief 数据发生更改。
