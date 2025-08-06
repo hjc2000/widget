@@ -36,8 +36,7 @@ void widget::Table::PrivateTable::ConnectSignals()
 				last_value = value;
 
 				widget::VerticalScrollEventArgs args{
-					verticalScrollBar(),
-					FirstVisibleRowIndex(),
+					this,
 					direction,
 				};
 

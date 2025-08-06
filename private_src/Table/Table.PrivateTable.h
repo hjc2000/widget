@@ -69,8 +69,7 @@ private:
 			}
 
 			widget::VerticalScrollEventArgs args{
-				verticalScrollBar(),
-				FirstVisibleRowIndex(),
+				this,
 				direction,
 			};
 

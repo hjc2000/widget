@@ -1,5 +1,5 @@
 #pragma once
-#include "qscrollbar.h"
+#include "qtableview.h"
 
 namespace widget
 {
@@ -16,28 +16,20 @@ namespace widget
 	class VerticalScrollEventArgs
 	{
 	private:
-		QScrollBar *_scroll_bar = nullptr;
-		int _first_visible_row = 0;
+		QTableView *_table_view = nullptr;
 		widget::VerticalScrollDirection _direction;
 
 	public:
-		constexpr VerticalScrollEventArgs(QScrollBar *scroll_bar,
-										  int first_visible_row,
+		constexpr VerticalScrollEventArgs(QTableView *table_view,
 										  widget::VerticalScrollDirection direction)
 		{
-			_scroll_bar = scroll_bar;
-			_first_visible_row = first_visible_row;
+			_table_view = table_view;
 			_direction = direction;
 		}
 
-		///
-		/// @brief 当前表格视图的滚动条对象。
-		///
-		/// @return
-		///
-		constexpr QScrollBar *ScrollBar() const
+		constexpr QTableView *TableView() const
 		{
-			return _scroll_bar;
+			return _table_view;
 		}
 
 		///
@@ -49,7 +41,7 @@ namespace widget
 		///
 		constexpr int FirstVisibleRowIndex() const
 		{
-			return _first_visible_row;
+			return _table_view->rowAt(0);
 		}
 
 		///
