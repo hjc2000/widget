@@ -62,9 +62,16 @@ private:
 			// 没有滚动到顶部或底部时，交给滚动条的滚动值改变事件来触发 _vertical_scroll_event,
 			// 滚动到顶部或底部时才有这里的滚轮事件触发 _vertical_scroll_event.
 
+			widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
+			if (event->angleDelta().y() > 0)
+			{
+				direction = widget::VerticalScrollDirection::Up;
+			}
+
 			widget::VerticalScrollEventArgs args{
 				verticalScrollBar(),
 				FirstVisibleRowIndex(),
+				direction,
 			};
 
 			_vertical_scroll_event.Invoke(args);

@@ -1,5 +1,6 @@
 #include "Table.PrivateTable.h"
 #include "base/math/Position.h"
+#include "widget/table/VerticalScrollEventArgs.h"
 #include <Table.CustomItemDelegate.h>
 #include <widget/convert.h>
 #include <widget/line-input-widget/Submit.h>
@@ -24,9 +25,20 @@ void widget::Table::PrivateTable::ConnectSignals()
 			&QScrollBar::valueChanged,
 			[this](int value)
 			{
+				static int last_value = 0;
+				widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
+
+				if (verticalScrollBar()->value() < last_value)
+				{
+					direction = widget::VerticalScrollDirection::Up;
+				}
+
+				last_value = value;
+
 				widget::VerticalScrollEventArgs args{
 					verticalScrollBar(),
 					FirstVisibleRowIndex(),
+					direction,
 				};
 
 				_vertical_scroll_event.Invoke(args);

@@ -3,6 +3,12 @@
 
 namespace widget
 {
+	enum class VerticalScrollDirection
+	{
+		Up,
+		Down
+	};
+
 	///
 	/// @brief 垂直滚动事件参数。
 	///
@@ -12,12 +18,16 @@ namespace widget
 	private:
 		QScrollBar *_scroll_bar = nullptr;
 		int _first_visible_row = 0;
+		widget::VerticalScrollDirection _direction;
 
 	public:
-		constexpr VerticalScrollEventArgs(QScrollBar *scroll_bar, int first_visible_row)
+		constexpr VerticalScrollEventArgs(QScrollBar *scroll_bar,
+										  int first_visible_row,
+										  widget::VerticalScrollDirection direction)
 		{
 			_scroll_bar = scroll_bar;
 			_first_visible_row = first_visible_row;
+			_direction = direction;
 		}
 
 		///
@@ -40,6 +50,16 @@ namespace widget
 		constexpr int FirstVisibleRowIndex() const
 		{
 			return _first_visible_row;
+		}
+
+		///
+		/// @brief 滚动方向。
+		///
+		/// @return
+		///
+		widget::VerticalScrollDirection Direction() const
+		{
+			return _direction;
 		}
 	};
 
