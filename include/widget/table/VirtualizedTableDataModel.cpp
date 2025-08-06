@@ -124,7 +124,6 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 		});
 	}
 
-	// 需要扩展视窗。
 	while (true)
 	{
 		int64_t size_to_expand = 1000 - RowCount();
@@ -134,6 +133,7 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 			return;
 		}
 
+		// 需要扩展视窗。
 		if (RealRowCount() <= RowCount())
 		{
 			// 没有更多数据可以扩展视窗。
@@ -153,6 +153,7 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 
 			_end += delta;
 			_row_inserted_event.Invoke(new_args);
+			continue;
 		}
 
 		if (_start > 0)
@@ -166,6 +167,7 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 
 			_start -= delta;
 			_row_inserted_event.Invoke(new_args);
+			continue;
 		}
 	}
 }
