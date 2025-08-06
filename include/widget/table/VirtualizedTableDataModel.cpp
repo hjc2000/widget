@@ -2,9 +2,11 @@
 #include "base/math/math.h"
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
+#include "base/string/define.h"
 #include "qscrollbar.h"
 #include <algorithm>
 #include <cstdint>
+#include <stdexcept>
 
 void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
 {
@@ -86,6 +88,21 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 
 void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t count)
 {
+	if (index < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "index 不能 < 0."};
+	}
+
+	if (count < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "count 不能 < 0."};
+	}
+
+	if (count == 0)
+	{
+		return;
+	}
+
 	if (index < _start)
 	{
 		// 在视窗的前面插入。
