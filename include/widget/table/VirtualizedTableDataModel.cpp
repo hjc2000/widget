@@ -8,6 +8,56 @@
 #include <cstdint>
 #include <stdexcept>
 
+void widget::VirtualizedTableDataModel::ExpandWindow()
+{
+	while (true)
+	{
+		int64_t size_to_expand = 1000 - RowCount();
+		if (size_to_expand <= 0)
+		{
+			// 视窗足够大了，不需要扩展。
+			return;
+		}
+
+		// 需要扩展视窗。
+		if (RealRowCount() <= RowCount())
+		{
+			// 没有更多数据可以扩展视窗。
+			return;
+		}
+
+		if (_end < RealRowCount())
+		{
+			// 尾部扩展
+			int64_t delta = RealRowCount() - _end;
+			delta = std::min(size_to_expand, delta);
+
+			widget::RowInsertedEventArgs new_args{
+				base::RowIndex{_end},
+				base::RowCount{delta},
+			};
+
+			_end += delta;
+			_row_inserted_event.Invoke(new_args);
+			continue;
+		}
+
+		if (_start > 0)
+		{
+			int64_t delta = std::min(_start, size_to_expand);
+
+			widget::RowInsertedEventArgs new_args{
+				base::RowIndex{0},
+				base::RowCount{delta},
+			};
+
+			_start -= delta;
+			_row_inserted_event.Invoke(new_args);
+			continue;
+		}
+	}
+}
+
 void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
 {
 	if ((args.Direction() == widget::VerticalScrollDirection::Down) &&
@@ -124,50 +174,5 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 		});
 	}
 
-	while (true)
-	{
-		int64_t size_to_expand = 1000 - RowCount();
-		if (size_to_expand <= 0)
-		{
-			// 视窗足够大了，不需要扩展。
-			return;
-		}
-
-		// 需要扩展视窗。
-		if (RealRowCount() <= RowCount())
-		{
-			// 没有更多数据可以扩展视窗。
-			return;
-		}
-
-		if (_end < RealRowCount())
-		{
-			// 尾部扩展
-			int64_t delta = RealRowCount() - _end;
-			delta = std::min(size_to_expand, delta);
-
-			widget::RowInsertedEventArgs new_args{
-				base::RowIndex{_end},
-				base::RowCount{delta},
-			};
-
-			_end += delta;
-			_row_inserted_event.Invoke(new_args);
-			continue;
-		}
-
-		if (_start > 0)
-		{
-			int64_t delta = std::min(_start, size_to_expand);
-
-			widget::RowInsertedEventArgs new_args{
-				base::RowIndex{0},
-				base::RowCount{delta},
-			};
-
-			_start -= delta;
-			_row_inserted_event.Invoke(new_args);
-			continue;
-		}
-	}
+	ExpandWindow();
 }

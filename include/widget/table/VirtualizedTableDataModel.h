@@ -21,6 +21,8 @@ namespace widget
 		base::Delegate<widget::RowRemovedEventArgs const &> _row_removed_event;
 		base::Delegate<base::PositionRange<int32_t> const &> _data_change_event;
 
+		void ExpandWindow();
+
 		/* #region 事件 */
 
 		///
