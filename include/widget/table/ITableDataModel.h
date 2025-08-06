@@ -1,62 +1,14 @@
 #pragma once
 #include "base/delegate/IEvent.h"
 #include "base/math/PositionRange.h"
-#include "base/math/RowCount.h"
-#include "base/math/RowIndex.h"
 #include "QString"
 #include "VerticalScrollEventArgs.h"
+#include "widget/table/RowInsertedEventArgs.h"
+#include "widget/table/RowRemovedEventArgs.h"
 #include <cstdint>
 
 namespace widget
 {
-	class RowInsertedEventArgs
-	{
-	private:
-		base::RowIndex _row_index;
-		base::RowCount _row_count;
-
-	public:
-		RowInsertedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
-		{
-			_row_index = row_index;
-			_row_count = row_count;
-		}
-
-		base::RowIndex RowIndex() const
-		{
-			return _row_index;
-		}
-
-		base::RowCount RowCount() const
-		{
-			return _row_count;
-		}
-	};
-
-	class RowRemovedEventArgs
-	{
-	private:
-		base::RowIndex _row_index;
-		base::RowCount _row_count;
-
-	public:
-		RowRemovedEventArgs(base::RowIndex const &row_index, base::RowCount const &row_count)
-		{
-			_row_index = row_index;
-			_row_count = row_count;
-		}
-
-		base::RowIndex RowIndex() const
-		{
-			return _row_index;
-		}
-
-		base::RowCount RowCount() const
-		{
-			return _row_count;
-		}
-	};
-
 	///
 	/// @brief 表格数据模型。
 	///
