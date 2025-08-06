@@ -187,6 +187,8 @@ namespace widget
 			}
 		}
 
+		/* #region 滑动窗口 */
+
 		///
 		/// @brief 移动列表窗口。
 		///
@@ -236,6 +238,8 @@ namespace widget
 
 			return delta;
 		}
+
+		/* #endregion */
 
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
