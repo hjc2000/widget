@@ -167,6 +167,13 @@ namespace widget
 	protected:
 		void NotifyRowInserted(int64_t index, int64_t count);
 
+		void NotifyModelReset()
+		{
+			_start = 0;
+			_end = 0;
+			_model_reset_event.Invoke();
+		}
+
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
 
