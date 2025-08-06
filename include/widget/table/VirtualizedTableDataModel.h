@@ -1,10 +1,11 @@
 #pragma once
 #include "base/delegate/Delegate.h"
-#include "base/math/math.h"
+#include "base/math/RowCount.h"
+#include "base/math/RowIndex.h"
 #include "base/string/String.h"
 #include "ITableDataModel.h"
 #include "qobject.h"
-#include "qscrollbar.h"
+#include <algorithm>
 #include <cstdint>
 
 namespace widget
@@ -109,83 +110,7 @@ namespace widget
 		///
 		/// @param args
 		///
-		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) override final
-		{
-			if ((args.Direction() == widget::VerticalScrollDirection::Down) &&
-				(args.FirstVisibleRowIndex() > RowCount() - 100))
-			{
-				QTableView *table_view = args.TableView();
-
-				int64_t step = TryMoveAsFarAsPossible(200);
-
-				_data_change_event.Invoke(base::PositionRange<int32_t>{
-					base::Position<int32_t>{0, 0},
-					base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
-				});
-
-				{
-					if (args.TableView()->verticalScrollBar()->maximum() == 0)
-					{
-						return;
-					}
-
-					// 插入点的行的当前像素位置。
-					int start_row_position = args.TableView()->rowViewportPosition(0);
-
-					// 插入后获取原来的插入点处的行的现在的像素位置。
-					int end_row_position = args.TableView()->rowViewportPosition(step);
-
-					// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-					QTimer::singleShot(
-						0,
-						&_q_object,
-						[table_view, start_row_position, end_row_position]
-						{
-							int delta_position = end_row_position - start_row_position;
-							int new_scroll_bar_position = table_view->verticalScrollBar()->value() - delta_position;
-							table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
-						});
-				}
-			}
-			else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
-					 (args.FirstVisibleRowIndex() < 100))
-			{
-				QTableView *table_view = args.TableView();
-
-				int64_t step = TryMoveAsFarAsPossible(-200);
-
-				_data_change_event.Invoke(base::PositionRange<int>{
-					base::Position<int32_t>{0, 0},
-					base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
-				});
-
-				{
-					if (args.TableView()->verticalScrollBar()->maximum() == 0)
-					{
-						return;
-					}
-
-					int64_t have_moved = base::abs(step);
-
-					// 插入点的行的当前像素位置。
-					int start_row_position = args.TableView()->rowViewportPosition(0);
-
-					// 插入后获取原来的插入点处的行的现在的像素位置。
-					int end_row_position = args.TableView()->rowViewportPosition(have_moved);
-
-					// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-					QTimer::singleShot(
-						0,
-						&_q_object,
-						[table_view, start_row_position, end_row_position]
-						{
-							int delta_position = end_row_position - start_row_position;
-							int new_scroll_bar_position = table_view->verticalScrollBar()->value() + delta_position;
-							table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
-						});
-				}
-			}
-		}
+		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) override final;
 
 		/* #region 滑动窗口 */
 
@@ -241,8 +166,57 @@ namespace widget
 
 		/* #endregion */
 
+	protected:
+		void NotifyRowInserted(int64_t start, int64_t end)
+		{
+			if (end - start > 1000)
+			{
+				// 对 end 限幅。因为视窗大小为 1000.
+				end = start + 1000;
+			}
+
+			if (RowCount() == 0)
+			{
+				// 视窗大小为 0.
+				_start = start;
+				_end = end;
+
+				widget::RowInsertedEventArgs new_args{
+					base::RowIndex{0},
+					base::RowCount{end - start},
+				};
+
+				_row_inserted_event.Invoke(new_args);
+				return;
+			}
+
+			// 视窗大小不为 0.
+			if (start >= _end)
+			{
+				// 在视窗的后面插入，无影响。
+				return;
+			}
+
+			if (start < _start)
+			{
+				// 在视窗的前面插入。
+				return;
+			}
+
+			// 在视窗中间插入
+			int64_t count = _end - start;
+
+			_data_change_event.Invoke(base::PositionRange<int>{
+				base::Position<int32_t>{0, static_cast<int32_t>(start - _start)},
+				base::Position<int32_t>{ColumnCount() - 1, static_cast<int32_t>(count - 1)},
+			});
+		}
+
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
+
+		virtual QTableView *TableView() override = 0;
+		virtual void SetTableView(QTableView *table_view) override = 0;
 
 		///
 		/// @brief 数据源中真实的行数。

@@ -2,6 +2,7 @@
 #include "base/delegate/IEvent.h"
 #include "base/math/PositionRange.h"
 #include "QString"
+#include "qtableview.h"
 #include "VerticalScrollEventArgs.h"
 #include "widget/table/RowInsertedEventArgs.h"
 #include "widget/table/RowRemovedEventArgs.h"
@@ -23,6 +24,9 @@ namespace widget
 	{
 	public:
 		virtual ~ITableDataModel() = default;
+
+		virtual QTableView *TableView() = 0;
+		virtual void SetTableView(QTableView *table_view) = 0;
 
 		///
 		/// @brief 行数。
