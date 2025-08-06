@@ -244,10 +244,17 @@ namespace widget
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
 
+		///
+		/// @brief 数据源中真实的行数。
+		///
+		/// @return
+		///
 		virtual int64_t RealRowCount() const = 0;
 
 		///
 		/// @brief 列数。
+		///
+		/// @note 列没有被虚拟化，没有真实的行数和虚拟化的行数之分。
 		///
 		/// @return
 		///
@@ -277,6 +284,13 @@ namespace widget
 			return true;
 		}
 
+		///
+		/// @brief 真实数据源中的行标题。
+		///
+		/// @param row 对应真实数据源中的行索引。
+		///
+		/// @return
+		///
 		virtual QString RealRowTitle(int64_t row) const
 		{
 			base::String str = std::to_string(row);
@@ -300,6 +314,14 @@ namespace widget
 			return QString{str.c_str()};
 		}
 
+		///
+		/// @brief 真实的数据源中的数据。
+		///
+		/// @param row 真实数据源的行号。
+		/// @param column 真实数据源的列号。
+		///
+		/// @return
+		///
 		virtual QString RealData(int64_t row, int64_t column) const = 0;
 
 		///
