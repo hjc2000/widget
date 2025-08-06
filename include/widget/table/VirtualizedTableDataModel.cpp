@@ -3,6 +3,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "qscrollbar.h"
+#include <algorithm>
 #include <cstdint>
 
 void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
@@ -106,26 +107,27 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 		});
 	}
 
-	int64_t size_to_expand = 1000 - RowCount();
-	if (size_to_expand <= 0)
-	{
-		// 视窗足够大了，不需要扩展。
-		return;
-	}
-
 	// 需要扩展视窗。
 	while (true)
 	{
+		int64_t size_to_expand = 1000 - RowCount();
+		if (size_to_expand <= 0)
+		{
+			// 视窗足够大了，不需要扩展。
+			return;
+		}
+
 		if (RealRowCount() <= RowCount())
 		{
 			// 没有更多数据可以扩展视窗。
 			return;
 		}
 
-		// 设置 _start 和 _end, 直接将视窗定到第一次插入的数据那里。
 		if (_end < RealRowCount())
 		{
+			// 尾部扩展
 			int64_t delta = RealRowCount() - _end;
+			delta = std::min(size_to_expand, delta);
 
 			widget::RowInsertedEventArgs new_args{
 				base::RowIndex{_end},
@@ -133,6 +135,19 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 			};
 
 			_end += delta;
+			_row_inserted_event.Invoke(new_args);
+		}
+
+		if (_start > 0)
+		{
+			int64_t delta = std::min(_start, size_to_expand);
+
+			widget::RowInsertedEventArgs new_args{
+				base::RowIndex{0},
+				base::RowCount{delta},
+			};
+
+			_start -= delta;
 			_row_inserted_event.Invoke(new_args);
 		}
 	}
