@@ -15,7 +15,7 @@ private:
 	widget::Padding _padding{10, 5, 10, 5};
 	int _original_default_section_size = defaultSectionSize();
 
-	void SetSectionSizeByPadding()
+	void SetDefaultSectionSizeByPadding()
 	{
 		if (_orientation == Qt::Orientation::Vertical)
 		{
@@ -40,7 +40,7 @@ public:
 	{
 		_orientation = orientation;
 		setSectionResizeMode(QHeaderView::ResizeMode::Fixed);
-		SetSectionSizeByPadding();
+		SetDefaultSectionSizeByPadding();
 
 		if (orientation == Qt::Orientation::Vertical)
 		{
@@ -83,7 +83,7 @@ public:
 	void SetPadding(widget::Padding const &value)
 	{
 		_padding = value;
-		SetSectionSizeByPadding();
+		SetDefaultSectionSizeByPadding();
 	}
 
 	Qt::AlignmentFlag TextAlignment() const
