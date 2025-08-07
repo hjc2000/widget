@@ -43,6 +43,7 @@ void widget::VirtualizedTableDataModel::ExpandWindow()
 
 		if (_start > 0)
 		{
+			// 头部扩展
 			int64_t delta = std::min(_start, size_to_expand);
 
 			widget::RowInsertedEventArgs new_args{
@@ -52,6 +53,7 @@ void widget::VirtualizedTableDataModel::ExpandWindow()
 
 			_start -= delta;
 			_row_inserted_event.Invoke(new_args);
+			ParentTable()->ScrollByRow(delta);
 			continue;
 		}
 	}
