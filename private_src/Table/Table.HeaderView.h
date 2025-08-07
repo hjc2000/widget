@@ -15,6 +15,20 @@ private:
 	widget::Padding _padding{10, 5, 10, 5};
 	int _original_default_section_size = defaultSectionSize();
 
+	void SetSectionSizeByPadding()
+	{
+		if (_orientation == Qt::Orientation::Vertical)
+		{
+			// 垂直表头，即行标题，高度由 section size 控制，只能用这种方式设置上下边距。
+			setDefaultSectionSize(_original_default_section_size + _padding.Top() + _padding.Bottom());
+		}
+		else
+		{
+			// 水平表头，即列标题，宽度由 section size 控制，只能用这种方式设置左右边距。
+			setDefaultSectionSize(_original_default_section_size + _padding.Left() + _padding.Right());
+		}
+	}
+
 protected:
 	void paintSection(QPainter *painter, QRect const &rect, int logicalIndex) const override;
 
@@ -26,15 +40,7 @@ public:
 	{
 		_orientation = orientation;
 		setSectionResizeMode(QHeaderView::ResizeMode::Fixed);
-
-		if (orientation == Qt::Orientation::Vertical)
-		{
-			// 派生 QHeaderView 类，自定义绘制后，行标题老是不够高，所以就在这里设置默认
-			// 的 Section 尺寸，对于行标题来说就是高度。让高度比默认值增加 10.
-			//
-			// 对于列标题来说，Section 大小控制的是宽度。
-			setDefaultSectionSize(_original_default_section_size + 10);
-		}
+		SetSectionSizeByPadding();
 
 		if (orientation == Qt::Orientation::Vertical)
 		{
@@ -77,6 +83,7 @@ public:
 	void SetPadding(widget::Padding const &value)
 	{
 		_padding = value;
+		SetSectionSizeByPadding();
 	}
 
 	Qt::AlignmentFlag TextAlignment() const
