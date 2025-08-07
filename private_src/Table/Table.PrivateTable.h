@@ -28,6 +28,7 @@ private:
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
 	base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
 	base::Delegate<QWheelEvent const &> _wheel_event;
+	base::Delegate<int> _vertical_scroll_bar_value_change_event;
 
 	std::vector<QMetaObject::Connection> _connections;
 
@@ -198,6 +199,11 @@ public:
 	base::IEvent<QWheelEvent const &> &WheelEvent()
 	{
 		return _wheel_event;
+	}
+
+	base::IEvent<int> &VerticalScrollBarValueChangeEvent()
+	{
+		return _vertical_scroll_bar_value_change_event;
 	}
 
 	/* #endregion */

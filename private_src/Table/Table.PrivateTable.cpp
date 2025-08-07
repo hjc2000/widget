@@ -25,6 +25,8 @@ void widget::Table::PrivateTable::ConnectSignals()
 			&QScrollBar::valueChanged,
 			[this](int value)
 			{
+				_vertical_scroll_bar_value_change_event.Invoke(value);
+
 				static int last_value = 0;
 				widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
 
