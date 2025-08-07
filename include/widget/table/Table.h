@@ -1,4 +1,5 @@
 #pragma once
+#include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/math/ColumnIndex.h"
 #include "base/math/Position.h"
@@ -63,6 +64,8 @@ namespace widget
 		std::shared_ptr<HeaderView> _row_header_view;
 		std::shared_ptr<HeaderView> _column_header_view;
 		widget::VBoxLayout _layout{this};
+
+		base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
 
 		void SetColumnHeaderStyle();
 
@@ -237,6 +240,8 @@ namespace widget
 
 		QScrollBar *VerticalScrollBar() const;
 
+		int RowViewportPosition(int row) const;
+
 		/* #region 事件 */
 
 		///
@@ -253,6 +258,10 @@ namespace widget
 		///
 		base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent();
 
+		base::IEvent<QWheelEvent const &> &WheelEvent();
+
+		base::IEvent<int> &VerticalScrollBarValueChangeEvent();
+
 		///
 		/// @brief 垂直滚动事件。
 		///
@@ -263,11 +272,10 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent();
-
-		base::IEvent<QWheelEvent const &> &WheelEvent();
-
-		base::IEvent<int> &VerticalScrollBarValueChangeEvent();
+		base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent()
+		{
+			return _vertical_scroll_event;
+		}
 
 		/* #endregion */
 	};

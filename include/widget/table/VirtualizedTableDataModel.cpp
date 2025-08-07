@@ -4,6 +4,7 @@
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
 #include "qscrollbar.h"
+#include "widget/table/Table.h"
 #include <algorithm>
 #include <cstdint>
 #include <stdexcept>
@@ -63,7 +64,7 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 	if ((args.Direction() == widget::VerticalScrollDirection::Down) &&
 		(args.FirstVisibleRowIndex() > RowCount() - 100))
 	{
-		QTableView *table_view = args.TableView();
+		widget::Table *table = args.Table();
 
 		int64_t step = TryMoveAsFarAsPossible(200);
 
@@ -73,33 +74,33 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 		});
 
 		{
-			if (args.TableView()->verticalScrollBar()->maximum() == 0)
+			if (args.Table()->VerticalScrollBar()->maximum() == 0)
 			{
 				return;
 			}
 
 			// 插入点的行的当前像素位置。
-			int start_row_position = args.TableView()->rowViewportPosition(0);
+			int start_row_position = args.Table()->RowViewportPosition(0);
 
 			// 插入后获取原来的插入点处的行的现在的像素位置。
-			int end_row_position = args.TableView()->rowViewportPosition(step);
+			int end_row_position = args.Table()->RowViewportPosition(step);
 
 			// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 			QTimer::singleShot(
 				0,
 				&_q_object,
-				[table_view, start_row_position, end_row_position]
+				[table, start_row_position, end_row_position]
 				{
 					int delta_position = end_row_position - start_row_position;
-					int new_scroll_bar_position = table_view->verticalScrollBar()->value() - delta_position;
-					table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
+					int new_scroll_bar_position = table->VerticalScrollBar()->value() - delta_position;
+					table->VerticalScrollBar()->setValue(new_scroll_bar_position);
 				});
 		}
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
 			 (args.FirstVisibleRowIndex() < 100))
 	{
-		QTableView *table_view = args.TableView();
+		widget::Table *table_view = args.Table();
 
 		int64_t step = TryMoveAsFarAsPossible(-200);
 
@@ -109,7 +110,7 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 		});
 
 		{
-			if (args.TableView()->verticalScrollBar()->maximum() == 0)
+			if (args.Table()->VerticalScrollBar()->maximum() == 0)
 			{
 				return;
 			}
@@ -117,10 +118,10 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 			int64_t have_moved = base::abs(step);
 
 			// 插入点的行的当前像素位置。
-			int start_row_position = args.TableView()->rowViewportPosition(0);
+			int start_row_position = args.Table()->RowViewportPosition(0);
 
 			// 插入后获取原来的插入点处的行的现在的像素位置。
-			int end_row_position = args.TableView()->rowViewportPosition(have_moved);
+			int end_row_position = args.Table()->RowViewportPosition(have_moved);
 
 			// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 			QTimer::singleShot(
@@ -129,8 +130,8 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 				[table_view, start_row_position, end_row_position]
 				{
 					int delta_position = end_row_position - start_row_position;
-					int new_scroll_bar_position = table_view->verticalScrollBar()->value() + delta_position;
-					table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
+					int new_scroll_bar_position = table_view->VerticalScrollBar()->value() + delta_position;
+					table_view->VerticalScrollBar()->setValue(new_scroll_bar_position);
 				});
 		}
 	}

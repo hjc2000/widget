@@ -179,8 +179,25 @@ namespace widget
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
 
-		virtual QTableView *TableView() override = 0;
-		virtual void SetTableView(QTableView *table_view) override = 0;
+		///
+		/// @brief 父表格。
+		///
+		/// @note 当表格数据模型被设置为一个表格的模型时，表格对象内部会调用 SetParentTable
+		/// 把自己的指针传进来。
+		///
+		/// @return
+		///
+		virtual widget::Table *ParentTable() override = 0;
+
+		///
+		/// @brief 设置父表格。
+		///
+		/// @note 当表格数据模型被设置为一个表格的模型时，表格对象内部会调用 SetParentTable
+		/// 把自己的指针传进来。
+		///
+		/// @param table
+		///
+		virtual void SetParentTable(widget::Table *table) override = 0;
 
 		///
 		/// @brief 数据源中真实的行数。

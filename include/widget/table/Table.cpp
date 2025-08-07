@@ -1,6 +1,7 @@
 #include "Table.h"
 #include "base/math/ColumnIndex.h"
 #include "base/string/define.h"
+#include "qevent.h"
 #include "Table.CustomItemDelegate.h"
 #include "Table.HeaderView.h"
 #include "Table.PrivateTable.h"
@@ -36,14 +37,57 @@ void widget::Table::SubscribeEvents()
 		update();
 	};
 
-	_table->VerticalScrollEvent() += [this](widget::VerticalScrollEventArgs const &args)
+	_table->WheelEvent() += [this](QWheelEvent const &event)
 	{
-		if (_table_data_model == nullptr)
+		if (VerticalScrollBar()->value() <= VerticalScrollBar()->minimum() ||
+			VerticalScrollBar()->value() >= VerticalScrollBar()->maximum())
 		{
-			return;
+			// 没有滚动到顶部或底部时，交给滚动条的滚动值改变事件来触发 _vertical_scroll_event,
+			// 滚动到顶部或底部时才有这里的滚轮事件触发 _vertical_scroll_event.
+
+			widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
+			if (event.angleDelta().y() > 0)
+			{
+				direction = widget::VerticalScrollDirection::Up;
+			}
+
+			widget::VerticalScrollEventArgs args{
+				this,
+				direction,
+			};
+
+			_vertical_scroll_event.Invoke(args);
+
+			if (_table_data_model != nullptr)
+			{
+				_table_data_model->InnerModel().OnVerticalScroll(args);
+			}
+		}
+	};
+
+	_table->VerticalScrollBarValueChangeEvent() += [this](int value)
+	{
+		static int last_value = 0;
+		widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
+
+		if (VerticalScrollBar()->value() < last_value)
+		{
+			direction = widget::VerticalScrollDirection::Up;
 		}
 
-		_table_data_model->InnerModel().OnVerticalScroll(args);
+		last_value = value;
+
+		widget::VerticalScrollEventArgs args{
+			this,
+			direction,
+		};
+
+		_vertical_scroll_event.Invoke(args);
+
+		if (_table_data_model != nullptr)
+		{
+			_table_data_model->InnerModel().OnVerticalScroll(args);
+		}
 	};
 }
 
@@ -64,6 +108,8 @@ widget::Table::Table()
 
 widget::Table::~Table()
 {
+	_vertical_scroll_event.Dispose();
+
 	_table->Dispose();
 }
 
@@ -77,7 +123,7 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 		return;
 	}
 
-	model->SetTableView(_table.get());
+	model->SetParentTable(this);
 	_table_data_model = std::shared_ptr<TableDataModelWrapper>{new TableDataModelWrapper{_table.get(), model}};
 	_table->setModel(_table_data_model.get());
 	_table->setVerticalHeader(_row_header_view.get());
@@ -276,6 +322,11 @@ QScrollBar *widget::Table::VerticalScrollBar() const
 	return _table->verticalScrollBar();
 }
 
+int widget::Table::RowViewportPosition(int row) const
+{
+	return _table->rowViewportPosition(row);
+}
+
 /* #region 事件 */
 
 base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
@@ -286,11 +337,6 @@ base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
 base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::CurrentChangeEvent()
 {
 	return _table->CurrentChangeEvent();
-}
-
-base::IEvent<widget::VerticalScrollEventArgs const &> &widget::Table::VerticalScrollEvent()
-{
-	return _table->VerticalScrollEvent();
 }
 
 base::IEvent<QWheelEvent const &> &widget::Table::WheelEvent()
