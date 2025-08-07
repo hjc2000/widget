@@ -59,11 +59,21 @@ public:
 		_selected_index = index;
 	}
 
+	///
+	/// @brief 标题单元格的内边距。
+	///
+	/// @return
+	///
 	widget::Padding Padding() const
 	{
 		return _padding;
 	}
 
+	///
+	/// @brief 设置标题单元格的内边距。
+	///
+	/// @param value
+	///
 	void SetPadding(widget::Padding const &value)
 	{
 		_padding = value;
