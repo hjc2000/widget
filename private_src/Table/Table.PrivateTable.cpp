@@ -1,6 +1,5 @@
 #include "Table.PrivateTable.h"
 #include "base/math/Position.h"
-#include "widget/table/VerticalScrollEventArgs.h"
 #include <Table.CustomItemDelegate.h>
 #include <widget/convert.h>
 #include <widget/line-input-widget/Submit.h>
@@ -26,23 +25,6 @@ void widget::Table::PrivateTable::ConnectSignals()
 			[this](int value)
 			{
 				_vertical_scroll_bar_value_change_event.Invoke(value);
-
-				static int last_value = 0;
-				widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
-
-				if (verticalScrollBar()->value() < last_value)
-				{
-					direction = widget::VerticalScrollDirection::Up;
-				}
-
-				last_value = value;
-
-				widget::VerticalScrollEventArgs args{
-					this,
-					direction,
-				};
-
-				_vertical_scroll_event.Invoke(args);
 			});
 
 		_connections.push_back(connection);

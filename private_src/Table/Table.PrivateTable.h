@@ -3,11 +3,9 @@
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
 #include "qevent.h"
-#include "qscrollbar.h"
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
-#include "widget/table/VerticalScrollEventArgs.h"
 #include <vector>
 
 ///
@@ -26,7 +24,6 @@ private:
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
-	base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
 	base::Delegate<QWheelEvent const &> _wheel_event;
 	base::Delegate<int> _vertical_scroll_bar_value_change_event;
 
@@ -58,27 +55,6 @@ private:
 	{
 		// 调用基类处理滚动
 		QTableView::wheelEvent(event);
-
-		if (verticalScrollBar()->value() <= verticalScrollBar()->minimum() ||
-			verticalScrollBar()->value() >= verticalScrollBar()->maximum())
-		{
-			// 没有滚动到顶部或底部时，交给滚动条的滚动值改变事件来触发 _vertical_scroll_event,
-			// 滚动到顶部或底部时才有这里的滚轮事件触发 _vertical_scroll_event.
-
-			widget::VerticalScrollDirection direction = widget::VerticalScrollDirection::Down;
-			if (event->angleDelta().y() > 0)
-			{
-				direction = widget::VerticalScrollDirection::Up;
-			}
-
-			widget::VerticalScrollEventArgs args{
-				this,
-				direction,
-			};
-
-			_vertical_scroll_event.Invoke(args);
-		}
-
 		_wheel_event.Invoke(*event);
 	}
 
@@ -111,7 +87,6 @@ public:
 
 		_double_click_event.Dispose();
 		_current_change_event.Dispose();
-		_vertical_scroll_event.Dispose();
 		_wheel_event.Dispose();
 		_vertical_scroll_bar_value_change_event.Dispose();
 
@@ -181,21 +156,6 @@ public:
 	base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent()
 	{
 		return _current_change_event;
-	}
-
-	///
-	/// @brief 垂直滚动事件。
-	///
-	/// @note 只要尝试滚动就会触发此事件。
-	///
-	/// @note 滚动条已经到顶或到底了，继续尝试滚动，滚不动了，当前位置不会改变，但是仍然会
-	/// 触发此事件。
-	///
-	/// @return
-	///
-	base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent()
-	{
-		return _vertical_scroll_event;
 	}
 
 	base::IEvent<QWheelEvent const &> &WheelEvent()
