@@ -2,7 +2,6 @@
 #include "base/delegate/IEvent.h"
 #include "base/math/PositionRange.h"
 #include "QString"
-#include "qtableview.h"
 #include "VerticalScrollEventArgs.h"
 #include "widget/table/RowInsertedEventArgs.h"
 #include "widget/table/RowRemovedEventArgs.h"
@@ -27,8 +26,25 @@ namespace widget
 	public:
 		virtual ~ITableDataModel() = default;
 
-		virtual QTableView *TableView() = 0;
-		virtual void SetTableView(QTableView *table_view) = 0;
+		///
+		/// @brief 父表格。
+		///
+		/// @note 当表格数据模型被设置为一个表格的模型时，表格对象内部会调用 SetParentTable
+		/// 把自己的指针传进来。
+		///
+		/// @return
+		///
+		virtual widget::Table *ParentTable() = 0;
+
+		///
+		/// @brief 设置父表格。
+		///
+		/// @note 当表格数据模型被设置为一个表格的模型时，表格对象内部会调用 SetParentTable
+		/// 把自己的指针传进来。
+		///
+		/// @param table
+		///
+		virtual void SetParentTable(widget::Table *table) = 0;
 
 		///
 		/// @brief 行数。
