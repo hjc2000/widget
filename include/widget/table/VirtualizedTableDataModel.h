@@ -169,6 +169,8 @@ namespace widget
 	protected:
 		void NotifyRowInserted(int64_t index, int64_t count);
 
+		void NotifyRowRemoved(int64_t index, int64_t count);
+
 		void NotifyModelReset()
 		{
 			_start = 0;

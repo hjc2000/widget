@@ -129,3 +129,53 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 
 	ExpandWindow();
 }
+
+void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t count)
+{
+	if (index < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "index 不能 < 0."};
+	}
+
+	if (count < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "count 不能 < 0."};
+	}
+
+	if (count == 0)
+	{
+		return;
+	}
+
+	int64_t insert_end_index = index + count;
+
+	if (insert_end_index < _start)
+	{
+		// 被移除的所有内容都在视窗之前。
+		_start -= count;
+		_end -= count;
+
+		if (_start < 0)
+		{
+			_start = 0;
+		}
+
+		if (_end < 0)
+		{
+			_end = 0;
+		}
+
+		return;
+	}
+
+	if (index >= _end)
+	{
+		// 被移除的所有内容都在视窗之后。
+		return;
+	}
+
+	if (index >= _start && insert_end_index <= _end)
+	{
+		// 被移除的所有内容都在视窗内。
+	}
+}
