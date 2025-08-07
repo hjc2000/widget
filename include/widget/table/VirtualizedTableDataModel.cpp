@@ -117,7 +117,7 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 	else if (index >= _start && index < _end)
 	{
 		// 在视窗中间插入
-		count = std::min(count, _end - _start);
+		count = std::min(count, _end - index);
 
 		_data_change_event.Invoke(base::PositionRange<int>{
 			base::Position<int32_t>{0, static_cast<int32_t>(index - _start)},
