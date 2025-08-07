@@ -99,4 +99,17 @@ public:
 	{
 		return _orientation;
 	}
+
+	///
+	/// @brief 默认的节尺寸。
+	///
+	/// @note 对于行标题，指的是高度。
+	/// @note 对于列标题，指的是宽度。
+	///
+	/// @return
+	///
+	int DefaultSectionSize() const
+	{
+		return defaultSectionSize();
+	}
 };
