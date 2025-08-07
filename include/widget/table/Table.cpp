@@ -293,4 +293,9 @@ base::IEvent<widget::VerticalScrollEventArgs const &> &widget::Table::VerticalSc
 	return _table->VerticalScrollEvent();
 }
 
+base::IEvent<QWheelEvent const &> &widget::Table::WheelEvent()
+{
+	return _table->WheelEvent();
+}
+
 /* #endregion */

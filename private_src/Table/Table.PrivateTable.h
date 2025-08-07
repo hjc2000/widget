@@ -2,6 +2,7 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
+#include "qevent.h"
 #include "qscrollbar.h"
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
@@ -26,6 +27,7 @@ private:
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
 	base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
+	base::Delegate<QWheelEvent const &> _wheel_event;
 
 	std::vector<QMetaObject::Connection> _connections;
 
@@ -75,6 +77,8 @@ private:
 
 			_vertical_scroll_event.Invoke(args);
 		}
+
+		_wheel_event.Invoke(*event);
 	}
 
 public:
@@ -189,6 +193,11 @@ public:
 	base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent()
 	{
 		return _vertical_scroll_event;
+	}
+
+	base::IEvent<QWheelEvent const &> &WheelEvent()
+	{
+		return _wheel_event;
 	}
 
 	/* #endregion */

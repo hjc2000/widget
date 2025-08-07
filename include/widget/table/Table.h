@@ -265,6 +265,8 @@ namespace widget
 		///
 		base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent();
 
+		base::IEvent<QWheelEvent const &> &WheelEvent();
+
 		/* #endregion */
 	};
 
