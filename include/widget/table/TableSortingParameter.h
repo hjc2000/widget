@@ -25,7 +25,7 @@ namespace widget
 		///
 		/// @brief 排序的列。
 		///
-		/// @return int 返回负数表示没有列被排序，所有列都处于未排序状态。返回 >=0 的数
+		/// @return 返回负数表示没有列被排序，所有列都处于未排序状态。返回 >=0 的数
 		/// 表示被排序的列的索引。
 		///
 		int Column() const
@@ -36,7 +36,7 @@ namespace widget
 		///
 		/// @brief 被排序的列（如果有的话）的数据排列顺序。
 		///
-		/// @return Qt::SortOrder
+		/// @return
 		///
 		Qt::SortOrder Order() const
 		{
