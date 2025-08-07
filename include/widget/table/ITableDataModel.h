@@ -10,6 +10,8 @@
 
 namespace widget
 {
+	class Table;
+
 	///
 	/// @brief 表格数据模型。
 	///
@@ -154,6 +156,7 @@ namespace widget
 		virtual base::IEvent<base::PositionRange<int32_t> const &> &DataChangeEvent() = 0;
 
 		/* #endregion */
-	};
+
+	}; // ITableDataModel
 
 } // namespace widget
