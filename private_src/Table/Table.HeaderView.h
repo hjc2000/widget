@@ -36,6 +36,7 @@ public:
 
 		if (orientation == Qt::Orientation::Vertical)
 		{
+			// 是垂直方向，即行标题。
 			_text_alignment = widget::AlignmentFlag{
 				Qt::AlignmentFlag::AlignRight,
 				Qt::AlignmentFlag::AlignVCenter,
@@ -43,6 +44,7 @@ public:
 		}
 		else
 		{
+			// 是水平方向，即列标题。
 			_text_alignment = widget::AlignmentFlag{
 				Qt::AlignmentFlag::AlignHCenter,
 				Qt::AlignmentFlag::AlignVCenter,
