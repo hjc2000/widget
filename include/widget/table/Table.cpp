@@ -1,5 +1,6 @@
 #include "Table.h"
 #include "base/math/ColumnIndex.h"
+#include "base/math/math.h"
 #include "base/string/define.h"
 #include "qevent.h"
 #include "Table.CustomItemDelegate.h"
@@ -311,6 +312,45 @@ QScrollBar *widget::Table::VerticalScrollBar() const
 int widget::Table::RowViewportPosition(int row) const
 {
 	return _table->rowViewportPosition(row);
+}
+
+void widget::Table::ScrollByRow(int row_step)
+{
+	if (row_step == 0)
+	{
+	}
+	else if (row_step > 0)
+	{
+		int start_row_position = RowViewportPosition(0);
+		int end_row_position = RowViewportPosition(row_step);
+		int delta_position = end_row_position - start_row_position;
+
+		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
+		QTimer::singleShot(
+			0,
+			_table.get(),
+			[this, delta_position]
+			{
+				int new_scroll_bar_position = VerticalScrollBar()->value() + delta_position;
+				VerticalScrollBar()->setValue(new_scroll_bar_position);
+			});
+	}
+	else if (row_step < 0)
+	{
+		int start_row_position = RowViewportPosition(0);
+		int end_row_position = RowViewportPosition(base::abs(row_step));
+		int delta_position = end_row_position - start_row_position;
+
+		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
+		QTimer::singleShot(
+			0,
+			_table.get(),
+			[this, delta_position]
+			{
+				int new_scroll_bar_position = VerticalScrollBar()->value() - delta_position;
+				VerticalScrollBar()->setValue(new_scroll_bar_position);
+			});
+	}
 }
 
 /* #region 事件 */

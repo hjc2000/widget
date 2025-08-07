@@ -250,6 +250,13 @@ namespace widget
 		///
 		int RowViewportPosition(int row) const;
 
+		///
+		/// @brief 以行为单位进行滚动。
+		///
+		/// @param row_step
+		///
+		void ScrollByRow(int row_step);
+
 		/* #region 事件 */
 
 		///
