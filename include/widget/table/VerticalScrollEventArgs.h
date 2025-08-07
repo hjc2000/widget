@@ -1,8 +1,9 @@
 #pragma once
-#include "qtableview.h"
 
 namespace widget
 {
+	class Table;
+
 	enum class VerticalScrollDirection
 	{
 		Up,
@@ -16,20 +17,20 @@ namespace widget
 	class VerticalScrollEventArgs
 	{
 	private:
-		QTableView *_table_view = nullptr;
+		widget::Table *_table = nullptr;
 		widget::VerticalScrollDirection _direction;
 
 	public:
-		constexpr VerticalScrollEventArgs(QTableView *table_view,
-										  widget::VerticalScrollDirection direction)
+		VerticalScrollEventArgs(widget::Table *table,
+								widget::VerticalScrollDirection direction)
 		{
-			_table_view = table_view;
+			_table = table;
 			_direction = direction;
 		}
 
-		constexpr QTableView *TableView() const
+		widget::Table *Table() const
 		{
-			return _table_view;
+			return _table;
 		}
 
 		///
@@ -39,10 +40,7 @@ namespace widget
 		///
 		/// @return
 		///
-		constexpr int FirstVisibleRowIndex() const
-		{
-			return _table_view->rowAt(0);
-		}
+		int FirstVisibleRowIndex() const;
 
 		///
 		/// @brief 滚动方向。
