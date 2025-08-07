@@ -112,6 +112,8 @@ public:
 		_double_click_event.Dispose();
 		_current_change_event.Dispose();
 		_vertical_scroll_event.Dispose();
+		_wheel_event.Dispose();
+		_vertical_scroll_bar_value_change_event.Dispose();
 
 		for (QMetaObject::Connection const &connection : _connections)
 		{
