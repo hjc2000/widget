@@ -326,9 +326,7 @@ void widget::Table::ScrollByRow(int row_step)
 	}
 	else if (row_step > 0)
 	{
-		int start_row_position = RowViewportPosition(0);
-		int end_row_position = RowViewportPosition(row_step);
-		int delta_position = end_row_position - start_row_position;
+		int delta_position = row_step * DefaultRowHeight();
 
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 		QTimer::singleShot(
@@ -342,9 +340,7 @@ void widget::Table::ScrollByRow(int row_step)
 	}
 	else if (row_step < 0)
 	{
-		int start_row_position = RowViewportPosition(0);
-		int end_row_position = RowViewportPosition(base::abs(row_step));
-		int delta_position = end_row_position - start_row_position;
+		int delta_position = base::abs(row_step) * DefaultRowHeight();
 
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 		QTimer::singleShot(
