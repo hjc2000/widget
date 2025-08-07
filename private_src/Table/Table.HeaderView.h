@@ -9,6 +9,7 @@ class widget::Table::HeaderView :
 	public QHeaderView
 {
 private:
+	Qt::Orientation _orientation = Qt::Orientation::Vertical;
 	int _selected_index = -1;
 	Qt::AlignmentFlag _text_alignment{};
 	widget::Padding _padding{10, 5, 10, 5};
@@ -23,6 +24,7 @@ public:
 	HeaderView(Qt::Orientation orientation)
 		: QHeaderView(orientation, nullptr)
 	{
+		_orientation = orientation;
 		setSectionResizeMode(QHeaderView::ResizeMode::Fixed);
 
 		if (orientation == Qt::Orientation::Vertical)
@@ -75,5 +77,16 @@ public:
 	void SetTextAlignment(Qt::AlignmentFlag value)
 	{
 		_text_alignment = value;
+	}
+
+	///
+	/// @brief 表头方向。
+	///
+	/// @return Qt::Orientation::Vertical 是垂直方向的表头，即行标题。
+	/// Qt::Orientation::Horizontal 是水平方向的表头，即列标题。
+	///
+	Qt::Orientation Orientation() const
+	{
+		return _orientation;
 	}
 };
