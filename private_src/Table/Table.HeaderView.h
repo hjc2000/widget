@@ -12,6 +12,7 @@ private:
 	int _selected_index = -1;
 	Qt::AlignmentFlag _text_alignment{};
 	widget::Padding _padding{10, 5, 10, 5};
+	int _original_default_section_size = defaultSectionSize();
 
 protected:
 	void paintSection(QPainter *painter, QRect const &rect, int logicalIndex) const override;
@@ -30,7 +31,7 @@ public:
 			// 的 Section 尺寸，对于行标题来说就是高度。让高度比默认值增加 10.
 			//
 			// 对于列标题来说，Section 大小控制的是宽度。
-			setDefaultSectionSize(defaultSectionSize() + 10);
+			setDefaultSectionSize(_original_default_section_size + 10);
 		}
 
 		if (orientation == Qt::Orientation::Vertical)
