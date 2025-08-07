@@ -71,6 +71,7 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 		});
 
+		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
@@ -83,6 +84,7 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 		});
 
+		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
 	}
 }
