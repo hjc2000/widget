@@ -87,8 +87,7 @@ namespace widget
 		///
 		/// @brief 排序是否使能。
 		///
-		/// @return true
-		/// @return false
+		/// @return
 		///
 		bool IsSortingEnabled() const;
 
@@ -107,7 +106,7 @@ namespace widget
 		///
 		/// @note 如果没有设置过数据模型，本方法返回的是默认的 widget::TableSortingParameter.
 		///
-		/// @return widget::TableSortingParameter
+		/// @return
 		///
 		widget::TableSortingParameter CurrentSortingParameter() const;
 
@@ -151,7 +150,7 @@ namespace widget
 		/// @brief 获取指定列的宽度。
 		///
 		/// @param column_index
-		/// @return int
+		/// @return
 		///
 		int ColumnWidth(int column_index) const;
 
@@ -262,7 +261,7 @@ namespace widget
 		///
 		/// @brief 单元格被双击事件。
 		///
-		/// @return base::IEvent<base::Position const &>&
+		/// @return
 		///
 		base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent();
 

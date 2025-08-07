@@ -167,10 +167,26 @@ namespace widget
 		/* #endregion */
 
 	protected:
+		///
+		/// @brief 通知行插入。
+		///
+		/// @param index
+		/// @param count
+		///
 		void NotifyRowInserted(int64_t index, int64_t count);
 
+		///
+		/// @brief 通知行移除。
+		///
+		/// @param index
+		/// @param count
+		///
 		void NotifyRowRemoved(int64_t index, int64_t count);
 
+		///
+		/// @brief 通知数据模型重置。
+		///
+		///
 		void NotifyModelReset()
 		{
 			_start = 0;
