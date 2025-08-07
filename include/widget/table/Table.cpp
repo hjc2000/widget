@@ -26,7 +26,7 @@ void widget::Table::SetColumnHeaderStyle()
 
 void widget::Table::SubscribeEvents()
 {
-	_table->CurrentChangeEvent() += [this](widget::Table::CurrentChangeEventArgs const &args)
+	_table->CurrentChangeEvent() += [this](widget::CurrentChangeEventArgs const &args)
 	{
 		if (_row_header_view == nullptr)
 		{
@@ -361,7 +361,7 @@ base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
 	return _table->DoubleClickEvent();
 }
 
-base::IEvent<widget::Table::CurrentChangeEventArgs const &> &widget::Table::CurrentChangeEvent()
+base::IEvent<widget::CurrentChangeEventArgs const &> &widget::Table::CurrentChangeEvent()
 {
 	return _table->CurrentChangeEvent();
 }

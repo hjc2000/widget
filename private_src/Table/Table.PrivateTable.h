@@ -23,7 +23,7 @@ private:
 	QAbstractItemModel *_data_model = nullptr;
 
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
-	base::Delegate<widget::Table::CurrentChangeEventArgs const &> _current_change_event;
+	base::Delegate<widget::CurrentChangeEventArgs const &> _current_change_event;
 	base::Delegate<QWheelEvent const &> _wheel_event;
 	base::Delegate<int> _vertical_scroll_bar_value_change_event;
 
@@ -47,7 +47,7 @@ private:
 	{
 		QTableView::currentChanged(current, previous);
 
-		widget::Table::CurrentChangeEventArgs args{current, previous};
+		widget::CurrentChangeEventArgs args{current, previous};
 		_current_change_event(args);
 	}
 
@@ -153,7 +153,7 @@ public:
 	///
 	/// @return
 	///
-	base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent()
+	base::IEvent<widget::CurrentChangeEventArgs const &> &CurrentChangeEvent()
 	{
 		return _current_change_event;
 	}

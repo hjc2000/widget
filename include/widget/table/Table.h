@@ -13,6 +13,31 @@
 
 namespace widget
 {
+	class CurrentChangeEventArgs
+	{
+	private:
+		QModelIndex _current;
+		QModelIndex _previous;
+
+	public:
+		CurrentChangeEventArgs(QModelIndex const &current,
+							   QModelIndex const &previous)
+		{
+			_current = current;
+			_previous = previous;
+		}
+
+		QModelIndex Current() const
+		{
+			return _current;
+		}
+
+		QModelIndex Previous() const
+		{
+			return _previous;
+		}
+	};
+
 	///
 	/// @brief 表格。
 	///
@@ -26,36 +51,6 @@ namespace widget
 		class CustomItemDelegate;
 		class TableDataModelWrapper;
 		class HeaderView;
-
-	public:
-		/* #region CurrentChangeEventArgs */
-
-		class CurrentChangeEventArgs
-		{
-		private:
-			QModelIndex _current;
-			QModelIndex _previous;
-
-		public:
-			CurrentChangeEventArgs(QModelIndex const &current,
-								   QModelIndex const &previous)
-			{
-				_current = current;
-				_previous = previous;
-			}
-
-			QModelIndex Current() const
-			{
-				return _current;
-			}
-
-			QModelIndex Previous() const
-			{
-				return _previous;
-			}
-		};
-
-		/* #endregion */
 
 	private:
 		std::shared_ptr<PrivateTable> _table;
@@ -277,7 +272,7 @@ namespace widget
 		///
 		/// @return
 		///
-		base::IEvent<widget::Table::CurrentChangeEventArgs const &> &CurrentChangeEvent();
+		base::IEvent<widget::CurrentChangeEventArgs const &> &CurrentChangeEvent();
 
 		base::IEvent<QWheelEvent const &> &WheelEvent();
 
