@@ -3,6 +3,7 @@
 #include "base/math/ColumnIndex.h"
 #include "base/math/Position.h"
 #include "QHeaderView"
+#include "qscrollbar.h"
 #include "QTableView"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/table/ITableDataModel.h"
@@ -233,6 +234,8 @@ namespace widget
 		/// @return
 		///
 		int FirstVisibleRowIndex() const;
+
+		QScrollBar *VerticalScrollBar() const;
 
 		/* #region 事件 */
 

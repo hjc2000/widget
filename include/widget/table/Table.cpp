@@ -271,6 +271,11 @@ int widget::Table::FirstVisibleRowIndex() const
 	return _table->FirstVisibleRowIndex();
 }
 
+QScrollBar *widget::Table::VerticalScrollBar() const
+{
+	return _table->verticalScrollBar();
+}
+
 /* #region 事件 */
 
 base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
