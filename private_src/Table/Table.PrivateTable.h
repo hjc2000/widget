@@ -43,6 +43,12 @@ private:
 	///
 	void ClearSortIndicator();
 
+	///
+	/// @brief 重写当前选中项发生变化时的处理函数。
+	///
+	/// @param current 当前的 “当前选中项”。
+	/// @param previous 上一次的 “当前选中项”。
+	///
 	virtual void currentChanged(QModelIndex const &current, QModelIndex const &previous) override
 	{
 		QTableView::currentChanged(current, previous);

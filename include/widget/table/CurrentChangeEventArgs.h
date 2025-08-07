@@ -2,6 +2,10 @@
 
 namespace widget
 {
+	///
+	/// @brief 表格的当前选中项发生改变的事件参数。
+	///
+	///
 	class CurrentChangeEventArgs
 	{
 	private:
@@ -9,8 +13,13 @@ namespace widget
 		QModelIndex _previous;
 
 	public:
-		CurrentChangeEventArgs(QModelIndex const &current,
-							   QModelIndex const &previous)
+		///
+		/// @brief
+		///
+		/// @param current 当前的 “当前选中项”。
+		/// @param previous 上一次的 “当前选中项”。
+		///
+		CurrentChangeEventArgs(QModelIndex const &current, QModelIndex const &previous)
 		{
 			_current = current;
 			_previous = previous;
