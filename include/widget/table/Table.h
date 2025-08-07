@@ -284,6 +284,7 @@ namespace widget
 		base::IEvent<int> &VerticalScrollBarValueChangeEvent();
 
 		/* #endregion */
-	};
+
+	}; // Table
 
 } // namespace widget
