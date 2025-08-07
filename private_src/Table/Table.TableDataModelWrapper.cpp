@@ -3,7 +3,6 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
-#include "qscrollbar.h"
 #include "Table.PrivateTable.h"
 #include <iostream>
 #include <stdexcept>
@@ -26,38 +25,6 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endInsertRows();
-
-		// 插入行后需要进行像素补偿，防止视窗内的行发生移动。
-		// 我写了一篇博客：
-		// https://blog.csdn.net/qq_36148047/article/details/149935903?sharetype=blogdetail&sharerId=149935903&sharerefer=PC&sharesource=qq_36148047&spm=1011.2480.3001.8118
-		if (_table_view->verticalScrollBar()->maximum() == 0)
-		{
-			return;
-		}
-
-		int first_visible_row = _table_view->FirstVisibleRowIndex();
-		if (args.RowIndex().Value() > first_visible_row)
-		{
-			return;
-		}
-
-		// 插入点的行的当前像素位置。
-		int start_row_position = _table_view->rowViewportPosition(args.RowIndex().Value());
-
-		// 插入后获取原来的插入点处的行的现在的像素位置。
-		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
-
-		int delta_position = end_row_position - start_row_position;
-
-		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-		QTimer::singleShot(
-			0,
-			_table_view,
-			[this, delta_position]
-			{
-				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() + delta_position;
-				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
-			});
 	};
 
 	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::RowRemovedEventArgs const &args)
@@ -67,32 +34,6 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endRemoveRows();
-
-		// 删除行后需要进行像素补偿，防止视窗内的行发生移动。
-		if (_table_view->verticalScrollBar()->maximum() == 0)
-		{
-			return;
-		}
-
-		int first_visible_row = _table_view->FirstVisibleRowIndex();
-		if (args.RowIndex().Value() > first_visible_row)
-		{
-			return;
-		}
-
-		int start_row_position = _table_view->rowViewportPosition(args.RowIndex().Value());
-		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
-		int delta_position = end_row_position - start_row_position;
-
-		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-		QTimer::singleShot(
-			0,
-			_table_view,
-			[this, delta_position]
-			{
-				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() - delta_position;
-				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
-			});
 	};
 
 	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange<int32_t> const &range)
