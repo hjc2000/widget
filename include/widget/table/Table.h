@@ -235,8 +235,19 @@ namespace widget
 		///
 		int FirstVisibleRowIndex() const;
 
+		///
+		/// @brief 获取垂直滚动条。
+		///
+		/// @return
+		///
 		QScrollBar *VerticalScrollBar() const;
 
+		///
+		/// @brief 获取视窗中指定的行的在视窗坐标系中的像素坐标。
+		///
+		/// @param row
+		/// @return
+		///
 		int RowViewportPosition(int row) const;
 
 		/* #region 事件 */
