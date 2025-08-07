@@ -1,9 +1,7 @@
 #include "VirtualizedTableDataModel.h" // IWYU pragma: keep
-#include "base/math/math.h"
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
-#include "qscrollbar.h"
 #include "widget/table/Table.h"
 #include <algorithm>
 #include <cstdint>
