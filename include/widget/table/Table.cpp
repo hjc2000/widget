@@ -51,11 +51,9 @@ void widget::Table::SubscribeEvents()
 				direction = widget::VerticalScrollDirection::Up;
 			}
 
-			widget::VerticalScrollEventArgs args{direction};
-			_vertical_scroll_event.Invoke(args);
-
 			if (_table_data_model != nullptr)
 			{
+				widget::VerticalScrollEventArgs args{direction};
 				_table_data_model->InnerModel().OnVerticalScroll(args);
 			}
 		}
@@ -73,11 +71,9 @@ void widget::Table::SubscribeEvents()
 
 		last_value = value;
 
-		widget::VerticalScrollEventArgs args{direction};
-		_vertical_scroll_event.Invoke(args);
-
 		if (_table_data_model != nullptr)
 		{
+			widget::VerticalScrollEventArgs args{direction};
 			_table_data_model->InnerModel().OnVerticalScroll(args);
 		}
 	};
@@ -100,8 +96,6 @@ widget::Table::Table()
 
 widget::Table::~Table()
 {
-	_vertical_scroll_event.Dispose();
-
 	_table->Dispose();
 }
 

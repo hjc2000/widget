@@ -1,5 +1,4 @@
 #pragma once
-#include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/math/ColumnIndex.h"
 #include "base/math/Position.h"
@@ -64,8 +63,6 @@ namespace widget
 		std::shared_ptr<HeaderView> _row_header_view;
 		std::shared_ptr<HeaderView> _column_header_view;
 		widget::VBoxLayout _layout{this};
-
-		base::Delegate<widget::VerticalScrollEventArgs const &> _vertical_scroll_event;
 
 		void SetColumnHeaderStyle();
 
@@ -261,21 +258,6 @@ namespace widget
 		base::IEvent<QWheelEvent const &> &WheelEvent();
 
 		base::IEvent<int> &VerticalScrollBarValueChangeEvent();
-
-		///
-		/// @brief 垂直滚动事件。
-		///
-		/// @note 只要尝试滚动就会触发此事件。
-		///
-		/// @note 滚动条已经到顶或到底了，继续尝试滚动，滚不动了，当前位置不会改变，但是仍然会
-		/// 触发此事件。
-		///
-		/// @return
-		///
-		base::IEvent<widget::VerticalScrollEventArgs const &> &VerticalScrollEvent()
-		{
-			return _vertical_scroll_event;
-		}
 
 		/* #endregion */
 	};
