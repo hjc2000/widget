@@ -147,35 +147,19 @@ void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t 
 		return;
 	}
 
-	int64_t insert_end_index = index + count;
-
-	if (insert_end_index < _start)
-	{
-		// 被移除的所有内容都在视窗之前。
-		_start -= count;
-		_end -= count;
-
-		if (_start < 0)
-		{
-			_start = 0;
-		}
-
-		if (_end < 0)
-		{
-			_end = 0;
-		}
-
-		return;
-	}
-
 	if (index >= _end)
 	{
 		// 被移除的所有内容都在视窗之后。
 		return;
 	}
 
-	if (index >= _start && insert_end_index <= _end)
+	// 视窗向上滑动，追上去。
+	_start -= count;
+	_end -= count;
+
+	// 追上去如果导致头部越界了，限幅一下。
+	if (_start < 0)
 	{
-		// 被移除的所有内容都在视窗内。
+		_start = 0;
 	}
 }
