@@ -47,13 +47,14 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		// 插入后获取原来的插入点处的行的现在的像素位置。
 		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
 
+		int delta_position = end_row_position - start_row_position;
+
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 		QTimer::singleShot(
 			0,
 			this,
-			[this, end_row_position, start_row_position]
+			[this, delta_position]
 			{
-				int delta_position = end_row_position - start_row_position;
 				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() + delta_position;
 				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
 			});
@@ -83,13 +84,14 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 
 		int end_row_position = _table_view->rowViewportPosition(args.RowIndex().Value() + args.RowCount().Value());
 
+		int delta_position = end_row_position - start_row_position;
+
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
 		QTimer::singleShot(
 			0,
 			this,
-			[this, end_row_position, start_row_position]
+			[this, delta_position]
 			{
-				int delta_position = end_row_position - start_row_position;
 				int new_scroll_bar_position = _table_view->verticalScrollBar()->value() - delta_position;
 				_table_view->verticalScrollBar()->setValue(new_scroll_bar_position);
 			});
