@@ -28,15 +28,15 @@ void widget::VirtualizedTableDataModel::ExpandWindow()
 		if (_end < RealRowCount())
 		{
 			// 尾部扩展
-			int64_t delta = RealRowCount() - _end;
-			delta = std::min(size_to_expand, delta);
+			int64_t inserted_row_count = RealRowCount() - _end;
+			inserted_row_count = std::min(size_to_expand, inserted_row_count);
 
 			widget::RowInsertedEventArgs new_args{
 				base::RowIndex{_end},
-				base::RowCount{delta},
+				base::RowCount{inserted_row_count},
 			};
 
-			_end += delta;
+			_end += inserted_row_count;
 			_row_inserted_event.Invoke(new_args);
 			continue;
 		}
@@ -44,16 +44,16 @@ void widget::VirtualizedTableDataModel::ExpandWindow()
 		if (_start > 0)
 		{
 			// 头部扩展
-			int64_t delta = std::min(_start, size_to_expand);
+			int64_t inserted_row_count = std::min(_start, size_to_expand);
 
 			widget::RowInsertedEventArgs new_args{
 				base::RowIndex{0},
-				base::RowCount{delta},
+				base::RowCount{inserted_row_count},
 			};
 
-			_start -= delta;
+			_start -= inserted_row_count;
 			_row_inserted_event.Invoke(new_args);
-			ParentTable()->ScrollByRow(delta);
+			ParentTable()->ScrollByRow(inserted_row_count);
 			continue;
 		}
 	}
