@@ -207,6 +207,13 @@ namespace widget
 		void SetRowHeaderPadding(widget::Padding const &value);
 
 		///
+		/// @brief 默认行高。
+		///
+		/// @return
+		///
+		int DefaultRowHeight();
+
+		///
 		/// @brief 行标题单元格的文本对齐方式。
 		///
 		/// @return

@@ -282,6 +282,11 @@ void widget::Table::SetRowHeaderPadding(widget::Padding const &value)
 	update();
 }
 
+int widget::Table::DefaultRowHeight()
+{
+	return _row_header_view->DefaultSectionSize();
+}
+
 Qt::AlignmentFlag widget::Table::RowHeaderTextAlignment() const
 {
 	return _row_header_view->TextAlignment();
