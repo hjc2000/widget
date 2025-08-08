@@ -23,7 +23,7 @@ namespace widget
 
 		void ExpandWindow();
 
-		/* #region 事件 */
+		/* #region 对外提供事件 */
 
 		///
 		/// @brief 需要重置整个模型时触发。
@@ -105,12 +105,16 @@ namespace widget
 			return RealData(static_cast<int64_t>(row) + _start, column);
 		}
 
+		/* #region 处理表格事件 */
+
 		///
 		/// @brief 垂直滚动事件处理函数。
 		///
 		/// @param args
 		///
 		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) override final;
+
+		/* #endregion */
 
 		/* #region 滑动窗口 */
 
