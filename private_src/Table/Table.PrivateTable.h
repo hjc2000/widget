@@ -175,4 +175,5 @@ public:
 	}
 
 	/* #endregion */
-};
+
+}; // class PrivateTable
