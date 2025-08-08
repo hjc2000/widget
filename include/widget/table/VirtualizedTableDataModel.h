@@ -1,5 +1,6 @@
 #pragma once
 #include "base/delegate/Delegate.h"
+#include "base/math/Position.h"
 #include "base/string/String.h"
 #include "ITableDataModel.h"
 #include "qobject.h"
@@ -28,7 +29,7 @@ namespace widget
 
 		void ExpandWindow();
 
-		/* #region 对外提供事件 */
+		/* #region 事件 */
 
 		///
 		/// @brief 需要重置整个模型时触发。
@@ -208,6 +209,13 @@ namespace widget
 		/// @param count
 		///
 		void NotifyRowRemoved(int64_t index, int64_t count);
+
+		///
+		/// @brief 通知数据发生改变。
+		///
+		/// @param range
+		///
+		void NotifyDataChange(base::PositionRange<int64_t> const &range);
 
 		///
 		/// @brief 通知数据模型重置。

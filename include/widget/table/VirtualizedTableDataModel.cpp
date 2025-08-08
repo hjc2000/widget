@@ -133,6 +133,12 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 
 void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t count)
 {
+	if (RowCount() <= 0)
+	{
+		// 视窗中没有数据，不需要处理。
+		return;
+	}
+
 	if (index < 0)
 	{
 		throw std::invalid_argument{CODE_POS_STR + "index 不能 < 0."};
@@ -188,4 +194,55 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 
 	_previous_row = _current_row;
 	_previous_column = _current_column;
+}
+
+void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int64_t> const &range)
+{
+	if (RowCount() <= 0)
+	{
+		// 视窗中没有数据，不需要处理。
+		return;
+	}
+
+	int64_t row_start = range.LeftTop().Y();
+	int64_t column_start = range.LeftTop().X();
+	int64_t row_end = range.RightBottom().Y();
+	int64_t column_end = range.RightBottom().X();
+
+	if (row_start >= _end)
+	{
+		// 变化的数据在视窗后面。
+		return;
+	}
+
+	if (row_end < _start)
+	{
+		// 变化的数据在视窗前面。
+		return;
+	}
+
+	// 视窗中含有变化的数据。
+	if (row_start < _start)
+	{
+		row_start = _start;
+	}
+
+	if (row_end > _end - 1)
+	{
+		row_end = _end - 1;
+	}
+
+	row_start -= _start;
+	row_end -= _start;
+
+	_data_change_event.Invoke(base::PositionRange<int32_t>{
+		base::Position<int32_t>{
+			static_cast<int32_t>(row_start),
+			static_cast<int32_t>(column_start),
+		},
+		base::Position<int32_t>{
+			static_cast<int32_t>(row_end),
+			static_cast<int32_t>(column_end),
+		},
+	});
 }

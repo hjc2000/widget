@@ -38,9 +38,9 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 
 	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange<int32_t> const &range)
 	{
-		auto start = createIndex(range.Start().Y(), range.Start().X());
-		auto end = createIndex(range.End().Y(), range.End().X());
-		dataChanged(start, end);
+		auto left_top = createIndex(range.LeftTop().Y(), range.LeftTop().X());
+		auto right_bottom = createIndex(range.RightBottom().Y(), range.RightBottom().X());
+		dataChanged(left_top, right_bottom);
 	};
 }
 
