@@ -90,6 +90,8 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 	}
 }
 
+/* #region 通知 */
+
 void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t count)
 {
 	if (index < 0)
@@ -221,6 +223,8 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 		},
 	});
 }
+
+/* #endregion */
 
 void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
