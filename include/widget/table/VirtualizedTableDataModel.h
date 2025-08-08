@@ -5,6 +5,7 @@
 #include "qobject.h"
 #include <algorithm>
 #include <cstdint>
+#include <iostream>
 
 namespace widget
 {
@@ -20,6 +21,11 @@ namespace widget
 		base::Delegate<widget::RowInsertedEventArgs const &> _row_inserted_event;
 		base::Delegate<widget::RowRemovedEventArgs const &> _row_removed_event;
 		base::Delegate<base::PositionRange<int32_t> const &> _data_change_event;
+
+		int64_t _current_row = -1;
+		int64_t _current_column = -1;
+		int64_t _previous_row = -1;
+		int64_t _previous_column = -1;
 
 		void ExpandWindow();
 
@@ -113,6 +119,36 @@ namespace widget
 		/// @param args
 		///
 		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) override final;
+
+		///
+		/// @brief 处理当前焦点单元格发生改变。
+		///
+		/// @return
+		///
+		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) override final
+		{
+			_current_row = args.Current().row() + _start;
+			_current_column = args.Current().column();
+
+			try
+			{
+				OnRealCurrentChange(_current_row,
+									_current_column,
+									_previous_row,
+									_previous_column);
+			}
+			catch (std::exception const &e)
+			{
+				std::cerr << CODE_POS_STR << e.what() << std::endl;
+			}
+			catch (...)
+			{
+				std::cerr << CODE_POS_STR << "未知异常。" << std::endl;
+			}
+
+			_previous_row = _current_row;
+			_previous_column = _current_column;
+		}
 
 		/* #endregion */
 
@@ -308,6 +344,19 @@ namespace widget
 		/// @param ascending 为 true 表示升序排列，即从小到大排列。
 		///
 		virtual void Sort(int column, bool ascending) override = 0;
+
+		///
+		/// @brief 真实的，非虚拟化的当前选中项发生改变的事件处理函数。
+		///
+		/// @param current_row
+		/// @param current_column
+		/// @param previous_row
+		/// @param previous_column
+		///
+		virtual void OnRealCurrentChange(int64_t current_row,
+										 int64_t current_column,
+										 int64_t previous_row,
+										 int64_t previous_column) = 0;
 	};
 
 } // namespace widget

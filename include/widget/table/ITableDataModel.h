@@ -3,6 +3,7 @@
 #include "base/math/PositionRange.h"
 #include "QString"
 #include "VerticalScrollEventArgs.h"
+#include "widget/table/CurrentChangeEventArgs.h"
 #include "widget/table/RowInsertedEventArgs.h"
 #include "widget/table/RowRemovedEventArgs.h"
 #include <cstdint>
@@ -142,6 +143,13 @@ namespace widget
 		/// @param args
 		///
 		virtual void OnVerticalScroll(widget::VerticalScrollEventArgs const &args) = 0;
+
+		///
+		/// @brief 处理当前焦点单元格发生改变。
+		///
+		/// @return
+		///
+		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) = 0;
 
 		/* #endregion */
 

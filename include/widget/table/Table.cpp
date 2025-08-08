@@ -35,6 +35,12 @@ void widget::Table::SubscribeEvents()
 
 		_row_header_view->SetSelectedIndex(args.Current().row());
 		_column_header_view->SetSelectedIndex(args.Current().column());
+
+		if (_table_data_model != nullptr)
+		{
+			_table_data_model->InnerModel().OnCurrentChange(args);
+		}
+
 		update();
 	};
 
