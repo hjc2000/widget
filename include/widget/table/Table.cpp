@@ -371,9 +371,4 @@ base::IEvent<QWheelEvent const &> &widget::Table::WheelEvent()
 	return _table->WheelEvent();
 }
 
-base::IEvent<int> &widget::Table::VerticalScrollBarValueChangeEvent()
-{
-	return _table->VerticalScrollBarValueChangeEvent();
-}
-
 /* #endregion */
