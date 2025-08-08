@@ -194,6 +194,8 @@ namespace widget
 		/* #endregion */
 
 	protected:
+		/* #region 通知 */
+
 		///
 		/// @brief 通知行插入。
 		///
@@ -227,6 +229,8 @@ namespace widget
 			_end = 0;
 			_model_reset_event.Invoke();
 		}
+
+		/* #endregion */
 
 	public:
 		virtual ~VirtualizedTableDataModel() = default;
