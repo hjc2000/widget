@@ -171,31 +171,6 @@ void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t 
 	}
 }
 
-void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
-{
-	_current_row = args.Current().row() + _start;
-	_current_column = args.Current().column();
-
-	try
-	{
-		OnRealCurrentChange(_current_row,
-							_current_column,
-							_previous_row,
-							_previous_column);
-	}
-	catch (std::exception const &e)
-	{
-		std::cerr << CODE_POS_STR << e.what() << std::endl;
-	}
-	catch (...)
-	{
-		std::cerr << CODE_POS_STR << "未知异常。" << std::endl;
-	}
-
-	_previous_row = _current_row;
-	_previous_column = _current_column;
-}
-
 void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int64_t> const &range)
 {
 	if (RowCount() <= 0)
@@ -245,4 +220,29 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 			static_cast<int32_t>(column_end),
 		},
 	});
+}
+
+void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
+{
+	_current_row = args.Current().row() + _start;
+	_current_column = args.Current().column();
+
+	try
+	{
+		OnRealCurrentChange(_current_row,
+							_current_column,
+							_previous_row,
+							_previous_column);
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << CODE_POS_STR << e.what() << std::endl;
+	}
+	catch (...)
+	{
+		std::cerr << CODE_POS_STR << "未知异常。" << std::endl;
+	}
+
+	_previous_row = _current_row;
+	_previous_column = _current_column;
 }
