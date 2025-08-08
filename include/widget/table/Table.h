@@ -250,8 +250,6 @@ namespace widget
 		///
 		base::IEvent<widget::CurrentChangeEventArgs const &> &CurrentChangeEvent();
 
-		base::IEvent<QWheelEvent const &> &WheelEvent();
-
 		/* #endregion */
 
 	}; // Table

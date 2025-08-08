@@ -366,9 +366,4 @@ base::IEvent<widget::CurrentChangeEventArgs const &> &widget::Table::CurrentChan
 	return _table->CurrentChangeEvent();
 }
 
-base::IEvent<QWheelEvent const &> &widget::Table::WheelEvent()
-{
-	return _table->WheelEvent();
-}
-
 /* #endregion */
