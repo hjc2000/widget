@@ -331,6 +331,8 @@ namespace widget
 		///
 		virtual void Sort(int column, bool ascending) override = 0;
 
+		/* #region 事件处理函数 */
+
 		///
 		/// @brief 真实的，非虚拟化的当前选中项发生改变的事件处理函数。
 		///
@@ -351,6 +353,8 @@ namespace widget
 		/// @param column 真实的数据源的列号。
 		///
 		virtual void OnRealDoubleClick(int64_t row, int64_t column) = 0;
-	};
+		/* #endregion */
+
+	}; // VirtualizedTableDataModel
 
 } // namespace widget
