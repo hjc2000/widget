@@ -6,7 +6,6 @@
 #include "qscrollbar.h"
 #include "QTableView"
 #include "widget/layout/VBoxLayout.h"
-#include "widget/table/CurrentChangeEventArgs.h"
 #include "widget/table/ITableDataModel.h"
 #include "widget/table/TableSortingParameter.h"
 #include "widget/table/VerticalScrollEventArgs.h"
@@ -242,13 +241,6 @@ namespace widget
 		/// @return
 		///
 		base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent();
-
-		///
-		/// @brief 当前焦点单元格发生改变的事件。
-		///
-		/// @return
-		///
-		base::IEvent<widget::CurrentChangeEventArgs const &> &CurrentChangeEvent();
 
 		/* #endregion */
 

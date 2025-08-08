@@ -5,7 +5,6 @@
 #include "qobject.h"
 #include <algorithm>
 #include <cstdint>
-#include <iostream>
 
 namespace widget
 {
@@ -125,30 +124,7 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) override final
-		{
-			_current_row = args.Current().row() + _start;
-			_current_column = args.Current().column();
-
-			try
-			{
-				OnRealCurrentChange(_current_row,
-									_current_column,
-									_previous_row,
-									_previous_column);
-			}
-			catch (std::exception const &e)
-			{
-				std::cerr << CODE_POS_STR << e.what() << std::endl;
-			}
-			catch (...)
-			{
-				std::cerr << CODE_POS_STR << "未知异常。" << std::endl;
-			}
-
-			_previous_row = _current_row;
-			_previous_column = _current_column;
-		}
+		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) override final;
 
 		/* #endregion */
 

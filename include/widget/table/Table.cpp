@@ -367,9 +367,4 @@ base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
 	return _table->DoubleClickEvent();
 }
 
-base::IEvent<widget::CurrentChangeEventArgs const &> &widget::Table::CurrentChangeEvent()
-{
-	return _table->CurrentChangeEvent();
-}
-
 /* #endregion */
