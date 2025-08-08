@@ -126,6 +126,16 @@ namespace widget
 		///
 		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) override final;
 
+		///
+		/// @brief 双击事件处理函数。
+		///
+		/// @param position
+		///
+		virtual void OnDoubleClick(base::Position<int32_t> const &position) override final
+		{
+			OnRealDoubleClick(position.Y() + _start, position.X());
+		}
+
 		/* #endregion */
 
 		/* #region 滑动窗口 */
@@ -324,15 +334,23 @@ namespace widget
 		///
 		/// @brief 真实的，非虚拟化的当前选中项发生改变的事件处理函数。
 		///
-		/// @param current_row
-		/// @param current_column
-		/// @param previous_row
-		/// @param previous_column
+		/// @param current_row 当前选中的真实数据源的行号。
+		/// @param current_column 当前选中的真实数据源的列号。
+		/// @param previous_row 上一次选中的真实数据源的行号。
+		/// @param previous_column 桑一次选中的真实数据源的列号。
 		///
 		virtual void OnRealCurrentChange(int64_t current_row,
 										 int64_t current_column,
 										 int64_t previous_row,
 										 int64_t previous_column) = 0;
+
+		///
+		/// @brief 真实的单元格，非虚拟的双击事件。
+		///
+		/// @param row 真实的数据源的行号。
+		/// @param column 真实的数据源的列号。
+		///
+		virtual void OnRealDoubleClick(int64_t row, int64_t column) = 0;
 	};
 
 } // namespace widget

@@ -1,5 +1,6 @@
 #pragma once
 #include "base/delegate/IEvent.h"
+#include "base/math/Position.h"
 #include "base/math/PositionRange.h"
 #include "QString"
 #include "VerticalScrollEventArgs.h"
@@ -150,6 +151,13 @@ namespace widget
 		/// @return
 		///
 		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) = 0;
+
+		///
+		/// @brief 双击事件处理函数。
+		///
+		/// @param position
+		///
+		virtual void OnDoubleClick(base::Position<int32_t> const &position) = 0;
 
 		/* #endregion */
 

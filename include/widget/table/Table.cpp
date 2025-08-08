@@ -1,6 +1,7 @@
 #include "Table.h"
 #include "base/math/ColumnIndex.h"
 #include "base/math/math.h"
+#include "base/math/Position.h"
 #include "base/string/define.h"
 #include "qevent.h"
 #include "Table.CustomItemDelegate.h"
@@ -82,6 +83,14 @@ void widget::Table::SubscribeEvents()
 		{
 			widget::VerticalScrollEventArgs args{direction};
 			_table_data_model->InnerModel().OnVerticalScroll(args);
+		}
+	};
+
+	_table->DoubleClickEvent() += [this](base::Position<int32_t> const &position)
+	{
+		if (_table_data_model != nullptr)
+		{
+			_table_data_model->InnerModel().OnDoubleClick(position);
 		}
 	};
 }
@@ -359,12 +368,3 @@ void widget::Table::ScrollByRow(int row_step)
 			});
 	}
 }
-
-/* #region 事件 */
-
-base::IEvent<base::Position<int32_t> const &> &widget::Table::DoubleClickEvent()
-{
-	return _table->DoubleClickEvent();
-}
-
-/* #endregion */

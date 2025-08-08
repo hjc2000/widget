@@ -1,7 +1,5 @@
 #pragma once
-#include "base/delegate/IEvent.h"
 #include "base/math/ColumnIndex.h"
-#include "base/math/Position.h"
 #include "QHeaderView"
 #include "qscrollbar.h"
 #include "QTableView"
@@ -232,17 +230,6 @@ namespace widget
 		/// @param row_step
 		///
 		void ScrollByRow(int row_step);
-
-		/* #region 事件 */
-
-		///
-		/// @brief 单元格被双击事件。
-		///
-		/// @return
-		///
-		base::IEvent<base::Position<int32_t> const &> &DoubleClickEvent();
-
-		/* #endregion */
 
 	}; // Table
 
