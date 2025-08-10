@@ -79,13 +79,21 @@ void widget::InfiniteTableDataModel::OnVerticalScroll(widget::VerticalScrollEven
 			&_q_object,
 			[this]() mutable
 			{
-				_current_is_changed_by_virtualized_scroll = true;
 				int64_t relative_row_index = _current_row - _start;
 				if (relative_row_index < 0 || relative_row_index >= RowCount())
 				{
 					relative_row_index = -1;
 				}
 
+				QModelIndex current_index = ParentTable()->CurrentIndex();
+
+				if (relative_row_index == current_index.row())
+				{
+					_current_is_changed_by_virtualized_scroll = false;
+					return;
+				}
+
+				_current_is_changed_by_virtualized_scroll = true;
 				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
 			});
 	}
@@ -107,13 +115,21 @@ void widget::InfiniteTableDataModel::OnVerticalScroll(widget::VerticalScrollEven
 			&_q_object,
 			[this]() mutable
 			{
-				_current_is_changed_by_virtualized_scroll = true;
 				int64_t relative_row_index = _current_row - _start;
 				if (relative_row_index < 0 || relative_row_index >= RowCount())
 				{
 					relative_row_index = -1;
 				}
 
+				QModelIndex current_index = ParentTable()->CurrentIndex();
+
+				if (relative_row_index == current_index.row())
+				{
+					_current_is_changed_by_virtualized_scroll = false;
+					return;
+				}
+
+				_current_is_changed_by_virtualized_scroll = true;
 				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
 			});
 	}
@@ -282,6 +298,11 @@ void widget::InfiniteTableDataModel::OnCurrentChange(widget::CurrentChangeEventA
 {
 	if (_current_is_changed_by_virtualized_scroll)
 	{
+		std::cout << "判定当前索引的改变是由虚拟化滚动引发的，忽略。真实行号：" << (args.Current().row() + _start)
+				  << ", "
+				  << "虚拟行号：" << args.Current().row()
+				  << std::endl;
+
 		_current_is_changed_by_virtualized_scroll = false;
 		return;
 	}
@@ -328,4 +349,8 @@ void widget::InfiniteTableDataModel::OnCurrentChange(widget::CurrentChangeEventA
 
 	_previous_row = _current_row;
 	_previous_column = _current_column;
+}
+
+void widget::InfiniteTableDataModel::OnClick(base::Position<int32_t> const &position)
+{
 }
