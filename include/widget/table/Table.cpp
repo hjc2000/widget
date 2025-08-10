@@ -368,3 +368,8 @@ void widget::Table::ScrollByRow(int row_step)
 			});
 	}
 }
+
+QModelIndex widget::Table::CurrentIndex() const
+{
+	return _table->currentIndex();
+}

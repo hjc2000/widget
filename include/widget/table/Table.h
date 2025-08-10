@@ -1,5 +1,6 @@
 #pragma once
 #include "base/math/ColumnIndex.h"
+#include "qabstractitemmodel.h"
 #include "QHeaderView"
 #include "qscrollbar.h"
 #include "QTableView"
@@ -230,6 +231,13 @@ namespace widget
 		/// @param row_step
 		///
 		void ScrollByRow(int row_step);
+
+		///
+		/// @brief 获取当前选中的单元格索引。
+		///
+		/// @return
+		///
+		QModelIndex CurrentIndex() const;
 
 	}; // Table
 
