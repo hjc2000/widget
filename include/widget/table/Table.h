@@ -246,6 +246,13 @@ namespace widget
 		///
 		void SetCurrentIndex(QModelIndex const &value);
 
+		///
+		/// @brief 设置当前选中的单元格索引。
+		///
+		/// @param value
+		///
+		void SetCurrentIndex(int row, int column);
+
 	}; // Table
 
 } // namespace widget

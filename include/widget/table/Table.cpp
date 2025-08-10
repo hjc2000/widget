@@ -378,3 +378,21 @@ void widget::Table::SetCurrentIndex(QModelIndex const &value)
 {
 	_table->setCurrentIndex(value);
 }
+
+void widget::Table::SetCurrentIndex(int row, int column)
+{
+	if (row < 0 || row >= _table_data_model->InnerModel().RowCount())
+	{
+		SetCurrentIndex(QModelIndex{});
+		return;
+	}
+
+	if (column < 0 || column >= _table_data_model->InnerModel().ColumnCount())
+	{
+		SetCurrentIndex(QModelIndex{});
+		return;
+	}
+
+	QModelIndex index = _table_data_model->index(row, column);
+	SetCurrentIndex(index);
+}
