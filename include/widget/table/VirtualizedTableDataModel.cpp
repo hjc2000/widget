@@ -77,10 +77,16 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 		QTimer::singleShot(
 			0,
 			&_q_object,
-			[this, step]()
+			[this]() mutable
 			{
-				QModelIndex current_index = ParentTable()->CurrentIndex();
-				ParentTable()->SetCurrentIndex(current_index.row() - step, current_index.column());
+				_current_is_changed_by_virtualized_scroll = true;
+				int64_t relative_row_index = _current_row - _start;
+				if (relative_row_index < 0 || relative_row_index >= RowCount())
+				{
+					relative_row_index = -1;
+				}
+
+				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
 			});
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
@@ -99,10 +105,16 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 		QTimer::singleShot(
 			0,
 			&_q_object,
-			[this, step]()
+			[this]() mutable
 			{
-				QModelIndex current_index = ParentTable()->CurrentIndex();
-				ParentTable()->SetCurrentIndex(current_index.row() - step, current_index.column());
+				_current_is_changed_by_virtualized_scroll = true;
+				int64_t relative_row_index = _current_row - _start;
+				if (relative_row_index < 0 || relative_row_index >= RowCount())
+				{
+					relative_row_index = -1;
+				}
+
+				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
 			});
 	}
 }
@@ -268,18 +280,35 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 
 void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
+	if (_current_is_changed_by_virtualized_scroll)
+	{
+		_current_is_changed_by_virtualized_scroll = false;
+		return;
+	}
+
 	if (args.Current().row() < 0 || args.Current().row() >= RowCount())
 	{
-		return;
+		_current_row = -1;
+	}
+	else
+	{
+		_current_row = args.Current().row() + _start;
 	}
 
 	if (args.Current().column() < 0 || args.Current().column() >= ColumnCount())
 	{
-		return;
+		_current_column = -1;
+	}
+	else
+	{
+		_current_column = args.Current().column();
 	}
 
-	_current_row = args.Current().row() + _start;
-	_current_column = args.Current().column();
+	if (_current_row == _previous_row &&
+		_current_column == _previous_column)
+	{
+		return;
+	}
 
 	try
 	{
