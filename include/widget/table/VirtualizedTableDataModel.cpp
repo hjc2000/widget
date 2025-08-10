@@ -353,5 +353,4 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 
 void widget::VirtualizedTableDataModel::OnClick(base::Position<int32_t> const &position)
 {
-	std::cout << "被单击" << std::endl;
 }
