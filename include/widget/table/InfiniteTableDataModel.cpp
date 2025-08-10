@@ -1,4 +1,4 @@
-#include "InfinityTableDataModel.h" // IWYU pragma: keep
+#include "InfiniteTableDataModel.h" // IWYU pragma: keep
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
@@ -10,7 +10,7 @@
 #include <iostream>
 #include <stdexcept>
 
-void widget::InfinityTableDataModel::ExpandWindow()
+void widget::InfiniteTableDataModel::ExpandWindow()
 {
 	int64_t size_to_expand = 1000 - RowCount();
 	if (size_to_expand <= 0)
@@ -58,7 +58,7 @@ void widget::InfinityTableDataModel::ExpandWindow()
 	}
 }
 
-void widget::InfinityTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
+void widget::InfiniteTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
 {
 	if ((args.Direction() == widget::VerticalScrollDirection::Down) &&
 		(ParentTable()->FirstVisibleRowIndex() > RowCount() - 100))
@@ -90,7 +90,7 @@ void widget::InfinityTableDataModel::OnVerticalScroll(widget::VerticalScrollEven
 
 /* #region 通知 */
 
-void widget::InfinityTableDataModel::NotifyRowInserted(int64_t index, int64_t count)
+void widget::InfiniteTableDataModel::NotifyRowInserted(int64_t index, int64_t count)
 {
 	if (index < 0)
 	{
@@ -137,7 +137,7 @@ void widget::InfinityTableDataModel::NotifyRowInserted(int64_t index, int64_t co
 		});
 }
 
-void widget::InfinityTableDataModel::NotifyRowRemoved(int64_t index, int64_t count)
+void widget::InfiniteTableDataModel::NotifyRowRemoved(int64_t index, int64_t count)
 {
 	if (RowCount() <= 0)
 	{
@@ -192,7 +192,7 @@ void widget::InfinityTableDataModel::NotifyRowRemoved(int64_t index, int64_t cou
 		});
 }
 
-void widget::InfinityTableDataModel::NotifyDataChange(base::PositionRange<int64_t> const &range)
+void widget::InfiniteTableDataModel::NotifyDataChange(base::PositionRange<int64_t> const &range)
 {
 	if (RowCount() <= 0)
 	{
@@ -247,7 +247,7 @@ void widget::InfinityTableDataModel::NotifyDataChange(base::PositionRange<int64_
 
 /* #endregion */
 
-void widget::InfinityTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
+void widget::InfiniteTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
 	_current_row = args.Current().row() + _start;
 	_current_column = args.Current().column();

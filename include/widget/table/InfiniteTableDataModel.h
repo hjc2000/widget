@@ -9,7 +9,7 @@
 
 namespace widget
 {
-	class InfinityTableDataModel :
+	class InfiniteTableDataModel :
 		public widget::ITableDataModel
 	{
 	private:
@@ -233,7 +233,7 @@ namespace widget
 		/* #endregion */
 
 	public:
-		virtual ~InfinityTableDataModel() = default;
+		virtual ~InfiniteTableDataModel() = default;
 
 		///
 		/// @brief 父表格。
@@ -368,6 +368,6 @@ namespace widget
 
 		/* #endregion */
 
-	}; // InfinityTableDataModel
+	}; // InfiniteTableDataModel
 
 } // namespace widget
