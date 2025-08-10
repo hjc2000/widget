@@ -153,6 +153,13 @@ namespace widget
 		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) = 0;
 
 		///
+		/// @brief 单击事件处理函数。
+		///
+		/// @param position
+		///
+		virtual void OnClick(base::Position<int32_t> const &position) = 0;
+
+		///
 		/// @brief 双击事件处理函数。
 		///
 		/// @param position

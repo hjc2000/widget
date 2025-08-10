@@ -86,6 +86,14 @@ void widget::Table::SubscribeEvents()
 		}
 	};
 
+	_table->ClickEvent() += [this](base::Position<int32_t> const &position)
+	{
+		if (_table_data_model != nullptr)
+		{
+			_table_data_model->InnerModel().OnClick(position);
+		}
+	};
+
 	_table->DoubleClickEvent() += [this](base::Position<int32_t> const &position)
 	{
 		if (_table_data_model != nullptr)

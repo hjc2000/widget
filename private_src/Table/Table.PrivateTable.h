@@ -22,6 +22,7 @@ private:
 	std::shared_ptr<CustomItemDelegate> _custom_item_delegate;
 	QAbstractItemModel *_data_model = nullptr;
 
+	base::Delegate<base::Position<int32_t> const &> _click_event;
 	base::Delegate<base::Position<int32_t> const &> _double_click_event;
 	base::Delegate<widget::CurrentChangeEventArgs const &> _current_change_event;
 	base::Delegate<QWheelEvent const &> _wheel_event;
@@ -141,6 +142,16 @@ public:
 	}
 
 	/* #region 事件 */
+
+	///
+	/// @brief 单元格被单击事件。
+	///
+	/// @return
+	///
+	base::IEvent<base::Position<int32_t> const &> &ClickEvent()
+	{
+		return _click_event;
+	}
 
 	///
 	/// @brief 单元格被双击事件。

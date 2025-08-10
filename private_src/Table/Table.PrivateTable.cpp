@@ -9,6 +9,18 @@ void widget::Table::PrivateTable::ConnectSignals()
 	{
 		QMetaObject::Connection connection = connect(
 			this,
+			&widget::Table::PrivateTable::clicked,
+			[this](QModelIndex const &index)
+			{
+				_click_event.Invoke(base::Position{index.column(), index.row()});
+			});
+
+		_connections.push_back(connection);
+	}
+
+	{
+		QMetaObject::Connection connection = connect(
+			this,
 			&widget::Table::PrivateTable::doubleClicked,
 			[this](QModelIndex const &index)
 			{

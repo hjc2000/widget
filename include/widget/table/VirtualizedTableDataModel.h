@@ -129,6 +129,13 @@ namespace widget
 		virtual void OnCurrentChange(widget::CurrentChangeEventArgs const &args) override final;
 
 		///
+		/// @brief 单击事件处理函数。
+		///
+		/// @param position
+		///
+		virtual void OnClick(base::Position<int32_t> const &position) override final;
+
+		///
 		/// @brief 双击事件处理函数。
 		///
 		/// @param position
