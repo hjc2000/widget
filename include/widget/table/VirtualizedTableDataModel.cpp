@@ -12,53 +12,49 @@
 
 void widget::VirtualizedTableDataModel::ExpandWindow()
 {
-	while (true)
+	int64_t size_to_expand = 1000 - RowCount();
+	if (size_to_expand <= 0)
 	{
-		int64_t size_to_expand = 1000 - RowCount();
-		if (size_to_expand <= 0)
-		{
-			// 视窗足够大了，不需要扩展。
-			return;
-		}
+		// 视窗足够大了，不需要扩展。
+		return;
+	}
 
-		// 需要扩展视窗。
-		if (RealRowCount() <= RowCount())
-		{
-			// 没有更多数据可以扩展视窗。
-			return;
-		}
+	// 需要扩展视窗。
+	if (RealRowCount() <= RowCount())
+	{
+		// 没有更多数据可以扩展视窗。
+		return;
+	}
 
-		if (_end < RealRowCount())
-		{
-			// 尾部扩展
-			int64_t inserted_row_count = RealRowCount() - _end;
-			inserted_row_count = std::min(size_to_expand, inserted_row_count);
+	if (_end < RealRowCount())
+	{
+		// 尾部扩展
+		int64_t inserted_row_count = RealRowCount() - _end;
+		inserted_row_count = std::min(size_to_expand, inserted_row_count);
 
-			widget::RowInsertedEventArgs new_args{
-				base::RowIndex{_end},
-				base::RowCount{inserted_row_count},
-			};
+		widget::RowInsertedEventArgs new_args{
+			base::RowIndex{_end},
+			base::RowCount{inserted_row_count},
+		};
 
-			_end += inserted_row_count;
-			_row_inserted_event.Invoke(new_args);
-			continue;
-		}
+		_end += inserted_row_count;
+		_row_inserted_event.Invoke(new_args);
+		size_to_expand -= inserted_row_count;
+	}
 
-		if (_start > 0)
-		{
-			// 头部扩展
-			int64_t inserted_row_count = std::min(_start, size_to_expand);
+	if (_start > 0)
+	{
+		// 头部扩展
+		int64_t inserted_row_count = std::min(_start, size_to_expand);
 
-			widget::RowInsertedEventArgs new_args{
-				base::RowIndex{0},
-				base::RowCount{inserted_row_count},
-			};
+		widget::RowInsertedEventArgs new_args{
+			base::RowIndex{0},
+			base::RowCount{inserted_row_count},
+		};
 
-			_start -= inserted_row_count;
-			_row_inserted_event.Invoke(new_args);
-			ParentTable()->ScrollByRow(inserted_row_count);
-			continue;
-		}
+		_start -= inserted_row_count;
+		_row_inserted_event.Invoke(new_args);
+		ParentTable()->ScrollByRow(inserted_row_count);
 	}
 }
 
