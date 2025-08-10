@@ -268,6 +268,16 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 
 void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
+	if (args.Current().row() < 0 || args.Current().row() >= RowCount())
+	{
+		return;
+	}
+
+	if (args.Current().column() < 0 || args.Current().column() >= ColumnCount())
+	{
+		return;
+	}
+
 	_current_row = args.Current().row() + _start;
 	_current_column = args.Current().column();
 
