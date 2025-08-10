@@ -2,6 +2,8 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include "qtimer.h"
+#include "RowRemovedEventArgs.h"
 #include "widget/table/Table.h"
 #include <algorithm>
 #include <cstdint>
@@ -109,28 +111,34 @@ void widget::VirtualizedTableDataModel::NotifyRowInserted(int64_t index, int64_t
 		return;
 	}
 
-	if (index < _start)
-	{
-		// 在视窗的前面插入。
-		_start += count;
-		_end += count;
-	}
-	else if (index >= _end)
-	{
-		// 在视窗后面插入
-	}
-	else if (index >= _start && index < _end)
-	{
-		// 在视窗中间插入
-		count = std::min(count, _end - index);
+	QTimer::singleShot(
+		0,
+		&_q_object,
+		[this, index, count]() mutable
+		{
+			if (index < _start)
+			{
+				// 在视窗的前面插入。
+				_start += count;
+				_end += count;
+			}
+			else if (index >= _end)
+			{
+				// 在视窗后面插入
+			}
+			else if (index >= _start && index < _end)
+			{
+				// 在视窗中间插入
+				count = std::min(count, _end - index);
 
-		_data_change_event.Invoke(base::PositionRange<int>{
-			base::Position<int32_t>{0, static_cast<int32_t>(index - _start)},
-			base::Position<int32_t>{ColumnCount() - 1, static_cast<int32_t>(count - 1)},
+				_data_change_event.Invoke(base::PositionRange<int>{
+					base::Position<int32_t>{0, static_cast<int32_t>(index - _start)},
+					base::Position<int32_t>{ColumnCount() - 1, static_cast<int32_t>(count - 1)},
+				});
+			}
+
+			ExpandWindow();
 		});
-	}
-
-	ExpandWindow();
 }
 
 void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t count)
@@ -156,21 +164,36 @@ void widget::VirtualizedTableDataModel::NotifyRowRemoved(int64_t index, int64_t 
 		return;
 	}
 
-	if (index >= _end)
-	{
-		// 被移除的所有内容都在视窗之后。
-		return;
-	}
+	QTimer::singleShot(
+		0,
+		&_q_object,
+		[this, index, count]() mutable
+		{
+			if (index >= _end)
+			{
+				// 被移除的所有内容都在视窗之后。
+				return;
+			}
 
-	// 视窗向上滑动，追上去。
-	_start -= count;
-	_end -= count;
+			// 视窗向上滑动，追上去。
+			_start -= count;
+			_end -= count;
 
-	// 追上去如果导致头部越界了，限幅一下。
-	if (_start < 0)
-	{
-		_start = 0;
-	}
+			if (_start < 0)
+			{
+				// 追上去如果导致头部越界了，除了要对 _start 限幅到 0 以外，
+				// _start 超出 0 的部分就是对于 qt 表格控件来说需要在头部移除的行数。
+				int64_t should_removed_count = 0 - _start;
+				_start = 0;
+
+				widget::RowRemovedEventArgs args{
+					base::RowIndex{0},
+					base::RowCount{should_removed_count},
+				};
+
+				_row_removed_event.Invoke(args);
+			}
+		});
 }
 
 void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int64_t> const &range)
@@ -209,6 +232,8 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 		row_end = _end - 1;
 	}
 
+	// 求相对的起始行索引、相对的结束行列索引。
+	// 即对于 qt 表格控件来说的起始行索引、结束行索引。
 	row_start -= _start;
 	row_end -= _start;
 
