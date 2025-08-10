@@ -373,3 +373,8 @@ QModelIndex widget::Table::CurrentIndex() const
 {
 	return _table->currentIndex();
 }
+
+void widget::Table::SetCurrentIndex(QModelIndex const &value)
+{
+	_table->setCurrentIndex(value);
+}
