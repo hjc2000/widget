@@ -347,7 +347,7 @@ void widget::Table::ScrollByRow(int row_step)
 		QTimer::singleShot(
 			0,
 			_table.get(),
-			[this, delta_position]
+			[this, delta_position]()
 			{
 				int new_scroll_bar_position = VerticalScrollBar()->value() + delta_position;
 				VerticalScrollBar()->setValue(new_scroll_bar_position);
@@ -361,7 +361,7 @@ void widget::Table::ScrollByRow(int row_step)
 		QTimer::singleShot(
 			0,
 			_table.get(),
-			[this, delta_position]
+			[this, delta_position]()
 			{
 				int new_scroll_bar_position = VerticalScrollBar()->value() - delta_position;
 				VerticalScrollBar()->setValue(new_scroll_bar_position);
