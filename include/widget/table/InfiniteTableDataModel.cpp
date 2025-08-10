@@ -2,6 +2,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include "qabstractitemmodel.h"
 #include "qtimer.h"
 #include "RowRemovedEventArgs.h"
 #include "widget/table/Table.h"
@@ -72,6 +73,21 @@ void widget::InfiniteTableDataModel::OnVerticalScroll(widget::VerticalScrollEven
 
 		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
+
+		QTimer::singleShot(
+			0,
+			&_q_object,
+			[this]() mutable
+			{
+				_current_is_changed_by_virtualized_scroll = true;
+				int64_t relative_row_index = _current_row - _start;
+				if (relative_row_index < 0 || relative_row_index >= RowCount())
+				{
+					relative_row_index = -1;
+				}
+
+				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+			});
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
 			 (ParentTable()->FirstVisibleRowIndex() < 100))
@@ -85,6 +101,21 @@ void widget::InfiniteTableDataModel::OnVerticalScroll(widget::VerticalScrollEven
 
 		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
+
+		QTimer::singleShot(
+			0,
+			&_q_object,
+			[this]() mutable
+			{
+				_current_is_changed_by_virtualized_scroll = true;
+				int64_t relative_row_index = _current_row - _start;
+				if (relative_row_index < 0 || relative_row_index >= RowCount())
+				{
+					relative_row_index = -1;
+				}
+
+				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+			});
 	}
 }
 
@@ -249,8 +280,35 @@ void widget::InfiniteTableDataModel::NotifyDataChange(base::PositionRange<int64_
 
 void widget::InfiniteTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
-	_current_row = args.Current().row() + _start;
-	_current_column = args.Current().column();
+	if (_current_is_changed_by_virtualized_scroll)
+	{
+		_current_is_changed_by_virtualized_scroll = false;
+		return;
+	}
+
+	if (args.Current().row() < 0 || args.Current().row() >= RowCount())
+	{
+		_current_row = -1;
+	}
+	else
+	{
+		_current_row = args.Current().row() + _start;
+	}
+
+	if (args.Current().column() < 0 || args.Current().column() >= ColumnCount())
+	{
+		_current_column = -1;
+	}
+	else
+	{
+		_current_column = args.Current().column();
+	}
+
+	if (_current_row == _previous_row &&
+		_current_column == _previous_column)
+	{
+		return;
+	}
 
 	try
 	{
