@@ -147,6 +147,8 @@ void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &mod
 		// 有行标题则让垂直的表格头可见。
 		_table->verticalHeader()->setVisible(model->HasRowTitle());
 	}
+
+	SetCurrentIndex(QModelIndex{});
 }
 
 /* #region 排序 */
