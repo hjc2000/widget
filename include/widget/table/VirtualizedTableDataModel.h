@@ -365,6 +365,7 @@ namespace widget
 		/// @param column 真实的数据源的列号。
 		///
 		virtual void OnRealDoubleClick(int64_t row, int64_t column) = 0;
+
 		/* #endregion */
 
 	}; // VirtualizedTableDataModel
