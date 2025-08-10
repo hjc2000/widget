@@ -2,6 +2,7 @@
 #include "base/math/RowCount.h"
 #include "base/math/RowIndex.h"
 #include "base/string/define.h"
+#include "qabstractitemmodel.h"
 #include "qtimer.h"
 #include "RowRemovedEventArgs.h"
 #include "widget/table/Table.h"
@@ -72,6 +73,15 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 
 		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
+
+		QTimer::singleShot(
+			0,
+			&_q_object,
+			[this, step]()
+			{
+				QModelIndex current_index = ParentTable()->CurrentIndex();
+				ParentTable()->SetCurrentIndex(current_index.row() - step, current_index.column());
+			});
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
 			 (ParentTable()->FirstVisibleRowIndex() < 100))
@@ -85,6 +95,15 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 
 		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
 		ParentTable()->ScrollByRow(-step);
+
+		QTimer::singleShot(
+			0,
+			&_q_object,
+			[this, step]()
+			{
+				QModelIndex current_index = ParentTable()->CurrentIndex();
+				ParentTable()->SetCurrentIndex(current_index.row() - step, current_index.column());
+			});
 	}
 }
 
