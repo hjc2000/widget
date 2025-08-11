@@ -31,7 +31,15 @@ widget::MemoryMapFile::~MemoryMapFile()
 
 void *widget::MemoryMapFile::Map(base::Range const &range)
 {
-	uint8_t *address = _file->map(range.Begin(), range.Size(), QFileDevice::MemoryMapFlag::NoOptions);
+	if (_file->size() < range.End())
+	{
+		Resize(range.End());
+	}
+
+	uint8_t *address = _file->map(range.Begin(),
+								  range.Size(),
+								  QFileDevice::MemoryMapFlag::NoOptions);
+
 	if (address == nullptr)
 	{
 		throw std::runtime_error{CODE_POS_STR + "映射失败。"};
