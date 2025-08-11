@@ -1,7 +1,7 @@
 #pragma once
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
-#include "base/math/interval/Interval.h"
+#include "base/math/interval/ClosedInterval.h"
 #include "base/string/define.h"
 #include "base/string/Parse.h"
 #include "widget/layout/VBoxLayout.h"
