@@ -4,7 +4,7 @@
 #include "qdir.h"
 #include <cstdint>
 #include <memory>
-#include <vector>
+#include <set>
 
 namespace widget
 {
@@ -13,7 +13,7 @@ namespace widget
 	{
 	private:
 		std::shared_ptr<QFile> _file;
-		std::vector<uint8_t *> _mapped_address_vector;
+		std::set<uint8_t *> _mapped_address_set;
 
 	public:
 		MemoryMapFile(base::Path const &path);
@@ -29,6 +29,19 @@ namespace widget
 		/// @return
 		///
 		virtual base::Span Map(base::Range const &range) override;
+
+		///
+		/// @brief 取消映射。
+		///
+		/// @param address 传入 Map 方法返回的 base::Span 的 Buffer 属性。
+		///
+		virtual void UnMap(uint8_t *address) override;
+
+		///
+		/// @brief 取消所有映射。
+		///
+		///
+		virtual void UnMapAll() override;
 
 		///
 		/// @brief 调整文件大小。

@@ -21,11 +21,7 @@ widget::MemoryMapFile::MemoryMapFile(base::Path const &path)
 
 widget::MemoryMapFile::~MemoryMapFile()
 {
-	for (uint8_t *address : _mapped_address_vector)
-	{
-		_file->unmap(address);
-	}
-
+	UnMapAll();
 	_file->close();
 }
 
@@ -45,7 +41,27 @@ base::Span widget::MemoryMapFile::Map(base::Range const &range)
 		throw std::runtime_error{CODE_POS_STR + "映射失败。"};
 	}
 
-	_mapped_address_vector.push_back(address);
+	_mapped_address_set.insert(address);
 	base::Span ret{address, range.Size()};
 	return ret;
+}
+
+void widget::MemoryMapFile::UnMap(uint8_t *address)
+{
+	auto it = _mapped_address_set.find(address);
+	if (it == _mapped_address_set.end())
+	{
+		throw std::invalid_argument{CODE_POS_STR + "非法地址。"};
+	}
+
+	_file->unmap(address);
+	_mapped_address_set.erase(address);
+}
+
+void widget::MemoryMapFile::UnMapAll()
+{
+	for (uint8_t *address : _mapped_address_set)
+	{
+		_file->unmap(address);
+	}
 }
