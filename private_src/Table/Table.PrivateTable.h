@@ -75,8 +75,8 @@ public:
 
 	~PrivateTable()
 	{
-		std::cout << __func__ << std::endl;
 		Dispose();
+		std::cout << __func__ << std::endl;
 	}
 
 	///

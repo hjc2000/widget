@@ -121,8 +121,8 @@ widget::Table::Table()
 
 widget::Table::~Table()
 {
-	std::cout << __func__ << std::endl;
 	_table->Dispose();
+	std::cout << __func__ << std::endl;
 }
 
 void widget::Table::SetModel(std::shared_ptr<widget::ITableDataModel> const &model)
