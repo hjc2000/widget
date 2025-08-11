@@ -6,6 +6,7 @@
 #include "qtableview.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
+#include <iostream>
 #include <vector>
 
 ///
@@ -74,6 +75,7 @@ public:
 
 	~PrivateTable()
 	{
+		std::cout << __func__ << std::endl;
 		Dispose();
 	}
 
