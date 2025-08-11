@@ -45,11 +45,6 @@ namespace widget
 			SetPadding(paddint);
 		}
 
-		~HBoxLayout()
-		{
-			_layout->setParent(nullptr);
-		}
-
 		///
 		/// @brief 向布局添加一个控件。
 		///

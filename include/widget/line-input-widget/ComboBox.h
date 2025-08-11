@@ -4,8 +4,8 @@
 #include "base/IDisposable.h"
 #include "qcombobox.h"
 #include "qcoreapplication.h"
+#include "qwidget.h"
 #include "widget/convert.h"
-#include "widget/IndependentQWidget.h"
 #include "widget/layout/VBoxLayout.h"
 #include <initializer_list>
 #include <string>
@@ -18,7 +18,7 @@ namespace widget
 	///
 	///
 	class ComboBox :
-		public widget::IndependentQWidget,
+		public QWidget,
 		public base::IDisposable
 	{
 	private:

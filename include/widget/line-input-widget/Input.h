@@ -4,7 +4,6 @@
 #include "qcoreapplication.h"
 #include "qlineedit.h"
 #include "widget/convert.h"
-#include "widget/IndependentQWidget.h"
 #include "widget/layout/HBoxLayout.h"
 #include <vector>
 
@@ -15,7 +14,7 @@ namespace widget
 	///
 	///
 	class Input final :
-		public widget::IndependentQWidget,
+		public QWidget,
 		public base::IDisposable
 	{
 	private:

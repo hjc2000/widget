@@ -45,11 +45,6 @@ namespace widget
 			SetPadding(padding);
 		}
 
-		~VBoxLayout()
-		{
-			_layout->setParent(nullptr);
-		}
-
 		///
 		/// @brief 向布局添加一个控件。
 		///

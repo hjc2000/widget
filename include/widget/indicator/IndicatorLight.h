@@ -5,7 +5,6 @@
 #include "qnamespace.h"
 #include "qpainter.h"
 #include "qwidget.h"
-#include "widget/IndependentQWidget.h"
 
 namespace widget
 {
@@ -14,7 +13,7 @@ namespace widget
 	///
 	///
 	class IndicatorLight final :
-		public widget::IndependentQWidget
+		public QWidget
 	{
 	private:
 		base::led::State _state = base::led::State::Off;

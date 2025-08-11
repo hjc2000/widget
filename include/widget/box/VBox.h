@@ -2,7 +2,6 @@
 #include "base/container/iterator/IEnumerable.h"
 #include "base/string/define.h"
 #include "qwidget.h"
-#include "widget/IndependentQWidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
 #include <memory>
@@ -15,7 +14,7 @@ namespace widget
 	///
 	///
 	class VBox :
-		public widget::IndependentQWidget
+		public QWidget
 	{
 	private:
 		widget::VBoxLayout _layout{this};

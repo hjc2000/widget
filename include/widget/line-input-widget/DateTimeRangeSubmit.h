@@ -10,7 +10,6 @@
 #include "QHBoxLayout"
 #include "QLabel"
 #include "qwindowdefs.h"
-#include "widget/IndependentQWidget.h"
 #include "widget/layout/HBoxLayout.h"
 #include <iostream>
 #include <vector>
@@ -22,7 +21,7 @@ namespace widget
 	///
 	///
 	class DateTimeRangeSubmit final :
-		public widget::IndependentQWidget,
+		public QWidget,
 		public base::IDisposable
 	{
 	private:
