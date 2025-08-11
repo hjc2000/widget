@@ -4,6 +4,7 @@
 #include "widget/box/GridBox.h"
 #include "widget/box/GridBoxItem.h"
 #include "widget/convert.h"
+#include "widget/IndependentQWidget.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/Input.h"
 #include <memory>
@@ -17,7 +18,7 @@ namespace widget
 	/// 点击后就是确认提交。
 	///
 	class RangeSubmit final :
-		public QWidget,
+		public widget::IndependentQWidget,
 		public base::IDisposable
 	{
 	private:

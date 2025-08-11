@@ -4,6 +4,7 @@
 #include "QLineEdit"
 #include "QPushButton"
 #include "widget/button/Button.h"
+#include "widget/IndependentQWidget.h"
 #include "widget/line-input-widget/Input.h"
 
 namespace widget
@@ -14,7 +15,7 @@ namespace widget
 	/// @note 用来让用户提交一个输入信息。
 	///
 	class Submit :
-		public QWidget
+		public widget::IndependentQWidget
 	{
 	private:
 		QHBoxLayout _layout{this};
