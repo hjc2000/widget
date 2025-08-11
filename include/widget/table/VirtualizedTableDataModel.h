@@ -6,6 +6,7 @@
 #include "qobject.h"
 #include <algorithm>
 #include <cstdint>
+#include <iostream>
 
 namespace widget
 {
@@ -242,7 +243,10 @@ namespace widget
 		/* #endregion */
 
 	public:
-		virtual ~VirtualizedTableDataModel() = default;
+		virtual ~VirtualizedTableDataModel()
+		{
+			std::cout << __func__ << std::endl;
+		}
 
 		///
 		/// @brief 父表格。
