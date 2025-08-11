@@ -94,7 +94,6 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 
 				if (relative_row_index == current_index.row())
 				{
-					_current_is_changed_by_virtualized_scroll = false;
 					return;
 				}
 
@@ -135,7 +134,6 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 
 				if (relative_row_index == current_index.row())
 				{
-					_current_is_changed_by_virtualized_scroll = false;
 					return;
 				}
 
@@ -318,7 +316,6 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 				  << "虚拟行号：" << args.Current().row()
 				  << std::endl;
 
-		_current_is_changed_by_virtualized_scroll = false;
 		return;
 	}
 
