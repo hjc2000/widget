@@ -1,10 +1,12 @@
 #pragma once
 #include "base/filesystem/IMemoryMapFile.h"
 #include "base/filesystem/Path.h"
+#include "base/string/define.h"
 #include "qdir.h"
 #include <cstdint>
 #include <memory>
 #include <set>
+#include <stdexcept>
 
 namespace widget
 {
@@ -50,7 +52,11 @@ namespace widget
 		///
 		virtual void Resize(int64_t size) override
 		{
-			_file->resize(size);
+			bool result = _file->resize(size);
+			if (!result)
+			{
+				throw std::runtime_error{CODE_POS_STR + "调整文件大小失败。"};
+			}
 		}
 
 		///
