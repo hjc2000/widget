@@ -154,6 +154,14 @@ namespace widget
 			}
 		}
 
+		~GridBox()
+		{
+			for (widget::GridBoxItem const &widget : _item_list)
+			{
+				widget.Widget()->setParent(nullptr);
+			}
+		}
+
 		/* #endregion */
 
 		void AddItem(widget::GridBoxItem const &item)
@@ -209,7 +217,7 @@ namespace widget
 			{
 				if (_item_list[i].Row() == row && _item_list[i].Column() == column)
 				{
-					_grid_layout.removeWidget(_item_list[i].Widget().get());
+					_item_list[i].Widget()->setParent(nullptr);
 					_item_list.RemoveAt(i);
 
 					// 移除后不返回。因为可能有多个控件同时层叠放置在同一个格子。
@@ -233,7 +241,7 @@ namespace widget
 			{
 				if (_item_list[i].Widget() == widget)
 				{
-					_grid_layout.removeWidget(widget.get());
+					_item_list[i].Widget()->setParent(nullptr);
 					_item_list.RemoveAt(i);
 					return;
 				}
@@ -248,7 +256,7 @@ namespace widget
 		{
 			for (auto &item : _item_list)
 			{
-				_grid_layout.removeWidget(item.Widget().get());
+				item.Widget()->setParent(nullptr);
 			}
 
 			_item_list.Clear();

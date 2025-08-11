@@ -1,7 +1,6 @@
 #pragma once
 #include "qboxlayout.h"
 #include "widget/layout/Padding.h"
-#include <memory>
 
 namespace widget
 {
@@ -14,7 +13,7 @@ namespace widget
 	class VBoxLayout
 	{
 	private:
-		std::shared_ptr<QVBoxLayout> _layout;
+		QVBoxLayout *_layout = nullptr;
 
 	public:
 		///
@@ -35,7 +34,7 @@ namespace widget
 		///
 		VBoxLayout(QWidget *parent, widget::Padding const &padding)
 		{
-			_layout = std::shared_ptr<QVBoxLayout>{new QVBoxLayout{parent}};
+			_layout = new QVBoxLayout{parent};
 
 			_layout->setAlignment(Qt::Alignment{Qt::AlignmentFlag::AlignTop | Qt::AlignmentFlag::AlignLeft});
 

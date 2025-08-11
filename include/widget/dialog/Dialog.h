@@ -104,6 +104,11 @@ namespace widget
 			SetContent(content);
 		}
 
+		virtual ~Dialog()
+		{
+			_content->setParent(nullptr);
+		}
+
 		/* #endregion */
 
 		/* #region 属性 */

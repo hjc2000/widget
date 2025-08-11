@@ -13,7 +13,7 @@ namespace widget
 	class HBoxLayout
 	{
 	private:
-		std::shared_ptr<QHBoxLayout> _layout;
+		QHBoxLayout *_layout;
 
 	public:
 		///
@@ -23,7 +23,7 @@ namespace widget
 		///
 		HBoxLayout(QWidget *parent)
 		{
-			_layout = std::shared_ptr<QHBoxLayout>{new QHBoxLayout{parent}};
+			_layout = new QHBoxLayout{parent};
 
 			_layout->setAlignment(Qt::Alignment{Qt::AlignmentFlag::AlignTop | Qt::AlignmentFlag::AlignLeft});
 

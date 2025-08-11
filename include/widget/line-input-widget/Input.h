@@ -20,7 +20,7 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::HBoxLayout _layout{this};
-		QLineEdit _line_edit{};
+		QLineEdit *_line_edit = new QLineEdit{};
 
 		/* #region 对外提供事件 */
 
@@ -38,9 +38,9 @@ namespace widget
 	public:
 		Input()
 		{
-			_line_edit.setPlaceholderText("在此处输入内容...");
-			_line_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-			_layout.AddWidget(&_line_edit);
+			_line_edit->setPlaceholderText("在此处输入内容...");
+			_line_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_layout.AddWidget(_line_edit);
 			ConnectSignal();
 		}
 
@@ -86,7 +86,7 @@ namespace widget
 		///
 		QString PlaceholderText() const
 		{
-			return _line_edit.placeholderText();
+			return _line_edit->placeholderText();
 		}
 
 		///
@@ -96,7 +96,7 @@ namespace widget
 		///
 		void SetPlaceholderText(QString const &value)
 		{
-			_line_edit.setPlaceholderText(value);
+			_line_edit->setPlaceholderText(value);
 		}
 
 		///
@@ -141,7 +141,7 @@ namespace widget
 		///
 		QString Text() const
 		{
-			return _line_edit.text();
+			return _line_edit->text();
 		}
 
 		///
@@ -151,11 +151,11 @@ namespace widget
 		///
 		void SetText(QString const &value)
 		{
-			_line_edit.setText(value);
+			_line_edit->setText(value);
 
 			try
 			{
-				_text_changing_finished_event.Invoke(_line_edit.text());
+				_text_changing_finished_event.Invoke(_line_edit->text());
 			}
 			catch (std::exception const &e)
 			{
@@ -267,12 +267,12 @@ namespace widget
 		{
 			if (is_invalid)
 			{
-				_line_edit.setStyleSheet("border: 2px solid red;");
+				_line_edit->setStyleSheet("border: 2px solid red;");
 			}
 			else
 			{
 				// 恢复默认样式
-				_line_edit.setStyleSheet("");
+				_line_edit->setStyleSheet("");
 			}
 		}
 	};

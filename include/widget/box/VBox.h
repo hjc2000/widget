@@ -46,6 +46,11 @@ namespace widget
 			AddWidget(widgets);
 		}
 
+		~VBox()
+		{
+			ClearWidget();
+		}
+
 		/* #endregion */
 
 		/* #region AddWidget */
@@ -142,8 +147,8 @@ namespace widget
 				return;
 			}
 
+			widget->setParent(nullptr);
 			_widget_set.erase(widget);
-			_layout.RemoveWidget(widget.get());
 		}
 
 		///
@@ -154,7 +159,7 @@ namespace widget
 		{
 			for (auto widget : _widget_set)
 			{
-				_layout.RemoveWidget(widget.get());
+				widget->setParent(nullptr);
 			}
 
 			_widget_set.clear();
