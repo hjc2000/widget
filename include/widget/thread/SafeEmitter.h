@@ -31,6 +31,7 @@ namespace widget
 		~SafeEmitter()
 		{
 			Dispose();
+			std::cout << __func__ << std::endl;
 		}
 
 		///

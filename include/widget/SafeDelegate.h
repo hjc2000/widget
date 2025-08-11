@@ -9,6 +9,7 @@
 #include "widget/thread/SafeEmitter.h"
 #include <atomic>
 #include <functional>
+#include <iostream>
 #include <stdexcept>
 
 namespace widget
@@ -45,6 +46,7 @@ namespace widget
 		~SafeDelegate()
 		{
 			Dispose();
+			std::cout << __func__ << std::endl;
 		}
 
 		///
