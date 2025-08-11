@@ -307,6 +307,11 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 		return;
 	}
 
+	std::cout << "设置当前行。真实行号:" << (args.Current().row() + _start)
+			  << ", "
+			  << "虚拟行号：" << args.Current().row()
+			  << std::endl;
+
 	if (args.Current().row() < 0 || args.Current().row() >= RowCount())
 	{
 		_current_row = -1;
