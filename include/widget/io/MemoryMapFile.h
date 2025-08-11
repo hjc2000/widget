@@ -28,7 +28,7 @@ namespace widget
 		/// @param range
 		/// @return
 		///
-		virtual void *Map(base::Range const &range) override;
+		virtual base::Span Map(base::Range const &range) override;
 
 		///
 		/// @brief 调整文件大小。

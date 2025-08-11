@@ -8,6 +8,7 @@
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
+#include "widget/test/TestMemoryMapFile.h"
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -88,5 +89,6 @@ int TestCoreApplication()
 
 int main()
 {
-	return TestCoreApplication();
+	widget::test::TestMemoryMapFile();
+	return 0;
 }

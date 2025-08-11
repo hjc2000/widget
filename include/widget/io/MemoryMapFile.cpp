@@ -29,7 +29,7 @@ widget::MemoryMapFile::~MemoryMapFile()
 	_file->close();
 }
 
-void *widget::MemoryMapFile::Map(base::Range const &range)
+base::Span widget::MemoryMapFile::Map(base::Range const &range)
 {
 	if (_file->size() < range.End())
 	{
@@ -46,5 +46,6 @@ void *widget::MemoryMapFile::Map(base::Range const &range)
 	}
 
 	_mapped_address_vector.push_back(address);
-	return address;
+	base::Span ret{address, range.Size()};
+	return ret;
 }
