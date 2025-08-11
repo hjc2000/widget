@@ -4,6 +4,7 @@
 #include "widget/AlignmentFlag.h"
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
+#include <iostream>
 
 class widget::Table::HeaderView :
 	public QHeaderView
@@ -58,6 +59,11 @@ public:
 				Qt::AlignmentFlag::AlignVCenter,
 			};
 		}
+	}
+
+	~HeaderView()
+	{
+		std::cout << __func__ << std::endl;
 	}
 
 	void SetSelectedIndex(int index)
