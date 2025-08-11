@@ -5,10 +5,10 @@
 #include "base/stream/Span.h"
 #include "base/task/delay.h"
 #include "base/task/task.h"
+#include "base/test/TestMemoryMapFile.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
-#include "widget/test/TestMemoryMapFile.h"
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -89,6 +89,6 @@ int TestCoreApplication()
 
 int main()
 {
-	widget::test::TestMemoryMapFile();
+	base::test::TestMemoryMapFile();
 	return 0;
 }
