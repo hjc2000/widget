@@ -23,6 +23,8 @@ namespace widget
 		///
 		/// @brief 将文件指定范围映射为进程地址空间中的内存块。
 		///
+		/// @note 指定的范围如果超过了文件范围，会自动扩大文件。
+		///
 		/// @param range
 		/// @return
 		///
