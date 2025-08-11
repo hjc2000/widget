@@ -52,6 +52,16 @@ namespace widget
 		{
 			_file->resize(size);
 		}
+
+		///
+		/// @brief 关闭内存映射文件。
+		///
+		///
+		virtual void Close() override
+		{
+			UnMapAll();
+			_file->close();
+		}
 	};
 
 } // namespace widget

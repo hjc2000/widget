@@ -21,8 +21,7 @@ widget::MemoryMapFile::MemoryMapFile(base::Path const &path)
 
 widget::MemoryMapFile::~MemoryMapFile()
 {
-	UnMapAll();
-	_file->close();
+	Close();
 }
 
 base::Span widget::MemoryMapFile::Map(base::Range const &range)
@@ -64,4 +63,6 @@ void widget::MemoryMapFile::UnMapAll()
 	{
 		_file->unmap(address);
 	}
+
+	_mapped_address_set.clear();
 }

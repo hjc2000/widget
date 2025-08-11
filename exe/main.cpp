@@ -6,6 +6,7 @@
 #include "base/task/delay.h"
 #include "base/task/task.h"
 #include "base/test/TestMemoryMapFile.h"
+#include "base/test/TestMemoryMapFileList.h"
 #include "widget/CoreApplication.h"
 #include "widget/FusionApplication.h"
 #include "widget/MainWindow.h"
@@ -89,6 +90,7 @@ int TestCoreApplication()
 
 int main()
 {
-	base::test::TestMemoryMapFile();
+	// base::test::TestMemoryMapFile();
+	base::test::TestMemoryMapFileList();
 	return 0;
 }
