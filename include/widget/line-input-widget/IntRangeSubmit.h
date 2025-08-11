@@ -21,7 +21,7 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
-		widget::RangeSubmit _range_submit = widget::RangeSubmit{};
+		widget::RangeSubmit _range_submit{};
 
 		int64_t _min = INT64_MIN;
 		int64_t _max = INT64_MAX;
