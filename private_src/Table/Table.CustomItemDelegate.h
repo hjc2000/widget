@@ -3,6 +3,7 @@
 #include "widget/layout/Padding.h"
 #include "widget/table/Table.h"
 #include <cstdint>
+#include <iostream>
 #include <vector>
 
 ///
@@ -21,6 +22,11 @@ private:
 
 public:
 	CustomItemDelegate() = default;
+
+	~CustomItemDelegate()
+	{
+		std::cout << __func__ << std::endl;
+	}
 
 	///
 	/// @brief 绘制单元格。
