@@ -4,6 +4,7 @@
 #include "QHeaderView"
 #include "qscrollbar.h"
 #include "QTableView"
+#include "widget/IndependentQWidget.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/table/ITableDataModel.h"
 #include "widget/table/TableSortingParameter.h"
@@ -18,7 +19,7 @@ namespace widget
 	/// @note 表格默认会撑开，占满父容器，如果父容器可以被撑开，则会将父容器也撑开。
 	///
 	class Table :
-		public QWidget
+		public widget::IndependentQWidget
 	{
 	private:
 		class PrivateTable;

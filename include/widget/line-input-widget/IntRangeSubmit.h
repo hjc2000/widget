@@ -4,6 +4,7 @@
 #include "base/math/interval/ClosedInterval.h"
 #include "base/string/define.h"
 #include "base/string/Parse.h"
+#include "widget/IndependentQWidget.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/RangeSubmit.h"
 #include <cstdint>
@@ -15,7 +16,7 @@ namespace widget
 	/// @brief 整型范围提交控件。
 	///
 	class IntRangeSubmit final :
-		public QWidget,
+		public widget::IndependentQWidget,
 		public base::IDisposable
 	{
 	private:

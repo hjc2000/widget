@@ -6,6 +6,7 @@
 #include "QCheckBox"
 #include "qcoreapplication.h"
 #include "QWidget"
+#include "widget/IndependentQWidget.h"
 #include "widget/layout/HBoxLayout.h"
 #include "widget/line-input-widget/CheckState.h"
 #include <iostream>
@@ -18,7 +19,7 @@ namespace widget
 	///
 	///
 	class CheckBox final :
-		public QWidget,
+		public widget::IndependentQWidget,
 		public base::IDisposable
 	{
 	private:

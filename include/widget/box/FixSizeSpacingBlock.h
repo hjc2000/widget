@@ -1,5 +1,5 @@
 #pragma once
-#include "qwidget.h"
+#include "widget/IndependentQWidget.h"
 
 namespace widget
 {
@@ -8,7 +8,7 @@ namespace widget
 	///
 	///
 	class FixSizeSpacingBlock :
-		public QWidget
+		public widget::IndependentQWidget
 	{
 	public:
 		///
@@ -17,7 +17,6 @@ namespace widget
 		/// @param size
 		///
 		FixSizeSpacingBlock(int size)
-			: QWidget(nullptr)
 		{
 			setFixedSize(size, size);
 		}
@@ -29,7 +28,6 @@ namespace widget
 		/// @param height
 		///
 		FixSizeSpacingBlock(int width, int height)
-			: QWidget(nullptr)
 		{
 			setFixedSize(width, height);
 		}

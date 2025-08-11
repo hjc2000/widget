@@ -6,6 +6,7 @@
 #include "LabelDataUnitGridItem.h"
 #include "qgridlayout.h"
 #include "qwidget.h"
+#include "widget/IndependentQWidget.h"
 #include "widget/layout/Padding.h"
 #include <algorithm>
 #include <cstdint>
@@ -21,7 +22,7 @@ namespace widget
 	///
 	///
 	class GridBox :
-		public QWidget
+		public widget::IndependentQWidget
 	{
 	private:
 		QGridLayout _grid_layout{this};
