@@ -1,5 +1,5 @@
 #include "XlsxDocumentEditor.h"
-#include "base/filesystem/IFileStream.h"
+#include "base/filesystem/file.h"
 #include "base/filesystem/Path.h"
 #include "qcontainerfwd.h"
 #include "widget/convert.h"
@@ -11,7 +11,7 @@
 
 widget::XlsxDocumentEditor::XlsxDocumentEditor(base::Path const &file_path)
 {
-	std::shared_ptr<base::IFileStream> fs = base::file::OpenOrCreate(file_path);
+	std::shared_ptr<base::Stream> fs = base::file::OpenOrCreate(file_path);
 	_io_device = std::shared_ptr<widget::StreamIODevice>{new widget::StreamIODevice{fs}};
 	_xlsx_writer = std::shared_ptr<QXlsx::Document>{new QXlsx::Document{_io_device.get()}};
 }
