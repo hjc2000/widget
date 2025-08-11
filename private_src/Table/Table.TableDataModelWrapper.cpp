@@ -69,6 +69,7 @@ widget::Table::TableDataModelWrapper::TableDataModelWrapper(widget::Table::Priva
 
 widget::Table::TableDataModelWrapper::~TableDataModelWrapper()
 {
+	std::cout << __func__ << std::endl;
 	UnsubscribeEvents();
 }
 
