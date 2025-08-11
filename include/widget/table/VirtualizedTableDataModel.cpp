@@ -93,8 +93,10 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 					return;
 				}
 
+				int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
 				_current_is_changed_by_virtualized_scroll = true;
 				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+				ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
 			});
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
@@ -129,8 +131,10 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 					return;
 				}
 
+				int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
 				_current_is_changed_by_virtualized_scroll = true;
 				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+				ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
 			});
 	}
 }
