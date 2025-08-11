@@ -9,6 +9,7 @@
 #include "Table.PrivateTable.h"
 #include "Table.TableDataModelWrapper.h"
 #include "VerticalScrollEventArgs.h"
+#include <iostream>
 #include <stdexcept>
 
 void widget::Table::SetColumnHeaderStyle()
@@ -120,6 +121,7 @@ widget::Table::Table()
 
 widget::Table::~Table()
 {
+	std::cout << __func__ << std::endl;
 	_table->Dispose();
 }
 
