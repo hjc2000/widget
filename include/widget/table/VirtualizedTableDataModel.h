@@ -381,6 +381,13 @@ namespace widget
 
 		/* #endregion */
 
+		///
+		/// @brief 基于行数增量进行滚动。
+		///
+		/// @param row_step
+		///
+		void ScrollByRow(int64_t row_step);
+
 	}; // VirtualizedTableDataModel
 
 } // namespace widget

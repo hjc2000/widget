@@ -371,3 +371,43 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 void widget::VirtualizedTableDataModel::OnClick(base::Position<int32_t> const &position)
 {
 }
+
+void widget::VirtualizedTableDataModel::ScrollByRow(int64_t row_step)
+{
+	int64_t actual_step = TryMoveAsFarAsPossible(row_step);
+
+	_data_change_event.Invoke(base::PositionRange<int32_t>{
+		base::Position<int32_t>{0, 0},
+		base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
+	});
+
+	// 滚动方向（滚动条移动方向）与视窗移动方向相反。
+	ParentTable()->ScrollByRow(-actual_step);
+
+	QTimer::singleShot(
+		0,
+		&_q_object,
+		[this]() mutable
+		{
+			int64_t relative_row_index = _current_row - _start;
+			if (relative_row_index < 0 || relative_row_index >= RowCount())
+			{
+				relative_row_index = -1;
+			}
+
+			QModelIndex current_index = ParentTable()->CurrentIndex();
+
+			if (relative_row_index == current_index.row())
+			{
+				return;
+			}
+
+			int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
+			_scroll_because_of_set_current = true;
+			_current_is_changed_by_virtualized_scroll = true;
+			ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+			ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
+			_scroll_because_of_set_current = false;
+			_current_is_changed_by_virtualized_scroll = false;
+		});
+}
