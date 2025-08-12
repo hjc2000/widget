@@ -69,82 +69,12 @@ void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollE
 	if ((args.Direction() == widget::VerticalScrollDirection::Down) &&
 		(ParentTable()->FirstVisibleRowIndex() > RowCount() - 100))
 	{
-		int64_t step = TryMoveAsFarAsPossible(200);
-
-		_data_change_event.Invoke(base::PositionRange<int32_t>{
-			base::Position<int32_t>{0, 0},
-			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
-		});
-
-		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
-		ParentTable()->ScrollByRow(-step);
-
-		QTimer::singleShot(
-			0,
-			&_q_object,
-			[this]() mutable
-			{
-				int64_t relative_row_index = _current_row - _start;
-				if (relative_row_index < 0 || relative_row_index >= RowCount())
-				{
-					relative_row_index = -1;
-				}
-
-				QModelIndex current_index = ParentTable()->CurrentIndex();
-
-				if (relative_row_index == current_index.row())
-				{
-					return;
-				}
-
-				int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
-				_scroll_because_of_set_current = true;
-				_current_is_changed_by_virtualized_scroll = true;
-				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
-				ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
-				_scroll_because_of_set_current = false;
-				_current_is_changed_by_virtualized_scroll = false;
-			});
+		ScrollByRow(200);
 	}
 	else if ((args.Direction() == widget::VerticalScrollDirection::Up) &&
 			 (ParentTable()->FirstVisibleRowIndex() < 100))
 	{
-		int64_t step = TryMoveAsFarAsPossible(-200);
-
-		_data_change_event.Invoke(base::PositionRange<int>{
-			base::Position<int32_t>{0, 0},
-			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
-		});
-
-		// 滚动方向（滚动条移动方向）与视窗移动方向相反。
-		ParentTable()->ScrollByRow(-step);
-
-		QTimer::singleShot(
-			0,
-			&_q_object,
-			[this]() mutable
-			{
-				int64_t relative_row_index = _current_row - _start;
-				if (relative_row_index < 0 || relative_row_index >= RowCount())
-				{
-					relative_row_index = -1;
-				}
-
-				QModelIndex current_index = ParentTable()->CurrentIndex();
-
-				if (relative_row_index == current_index.row())
-				{
-					return;
-				}
-
-				int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
-				_scroll_because_of_set_current = true;
-				_current_is_changed_by_virtualized_scroll = true;
-				ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
-				ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
-				_scroll_because_of_set_current = false;
-				_current_is_changed_by_virtualized_scroll = false;
-			});
+		ScrollByRow(-200);
 	}
 }
 
