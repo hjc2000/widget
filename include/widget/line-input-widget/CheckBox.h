@@ -2,13 +2,11 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
-#include "base/string/define.h"
 #include "QCheckBox"
 #include "qcoreapplication.h"
 #include "QWidget"
 #include "widget/layout/HBoxLayout.h"
 #include "widget/line-input-widget/CheckState.h"
-#include <iostream>
 #include <vector>
 
 namespace widget
@@ -30,30 +28,7 @@ namespace widget
 
 		std::vector<QMetaObject::Connection> _connections;
 
-		void ConnectSignals()
-		{
-			QMetaObject::Connection connection;
-
-			connection = connect(_check_box.get(),
-								 &QCheckBox::checkStateChanged,
-								 [this](Qt::CheckState q_check_state)
-								 {
-									 try
-									 {
-										 _check_state_changed_event.Invoke();
-									 }
-									 catch (std::exception const &e)
-									 {
-										 std::cerr << CODE_POS_STR + e.what() << std::endl;
-									 }
-									 catch (...)
-									 {
-										 std::cerr << CODE_POS_STR + "发生了未知异常。" << std::endl;
-									 }
-								 });
-
-			_connections.push_back(connection);
-		}
+		void ConnectSignals();
 
 	public:
 		CheckBox()
@@ -78,6 +53,7 @@ namespace widget
 
 		~CheckBox()
 		{
+			_check_box->setParent(nullptr);
 			Dispose();
 		}
 

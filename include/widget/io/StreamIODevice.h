@@ -2,7 +2,6 @@
 #include "base/stream/Stream.h"
 #include "base/string/define.h"
 #include "QIODevice"
-#include <iostream>
 
 namespace widget
 {
@@ -16,42 +15,9 @@ namespace widget
 	private:
 		std::shared_ptr<base::Stream> _stream;
 
-		virtual qint64 readData(char *data, qint64 maxlen) override
-		{
-			try
-			{
-				base::Span span{
-					reinterpret_cast<uint8_t *>(data),
-					maxlen,
-				};
+		virtual qint64 readData(char *data, qint64 maxlen) override;
 
-				return _stream->Read(span);
-			}
-			catch (std::exception const &e)
-			{
-				std::cerr << CODE_POS_STR + e.what() << std::endl;
-				return -1;
-			}
-		}
-
-		virtual qint64 writeData(char const *data, qint64 len) override
-		{
-			try
-			{
-				base::ReadOnlySpan span{
-					reinterpret_cast<uint8_t const *>(data),
-					len,
-				};
-
-				_stream->Write(span);
-				return len;
-			}
-			catch (std::exception const &e)
-			{
-				std::cerr << CODE_POS_STR + e.what() << std::endl;
-				return -1;
-			}
-		}
+		virtual qint64 writeData(char const *data, qint64 len) override;
 
 	public:
 		///
