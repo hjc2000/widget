@@ -361,6 +361,14 @@ void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
 {
 	int64_t step = row_index - _start;
 	ScrollByRow(step);
+
+	// 为什么要先滚动到 1 再滚动到 0?
+	//
+	// 我也不知道，如果不这么做，当前选中行在跳转中会显示延迟，要滚动一下才刷新。
+	// 比如滚动到 3338 行，选中，然后滚动到 0 行，此时 0 行显示成灰色，表示这是焦点，
+	// 要再滚动一下才能反应过来这不是焦点。
+	//
+	// 既然这样，我就模拟手动再滚了一下的这个操作。所以滚动了 2 次。
 	ParentTable()->VerticalScrollBar()->setValue(1);
 	ParentTable()->VerticalScrollBar()->setValue(0);
 }
