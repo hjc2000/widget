@@ -38,8 +38,13 @@ namespace widget
 		///
 		virtual bool Remove(std::shared_ptr<QWidget> const &item) override
 		{
-			item->setParent(nullptr);
-			return _set.Remove(item);
+			bool result = _set.Remove(item);
+			if (result)
+			{
+				item->setParent(nullptr);
+			}
+
+			return result;
 		}
 
 		///

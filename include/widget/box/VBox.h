@@ -4,8 +4,8 @@
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
+#include "widget/WidgetSet.h"
 #include <memory>
-#include <set>
 
 namespace widget
 {
@@ -18,7 +18,7 @@ namespace widget
 	{
 	private:
 		widget::VBoxLayout _layout{this};
-		std::set<std::shared_ptr<QWidget>> _widget_set;
+		widget::WidgetSet _widget_set;
 
 	public:
 		/* #region 构造函数 */
@@ -67,14 +67,12 @@ namespace widget
 				throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
 			}
 
-			auto it = _widget_set.find(widget);
-			if (it != _widget_set.end())
+			if (_widget_set.Contains(widget))
 			{
-				// 如果已经添加过了，就不重复添加了。
 				return;
 			}
 
-			_widget_set.insert(widget);
+			_widget_set.Add(widget);
 			_layout.AddWidget(widget.get());
 		}
 
@@ -141,14 +139,7 @@ namespace widget
 		///
 		void RemoveWidget(std::shared_ptr<QWidget> const &widget)
 		{
-			auto it = _widget_set.find(widget);
-			if (it == _widget_set.end())
-			{
-				return;
-			}
-
-			widget->setParent(nullptr);
-			_widget_set.erase(widget);
+			_widget_set.Remove(widget);
 		}
 
 		///
@@ -157,12 +148,7 @@ namespace widget
 		///
 		void ClearWidget()
 		{
-			for (auto widget : _widget_set)
-			{
-				widget->setParent(nullptr);
-			}
-
-			_widget_set.clear();
+			_widget_set.Clear();
 		}
 
 		///
