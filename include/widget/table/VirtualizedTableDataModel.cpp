@@ -96,6 +96,9 @@ void widget::VirtualizedTableDataModel::UpdateCurrentRow()
 	}
 
 	int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
+
+	// 设置当前索引会触发滚动。
+	// 滚动会触发本类的虚拟滚动事件处理函数，所以需要把这两个事件的处理都屏蔽。
 	_scroll_because_of_set_current = true;
 	_current_is_changed_by_virtualized_scroll = true;
 	ParentTable()->SetCurrentIndex(relative_current_row_index, _current_column);
