@@ -256,7 +256,7 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual widget::Table *ParentTable() override = 0;
+		virtual widget::Table *ParentTable() const override = 0;
 
 		///
 		/// @brief 设置父表格。
@@ -380,6 +380,13 @@ namespace widget
 		virtual void OnRealDoubleClick(int64_t row, int64_t column) = 0;
 
 		/* #endregion */
+
+		///
+		/// @brief 第一个可见行的行索引。
+		///
+		/// @return
+		///
+		int64_t FirstVisibleRowIndex() const;
 
 		///
 		/// @brief 基于行数增量进行滚动。

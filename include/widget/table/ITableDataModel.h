@@ -36,7 +36,7 @@ namespace widget
 		///
 		/// @return
 		///
-		virtual widget::Table *ParentTable() = 0;
+		virtual widget::Table *ParentTable() const = 0;
 
 		///
 		/// @brief 设置父表格。

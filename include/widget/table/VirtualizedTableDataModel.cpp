@@ -302,6 +302,11 @@ void widget::VirtualizedTableDataModel::OnClick(base::Position<int32_t> const &p
 {
 }
 
+int64_t widget::VirtualizedTableDataModel::FirstVisibleRowIndex() const
+{
+	return ParentTable()->FirstVisibleRowIndex() + _start;
+}
+
 void widget::VirtualizedTableDataModel::ScrollByRow(int64_t row_step)
 {
 	int64_t actual_step = TryMoveAsFarAsPossible(row_step);
