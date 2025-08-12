@@ -25,6 +25,9 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endInsertRows();
+
+		headerDataChanged(Qt::Orientation::Vertical, 0, rowCount());
+		headerDataChanged(Qt::Orientation::Horizontal, 0, columnCount());
 	};
 
 	_row_removed_event_token = _model->RowRemovedEvent() += [this](widget::RowRemovedEventArgs const &args)
@@ -34,6 +37,9 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 						args.RowIndex().Value() + args.RowCount().Value() - 1);
 
 		endRemoveRows();
+
+		headerDataChanged(Qt::Orientation::Vertical, 0, rowCount());
+		headerDataChanged(Qt::Orientation::Horizontal, 0, columnCount());
 	};
 
 	_data_change_event_token = _model->DataChangeEvent() += [this](base::PositionRange<int32_t> const &range)
@@ -41,6 +47,9 @@ void widget::Table::TableDataModelWrapper::SubscribeEvents()
 		auto left_top = createIndex(range.LeftTop().Y(), range.LeftTop().X());
 		auto right_bottom = createIndex(range.RightBottom().Y(), range.RightBottom().X());
 		dataChanged(left_top, right_bottom);
+
+		headerDataChanged(Qt::Orientation::Vertical, 0, rowCount());
+		headerDataChanged(Qt::Orientation::Horizontal, 0, columnCount());
 	};
 }
 
