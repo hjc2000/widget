@@ -55,16 +55,6 @@ namespace widget
 		}
 
 		///
-		/// @brief 将控件从布局中移除。
-		///
-		/// @param widget
-		///
-		void RemoveWidget(QWidget *widget)
-		{
-			_layout->removeWidget(widget);
-		}
-
-		///
 		/// @brief 获取内边距。
 		///
 		/// @return widget::Padding
