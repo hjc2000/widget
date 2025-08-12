@@ -361,5 +361,6 @@ void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
 {
 	int64_t step = row_index - _start;
 	ScrollByRow(step);
+	ParentTable()->VerticalScrollBar()->setValue(1);
 	ParentTable()->VerticalScrollBar()->setValue(0);
 }
