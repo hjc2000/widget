@@ -34,7 +34,7 @@ namespace widget
 		CheckBox()
 		{
 			_check_box = std::shared_ptr<QCheckBox>{new QCheckBox{}};
-			_layout.AddWidget(_check_box.get());
+			_layout.AddWidget(_check_box);
 
 			ConnectSignals();
 		}
@@ -46,7 +46,7 @@ namespace widget
 				nullptr,
 			}};
 
-			_layout.AddWidget(_check_box.get());
+			_layout.AddWidget(_check_box);
 
 			ConnectSignals();
 		}

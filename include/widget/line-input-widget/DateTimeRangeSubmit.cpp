@@ -6,7 +6,7 @@ void widget::DateTimeRangeSubmit::ConnectSignal()
 {
 	QMetaObject::Connection connection;
 
-	connection = connect(&_left_edit,
+	connection = connect(_left_edit.get(),
 						 &QDateTimeEdit::dateTimeChanged,
 						 [this](QDateTime const &date_time)
 						 {
@@ -15,7 +15,7 @@ void widget::DateTimeRangeSubmit::ConnectSignal()
 
 	_connections.push_back(connection);
 
-	connection = connect(&_right_edit,
+	connection = connect(_right_edit.get(),
 						 &QDateTimeEdit::dateTimeChanged,
 						 [this](QDateTime const &date_time)
 						 {

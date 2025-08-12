@@ -10,6 +10,7 @@
 #include "QLabel"
 #include "qwindowdefs.h"
 #include "widget/layout/HBoxLayout.h"
+#include <memory>
 #include <vector>
 
 namespace widget
@@ -25,14 +26,14 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::HBoxLayout _layout{this};
-		QDateTimeEdit _left_edit{};
-		QDateTimeEdit _right_edit{};
+		std::shared_ptr<QDateTimeEdit> _left_edit{new QDateTimeEdit{}};
+		std::shared_ptr<QDateTimeEdit> _right_edit{new QDateTimeEdit{}};
 
 		///
 		/// @brief 两个日期输入框之间的短横线。
 		///
 		///
-		QLabel _label{"-"};
+		std::shared_ptr<QLabel> _label{new QLabel{"-"}};
 
 		base::TimePointSinceEpoch _min{std::chrono::nanoseconds{INT64_MIN}};
 		base::TimePointSinceEpoch _max{std::chrono::nanoseconds{INT64_MAX}};
@@ -51,29 +52,29 @@ namespace widget
 		DateTimeRangeSubmit()
 		{
 			{
-				_left_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+				_left_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
 				// 设置当前日期和时间
-				_left_edit.setDateTime(QDateTime::currentDateTime());
+				_left_edit->setDateTime(QDateTime::currentDateTime());
 
 				// 设置显示格式
-				_left_edit.setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+				_left_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
 			}
 
 			{
-				_right_edit.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+				_right_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
 				// 设置当前日期和时间
-				_right_edit.setDateTime(QDateTime::currentDateTime());
+				_right_edit->setDateTime(QDateTime::currentDateTime());
 
 				// 设置显示格式
-				_right_edit.setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+				_right_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
 			}
 
 			{
-				_layout.AddWidget(&_left_edit);
-				_layout.AddWidget(&_label);
-				_layout.AddWidget(&_right_edit);
+				_layout.AddWidget(_left_edit);
+				_layout.AddWidget(_label);
+				_layout.AddWidget(_right_edit);
 			}
 
 			{
@@ -103,9 +104,6 @@ namespace widget
 		~DateTimeRangeSubmit()
 		{
 			Dispose();
-			_left_edit.setParent(nullptr);
-			_right_edit.setParent(nullptr);
-			_label.setParent(nullptr);
 		}
 
 		///
@@ -154,7 +152,7 @@ namespace widget
 		///
 		base::TimePointSinceEpoch LeftTimePoint() const
 		{
-			QDateTime selectedDateTime = _left_edit.dateTime();
+			QDateTime selectedDateTime = _left_edit->dateTime();
 			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
 		}
 
@@ -165,7 +163,7 @@ namespace widget
 		///
 		base::TimePointSinceEpoch RightTimePoint() const
 		{
-			QDateTime selectedDateTime = _right_edit.dateTime();
+			QDateTime selectedDateTime = _right_edit->dateTime();
 			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
 		}
 
@@ -192,12 +190,12 @@ namespace widget
 		{
 			if (is_invalid)
 			{
-				_left_edit.setStyleSheet("border: 2px solid red;");
+				_left_edit->setStyleSheet("border: 2px solid red;");
 			}
 			else
 			{
 				// 恢复默认样式
-				_left_edit.setStyleSheet("");
+				_left_edit->setStyleSheet("");
 			}
 		}
 
@@ -210,12 +208,12 @@ namespace widget
 		{
 			if (is_invalid)
 			{
-				_right_edit.setStyleSheet("border: 2px solid red;");
+				_right_edit->setStyleSheet("border: 2px solid red;");
 			}
 			else
 			{
 				// 恢复默认样式
-				_right_edit.setStyleSheet("");
+				_right_edit->setStyleSheet("");
 			}
 		}
 
