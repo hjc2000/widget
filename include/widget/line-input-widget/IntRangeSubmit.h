@@ -3,7 +3,6 @@
 #include "base/IDisposable.h"
 #include "base/math/interval/ClosedInterval.h"
 #include "base/string/define.h"
-#include "base/string/Parse.h"
 #include "widget/layout/VBoxLayout.h"
 #include "widget/line-input-widget/RangeSubmit.h"
 #include <cstdint>
@@ -31,47 +30,9 @@ namespace widget
 
 		base::Delegate<> _submit_event;
 
-		bool TryParseLeftValue(int64_t &out)
-		{
-			try
-			{
-				out = base::ParseInt64(_range_submit.LeftTextStdString());
-				return true;
-			}
-			catch (std::exception const &e)
-			{
-				SetLeftInvalidInputStyle(true);
-				std::cerr << CODE_POS_STR + e.what() << std::endl;
-			}
-			catch (...)
-			{
-				SetLeftInvalidInputStyle(true);
-				std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
-			}
+		bool TryParseLeftValue(int64_t &out);
 
-			return false;
-		}
-
-		bool TryParseRightValue(int64_t &out)
-		{
-			try
-			{
-				out = base::ParseInt64(_range_submit.RightTextStdString());
-				return true;
-			}
-			catch (std::exception const &e)
-			{
-				SetRightInvalidInputStyle(true);
-				std::cerr << CODE_POS_STR + e.what() << std::endl;
-			}
-			catch (...)
-			{
-				SetRightInvalidInputStyle(true);
-				std::cerr << CODE_POS_STR + "发生了未知错误" << std::endl;
-			}
-
-			return false;
-		}
+		bool TryParseRightValue(int64_t &out);
 
 		void CheckLeftRightValues(int64_t left_value, int64_t right_value)
 		{
