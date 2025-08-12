@@ -8,6 +8,7 @@
 #include "widget/convert.h"
 #include "widget/layout/VBoxLayout.h"
 #include <initializer_list>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -24,7 +25,7 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
-		QComboBox _combo_box{};
+		std::shared_ptr<QComboBox> _combo_box{new QComboBox{}};
 		std::vector<QMetaObject::Connection> _connections{};
 
 		base::Delegate<int> _current_index_changed{};
@@ -35,8 +36,8 @@ namespace widget
 	public:
 		ComboBox()
 		{
-			_layout.AddWidget(&_combo_box);
-			_combo_box.setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+			_layout.AddWidget(_combo_box);
+			_combo_box->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 			ConnectSignals();
 		}
 
@@ -52,7 +53,7 @@ namespace widget
 		~ComboBox()
 		{
 			Dispose();
-			_combo_box.setParent(nullptr);
+			_combo_box->setParent(nullptr);
 		}
 
 		///
@@ -85,7 +86,7 @@ namespace widget
 
 		void AddItem(QString const &item)
 		{
-			_combo_box.addItem(item);
+			_combo_box->addItem(item);
 		}
 
 		void AddItem(std::string const &item)
@@ -127,7 +128,7 @@ namespace widget
 		///
 		int CurrentIndex() const
 		{
-			return _combo_box.currentIndex();
+			return _combo_box->currentIndex();
 		}
 
 		///
@@ -137,9 +138,9 @@ namespace widget
 		///
 		void SetCurrentIndex(int index)
 		{
-			if (_combo_box.currentIndex() != index)
+			if (_combo_box->currentIndex() != index)
 			{
-				_combo_box.setCurrentIndex(index);
+				_combo_box->setCurrentIndex(index);
 			}
 		}
 
@@ -150,7 +151,7 @@ namespace widget
 		///
 		std::string CurrentText() const
 		{
-			return base::to_string(_combo_box.currentText());
+			return base::to_string(_combo_box->currentText());
 		}
 
 		///
@@ -162,7 +163,7 @@ namespace widget
 		{
 			if (CurrentText() != value)
 			{
-				_combo_box.setCurrentText(widget::ToQString(value));
+				_combo_box->setCurrentText(widget::ToQString(value));
 			}
 		}
 	};

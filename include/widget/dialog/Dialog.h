@@ -126,7 +126,7 @@ namespace widget
 			}
 
 			_content = content;
-			_layout.AddWidget(_content.get());
+			_layout.AddWidget(_content);
 		}
 
 		widget::Padding Padding() const

@@ -4,7 +4,6 @@
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
-#include "widget/WidgetSet.h"
 #include <memory>
 
 namespace widget
@@ -18,7 +17,6 @@ namespace widget
 	{
 	private:
 		widget::VBoxLayout _layout{this};
-		widget::WidgetSet _widget_set;
 
 	public:
 		/* #region 构造函数 */
@@ -67,13 +65,7 @@ namespace widget
 				throw std::invalid_argument{CODE_POS_STR + "widget 不能是空指针"};
 			}
 
-			if (_widget_set.Contains(widget))
-			{
-				return;
-			}
-
-			_widget_set.Add(widget);
-			_layout.AddWidget(widget.get());
+			_layout.AddWidget(widget);
 		}
 
 		///
@@ -139,7 +131,7 @@ namespace widget
 		///
 		void RemoveWidget(std::shared_ptr<QWidget> const &widget)
 		{
-			_widget_set.Remove(widget);
+			_layout.RemoveWidget(widget);
 		}
 
 		///
@@ -148,7 +140,7 @@ namespace widget
 		///
 		void ClearWidget()
 		{
-			_widget_set.Clear();
+			_layout.ClearWidget();
 		}
 
 		///

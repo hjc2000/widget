@@ -3,7 +3,7 @@
 widget::RangeSubmit::RangeSubmit()
 {
 	setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-	_layout.AddWidget(_grid_box.get());
+	_layout.AddWidget(_grid_box);
 
 	_left_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 	_label->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);

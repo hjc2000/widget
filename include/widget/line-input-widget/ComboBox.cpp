@@ -5,7 +5,7 @@ void widget::ComboBox::ConnectSignals()
 	QMetaObject::Connection connection;
 
 	{
-		connection = connect(&_combo_box,
+		connection = connect(_combo_box.get(),
 							 &QComboBox::currentIndexChanged,
 							 [this](int index)
 							 {
@@ -16,7 +16,7 @@ void widget::ComboBox::ConnectSignals()
 	}
 
 	{
-		connection = connect(&_combo_box,
+		connection = connect(_combo_box.get(),
 							 &QComboBox::currentTextChanged,
 							 [this](QString const &text)
 							 {

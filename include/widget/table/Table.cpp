@@ -113,7 +113,7 @@ widget::Table::Table()
 	_row_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Vertical}};
 	_column_header_view = std::shared_ptr<HeaderView>{new HeaderView{Qt::Orientation::Horizontal}};
 
-	_layout.AddWidget(_table.get());
+	_layout.AddWidget(_table);
 
 	SubscribeEvents();
 	SetColumnHeaderStyle();

@@ -5,7 +5,7 @@ bool widget::IntRangeSubmit::TryParseLeftValue(int64_t &out)
 {
 	try
 	{
-		out = base::ParseInt64(_range_submit.LeftTextStdString());
+		out = base::ParseInt64(_range_submit->LeftTextStdString());
 		return true;
 	}
 	catch (std::exception const &e)
@@ -26,7 +26,7 @@ bool widget::IntRangeSubmit::TryParseRightValue(int64_t &out)
 {
 	try
 	{
-		out = base::ParseInt64(_range_submit.RightTextStdString());
+		out = base::ParseInt64(_range_submit->RightTextStdString());
 		return true;
 	}
 	catch (std::exception const &e)

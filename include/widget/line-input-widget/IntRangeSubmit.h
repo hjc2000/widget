@@ -7,6 +7,7 @@
 #include "widget/line-input-widget/RangeSubmit.h"
 #include <cstdint>
 #include <iostream>
+#include <memory>
 
 namespace widget
 {
@@ -20,7 +21,7 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::VBoxLayout _layout{this};
-		widget::RangeSubmit _range_submit{};
+		std::shared_ptr<widget::RangeSubmit> _range_submit{new widget::RangeSubmit{}};
 
 		int64_t _min = INT64_MIN;
 		int64_t _max = INT64_MAX;
@@ -97,15 +98,15 @@ namespace widget
 		IntRangeSubmit()
 		{
 			setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-			_layout.AddWidget(&_range_submit);
+			_layout.AddWidget(_range_submit);
 
-			_range_submit.SubmitEvent().Subscribe([this]()
-												  {
-													  OnSubmit();
-												  });
+			_range_submit->SubmitEvent().Subscribe([this]()
+												   {
+													   OnSubmit();
+												   });
 
-			_range_submit.SetLeftText(std::to_string(_left_value));
-			_range_submit.SetRightText(std::to_string(_right_value));
+			_range_submit->SetLeftText(std::to_string(_left_value));
+			_range_submit->SetRightText(std::to_string(_right_value));
 		}
 
 		IntRangeSubmit(int64_t min, int64_t max)
@@ -140,7 +141,7 @@ namespace widget
 
 			_disposed = true;
 
-			_range_submit.Dispose();
+			_range_submit->Dispose();
 			_submit_event.Dispose();
 		}
 
@@ -217,7 +218,7 @@ namespace widget
 		///
 		void SetLeftInvalidInputStyle(bool is_invalid)
 		{
-			_range_submit.SetLeftInvalidInputStyle(is_invalid);
+			_range_submit->SetLeftInvalidInputStyle(is_invalid);
 		}
 
 		///
@@ -227,7 +228,7 @@ namespace widget
 		///
 		void SetRightInvalidInputStyle(bool is_invalid)
 		{
-			_range_submit.SetRightInvalidInputStyle(is_invalid);
+			_range_submit->SetRightInvalidInputStyle(is_invalid);
 		}
 
 		/* #endregion */
@@ -241,7 +242,7 @@ namespace widget
 		///
 		QString LeftPlaceholderText() const
 		{
-			return _range_submit.LeftPlaceholderText();
+			return _range_submit->LeftPlaceholderText();
 		}
 
 		///
@@ -251,7 +252,7 @@ namespace widget
 		///
 		void SetLeftPlaceholderText(QString const &value)
 		{
-			_range_submit.SetLeftPlaceholderText(value);
+			_range_submit->SetLeftPlaceholderText(value);
 		}
 
 		///
@@ -261,7 +262,7 @@ namespace widget
 		///
 		void SetLeftPlaceholderText(std::string const &value)
 		{
-			_range_submit.SetLeftPlaceholderText(value);
+			_range_submit->SetLeftPlaceholderText(value);
 		}
 
 		///
@@ -271,7 +272,7 @@ namespace widget
 		///
 		void SetLeftPlaceholderText(char const *value)
 		{
-			_range_submit.SetLeftPlaceholderText(value);
+			_range_submit->SetLeftPlaceholderText(value);
 		}
 
 		///
@@ -281,7 +282,7 @@ namespace widget
 		///
 		std::string LeftPlaceholderTextStdString() const
 		{
-			return _range_submit.LeftPlaceholderTextStdString();
+			return _range_submit->LeftPlaceholderTextStdString();
 		}
 
 		///
@@ -291,7 +292,7 @@ namespace widget
 		///
 		QString RightPlaceholderText() const
 		{
-			return _range_submit.RightPlaceholderText();
+			return _range_submit->RightPlaceholderText();
 		}
 
 		///
@@ -301,7 +302,7 @@ namespace widget
 		///
 		void SetRightPlaceholderText(QString const &value)
 		{
-			_range_submit.SetRightPlaceholderText(value);
+			_range_submit->SetRightPlaceholderText(value);
 		}
 
 		///
@@ -311,7 +312,7 @@ namespace widget
 		///
 		void SetRightPlaceholderText(std::string const &value)
 		{
-			_range_submit.SetRightPlaceholderText(value);
+			_range_submit->SetRightPlaceholderText(value);
 		}
 
 		///
@@ -321,7 +322,7 @@ namespace widget
 		///
 		void SetRightPlaceholderText(char const *value)
 		{
-			_range_submit.SetRightPlaceholderText(value);
+			_range_submit->SetRightPlaceholderText(value);
 		}
 
 		///
@@ -331,7 +332,7 @@ namespace widget
 		///
 		std::string RightPlaceholderTextStdString() const
 		{
-			return _range_submit.RightPlaceholderTextStdString();
+			return _range_submit->RightPlaceholderTextStdString();
 		}
 
 		/* #endregion */
@@ -345,7 +346,7 @@ namespace widget
 		///
 		QString LeftText() const
 		{
-			return _range_submit.LeftText();
+			return _range_submit->LeftText();
 		}
 
 		///
@@ -355,7 +356,7 @@ namespace widget
 		///
 		void SetLeftText(QString const &value)
 		{
-			_range_submit.SetLeftText(value);
+			_range_submit->SetLeftText(value);
 		}
 
 		///
@@ -365,7 +366,7 @@ namespace widget
 		///
 		void SetLeftText(std::string const &value)
 		{
-			_range_submit.SetLeftText(value);
+			_range_submit->SetLeftText(value);
 		}
 
 		///
@@ -375,7 +376,7 @@ namespace widget
 		///
 		void SetLeftText(char const *value)
 		{
-			_range_submit.SetLeftText(value);
+			_range_submit->SetLeftText(value);
 		}
 
 		///
@@ -385,7 +386,7 @@ namespace widget
 		///
 		std::string LeftTextStdString() const
 		{
-			return _range_submit.LeftTextStdString();
+			return _range_submit->LeftTextStdString();
 		}
 
 		///
@@ -395,7 +396,7 @@ namespace widget
 		///
 		QString RightText() const
 		{
-			return _range_submit.RightText();
+			return _range_submit->RightText();
 		}
 
 		///
@@ -405,7 +406,7 @@ namespace widget
 		///
 		void SetRightText(QString const &value)
 		{
-			_range_submit.SetRightText(value);
+			_range_submit->SetRightText(value);
 		}
 
 		///
@@ -415,7 +416,7 @@ namespace widget
 		///
 		void SetRightText(std::string const &value)
 		{
-			_range_submit.SetRightText(value);
+			_range_submit->SetRightText(value);
 		}
 
 		///
@@ -425,7 +426,7 @@ namespace widget
 		///
 		void SetRightText(char const *value)
 		{
-			_range_submit.SetRightText(value);
+			_range_submit->SetRightText(value);
 		}
 
 		///
@@ -435,7 +436,7 @@ namespace widget
 		///
 		std::string RightTextStdString() const
 		{
-			return _range_submit.RightTextStdString();
+			return _range_submit->RightTextStdString();
 		}
 
 		/* #endregion */

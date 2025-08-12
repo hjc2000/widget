@@ -1,6 +1,8 @@
 #pragma once
 #include "qboxlayout.h"
 #include "widget/layout/Padding.h"
+#include "widget/WidgetSet.h"
+#include <memory>
 
 namespace widget
 {
@@ -14,6 +16,7 @@ namespace widget
 	{
 	private:
 		QVBoxLayout *_layout = nullptr;
+		widget::WidgetSet _set;
 
 	public:
 		///
@@ -49,9 +52,29 @@ namespace widget
 		///
 		/// @param widget 要被添加到布局中进行显示的 QWidget 对象。
 		///
-		void AddWidget(QWidget *widget)
+		void AddWidget(std::shared_ptr<QWidget> const &widget)
 		{
-			_layout->addWidget(widget);
+			_set.Add(widget);
+			_layout->addWidget(widget.get());
+		}
+
+		///
+		/// @brief 将控件从盒子中移除。
+		///
+		/// @param widget
+		///
+		void RemoveWidget(std::shared_ptr<QWidget> const &widget)
+		{
+			_set.Remove(widget);
+		}
+
+		///
+		/// @brief 清空盒子中的所有控件。
+		///
+		///
+		void ClearWidget()
+		{
+			_set.Clear();
 		}
 
 		///
