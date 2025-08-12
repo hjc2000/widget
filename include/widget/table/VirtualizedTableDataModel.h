@@ -39,6 +39,8 @@ namespace widget
 		///
 		void VirtualizedScrollByRow(int64_t row_step);
 
+		void UpdateCurrentRow();
+
 		/* #region 事件 */
 
 		///
