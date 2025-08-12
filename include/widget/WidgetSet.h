@@ -13,6 +13,13 @@ namespace widget
 		base::Set<std::shared_ptr<QWidget>> _set;
 
 	public:
+		WidgetSet() = default;
+
+		~WidgetSet()
+		{
+			Clear();
+		}
+
 		/* #region 接口 */
 
 		using base::ISet<std::shared_ptr<QWidget>>::Add;
