@@ -39,6 +39,9 @@ namespace widget
 		///
 		void VirtualizedScrollByRow(int64_t row_step);
 
+		///
+		/// @brief 虚拟滚动后更新 qt 视角下的当前索引。
+		///
 		void UpdateCurrentRow();
 
 		/* #region 事件 */
