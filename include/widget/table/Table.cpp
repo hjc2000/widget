@@ -356,28 +356,16 @@ void widget::Table::ScrollByRow(int row_step)
 		int delta_position = row_step * DefaultRowHeight();
 
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-		QTimer::singleShot(
-			0,
-			_table.get(),
-			[this, delta_position]()
-			{
-				int new_scroll_bar_position = VerticalScrollBar()->value() + delta_position;
-				VerticalScrollBar()->setValue(new_scroll_bar_position);
-			});
+		int new_scroll_bar_position = VerticalScrollBar()->value() + delta_position;
+		VerticalScrollBar()->setValue(new_scroll_bar_position);
 	}
 	else if (row_step < 0)
 	{
 		int delta_position = base::abs(row_step) * DefaultRowHeight();
 
 		// 通过定时器延迟执行滚动条调整。等到表格重绘后执行滚动才能滚到正确的位置。
-		QTimer::singleShot(
-			0,
-			_table.get(),
-			[this, delta_position]()
-			{
-				int new_scroll_bar_position = VerticalScrollBar()->value() - delta_position;
-				VerticalScrollBar()->setValue(new_scroll_bar_position);
-			});
+		int new_scroll_bar_position = VerticalScrollBar()->value() - delta_position;
+		VerticalScrollBar()->setValue(new_scroll_bar_position);
 	}
 }
 

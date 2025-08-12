@@ -316,14 +316,14 @@ void widget::VirtualizedTableDataModel::ScrollByRow(int64_t row_step)
 		base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 	});
 
-	// 滚动方向（滚动条移动方向）与视窗移动方向相反。
-	ParentTable()->ScrollByRow(-actual_step);
-
 	QTimer::singleShot(
 		0,
 		&_q_object,
-		[this]() mutable
+		[this, actual_step]() mutable
 		{
+			// 滚动方向（滚动条移动方向）与视窗移动方向相反。
+			ParentTable()->ScrollByRow(-actual_step);
+
 			int64_t relative_row_index = _current_row - _start;
 			if (relative_row_index < 0 || relative_row_index >= RowCount())
 			{
