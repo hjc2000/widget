@@ -32,6 +32,13 @@ namespace widget
 
 		void ExpandWindow();
 
+		///
+		/// @brief 基于行数增量进行滚动。
+		///
+		/// @param row_step
+		///
+		void VirtualizedScrollByRow(int64_t row_step);
+
 		/* #region 事件 */
 
 		///
@@ -389,7 +396,7 @@ namespace widget
 		int64_t FirstVisibleRowIndex() const;
 
 		///
-		/// @brief 基于行数增量进行滚动。
+		/// @brief 滚动指定的行数增量。
 		///
 		/// @param row_step
 		///
