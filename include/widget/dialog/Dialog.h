@@ -106,13 +106,6 @@ namespace widget
 
 		/* #endregion */
 
-		virtual ~Dialog()
-		{
-			_content->setParent(nullptr);
-		}
-
-		/* #region 属性 */
-
 		///
 		/// @brief 设置弹窗的内容。
 		///
@@ -125,9 +118,16 @@ namespace widget
 				throw std::invalid_argument{CODE_POS_STR + "不能传入空指针。"};
 			}
 
+			if (_content != nullptr)
+			{
+				_layout.RemoveWidget(_content);
+			}
+
 			_content = content;
 			_layout.AddWidget(_content);
 		}
+
+		/* #region Padding */
 
 		widget::Padding Padding() const
 		{
