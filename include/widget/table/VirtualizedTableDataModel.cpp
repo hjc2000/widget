@@ -289,11 +289,6 @@ void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEve
 {
 	if (_block_current_change_event)
 	{
-		std::cout << "判定当前索引的改变是由虚拟化滚动引发的，忽略。真实行号：" << (args.Current().row() + _start)
-				  << ", "
-				  << "虚拟行号：" << args.Current().row()
-				  << std::endl;
-
 		return;
 	}
 
