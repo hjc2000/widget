@@ -369,6 +369,41 @@ void widget::VirtualizedTableDataModel::ScrollByRow(int64_t row_step)
 
 void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
 {
-	int64_t step = row_index - _start;
-	ScrollByRow(step);
+	if (row_index < 0)
+	{
+		throw std::invalid_argument{CODE_POS_STR + "row_index 不能 < 0."};
+	}
+
+	if (row_index > RealRowCount())
+	{
+		throw std::invalid_argument{CODE_POS_STR + "row_index 不能 > RealRowCount()."};
+	}
+
+	int32_t window_row_count = _end - _start;
+	if (row_index + window_row_count <= RealRowCount())
+	{
+		_start = row_index;
+		_end = _start + window_row_count;
+
+		_data_change_event.Invoke(base::PositionRange<int32_t>{
+			base::Position<int32_t>{0, 0},
+			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
+		});
+
+		ParentTable()->VerticalScrollBar()->setValue(0);
+		UpdateCurrentRow();
+	}
+	else
+	{
+		_start = RealRowCount() - window_row_count;
+		_end = RealRowCount();
+
+		_data_change_event.Invoke(base::PositionRange<int32_t>{
+			base::Position<int32_t>{0, 0},
+			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
+		});
+
+		ParentTable()->VerticalScrollBar()->setValue(0);
+		UpdateCurrentRow();
+	}
 }
