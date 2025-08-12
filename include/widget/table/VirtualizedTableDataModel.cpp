@@ -99,17 +99,17 @@ void widget::VirtualizedTableDataModel::UpdateCurrentRow()
 
 	// 设置当前索引会触发滚动。
 	// 滚动会触发本类的虚拟滚动事件处理函数，所以需要把这两个事件的处理都屏蔽。
-	_scroll_because_of_set_current = true;
-	_current_is_changed_by_virtualized_scroll = true;
+	_block_vertical_scroll_event = true;
+	_block_current_change_event = true;
 	ParentTable()->SetCurrentIndex(relative_current_row_index, _current_column);
 	ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
-	_scroll_because_of_set_current = false;
-	_current_is_changed_by_virtualized_scroll = false;
+	_block_vertical_scroll_event = false;
+	_block_current_change_event = false;
 }
 
 void widget::VirtualizedTableDataModel::OnVerticalScroll(widget::VerticalScrollEventArgs const &args)
 {
-	if (_scroll_because_of_set_current)
+	if (_block_vertical_scroll_event)
 	{
 		return;
 	}
@@ -287,7 +287,7 @@ void widget::VirtualizedTableDataModel::NotifyDataChange(base::PositionRange<int
 
 void widget::VirtualizedTableDataModel::OnCurrentChange(widget::CurrentChangeEventArgs const &args)
 {
-	if (_current_is_changed_by_virtualized_scroll)
+	if (_block_current_change_event)
 	{
 		std::cout << "判定当前索引的改变是由虚拟化滚动引发的，忽略。真实行号：" << (args.Current().row() + _start)
 				  << ", "

@@ -23,8 +23,8 @@ namespace widget
 		base::Delegate<widget::RowRemovedEventArgs const &> _row_removed_event;
 		base::Delegate<base::PositionRange<int32_t> const &> _data_change_event;
 
-		bool _scroll_because_of_set_current = false;
-		bool _current_is_changed_by_virtualized_scroll = false;
+		bool _block_vertical_scroll_event = false;
+		bool _block_current_change_event = false;
 		int64_t _current_row = -1;
 		int64_t _current_column = -1;
 		int64_t _previous_row = -1;
