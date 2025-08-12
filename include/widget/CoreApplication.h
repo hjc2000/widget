@@ -10,7 +10,9 @@ namespace widget
 	{
 	private:
 		///
-		/// @brief 使用过 std::thread 和 qt 的类交互过后，进程结束时会发生访问非法内存的异常。
+		/// @brief 析构时调用 exit(0).
+		///
+		/// @note 使用过 std::thread 和 qt 的类交互过后，进程结束时会发生如下异常：
 		/// 调用堆栈如下：
 		/// 	set_thread_data(QThreadData*)::Cleanup::~Cleanup() (@set_thread_data(QThreadData*)::Cleanup::~Cleanup():11)
 		/// 	run_dtor_list (@tls_callback:34)
@@ -29,6 +31,9 @@ namespace widget
 		/// 直接退出进程，不让 tls_callback 去调用 QThreadData::Cleanup::~Cleanup() 了。
 		///
 		/// 因为 APP 类对象应该第一个构造，所以所有类的析构函数都可以执行，应用程序的所有资源都有机会清理。
+		///
+		/// @note 上述异常发生后会导致进程卡住较长的一段时间，不知道是不是 qt 在做些什么对这个异常的处理。
+		/// 通过 base::ExitGuard 可以保证快速结束进程。
 		///
 		base::ExitGuard _exit_guard;
 
