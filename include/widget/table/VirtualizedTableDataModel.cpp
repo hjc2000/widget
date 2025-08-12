@@ -81,15 +81,16 @@ void widget::VirtualizedTableDataModel::VirtualizedScrollByRow(int64_t row_step)
 
 void widget::VirtualizedTableDataModel::UpdateCurrentRow()
 {
-	int64_t relative_row_index = _current_row - _start;
-	if (relative_row_index < 0 || relative_row_index >= RowCount())
+	// 相对的 “当前行” ，即 qt 视角下的当前行。
+	int64_t relative_current_row_index = _current_row - _start;
+	if (relative_current_row_index < 0 || relative_current_row_index >= RowCount())
 	{
-		relative_row_index = -1;
+		relative_current_row_index = -1;
 	}
 
 	QModelIndex current_index = ParentTable()->CurrentIndex();
 
-	if (relative_row_index == current_index.row())
+	if (relative_current_row_index == current_index.row())
 	{
 		return;
 	}
@@ -97,7 +98,7 @@ void widget::VirtualizedTableDataModel::UpdateCurrentRow()
 	int scroll_bar_value = ParentTable()->VerticalScrollBar()->value();
 	_scroll_because_of_set_current = true;
 	_current_is_changed_by_virtualized_scroll = true;
-	ParentTable()->SetCurrentIndex(relative_row_index, _current_column);
+	ParentTable()->SetCurrentIndex(relative_current_row_index, _current_column);
 	ParentTable()->VerticalScrollBar()->setValue(scroll_bar_value);
 	_scroll_because_of_set_current = false;
 	_current_is_changed_by_virtualized_scroll = false;
