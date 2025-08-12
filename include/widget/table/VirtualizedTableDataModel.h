@@ -402,6 +402,13 @@ namespace widget
 		///
 		void ScrollByRow(int64_t row_step);
 
+		///
+		/// @brief 滚动到指定的行。
+		///
+		/// @param row_index
+		///
+		void ScrollToRow(int64_t row_index);
+
 	}; // VirtualizedTableDataModel
 
 } // namespace widget

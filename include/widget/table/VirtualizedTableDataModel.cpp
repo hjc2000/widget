@@ -355,6 +355,11 @@ void widget::VirtualizedTableDataModel::ScrollByRow(int64_t row_step)
 		base::Position<int32_t>{0, 0},
 		base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 	});
+}
 
-	ParentTable()->update();
+void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
+{
+	int64_t step = row_index - _start;
+	ScrollByRow(step);
+	ParentTable()->VerticalScrollBar()->setValue(0);
 }
