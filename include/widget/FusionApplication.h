@@ -1,4 +1,5 @@
 #pragma once
+#include "base/ExitGuard.h"
 #include "QApplication"
 #include "QFont"
 #include "widget/plugin.h" // IWYU pragma: keep
@@ -9,6 +10,8 @@ namespace widget
 		public QApplication
 	{
 	private:
+		base::ExitGuard _exit_guard;
+
 		void SetFont()
 		{
 			QFont qfont = font();
