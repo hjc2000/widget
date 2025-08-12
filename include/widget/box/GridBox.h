@@ -166,7 +166,7 @@ namespace widget
 
 		void AddItem(widget::GridBoxItem const &item)
 		{
-			for (auto &item_list_item : _item_list)
+			for (widget::GridBoxItem const &item_list_item : _item_list)
 			{
 				if (item_list_item.Widget() == item.Widget())
 				{
@@ -230,7 +230,7 @@ namespace widget
 		///
 		/// @param widget
 		///
-		void RemoveWidget(std::shared_ptr<QWidget> widget)
+		void RemoveWidget(std::shared_ptr<QWidget> const &widget)
 		{
 			if (widget == nullptr)
 			{
