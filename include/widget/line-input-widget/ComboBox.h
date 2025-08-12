@@ -30,32 +30,7 @@ namespace widget
 		base::Delegate<int> _current_index_changed{};
 		base::Delegate<std::string const &> _current_text_changed{};
 
-		void ConnectSignals()
-		{
-			QMetaObject::Connection connection;
-
-			{
-				connection = connect(&_combo_box,
-									 &QComboBox::currentIndexChanged,
-									 [this](int index)
-									 {
-										 _current_index_changed.Invoke(index);
-									 });
-
-				_connections.push_back(connection);
-			}
-
-			{
-				connection = connect(&_combo_box,
-									 &QComboBox::currentTextChanged,
-									 [this](QString const &text)
-									 {
-										 _current_text_changed.Invoke(base::to_string(text));
-									 });
-
-				_connections.push_back(connection);
-			}
-		}
+		void ConnectSignals();
 
 	public:
 		ComboBox()
@@ -77,6 +52,7 @@ namespace widget
 		~ComboBox()
 		{
 			Dispose();
+			_combo_box.setParent(nullptr);
 		}
 
 		///

@@ -2,8 +2,7 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
-#include "base/math/interval/Interval.h"
-#include "base/string/define.h"
+#include "base/math/interval/ClosedInterval.h"
 #include "base/time/TimePointSinceEpoch.h"
 #include "qcoreapplication.h"
 #include "QDateTimeEdit"
@@ -11,7 +10,6 @@
 #include "QLabel"
 #include "qwindowdefs.h"
 #include "widget/layout/HBoxLayout.h"
-#include <iostream>
 #include <vector>
 
 namespace widget
@@ -43,124 +41,11 @@ namespace widget
 
 		std::vector<QMetaObject::Connection> _connections;
 
-		void ConnectSignal()
-		{
-			QMetaObject::Connection connection;
+		void ConnectSignal();
 
-			connection = connect(&_left_edit,
-								 &QDateTimeEdit::dateTimeChanged,
-								 [this](QDateTime const &date_time)
-								 {
-									 OnLeftDateTimeChanged();
-								 });
+		void OnLeftDateTimeChanged();
 
-			_connections.push_back(connection);
-
-			connection = connect(&_right_edit,
-								 &QDateTimeEdit::dateTimeChanged,
-								 [this](QDateTime const &date_time)
-								 {
-									 OnRightDateTimeChanged();
-								 });
-
-			_connections.push_back(connection);
-		}
-
-		void OnLeftDateTimeChanged()
-		{
-			try
-			{
-				{
-					// 检查非法输入
-					bool error = false;
-					if (LeftTimePoint() > RightTimePoint())
-					{
-						SetLeftInvalidInputStyle(true);
-						SetRightInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (LeftTimePoint() < _min)
-					{
-						SetLeftInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (RightTimePoint() > _max)
-					{
-						SetRightInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (error)
-					{
-						return;
-					}
-				}
-
-				{
-					// 输入合法，开始处理
-					SetLeftInvalidInputStyle(false);
-					SetRightInvalidInputStyle(false);
-					_submit_event.Invoke();
-				}
-			}
-			catch (std::exception const &e)
-			{
-				std::cerr << CODE_POS_STR << e.what() << std::endl;
-			}
-			catch (...)
-			{
-			}
-		}
-
-		void OnRightDateTimeChanged()
-		{
-			try
-			{
-				{
-					// 检查非法输入
-					bool error = false;
-					if (LeftTimePoint() > RightTimePoint())
-					{
-						SetLeftInvalidInputStyle(true);
-						SetRightInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (LeftTimePoint() < _min)
-					{
-						SetLeftInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (RightTimePoint() > _max)
-					{
-						SetRightInvalidInputStyle(true);
-						error = true;
-					}
-
-					if (error)
-					{
-						return;
-					}
-				}
-
-				{
-					// 输入合法，开始处理
-					SetLeftInvalidInputStyle(false);
-					SetRightInvalidInputStyle(false);
-					_submit_event.Invoke();
-				}
-			}
-			catch (std::exception const &e)
-			{
-				std::cerr << e.what() << std::endl;
-			}
-			catch (...)
-			{
-			}
-		}
+		void OnRightDateTimeChanged();
 
 	public:
 		DateTimeRangeSubmit()
@@ -218,6 +103,9 @@ namespace widget
 		~DateTimeRangeSubmit()
 		{
 			Dispose();
+			_left_edit.setParent(nullptr);
+			_right_edit.setParent(nullptr);
+			_label.setParent(nullptr);
 		}
 
 		///

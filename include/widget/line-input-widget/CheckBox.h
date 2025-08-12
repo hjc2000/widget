@@ -53,8 +53,8 @@ namespace widget
 
 		~CheckBox()
 		{
-			_check_box->setParent(nullptr);
 			Dispose();
+			_check_box->setParent(nullptr);
 		}
 
 		///
