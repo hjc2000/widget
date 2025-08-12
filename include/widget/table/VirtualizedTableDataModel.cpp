@@ -385,8 +385,11 @@ void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
 			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 		});
 
-		ParentTable()->VerticalScrollBar()->setValue(0);
 		UpdateCurrentRow();
+
+		_block_vertical_scroll_event = true;
+		ParentTable()->VerticalScrollBar()->setValue(0);
+		_block_vertical_scroll_event = false;
 	}
 	else
 	{
@@ -398,8 +401,11 @@ void widget::VirtualizedTableDataModel::ScrollToRow(int64_t row_index)
 			base::Position<int32_t>{ColumnCount() - 1, RowCount() - 1},
 		});
 
+		UpdateCurrentRow();
+
+		_block_vertical_scroll_event = true;
 		ParentTable()->VerticalScrollBar()->setValue(0);
 		ParentTable()->ScrollByRow(row_index - _start);
-		UpdateCurrentRow();
+		_block_vertical_scroll_event = false;
 	}
 }
