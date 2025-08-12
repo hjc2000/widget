@@ -53,7 +53,6 @@ namespace widget
 		~ComboBox()
 		{
 			Dispose();
-			_combo_box->setParent(nullptr);
 		}
 
 		///

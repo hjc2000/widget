@@ -48,7 +48,6 @@ namespace widget
 		~Input()
 		{
 			Dispose();
-			_line_edit->setParent(nullptr);
 		}
 
 		///

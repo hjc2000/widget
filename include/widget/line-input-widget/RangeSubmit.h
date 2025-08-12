@@ -50,7 +50,6 @@ namespace widget
 		~RangeSubmit()
 		{
 			Dispose();
-			_grid_box->setParent(nullptr);
 		}
 
 		///
