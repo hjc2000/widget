@@ -24,6 +24,27 @@ widget::DateTimeEdit::DateTimeEdit()
 
 	// 设置显示格式
 	_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+
+	ConnectSignal();
+}
+
+void widget::DateTimeEdit::Dispose()
+{
+	if (_disposed)
+	{
+		return;
+	}
+
+	_disposed = true;
+
+	_submit_event.Dispose();
+
+	for (QMetaObject::Connection &connection : _connections)
+	{
+		disconnect(connection);
+	}
+
+	QCoreApplication::removePostedEvents(this);
 }
 
 void widget::DateTimeEdit::SetInvalidInputStyle(bool is_invalid)

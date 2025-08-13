@@ -37,24 +37,7 @@ namespace widget
 		/// @note 注意，对象并不是析构了，并不是完全无法访问，它仍然允许访问，仍然能执行一些
 		/// 符合 “准备后事” 的工作。
 		///
-		virtual void Dispose() override
-		{
-			if (_disposed)
-			{
-				return;
-			}
-
-			_disposed = true;
-
-			_submit_event.Dispose();
-
-			for (QMetaObject::Connection &connection : _connections)
-			{
-				disconnect(connection);
-			}
-
-			QCoreApplication::removePostedEvents(this);
-		}
+		virtual void Dispose() override;
 
 		///
 		/// @brief 提交事件。
