@@ -20,6 +20,17 @@ namespace widget
 		base::Delegate<> _submit_event;
 
 	public:
+		DateTimeEdit()
+		{
+			_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
+
+			// 设置当前日期和时间
+			_edit->setDateTime(QDateTime::currentDateTime());
+
+			// 设置显示格式
+			_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+		}
+
 		~DateTimeEdit()
 		{
 			Dispose();
