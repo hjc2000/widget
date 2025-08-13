@@ -10,6 +10,7 @@
 #include "QLabel"
 #include "qwindowdefs.h"
 #include "widget/layout/HBoxLayout.h"
+#include "widget/line-input-widget/DateTimeEdit.h"
 #include <memory>
 #include <vector>
 
