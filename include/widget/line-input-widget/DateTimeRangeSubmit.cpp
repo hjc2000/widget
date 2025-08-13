@@ -4,25 +4,29 @@
 
 void widget::DateTimeRangeSubmit::ConnectSignal()
 {
-	QMetaObject::Connection connection;
+	{
+		QMetaObject::Connection connection =
+			connect(_left_edit.get(),
+					&QDateTimeEdit::dateTimeChanged,
+					[this](QDateTime const &date_time)
+					{
+						OnLeftDateTimeChanged();
+					});
 
-	connection = connect(_left_edit.get(),
-						 &QDateTimeEdit::dateTimeChanged,
-						 [this](QDateTime const &date_time)
-						 {
-							 OnLeftDateTimeChanged();
-						 });
+		_connections.push_back(connection);
+	}
 
-	_connections.push_back(connection);
+	{
+		QMetaObject::Connection connection =
+			connect(_right_edit.get(),
+					&QDateTimeEdit::dateTimeChanged,
+					[this](QDateTime const &date_time)
+					{
+						OnRightDateTimeChanged();
+					});
 
-	connection = connect(_right_edit.get(),
-						 &QDateTimeEdit::dateTimeChanged,
-						 [this](QDateTime const &date_time)
-						 {
-							 OnRightDateTimeChanged();
-						 });
-
-	_connections.push_back(connection);
+		_connections.push_back(connection);
+	}
 }
 
 void widget::DateTimeRangeSubmit::OnLeftDateTimeChanged()
