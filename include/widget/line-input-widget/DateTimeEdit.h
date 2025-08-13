@@ -5,6 +5,7 @@
 #include "qdatetimeedit.h"
 #include "qwidget.h"
 #include "widget/layout/HBoxLayout.h"
+#include <vector>
 
 namespace widget
 {
@@ -18,18 +19,12 @@ namespace widget
 		std::shared_ptr<QDateTimeEdit> _edit{new QDateTimeEdit{}};
 
 		base::Delegate<> _submit_event;
+		std::vector<QMetaObject::Connection> _connections;
+
+		void ConnectSignal();
 
 	public:
-		DateTimeEdit()
-		{
-			_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-			// 设置当前日期和时间
-			_edit->setDateTime(QDateTime::currentDateTime());
-
-			// 设置显示格式
-			_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
-		}
+		DateTimeEdit();
 
 		~DateTimeEdit()
 		{
@@ -52,6 +47,13 @@ namespace widget
 			_disposed = true;
 
 			_submit_event.Dispose();
+
+			for (QMetaObject::Connection &connection : _connections)
+			{
+				disconnect(connection);
+			}
+
+			QCoreApplication::removePostedEvents(this);
 		}
 
 		///
@@ -74,6 +76,13 @@ namespace widget
 			QDateTime selectedDateTime = _edit->dateTime();
 			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
 		}
+
+		///
+		/// @brief 设置输入框的输入非法样式。
+		///
+		/// @param is_invalid 为 true 打开非法样式，为 false 恢复成正常样式。
+		///
+		void SetInvalidInputStyle(bool is_invalid);
 	};
 
 } // namespace widget
