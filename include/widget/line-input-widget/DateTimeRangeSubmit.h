@@ -4,7 +4,6 @@
 #include "base/IDisposable.h"
 #include "base/math/interval/ClosedInterval.h"
 #include "base/time/TimePointSinceEpoch.h"
-#include "qcoreapplication.h"
 #include "QDateTimeEdit"
 #include "QHBoxLayout"
 #include "QLabel"
@@ -12,7 +11,6 @@
 #include "widget/layout/HBoxLayout.h"
 #include "widget/line-input-widget/DateTimeEdit.h"
 #include <memory>
-#include <vector>
 
 namespace widget
 {
@@ -27,8 +25,8 @@ namespace widget
 	private:
 		bool _disposed = false;
 		widget::HBoxLayout _layout{this};
-		std::shared_ptr<QDateTimeEdit> _left_edit{new QDateTimeEdit{}};
-		std::shared_ptr<QDateTimeEdit> _right_edit{new QDateTimeEdit{}};
+		std::shared_ptr<widget::DateTimeEdit> _left_edit{new widget::DateTimeEdit{}};
+		std::shared_ptr<widget::DateTimeEdit> _right_edit{new widget::DateTimeEdit{}};
 
 		///
 		/// @brief 两个日期输入框之间的短横线。
@@ -41,9 +39,7 @@ namespace widget
 
 		base::Delegate<> _submit_event;
 
-		std::vector<QMetaObject::Connection> _connections;
-
-		void ConnectSignal();
+		void SubscribeEvent();
 
 		void OnLeftDateTimeChanged();
 
@@ -87,13 +83,8 @@ namespace widget
 			_disposed = true;
 
 			_submit_event.Dispose();
-
-			for (QMetaObject::Connection &connection : _connections)
-			{
-				disconnect(connection);
-			}
-
-			QCoreApplication::removePostedEvents(this);
+			_left_edit->Dispose();
+			_right_edit->Dispose();
 		}
 
 		///
@@ -117,8 +108,7 @@ namespace widget
 		///
 		base::TimePointSinceEpoch LeftTimePoint() const
 		{
-			QDateTime selectedDateTime = _left_edit->dateTime();
-			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
+			return _left_edit->TimePoint();
 		}
 
 		///
@@ -128,8 +118,7 @@ namespace widget
 		///
 		base::TimePointSinceEpoch RightTimePoint() const
 		{
-			QDateTime selectedDateTime = _right_edit->dateTime();
-			return base::TimePointSinceEpoch{std::chrono::seconds{selectedDateTime.toSecsSinceEpoch()}};
+			return _right_edit->TimePoint();
 		}
 
 		///
@@ -153,15 +142,7 @@ namespace widget
 		///
 		void SetLeftInvalidInputStyle(bool is_invalid)
 		{
-			if (is_invalid)
-			{
-				_left_edit->setStyleSheet("border: 2px solid red;");
-			}
-			else
-			{
-				// 恢复默认样式
-				_left_edit->setStyleSheet("");
-			}
+			_left_edit->SetInvalidInputStyle(is_invalid);
 		}
 
 		///
@@ -171,15 +152,7 @@ namespace widget
 		///
 		void SetRightInvalidInputStyle(bool is_invalid)
 		{
-			if (is_invalid)
-			{
-				_right_edit->setStyleSheet("border: 2px solid red;");
-			}
-			else
-			{
-				// 恢复默认样式
-				_right_edit->setStyleSheet("");
-			}
+			_right_edit->SetInvalidInputStyle(is_invalid);
 		}
 
 		/* #endregion */

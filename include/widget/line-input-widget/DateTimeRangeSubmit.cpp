@@ -2,31 +2,17 @@
 #include "base/string/define.h"
 #include <iostream>
 
-void widget::DateTimeRangeSubmit::ConnectSignal()
+void widget::DateTimeRangeSubmit::SubscribeEvent()
 {
+	_left_edit->SubmitEvent() += [this]()
 	{
-		QMetaObject::Connection connection =
-			connect(_left_edit.get(),
-					&QDateTimeEdit::dateTimeChanged,
-					[this](QDateTime const &date_time)
-					{
-						OnLeftDateTimeChanged();
-					});
+		OnLeftDateTimeChanged();
+	};
 
-		_connections.push_back(connection);
-	}
-
+	_right_edit->SubmitEvent() += [this]()
 	{
-		QMetaObject::Connection connection =
-			connect(_right_edit.get(),
-					&QDateTimeEdit::dateTimeChanged,
-					[this](QDateTime const &date_time)
-					{
-						OnRightDateTimeChanged();
-					});
-
-		_connections.push_back(connection);
-	}
+		OnRightDateTimeChanged();
+	};
 }
 
 void widget::DateTimeRangeSubmit::OnLeftDateTimeChanged()
@@ -128,26 +114,6 @@ void widget::DateTimeRangeSubmit::OnRightDateTimeChanged()
 widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 {
 	{
-		_left_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-		// 设置当前日期和时间
-		_left_edit->setDateTime(QDateTime::currentDateTime());
-
-		// 设置显示格式
-		_left_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
-	}
-
-	{
-		_right_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-		// 设置当前日期和时间
-		_right_edit->setDateTime(QDateTime::currentDateTime());
-
-		// 设置显示格式
-		_right_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
-	}
-
-	{
 		_layout.AddWidget(_left_edit);
 		_layout.AddWidget(_label);
 		_layout.AddWidget(_right_edit);
@@ -160,5 +126,5 @@ widget::DateTimeRangeSubmit::DateTimeRangeSubmit()
 		setPalette(temp_palette);
 	}
 
-	ConnectSignal();
+	SubscribeEvent();
 }

@@ -17,6 +17,8 @@ void widget::DateTimeEdit::ConnectSignal()
 
 widget::DateTimeEdit::DateTimeEdit()
 {
+	_layout.AddWidget(_edit);
+
 	_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
 
 	// 设置当前日期和时间
