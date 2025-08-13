@@ -49,43 +49,7 @@ namespace widget
 		void OnRightDateTimeChanged();
 
 	public:
-		DateTimeRangeSubmit()
-		{
-			{
-				_left_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-				// 设置当前日期和时间
-				_left_edit->setDateTime(QDateTime::currentDateTime());
-
-				// 设置显示格式
-				_left_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
-			}
-
-			{
-				_right_edit->setSizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Fixed);
-
-				// 设置当前日期和时间
-				_right_edit->setDateTime(QDateTime::currentDateTime());
-
-				// 设置显示格式
-				_right_edit->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
-			}
-
-			{
-				_layout.AddWidget(_left_edit);
-				_layout.AddWidget(_label);
-				_layout.AddWidget(_right_edit);
-			}
-
-			{
-				setAutoFillBackground(true);
-				QPalette temp_palette = palette();
-				temp_palette.setColor(QPalette::Window, QColor{240, 240, 240});
-				setPalette(temp_palette);
-			}
-
-			ConnectSignal();
-		}
+		DateTimeRangeSubmit();
 
 		///
 		/// @brief
