@@ -4,6 +4,7 @@
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
 #include "base/IIdToken.h"
+#include "base/Placement.h"
 #include "base/string/define.h"
 #include "QPushButton"
 #include "widget/thread/SafeEmitter.h"
@@ -33,11 +34,11 @@ namespace widget
 		{
 			_safe_emiter.CallbackEvent() += [this]()
 			{
-				std::function<void()> capture_func;
-				bool dequeue_result = _capture_func_queue.TryDequeue(capture_func);
-				if (dequeue_result && capture_func)
+				base::Placement<std::function<void()>> placement;
+				_capture_func_queue.TryDequeue(placement);
+				if (placement.Available() && placement.Object())
 				{
-					capture_func();
+					placement.Object()();
 				}
 			};
 		}
