@@ -3,7 +3,7 @@
 #include "QDomDocument"
 #include <string>
 
-namespace widget
+namespace widget::xml
 {
 	class XmlSerializable
 	{
@@ -20,4 +20,4 @@ namespace widget
 		}
 	};
 
-} // namespace widget
+} // namespace widget::xml
