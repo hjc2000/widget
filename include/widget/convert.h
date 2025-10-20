@@ -1,5 +1,6 @@
 #pragma once
 #include "qcontainerfwd.h"
+#include "qstring.h"
 #include <string>
 
 namespace base
