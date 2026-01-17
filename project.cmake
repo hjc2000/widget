@@ -1,6 +1,7 @@
 add_library(${ProjectName} STATIC)
 target_import_src(${ProjectName})
 target_import_base(${ProjectName} PUBLIC)
+target_import_base_filesystem(${ProjectName} PUBLIC)
 target_import_qt_widgets(${ProjectName} PUBLIC)
 target_import_qt_opengl(${ProjectName} PUBLIC)
 target_import_qwt(${ProjectName} PUBLIC)
