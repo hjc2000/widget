@@ -1,4 +1,4 @@
-add_library(${ProjectName} STATIC)
+add_library(${ProjectName} OBJECT)
 target_import_src(${ProjectName})
 target_import_base(${ProjectName} PUBLIC)
 target_import_base_filesystem(${ProjectName} PUBLIC)
@@ -26,5 +26,4 @@ if(("${platform}" STREQUAL "msys") OR
 	target_import_test(${test_exe_target_name})
 
 	target_link_libraries(${test_exe_target_name} PUBLIC ${ProjectName})
-	target_import_base_filesystem(${test_exe_target_name} PUBLIC)
 endif()
