@@ -25,7 +25,6 @@ if(("${platform}" STREQUAL "msys") OR
 	add_executable(${test_exe_target_name} ${exe_type})
 	target_import_test(${test_exe_target_name})
 
-	target_link_options(${test_exe_target_name} PUBLIC -Wl,--start-group)
 	target_link_libraries(${test_exe_target_name} PUBLIC ${ProjectName})
-	target_link_options(${test_exe_target_name} PUBLIC -Wl,--end-group)
+	target_import_base_filesystem(${test_exe_target_name} PUBLIC)
 endif()
