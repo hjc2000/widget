@@ -29,6 +29,7 @@ int TestCoreApplication()
 	widget::CoreApplication app{};
 
 	auto serials = base::serial::scan_serials_for_details();
+
 	for (auto const &serial : serials)
 	{
 		std::cout << serial.Name() << std::endl;
@@ -52,6 +53,7 @@ int TestCoreApplication()
 			while (true)
 			{
 				int32_t have_read = soft_serial->Read(base::Span{buffer, sizeof(buffer)});
+
 				if (have_read == 0)
 				{
 					std::cout << "Read 函数返回 0, 流结束。读线程退出。" << std::endl;
