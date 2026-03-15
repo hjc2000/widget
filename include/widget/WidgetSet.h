@@ -91,16 +91,14 @@ namespace widget
 			return _set.Count();
 		}
 
-		using base::IEnumerable<std::shared_ptr<QWidget> const>::GetEnumerator;
-
-		///
-		/// @brief 获取非 const 迭代器
-		///
-		/// @return
-		///
-		virtual std::shared_ptr<base::IEnumerator<std::shared_ptr<QWidget> const>> GetEnumerator() override
+		virtual std::shared_ptr<base::IBidirectionalIterator<std::shared_ptr<QWidget> const>> BeginIterator() override
 		{
-			return _set.GetEnumerator();
+			return _set.BeginIterator();
+		}
+
+		virtual std::shared_ptr<base::IBidirectionalIterator<std::shared_ptr<QWidget> const>> EndIterator() override
+		{
+			return _set.EndIterator();
 		}
 
 		/* #endregion */
