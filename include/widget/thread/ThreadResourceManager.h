@@ -1,19 +1,20 @@
 #pragma once
 #include <cstdint>
+#include <map>
 #include <memory>
-#include <vector>
+#include <utility>
 
 namespace widget
 {
 	class ThreadResourceManager final
 	{
 	private:
-		std::vector<std::shared_ptr<void>> _resources{};
+		std::map<int64_t, std::shared_ptr<void>> _resources{};
 
 	public:
-		void Add(std::shared_ptr<void> const &resource)
+		void Add(int64_t id, std::shared_ptr<void> const &resource)
 		{
-			_resources.push_back(resource);
+			_resources.insert(std::pair<int64_t, std::shared_ptr<void>>{id, resource});
 		}
 
 		template <typename T>

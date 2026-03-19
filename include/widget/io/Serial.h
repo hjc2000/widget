@@ -276,7 +276,6 @@ namespace widget
 		widget::Thread _thread{};
 		std::string _port_name{};
 		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
-		QSerialPort *_serial{};
 		bool _closed = false;
 
 		base::serial::Direction _direction{};
@@ -286,7 +285,16 @@ namespace widget
 		base::serial::StopBits _stop_bits{};
 		base::serial::HardwareFlowControl _hardware_flow_control{};
 
-		void OnReceiveData();
+		void OnReceiveData(QSerialPort &serial);
+
+		class ThreadResourceIdProvider
+		{
+		public:
+			constexpr static int64_t SerialPort()
+			{
+				return 0;
+			}
+		};
 
 	public:
 		Serial(std::string const &name);
@@ -318,8 +326,10 @@ namespace widget
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 				[&](widget::ThreadResourceManager &thread_resource_manager)
 				{
-					_serial->write(reinterpret_cast<char const *>(span.Buffer()),
-								   span.Size());
+					QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
+
+					serial.write(reinterpret_cast<char const *>(span.Buffer()),
+								 span.Size());
 				});
 
 			// 写入必须等待，因为引用捕获的 span 只在本函数没有返回时有效。
@@ -336,7 +346,9 @@ namespace widget
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 				[&](widget::ThreadResourceManager &thread_resource_manager)
 				{
-					_serial->flush();
+					QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
+
+					serial.flush();
 				});
 
 			task->Wait();
@@ -353,7 +365,6 @@ namespace widget
 
 			_received_stream.Close();
 			_thread.Dispose();
-			_serial = nullptr;
 		}
 
 		/* #region 串口信息 */

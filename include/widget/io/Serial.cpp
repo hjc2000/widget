@@ -1,7 +1,7 @@
 #include "Serial.h"
 #include <iostream>
 
-void widget::Serial::OnReceiveData()
+void widget::Serial::OnReceiveData(QSerialPort &serial)
 {
 	try
 	{
@@ -10,7 +10,7 @@ void widget::Serial::OnReceiveData()
 			return;
 		}
 
-		QByteArray receive_data = _serial->readAll();
+		QByteArray receive_data = serial.readAll();
 
 		base::ReadOnlySpan span{
 			reinterpret_cast<uint8_t const *>(receive_data.data()),
@@ -38,17 +38,20 @@ widget::Serial::Serial(std::string const &name)
 		std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 			[this](widget::ThreadResourceManager &thread_resource_manager)
 			{
-				std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
-				thread_resource_manager.Add(serial);
-				_serial = serial.get();
+				{
+					std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
+					thread_resource_manager.Add(ThreadResourceIdProvider::SerialPort(), serial);
+				}
+
+				QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
 
 				// 槽函数禁止用值捕获的方式捕获 qt 信号源对象的共享指针，因为 lambda 槽函数会被信号源
 				// 对象储存，会直接导致共享指针循环引用。
-				QSerialPort::connect(_serial,
+				QSerialPort::connect(&serial,
 									 &QSerialPort::readyRead,
-									 [this]()
+									 [this, &serial]()
 									 {
-										 OnReceiveData();
+										 OnReceiveData(serial);
 									 });
 			});
 
@@ -73,14 +76,16 @@ void widget::Serial::Start(base::serial::Direction direction,
 	std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
 		[&](widget::ThreadResourceManager &thread_resource_manager)
 		{
-			_serial->setPortName(_port_name.c_str());
-			_serial->setBaudRate(baud_rate.Value());
-			_serial->setDataBits(widget::Convert<QSerialPort::DataBits>(data_bits));
-			_serial->setParity(widget::Convert<QSerialPort::Parity>(parity));
-			_serial->setStopBits(widget::Convert<QSerialPort::StopBits>(stop_bits));
-			_serial->setFlowControl(widget::Convert<QSerialPort::FlowControl>(hardware_flow_control));
+			QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
 
-			_serial->open(widget::Convert<QIODeviceBase::OpenModeFlag>(direction));
+			serial.setPortName(_port_name.c_str());
+			serial.setBaudRate(baud_rate.Value());
+			serial.setDataBits(widget::Convert<QSerialPort::DataBits>(data_bits));
+			serial.setParity(widget::Convert<QSerialPort::Parity>(parity));
+			serial.setStopBits(widget::Convert<QSerialPort::StopBits>(stop_bits));
+			serial.setFlowControl(widget::Convert<QSerialPort::FlowControl>(hardware_flow_control));
+
+			serial.open(widget::Convert<QIODeviceBase::OpenModeFlag>(direction));
 		});
 
 	task->Wait();
