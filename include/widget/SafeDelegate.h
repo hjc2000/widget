@@ -35,6 +35,7 @@ namespace widget
 			{
 				base::Placement<std::function<void()>> placement;
 				_capture_func_queue.TryDequeue(placement);
+
 				if (placement.Available() && placement.Object())
 				{
 					placement.Object()();
