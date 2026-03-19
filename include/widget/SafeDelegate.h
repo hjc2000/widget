@@ -17,7 +17,6 @@ namespace widget
 	///
 	/// @brief 安全委托。
 	///
-	///
 	template <typename... Args>
 	class SafeDelegate final :
 		public base::IEvent<Args...>,

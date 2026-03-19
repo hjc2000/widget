@@ -11,7 +11,6 @@ namespace widget
 	///
 	/// @brief 安全发射器，可以在后台线程安全地向 UI 线程发射事件。
 	///
-	///
 	class SafeEmitter final :
 		private QObject,
 		public base::IDisposable
@@ -23,7 +22,6 @@ namespace widget
 	public:
 		///
 		/// @brief 析构时会自动 Dispose.
-		///
 		///
 		~SafeEmitter()
 		{
