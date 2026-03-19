@@ -4,11 +4,11 @@
 #include "base/math/Position.h"
 #include "base/string/define.h"
 #include "qevent.h"
-#include "Table.CustomItemDelegate.h"
-#include "Table.HeaderView.h"
-#include "Table.PrivateTable.h"
-#include "Table.TableDataModelWrapper.h"
 #include "VerticalScrollEventArgs.h"
+#include "widget/table/private_table/Table.CustomItemDelegate.h"
+#include "widget/table/private_table/Table.HeaderView.h"
+#include "widget/table/private_table/Table.PrivateTable.h"
+#include "widget/table/private_table/Table.TableDataModelWrapper.h"
 #include <iostream>
 #include <stdexcept>
 

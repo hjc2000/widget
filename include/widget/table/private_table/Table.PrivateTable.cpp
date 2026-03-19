@@ -1,8 +1,8 @@
 #include "Table.PrivateTable.h"
 #include "base/math/Position.h"
-#include <Table.CustomItemDelegate.h>
 #include <widget/convert.h>
 #include <widget/line-input-widget/Submit.h>
+#include <widget/table/private_table/Table.CustomItemDelegate.h>
 
 void widget::Table::PrivateTable::ConnectSignals()
 {
