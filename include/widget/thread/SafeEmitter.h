@@ -22,6 +22,8 @@ namespace widget
 		std::atomic_bool _disposed = false;
 
 	public:
+		SafeEmitter() = default;
+
 		///
 		/// @brief 析构时会自动 Dispose.
 		///
@@ -54,7 +56,6 @@ namespace widget
 		///
 		/// @brief 在后台线程中安全地发射信号到前台。
 		///
-		///
 		void Emit()
 		{
 			if (_disposed)
@@ -63,7 +64,8 @@ namespace widget
 			}
 
 			QMetaObject::invokeMethod(
-				this, [this]()
+				this,
+				[this]()
 				{
 					if (_disposed)
 					{
