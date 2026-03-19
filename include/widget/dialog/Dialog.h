@@ -2,6 +2,7 @@
 #include "base/math/Size.h"
 #include "base/string/define.h"
 #include "qdialog.h"
+#include "qevent.h"
 #include "qwidget.h"
 #include "widget/layout/Padding.h"
 #include "widget/layout/VBoxLayout.h"
