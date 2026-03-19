@@ -2,9 +2,11 @@
 #include "base/delegate/Delegate.h"
 #include "base/delegate/IEvent.h"
 #include "base/IDisposable.h"
+#include "base/string/define.h"
 #include "qobject.h"
-#include "QPushButton"
 #include <atomic>
+#include <exception>
+#include <iostream>
 
 namespace widget
 {
@@ -53,7 +55,36 @@ namespace widget
 		/// @brief 在后台线程中安全地发射信号到前台。
 		///
 		///
-		void Emit();
+		void Emit()
+		{
+			if (_disposed)
+			{
+				throw base::ObjectDisposedException{CODE_POS_STR + "对象已经释放，禁止发射信号。"};
+			}
+
+			QMetaObject::invokeMethod(
+				this, [this]()
+				{
+					if (_disposed)
+					{
+						return;
+					}
+
+					try
+					{
+						_callback.Invoke();
+					}
+					catch (std::exception const &e)
+					{
+						std::cerr << CODE_POS_STR << e.what() << std::endl;
+					}
+					catch (...)
+					{
+						std::cerr << CODE_POS_STR << "未知的异常。" << std::endl;
+					}
+				},
+				Qt::QueuedConnection);
+		}
 
 		///
 		/// @brief 后台线程发射了信号就会触发此回调事件。
