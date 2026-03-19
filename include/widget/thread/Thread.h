@@ -26,12 +26,10 @@ namespace widget
 		///
 		/// @brief 线程启动后构造一个 QObject 对象，将指针赋值到本字段。
 		///
-		///
 		QObject *_object{};
 
 		///
 		/// @brief 线程启动后就设置本信号的结果。
-		///
 		///
 		base::task::TaskCompletionSignal _thread_started{false};
 
@@ -103,24 +101,26 @@ namespace widget
 
 			std::shared_ptr<base::task::TaskCompletionSignal> signal{new base::task::TaskCompletionSignal{false}};
 
-			QMetaObject::invokeMethod(_object, [func, signal]()
-									  {
-										  base::task::TaskCompletionSignalGuard g{*signal};
+			QMetaObject::invokeMethod(
+				_object,
+				[func, signal]()
+				{
+					base::task::TaskCompletionSignalGuard g{*signal};
 
-										  try
-										  {
-											  func();
-										  }
-										  catch (std::exception const &e)
-										  {
-											  std::cerr << CODE_POS_STR << e.what() << std::endl;
-										  }
-										  catch (...)
-										  {
-											  std::cerr << CODE_POS_STR << "未知的异常。" << std::endl;
-										  }
-									  },
-									  Qt::QueuedConnection);
+					try
+					{
+						func();
+					}
+					catch (std::exception const &e)
+					{
+						std::cerr << CODE_POS_STR << e.what() << std::endl;
+					}
+					catch (...)
+					{
+						std::cerr << CODE_POS_STR << "未知的异常。" << std::endl;
+					}
+				},
+				Qt::QueuedConnection);
 
 			return signal;
 		}
