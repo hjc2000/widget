@@ -3,10 +3,10 @@
 #include "base/string/define.h"
 #include "base/task/ITask.h"
 #include "base/task/TaskCompletionSignal.h"
+#include "base/task/ThreadResourceManager.h"
 #include "qeventloop.h"
 #include "qobject.h"
 #include "qthread.h"
-#include "ThreadResourceManager.h"
 #include <atomic>
 #include <functional>
 #include <iostream>
@@ -21,7 +21,7 @@ namespace widget
 	private:
 		std::function<void()> _func;
 		std::atomic_bool _disposed = false;
-		widget::ThreadResourceManager _resource_manager{};
+		base::ThreadResourceManager _resource_manager{};
 
 		///
 		/// @brief 线程启动后构造一个 QObject 对象，将指针赋值到本字段。
@@ -92,7 +92,7 @@ namespace widget
 		///
 		/// @return 可以用来等待任务完成。
 		///
-		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void(widget::ThreadResourceManager &thread_resource_manager)> const &func)
+		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void(base::ThreadResourceManager &thread_resource_manager)> const &func)
 		{
 			if (_disposed)
 			{

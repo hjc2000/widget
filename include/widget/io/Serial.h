@@ -332,7 +332,7 @@ namespace widget
 			// 委托后台线程创建串口对象并连接信号。
 			{
 				std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-					[this](widget::ThreadResourceManager &thread_resource_manager)
+					[this](base::ThreadResourceManager &thread_resource_manager)
 					{
 						{
 							std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
@@ -376,7 +376,7 @@ namespace widget
 			_hardware_flow_control = hardware_flow_control;
 
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[&](widget::ThreadResourceManager &thread_resource_manager)
+				[&](base::ThreadResourceManager &thread_resource_manager)
 				{
 					QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
 
@@ -406,7 +406,7 @@ namespace widget
 			}
 
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[&](widget::ThreadResourceManager &thread_resource_manager)
+				[&](base::ThreadResourceManager &thread_resource_manager)
 				{
 					QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
 
@@ -426,7 +426,7 @@ namespace widget
 			}
 
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[&](widget::ThreadResourceManager &thread_resource_manager)
+				[&](base::ThreadResourceManager &thread_resource_manager)
 				{
 					QSerialPort &serial = thread_resource_manager.Get<QSerialPort>(ThreadResourceIdProvider::SerialPort());
 
