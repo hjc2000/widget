@@ -3,6 +3,7 @@
 #include "base/embedded/serial/SoftWareTimeoutSerial.h"
 #include "base/stream/ReadOnlySpan.h"
 #include "base/stream/Span.h"
+#include "base/string/define.h"
 #include "base/task/delay.h"
 #include "base/task/task.h"
 #include "base/test/TestMemoryMapFile.h"
@@ -63,8 +64,10 @@ int TestCoreApplication()
 				std::cout.write(reinterpret_cast<char const *>(buffer), have_read);
 
 				count++;
+
 				if (count > 10)
 				{
+					std::cout << CODE_POS_STR << "count > 10, 主动关闭串口。" << std::endl;
 					soft_serial->Close();
 				}
 			}
