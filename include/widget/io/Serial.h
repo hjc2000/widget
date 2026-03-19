@@ -343,12 +343,13 @@ namespace widget
 
 						// 槽函数禁止用值捕获的方式捕获 qt 信号源对象的共享指针，因为 lambda 槽函数会被信号源
 						// 对象储存，会直接导致共享指针循环引用。
-						QSerialPort::connect(&serial,
-											 &QSerialPort::readyRead,
-											 [this, &serial]()
-											 {
-												 OnReceiveData(serial);
-											 });
+						QSerialPort::connect(
+							&serial,
+							&QSerialPort::readyRead,
+							[this, &serial]()
+							{
+								OnReceiveData(serial);
+							});
 					});
 
 				task->Wait();
