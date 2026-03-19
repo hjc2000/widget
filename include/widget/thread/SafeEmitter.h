@@ -63,6 +63,18 @@ namespace widget
 				throw base::ObjectDisposedException{CODE_POS_STR + "对象已经释放，禁止发射信号。"};
 			}
 
+			///
+			/// @brief
+			///
+			/// @param object this 是一个 QObject, 具有线程亲和性。在此参数中传入 this,
+			/// 则 QMetaObject::invokeMethod 会将 lambda 表达式发送给 this
+			/// 对象所在的线程的消息循环中执行。因此，后台线程调用 SafeEmitter::Emit 时，
+			/// 就实现了将任务放到指定线程的消息循环中排队执行的目标。
+			///
+			/// @param function 这里传入了 lambda 表达式。此 lambda 表达式会被送给 this
+			/// 所在的线程的消息循环中，等排队排到了之后就会被 this 所在的线程调用。
+			/// 即 SafeEmitter::Emit 的作用是发一个任务出去，叫别的线程帮忙执行，自己不亲自执行。
+			///
 			QMetaObject::invokeMethod(
 				this,
 				[this]()
