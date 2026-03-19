@@ -37,7 +37,7 @@ int TestCoreApplication()
 	}
 
 	std::shared_ptr<base::serial::SoftWareTimeoutSerial> soft_serial{new base::serial::SoftWareTimeoutSerial{
-		std::shared_ptr<base::serial::Serial>{new base::serial::Serial{"COM3"}},
+		std::shared_ptr<base::serial::Serial>{new base::serial::Serial{"COM8"}},
 		1024 * 10,
 		20,
 	}};
@@ -93,6 +93,7 @@ int TestCoreApplication()
 int main()
 {
 	// base::test::TestMemoryMapFile();
-	base::test::TestMemoryMapFileList();
+	// base::test::TestMemoryMapFileList();
+	TestCoreApplication();
 	return 0;
 }
