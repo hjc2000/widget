@@ -6,9 +6,9 @@
 std::vector<std::string> base::serial::scan_serials()
 {
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-	std::vector<std::string> results;
+	std::vector<std::string> results{};
 
-	for (auto const &port : ports)
+	for (QSerialPortInfo const &port : ports)
 	{
 		results.push_back(base::to_string(port.portName()));
 	}
@@ -19,9 +19,9 @@ std::vector<std::string> base::serial::scan_serials()
 std::vector<base::serial::SerialPortInfomation> base::serial::scan_serials_for_details()
 {
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-	std::vector<base::serial::SerialPortInfomation> results;
+	std::vector<base::serial::SerialPortInfomation> results{};
 
-	for (auto const &port : ports)
+	for (QSerialPortInfo const &port : ports)
 	{
 		base::serial::SerialPortInfomation info{
 			base::to_string(port.portName()),
