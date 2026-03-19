@@ -1,11 +1,11 @@
 #pragma once
-#include "indicator/IndicatorLight.h"
 #include "QCheckBox"
 #include "QDateTimeEdit"
 #include "QMainWindow"
 #include "QVBoxLayout"
 #include "widget/box/VBox.h"
 #include "widget/button/Button.h"
+#include "widget/indicator/IndicatorLight.h"
 #include <memory>
 
 namespace widget

@@ -1,8 +1,8 @@
 #include "MainWindow.h"
 #include "base/embedded/led/parameter.h"
 #include "base/math/Size.h"
-#include "dialog/Dialog.h"
 #include "widget/button/Button.h"
+#include "widget/dialog/Dialog.h"
 #include "widget/layout/Padding.h"
 #include <memory>
 
