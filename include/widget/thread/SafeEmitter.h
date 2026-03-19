@@ -38,6 +38,8 @@ namespace widget
 		///
 		/// 此外，还会释放 CallbackEvent, 清理其中订阅的所有委托。
 		///
+		/// @warning 本方法只能在本对象所在的线程调用。
+		///
 		virtual void Dispose() override
 		{
 			if (_disposed)
@@ -47,7 +49,13 @@ namespace widget
 
 			_disposed = true;
 
-			// 清理消息队列中已经有的信号，避免本对象析构后仍然触发回调访问本对象。
+			///
+			/// @brief 清理消息队列中已经有的信号，避免本对象析构后仍然触发回调访问本对象。
+			///
+			/// @param receiver 这里传入了 this, 即本对象是接收者。QCoreApplication::removePostedEvents
+			/// 收到 this 后，会遍历 this 所在线程的消息队列，删除发送给 this 的所有消息。注意，接收者
+			/// 不是 this 的消息会被保留。
+			///
 			QCoreApplication::removePostedEvents(this, QEvent::MetaCall);
 
 			_callback.Dispose();
@@ -74,6 +82,10 @@ namespace widget
 			/// @param function 这里传入了 lambda 表达式。此 lambda 表达式会被送给 this
 			/// 所在的线程的消息循环中，等排队排到了之后就会被 this 所在的线程调用。
 			/// 即 SafeEmitter::Emit 的作用是发一个任务出去，叫别的线程帮忙执行，自己不亲自执行。
+			///
+			/// @param type 发送的信号类型。或者说发送的任务加入 this 所在线程的消息循环的方式。
+			/// Qt::QueuedConnection 表示在互斥锁的保护下将 lambda 表达式任务塞入它的队列中，
+			/// 后台线程要用这种方式向它发送任务才是安全的。
 			///
 			QMetaObject::invokeMethod(
 				this,
