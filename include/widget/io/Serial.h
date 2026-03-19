@@ -316,7 +316,7 @@ namespace widget
 			}
 
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[&](widget::ThreadResourceManager &manager)
+				[&](widget::ThreadResourceManager &thread_resource_manager)
 				{
 					_serial->write(reinterpret_cast<char const *>(span.Buffer()),
 								   span.Size());
@@ -334,7 +334,7 @@ namespace widget
 			}
 
 			std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-				[&](widget::ThreadResourceManager &manager)
+				[&](widget::ThreadResourceManager &thread_resource_manager)
 				{
 					_serial->flush();
 				});

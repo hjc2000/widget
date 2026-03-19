@@ -92,7 +92,7 @@ namespace widget
 		///
 		/// @return 可以用来等待任务完成。
 		///
-		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void(widget::ThreadResourceManager &manager)> const &func)
+		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void(widget::ThreadResourceManager &thread_resource_manager)> const &func)
 		{
 			if (_disposed)
 			{
