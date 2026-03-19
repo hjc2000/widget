@@ -40,7 +40,7 @@ int TestCoreApplication()
 	std::shared_ptr<base::serial::SoftWareTimeoutSerial> soft_serial{new base::serial::SoftWareTimeoutSerial{
 		std::shared_ptr<base::serial::Serial>{new base::serial::Serial{"COM8"}},
 		1024 * 10,
-		20,
+		200,
 	}};
 
 	soft_serial->Start();
@@ -49,7 +49,6 @@ int TestCoreApplication()
 		[&]()
 		{
 			uint8_t buffer[1024]{};
-			int64_t count = 0;
 
 			while (true)
 			{
@@ -62,14 +61,7 @@ int TestCoreApplication()
 				}
 
 				std::cout.write(reinterpret_cast<char const *>(buffer), have_read);
-
-				count++;
-
-				if (count > 10)
-				{
-					std::cout << CODE_POS_STR << "count > 10, 主动关闭串口。" << std::endl;
-					soft_serial->Close();
-				}
+				std::cout << std::endl;
 			}
 		});
 
@@ -86,7 +78,7 @@ int TestCoreApplication()
 				};
 
 				soft_serial->Write(span);
-				base::task::Delay(std::chrono::milliseconds{1000});
+				base::task::Delay(std::chrono::milliseconds{100});
 			}
 		});
 
