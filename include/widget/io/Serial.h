@@ -274,6 +274,16 @@ namespace widget
 		public base::serial::serial_handle
 	{
 	private:
+		class ThreadResourceIdProvider
+		{
+		public:
+			constexpr static int64_t SerialPort()
+			{
+				return 0;
+			}
+		};
+
+	private:
 		widget::Thread _thread{};
 		std::string _port_name{};
 		base::BlockingCircleBufferMemoryStream _received_stream{1024 * 10};
@@ -313,15 +323,6 @@ namespace widget
 				std::cerr << CODE_POS_STR + "未知异常。" << std::endl;
 			}
 		}
-
-		class ThreadResourceIdProvider
-		{
-		public:
-			constexpr static int64_t SerialPort()
-			{
-				return 0;
-			}
-		};
 
 	public:
 		Serial(std::string const &name)
