@@ -36,10 +36,10 @@ widget::Serial::Serial(std::string const &name)
 	// 委托后台线程创建串口对象并连接信号。
 	{
 		std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-			[this]()
+			[this](widget::ThreadResourceManager &manager)
 			{
 				std::shared_ptr<QSerialPort> serial{new QSerialPort{}};
-				_thread.AddResource(serial);
+				manager.Add(serial);
 				_serial = serial.get();
 
 				// 槽函数禁止用值捕获的方式捕获 qt 信号源对象的共享指针，因为 lambda 槽函数会被信号源
@@ -71,7 +71,7 @@ void widget::Serial::Start(base::serial::Direction direction,
 	_hardware_flow_control = hardware_flow_control;
 
 	std::shared_ptr<base::task::ITask> task = _thread.InvokeAsync(
-		[&]()
+		[&](widget::ThreadResourceManager &manager)
 		{
 			_serial->setPortName(_port_name.c_str());
 			_serial->setBaudRate(baud_rate.Value());

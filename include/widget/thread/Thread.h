@@ -6,11 +6,11 @@
 #include "qeventloop.h"
 #include "qobject.h"
 #include "qthread.h"
+#include "ThreadResourceManager.h"
 #include <atomic>
 #include <functional>
 #include <iostream>
 #include <memory>
-#include <vector>
 
 namespace widget
 {
@@ -21,7 +21,7 @@ namespace widget
 	private:
 		std::function<void()> _func;
 		std::atomic_bool _disposed = false;
-		std::vector<std::shared_ptr<void>> _resources{};
+		widget::ThreadResourceManager _resource_manager{};
 
 		///
 		/// @brief 线程启动后构造一个 QObject 对象，将指针赋值到本字段。
@@ -44,7 +44,7 @@ namespace widget
 			_object = &object;
 			_thread_started.SetResult();
 			loop.exec();
-			_resources.clear();
+			_resource_manager.Clear();
 			_object = nullptr;
 		}
 
@@ -92,7 +92,7 @@ namespace widget
 		///
 		/// @return 可以用来等待任务完成。
 		///
-		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void()> const &func)
+		std::shared_ptr<base::task::ITask> InvokeAsync(std::function<void(widget::ThreadResourceManager &manager)> const &func)
 		{
 			if (_disposed)
 			{
@@ -103,13 +103,13 @@ namespace widget
 
 			QMetaObject::invokeMethod(
 				_object,
-				[func, signal]()
+				[func, signal, this]()
 				{
 					base::task::TaskCompletionSignalGuard g{*signal};
 
 					try
 					{
-						func();
+						func(_resource_manager);
 					}
 					catch (std::exception const &e)
 					{
@@ -123,19 +123,6 @@ namespace widget
 				Qt::QueuedConnection);
 
 			return signal;
-		}
-
-		///
-		/// @brief 添加要托管到本线程的资源。在线程退出前会清空容器，触发共享指针的析构。
-		///
-		/// @warning 共享指针添加进来后，外部要通过裸指针进行操作，避免潜在的循环引用，特别是有
-		/// lambda 表达式进行值捕获时。要使用托管到本对象的资源，就必须保证本对象存活。
-		///
-		/// @param resource
-		///
-		void AddResource(std::shared_ptr<void> const &resource)
-		{
-			_resources.push_back(resource);
 		}
 	};
 
